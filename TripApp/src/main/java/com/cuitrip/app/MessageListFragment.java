@@ -145,7 +145,7 @@ public class MessageListFragment extends BaseFragment implements SwipeRefreshLay
         @Override
         public void onFailure(LabResponse response, Object data) {
             mRefresh.setRefreshing(false);
-            if(mType == UserInfo.USER_TRAVEL && isTokenInvalid(response)){
+            if(mType == UserInfo.USER_TRAVEL ){
                 return;
             }
             if (response != null && !TextUtils.isEmpty(response.msg)) {

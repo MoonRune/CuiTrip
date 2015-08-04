@@ -203,9 +203,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     @Override
                     public void onFailure(LabResponse response, Object data) {
                         hideNoCancelDialog();
-                        if (!isTokenInvalid(response)) {
                             MessageUtils.showToast(response.msg);
-                        }
                     }
                 }, mServiceInfo.getSid(), mServiceInfo.getName(), mAddress.getText().toString().trim(), mServiceInfo.getDescpt(),
                 mServiceInfo.getPic(), mServiceInfo.getBackPic(), paywayValue == 2 ? "0" : mMoney.getText().toString().trim(),

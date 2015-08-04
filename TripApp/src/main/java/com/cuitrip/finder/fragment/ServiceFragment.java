@@ -227,10 +227,8 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onFailure(LabResponse response, Object data) {
 
-                if (!isTokenInvalid(response)) {
                     hideNoCancelDialog();
                     MessageUtils.showToast(getActivity().getString(R.string.ct_delete_failed_can_try));
-                }
             }
         }, sid);
     }
@@ -246,13 +244,11 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
     LabAsyncHttpResponseHandler responseHandler = new LabAsyncHttpResponseHandler(RecommendOutData.class) {
         @Override
         public void onFailure(LabResponse response, Object data) {
-            if (!isTokenInvalid(response)) {
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     MessageUtils.showToast(response.msg);
                 }
                 refresh.setRefreshing(false);
                 onNetwokError(0, 0, 0);
-            }
         }
 
         @Override

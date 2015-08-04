@@ -308,7 +308,8 @@
     <string name="ct_service_create_image_size_validate">创建发现至少需要上传一张图片</string>
     <string name="ct_delete_suc">删除成功</string>
     <string name="ct_delete_failed_can_try">删除失败，请稍后重试</string>
->>>>>>> feature/language
+    <string name="please_relogin">请重新登录</string>
+    >>>>>>> feature/language
 
     <string-array name="ct_gender_list">
         <item>男</item>

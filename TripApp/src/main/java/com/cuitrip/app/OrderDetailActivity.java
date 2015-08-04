@@ -215,14 +215,12 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         @Override
         public void onFailure(LabResponse response, Object data) {
             hideLoading();
-            if (!isTokenInvalid(response)) {
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     MessageUtils.showToast(response.msg);
                 } else {
                     MessageUtils.showToast(R.string.ct_fetch_failed);
                 }
                 return;
-            }
         }
     };
 
@@ -424,9 +422,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                             @Override
                             public void onFailure(LabResponse response, Object data) {
                                 hideNoCancelDialog();
-                                if (!isTokenInvalid(response)) {
                                     MessageUtils.showToast(response.msg);
-                                }
                             }
                         }, mOrderInfo.getOid());
                     }
@@ -450,9 +446,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideNoCancelDialog();
-                if (!isTokenInvalid(response)) {
                     MessageUtils.showToast(response.msg);
-                }
             }
         }, mOrderInfo.getOid());
     }
@@ -472,9 +466,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideNoCancelDialog();
-                if (!isTokenInvalid(response)) {
                     MessageUtils.showToast(response.msg);
-                }
             }
         }, mOrderInfo.getOid());
     }

@@ -14,12 +14,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cuitrip.app.MainApplication;
-import com.cuitrip.business.BusinessHelper;
 import com.cuitrip.login.LoginActivity;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.push.PushService;
 import com.cuitrip.service.R;
-import com.lab.network.LabResponse;
 import com.lab.utils.AnalyticsHelper;
 import com.lab.utils.MessageUtils;
 import com.pingplusplus.android.PaymentActivity;
@@ -107,14 +105,6 @@ public class BaseActivity extends AppCompatActivity {
 
     protected void reLogin() {
         startActivityForResult(new Intent(this, LoginActivity.class), REQUEST_LOGIN);
-    }
-
-    protected boolean isTokenInvalid(LabResponse response){
-        if(BusinessHelper.isTokenInvalid(response)){
-            reLogin();
-            return true;
-        }
-        return false;
     }
 
     public void pay(String data){

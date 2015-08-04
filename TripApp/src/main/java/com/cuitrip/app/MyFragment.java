@@ -153,8 +153,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                     @Override
                     public void onFailure(LabResponse response, Object data) {
                         hideLoading();
-                        if (!isTokenInvalid(response)) {
-                        }
 
                         //TODO:
                     }
@@ -248,11 +246,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(msg)) {
                     msg = getString(R.string.ct_fetch_failed);
                 }
-                if (!isTokenInvalid(response)) {
                     ((TextView) mContentView.findViewById(R.id.ct_home_page_status_tv)).setText(msg);
                     ((TextView) mContentView.findViewById(R.id.ct_home_page_error)).setVisibility(View.GONE);
                     (mContentView.findViewById(R.id.ct_homepage_arrow_v)).setVisibility(View.GONE);
-                }
             }
         });
     }

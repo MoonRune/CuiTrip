@@ -85,12 +85,10 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideNoCancelDialog();
-                if (!isTokenInvalid(response)) {
                     if (response != null && !TextUtils.isEmpty(response.msg)) {
                         MessageUtils.showToast(response.msg);
                     }
                     return;
-                }
             }
         }, mOrderInfo.getOid(), String.valueOf(mRatingBar.getRating()), mContent.getText().toString());
     }

@@ -99,16 +99,6 @@ public class BaseFragment extends Fragment {
 
     }
 
-    protected boolean isTokenInvalid(LabResponse response) {
-        if (BusinessHelper.isTokenInvalid(response)) {
-            reLogin();
-            if (!TextUtils.isEmpty(response.msg)) {
-                MessageUtils.showToast(response.msg);
-            }
-            return true;
-        }
-        return false;
-    }
 
     protected void reLogin() {
         Activity activity = getActivity();

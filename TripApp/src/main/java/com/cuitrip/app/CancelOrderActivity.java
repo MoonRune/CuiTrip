@@ -49,11 +49,11 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
         setContentView(R.layout.ct_order_cancel);
         setViewText(R.id.service_name, mOrderInfo.getServiceName());
         UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
-        if(userInfo.isTravel()){
+        if (userInfo.isTravel()) {
             setViewText(R.id.cuthor_name, mOrderInfo.getInsiderName());
-        }else{
+        } else {
             setViewText(R.id.cuthor_name, mOrderInfo.getTravellerName());
-            TextView cancelTips = (TextView)findViewById(R.id.cancel_tips);
+            TextView cancelTips = (TextView) findViewById(R.id.cancel_tips);
             cancelTips.setText(R.string.ct_cancel_order_tips);
         }
         setViewText(R.id.service_address, mOrderInfo.getServiceAddress());
@@ -87,7 +87,7 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
 
     private void cancelOrder() {
         showNoCancelDialog();
-        LogHelper.e("cancel order",""+ mOrderInfo.getOid());
+        LogHelper.e("cancel order", "" + mOrderInfo.getOid());
         OrderBusiness.cancelOrder(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
@@ -103,12 +103,10 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideNoCancelDialog();
-                if (!isTokenInvalid(response)) {
-                    if (response != null && !TextUtils.isEmpty(response.msg)) {
-                        MessageUtils.showToast(response.msg);
-                    }
-                    return;
+                if (response != null && !TextUtils.isEmpty(response.msg)) {
+                    MessageUtils.showToast(response.msg);
                 }
+                return;
             }
         }, mOrderInfo.getOid(), mContent.getText().toString());
     }

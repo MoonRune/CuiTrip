@@ -2,7 +2,6 @@ package com.cuitrip.app;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,6 @@ import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -128,10 +126,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                if (!isTokenInvalid(response)) {
                     hideLoading();
                     MessageUtils.showToast(response.msg);
-                }
             }
         }, mService.getSid());
     }
@@ -212,9 +208,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onFailure(LabResponse response, Object data) {
                         hideNoCancelDialog();
-                        if(!isTokenInvalid(response)){
                             MessageUtils.showToast(response.msg);
-                        }
                     }
                 }, mService.getInsiderId(), mService.getSid(), mService.getName(),
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY),

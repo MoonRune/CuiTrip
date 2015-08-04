@@ -12,7 +12,7 @@ public class BusinessHelper {
         return BASE_URL + api;
     }
 
-    public static boolean isTokenInvalid(LabResponse response){
+    public static boolean isTokenInvalided(LabResponse response){
         return response != null && response.code == 1;
     }
 }
