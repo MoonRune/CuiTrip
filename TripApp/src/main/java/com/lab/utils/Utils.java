@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * Created on 7/16.
@@ -31,6 +32,7 @@ public class Utils {
     public static final String DATE_FORMAT_MOTH = "MM-dd";
 
     public static final String DATE_FORMAT_SECOND_M = "yyyy-MM-dd HH:mm:ss.sss";
+    public static final String DATE_FORMAT_DAY_Z = "yyyy-MM-dd z";
 
 
     public static String getAppVersionName(Application application) {
@@ -51,13 +53,20 @@ public class Utils {
     public static String parseLongTimeToString(long time, String format) {
         Date date = new Date(time);
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
-        return sdf.format(date);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+
+        String result=sdf.format(date);
+        LogHelper.e("reparse",result+"  |" + String.valueOf(time));
+        return result ;
     }
 
     public static long parseStringToLongTime(String time, String format) {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         try {
-            return sdf.parse(time.trim()).getTime();
+            long result = sdf.parse(time.trim()).getTime();
+            LogHelper.e("parse", time.trim()+"  |" + String.valueOf(result));
+            return result;
         } catch (Exception e) {
             return -1;
         }
@@ -101,8 +110,7 @@ public class Utils {
                     AlertDialog.Builder builder = MessageUtils.createHoloBuilder(activity);
                     builder.setMessage(activity.getText(R.string.ct_call_phone_fail) + tele)
                             .create().show();
-                }
-                catch (Exception e1) {
+                } catch (Exception e1) {
                     e1.printStackTrace();
                 }
             }

@@ -136,6 +136,7 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
+                    position--;
                     ServiceListInterface serviceInfo = mAdapter.getItem(position);
                     if (serviceInfo instanceof SavedLocalService) {
                         ServiceInfo serviceInfo1 = new ServiceInfo();
