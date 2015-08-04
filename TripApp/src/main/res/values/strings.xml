@@ -226,7 +226,7 @@
     <string name="ct_save">保存</string>
     <string name="ct_edit">编辑</string>
     <string name="ct_home_page_update_posted">更新已提交，等待审核中</string>
-    <string name="select_image_failed">图片生成失败，请重试</string>
+    <string name="select_image_failed">图片获取失败，请重试或者换一个图片选择器</string>
     <string name="ct_personal_desc_limit_msg">个人介绍请不要超过%1$d个字符.</string>
     <string name="update_failed">更新失败！</string>
 

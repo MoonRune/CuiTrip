@@ -2,17 +2,16 @@
 
 
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ct_white">
-
     <EditText
         android:id="@+id/ct_personal_desc_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/ct_personal_desc_editor_content_margitop"
+        android:layout_marginTop="20dp"
         android:background="@color/ct_alpha"
+        android:gravity="top"
         android:minLines="5"
         android:paddingLeft="@dimen/ct_personal_desc_editor_content_paddingLeft"
         android:paddingRight="@dimen/ct_personal_desc_editor_content_paddingLeft"

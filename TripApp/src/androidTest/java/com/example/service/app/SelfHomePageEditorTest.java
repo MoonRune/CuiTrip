@@ -21,20 +21,10 @@ public class SelfHomePageEditorTest extends ActivityInstrumentationTestCase2<Sel
         super.setUp();
         activity = getActivity();
     }
-    @SmallTest
-    public void testSoftInput(){
-        try {
-            Thread.sleep(3000);
-            activity.mContentEt.requestFocus();
-            Thread.sleep(4000);
-            activity.mContentEt.clearFocus();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
+    @SmallTest
     public void testInput(){
-        final String imput="12342314dsafsdfas.q234fasdf4trfrnwifnoa西瓜佛那四个脑 is 地方";
+        final String imput="12342314dsafsdfas.q234fasdf4trfrnwifnoa";
         final Point p= new Point();
         for (p.x=0;p.x <imput.length();p.x++) {
             try {
@@ -56,6 +46,19 @@ public class SelfHomePageEditorTest extends ActivityInstrumentationTestCase2<Sel
 //                activity.testInjectBitmap();
             }
         });
+        try {
+            Thread.sleep(20000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                activity.trySubmit();
+
+            }
+        });
+
         try {
             Thread.sleep(10000);
         } catch (InterruptedException e) {

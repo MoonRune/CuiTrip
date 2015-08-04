@@ -81,8 +81,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if ((requestCode == REQUEST_FOR_EDIT && resultCode == SelfHomePageEditorActivity.HOME_PAGE_UPDATED)
-                || (requestCode == SelfHomePageEditorActivity.REQUEST_HOME_PAGE_UPDATE && resultCode == SelfHomePageEditorActivity.HOME_PAGE_UPDATED)) {
+        if (SelfHomePageEditorActivity.isEdited(requestCode, resultCode, data)) {
             requestForHomepageStatus();
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -246,9 +245,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 if (TextUtils.isEmpty(msg)) {
                     msg = getString(R.string.ct_fetch_failed);
                 }
-                    ((TextView) mContentView.findViewById(R.id.ct_home_page_status_tv)).setText(msg);
-                    ((TextView) mContentView.findViewById(R.id.ct_home_page_error)).setVisibility(View.GONE);
-                    (mContentView.findViewById(R.id.ct_homepage_arrow_v)).setVisibility(View.GONE);
+                ((TextView) mContentView.findViewById(R.id.ct_home_page_status_tv)).setText(msg);
+                ((TextView) mContentView.findViewById(R.id.ct_home_page_error)).setVisibility(View.GONE);
+                (mContentView.findViewById(R.id.ct_homepage_arrow_v)).setVisibility(View.GONE);
             }
         });
     }

@@ -5,8 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,8 +15,8 @@ import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.push.MessagePrefs;
 import com.cuitrip.push.PushService;
-import com.lab.app.BaseTabHostActivity;
 import com.cuitrip.service.R;
+import com.lab.app.BaseTabHostActivity;
 import com.lab.utils.MessageUtils;
 
 public class IndexActivity extends BaseTabHostActivity {
@@ -72,6 +70,10 @@ public class IndexActivity extends BaseTabHostActivity {
         }
     }
 
+    public void testClickMy(){
+        tab.performClick();
+    }
+    View tab;
     @Override
     protected void initTabs() {
         UserInfo info = LoginInstance.getInstance(this).getUserInfo();
@@ -93,8 +95,8 @@ public class IndexActivity extends BaseTabHostActivity {
         mTabHost.addTab(mTabHost.newTabSpec(ORDER_TAB)
                 .setIndicator(createTabView(R.drawable.ct_order, getString(R.string.ct_order))),
                 OrderFragment.class, null);
-        mTabHost.addTab(mTabHost.newTabSpec(MY_TAB)
-                        .setIndicator(createTabView(R.drawable.ct_my, getString(R.string.ct_my))),
+        mTabHost.addTab( mTabHost.newTabSpec(MY_TAB)
+                        .setIndicator(tab =createTabView(R.drawable.ct_my, getString(R.string.ct_my))),
                 MyFragment.class, null);
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
