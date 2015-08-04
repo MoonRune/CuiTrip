@@ -115,7 +115,7 @@
     <string name="ct_fri">五</string>
     <string name="ct_sat">六</string>
     <string name="ct_can_book">可以预订</string>
-    <string name="ct_booked">已被预订</string>
+    <string name="ct_booked">不可预订</string>
 
     <string name="ct_country">国家/地区</string>
     <string name="ct_mobile_hint">手机号码</string>
@@ -217,8 +217,8 @@
     <string name="ct_country_selected">地区</string>
     <string name="ct_country_selected_null">请选择地区</string>
     <string name="ct_selected_service_date">安排日程</string>
-    <string name="ct_service_booked">已被预订，不能取消</string>
-    <string name="ct_service_cancelable">可以取消</string>
+    <string name="ct_service_booked">不可安排</string>
+    <string name="ct_service_cancelable">可以安排</string>
     <string name="ct_service_date_setted">提交成功</string>
     <string name="ct_waiting">请稍后...</string>
 
@@ -310,6 +310,10 @@
     <string name="ct_delete_suc">删除成功</string>
     <string name="ct_delete_failed_can_try">删除失败，请稍后重试</string>
     <string name="please_relogin">请重新登录</string>
+    <string name="ct_per_man">/人</string>
+    <string name="ct_pay_canceled">支付取消</string>
+    <string name="ct_pay_fail">支付失败</string>
+    <string name="ct_pay_invalid">支付应用未安装</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

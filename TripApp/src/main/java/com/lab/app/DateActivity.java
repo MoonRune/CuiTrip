@@ -57,7 +57,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 == UserInfo.USER_FINDER;
 
         setContentView(R.layout.ct_activity_date);
-        if(mIsFinder){
+        if (mIsFinder) {
             setViewText(R.id.ct_booked, getString(R.string.ct_service_booked));
             setViewText(R.id.ct_can_cancel, getString(R.string.ct_service_cancelable));
             findViewById(R.id.finish).setOnClickListener(this);
@@ -95,7 +95,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideLoading();
-                if(response.code == 105 && mIsFinder){//可约日期为空
+                if (response.code == 105 && mIsFinder) {//可约日期为空
                     return;
                 }
                 MessageUtils.showToast(response.msg);
@@ -140,7 +140,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
 
         private Calendar calendar = Calendar.getInstance();
 
-        public void setCalendar(Calendar cal){
+        public void setCalendar(Calendar cal) {
             this.calendar.setTimeInMillis(cal.getTimeInMillis());
         }
 
@@ -172,7 +172,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 tv.setText("");
                 tv.setEnabled(false);
                 tv.setVisibility(View.INVISIBLE);
-            }else{
+            } else {
                 calendar.set(Calendar.DAY_OF_MONTH, date);
                 calendar.set(Calendar.HOUR_OF_DAY, 0);
                 calendar.set(Calendar.MINUTE, 0);
@@ -187,9 +187,9 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
 
                 tv.setText(String.valueOf(date));
                 boolean match = false;
-                if(mAvailableDate != null && !mAvailableDate.isEmpty()){
-                    for(long time : mAvailableDate){
-                        if(time >= start && time < end){
+                if (mAvailableDate != null && !mAvailableDate.isEmpty()) {
+                    for (long time : mAvailableDate) {
+                        if (time >= start && time < end) {
                             tv.setEnabled(true);
                             tv.setChecked(true);
                             match = true;
@@ -197,56 +197,56 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                         }
                     }
                 }
-                if(!match){
-                    if(mIsFinder){
+                if (!match) {
+                    Calendar today = Calendar.getInstance();
+                    today.set(Calendar.HOUR_OF_DAY, 0);
+                    today.set(Calendar.MINUTE, 0);
+                    today.set(Calendar.SECOND, 0);
+                    today.set(Calendar.MILLISECOND, 0);
+                    if (mIsFinder) {
                         //当天之前不能被选中
-                        Calendar today = Calendar.getInstance();
-                        today.set(Calendar.HOUR_OF_DAY, 0);
-                        today.set(Calendar.MINUTE, 0);
-                        today.set(Calendar.SECOND, 0);
-                        today.set(Calendar.MILLISECOND, 0);
-                        if(start < today.getTimeInMillis()){
+                        if (start <= today.getTimeInMillis()) {
                             tv.setEnabled(false);
-                            tv.setChecked(false);
-                        }else{
-                            tv.setChecked(false);
+                            tv.setChecked(true);
+                        } else {
                             tv.setEnabled(true);
+                            tv.setChecked(false);
                         }
-                    }else{
+                    } else {
                         tv.setEnabled(false);
-                        tv.setChecked(false);
+                        tv.setChecked(true);
                     }
                 }
                 view.setTag(Long.valueOf(start));
                 tv.setVisibility(View.VISIBLE);
             }
 
-            if(mIsFinder && view.isEnabled()){
+            if (mIsFinder && view.isEnabled()) {
                 view.setOnClickListener(onDateSelectedListener);
             }
             return view;
         }
 
-        private View.OnClickListener onDateSelectedListener = new View.OnClickListener(){
+        private View.OnClickListener onDateSelectedListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                if(view.getTag() == null || !(view.getTag() instanceof Long)){
+                if (view.getTag() == null || !(view.getTag() instanceof Long)) {
                     return;
                 }
-                Long time = (Long)view.getTag();
-                if(mAvailableDate.contains(time)){
+                Long time = (Long) view.getTag();
+                if (mAvailableDate.contains(time)) {
                     mAvailableDate.remove(time);
-                    ((CheckedTextView)view).setChecked(false);
-                }else{
+                    ((CheckedTextView) view).setChecked(false);
+                } else {
                     mAvailableDate.add(time);
-                    ((CheckedTextView)view).setChecked(true);
+                    ((CheckedTextView) view).setChecked(true);
                 }
             }
         };
     }
 
-    private void commitDateSet(){
+    private void commitDateSet() {
         showNoCancelDialog();
         ServiceBusiness.modifyServiceInfo(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
@@ -262,6 +262,6 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 MessageUtils.showToast(response.msg);
 
             }
-        },mSid, mAvailableDate);
+        }, mSid, mAvailableDate);
     }
 }

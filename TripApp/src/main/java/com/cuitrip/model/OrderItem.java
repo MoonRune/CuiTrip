@@ -69,7 +69,11 @@ public class OrderItem implements Serializable{
     private String gmtModified; //": "2015-06-26 22:38:56.0"
     private String comment;
     private String commentScore;
+    private String priceType;
 
+    public boolean isPricePerMan(){
+        return "1".equals(priceType );
+    }
     public String getPayCurrency() {
         return payCurrency;
     }

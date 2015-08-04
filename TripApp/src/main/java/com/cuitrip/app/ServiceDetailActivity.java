@@ -3,7 +3,6 @@ package com.cuitrip.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -131,9 +130,9 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
 //            setViewText(R.id.service_price, info.getMoneyType() + " " + info.getPrice());
             String price;
-            if(info.getPriceType() == 1){ //按人计费
+            if (info.getPriceType() == 1) { //按人计费
                 price = info.getMoneyType() + " " + info.getPrice() + getString(R.string.ct_service_unit);
-            }else{
+            } else {
                 price = info.getMoneyType() + " " + info.getPrice();
             }
             setViewText(R.id.service_price, price);
@@ -177,17 +176,30 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
         ReviewInfo review = data.getReviewInfo();
         if (review != null) {
-            setViewText(R.id.comment_count, review.getReviewNum() + getString(R.string.ct_cuitrip_comment_count));
-            if (review.getLastReview() != null) {
-                String content = review.getLastReview().getContent();
-                if (TextUtils.isEmpty(content)) {
-                    setViewText(R.id.comment_content, getString(R.string.ct_cuitrip_comment_no));
-                } else {
-                    setViewText(R.id.comment_content, content);
-                }
+            Integer commentCount = 0;
+            try {
+                commentCount = Integer.valueOf(review.getReviewNum());
+            } catch (NumberFormatException e) {
+                e.printStackTrace();
             }
-            findViewById(R.id.comment_click).setOnClickListener(this);
+            if (commentCount > 0) {
+                findViewById(R.id.comment_block).setVisibility(View.VISIBLE);
+                setViewText(R.id.comment_count, review.getReviewNum() + getString(R.string.ct_cuitrip_comment_count));
+                if (review.getLastReview() != null) {
+                    String content = review.getLastReview().getContent();
+                    if (TextUtils.isEmpty(content)) {
+                        setViewText(R.id.comment_content, getString(R.string.ct_cuitrip_comment_no));
+                    } else {
+                        setViewText(R.id.comment_content, content);
+                    }
+                }
+                findViewById(R.id.comment_click).setOnClickListener(this);
+            } else {
+                findViewById(R.id.comment_block).setVisibility(View.GONE);
+
+            }
         } else {
+            findViewById(R.id.comment_block).setVisibility(View.GONE);
             setViewText(R.id.comment_count, 0 + getString(R.string.ct_cuitrip_comment_count));
             setViewText(R.id.comment_content, getString(R.string.ct_cuitrip_comment_no));
             //TODO:

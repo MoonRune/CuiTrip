@@ -115,7 +115,7 @@
     <string name="ct_fri">五</string>
     <string name="ct_sat">六</string>
     <string name="ct_can_book">可以預訂</string>
-    <string name="ct_booked">已被預訂</string>
+    <string name="ct_booked">不可預訂</string>
 
     <string name="ct_country">國家/地區</string>
     <string name="ct_mobile_hint">手機號碼</string>
@@ -217,8 +217,8 @@
     <string name="ct_country_selected">地區</string>
     <string name="ct_country_selected_null">請選擇地區</string>
     <string name="ct_selected_service_date">安排日程</string>
-    <string name="ct_service_booked">已被預訂，不能取消</string>
-    <string name="ct_service_cancelable">可以取消</string>
+    <string name="ct_service_booked">不可安排</string>
+    <string name="ct_service_cancelable">可以安排</string>
     <string name="ct_service_date_setted">提交成功</string>
     <string name="ct_waiting">請稍後...</string>
 
@@ -345,5 +345,6 @@
         <item>按人計費</item>
         <item>免費</item>
     </string-array>
+    <string name="ct_per_man">/人</string>
 
 </resources>

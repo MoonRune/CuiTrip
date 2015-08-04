@@ -151,8 +151,9 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
         mOrderDateTv.setText(Html.fromHtml(getString(R.string.ct_order_info_date, time)));
         mOrderPeopleSizeTv.setText(Html.fromHtml(getString(R.string.ct_order_info_people, mOrderInfo.getBuyerNum())));
-        mOrderRemoteCostTv.setText(Html.fromHtml(getString(R.string.ct_order_info_service_price, mOrderInfo.getOrderPrice(),
-                CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getMoneyType()))));
+        String append=mOrderInfo.isPricePerMan()?getString(R.string.ct_per_man):"";
+        mOrderRemoteCostTv.setText(Html.fromHtml(getString(R.string.ct_order_info_service_price, mOrderInfo.getServicePrice(),
+                CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getMoneyType()))+append));
         mOrderLocalCurrencyTv.setText(Html.fromHtml(getString(R.string.ct_order_info_pay_currency,
                 CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getPayCurrency()))));
         mOrderLocalCostTv.setText(String.valueOf(mOrderInfo.getOrderPrice()));

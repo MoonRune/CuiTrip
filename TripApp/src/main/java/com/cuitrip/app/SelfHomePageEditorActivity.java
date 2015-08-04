@@ -29,6 +29,7 @@ import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.imageupload.IImageUploader;
 import com.lab.utils.imageupload.ImageUploadCallback;
+import com.lab.utils.imageupload.URLImageParser;
 import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -499,7 +500,11 @@ public class SelfHomePageEditorActivity extends BaseActivity {
     protected void submit() {
         showSubmitProgressing();
         UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
-        LogHelper.e(TAG, "submit  : " + userInfo.getUid() + "|" + userInfo.getToken() + "|" + mContentEt.getText().toString());
+        String content= mContentEt.getText().toString();
+        LogHelper.e("omg","before bad replace :"+content);
+        content = URLImageParser.badReplae(content);
+        LogHelper.e("omg","after bad replace :"+content);
+        LogHelper.e(TAG, "submit  : " + userInfo.getUid() + "|" + userInfo.getToken() + "|" + content);
         UserBusiness.updateIntroduce(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
@@ -524,7 +529,7 @@ public class SelfHomePageEditorActivity extends BaseActivity {
             public void onFinish() {
                 super.onFinish();
             }
-        }, userInfo.getUid(), userInfo.getToken(), mContentEt.getText().toString());
+        }, userInfo.getUid(), userInfo.getToken(),content);
     }
 
     public class UrlTaskSpannable {

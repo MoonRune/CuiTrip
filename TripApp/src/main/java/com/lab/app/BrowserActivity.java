@@ -1,7 +1,6 @@
 package com.lab.app;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
@@ -12,6 +11,11 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.lab.utils.Constants;
+import com.lab.utils.LogHelper;
+import com.lab.utils.imageupload.URLImageParser;
+
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -86,8 +90,29 @@ public class BrowserActivity extends BaseActivity {
             if(intent != null){
                 boolean isData = intent.getBooleanExtra(IS_DATA, false);
                 String data = intent.getStringExtra(DATA);
+                data= URLImageParser.replae(data);
+                data=URLImageParser.replaeWidth(data);
                 if(isData){
-                    mWebView.loadDataWithBaseURL(null, data, "text/html", "utf-8", null);
+                    String url = "";
+                    Pattern pattern = Pattern.compile(Constants.ONLY_IMAGE_PATTERN);
+                    Matcher matcher = pattern.matcher(data);
+                    int index = 0;
+                    if (matcher.find()) {
+                        int start = matcher.start();
+                        String temp = data.substring(index, start);
+                        LogHelper.e("omg"," temp:"+temp);
+                        try {
+                            int position = temp.indexOf("/",8);
+                            if (position>0){
+                                url= temp.substring(0,position);
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    LogHelper.e("omg"," url:"+url);
+                    mWebView.loadDataWithBaseURL(url, data, "text/html", "utf-8", null);
                 }else{
                     mWebView.loadUrl(data);
                 }
