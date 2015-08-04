@@ -2,7 +2,6 @@ package com.cuitrip.app;
 
 import android.app.AlertDialog;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,13 +22,13 @@ import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 
 /**
@@ -119,6 +118,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     if (availableDate != null) {
                         mAvailableDate = new ArrayList<String>();
                         for (long time : availableDate) {
+                            LogHelper.e("omg","fetched date :"+String.valueOf(time));
                             mAvailableDate.add(Utils.parseLongTimeToString(time, Utils.DATE_FORMAT_DAY));
                         }
                     }
@@ -128,10 +128,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                if (!isTokenInvalid(response)) {
                     hideLoading();
                     MessageUtils.showToast(response.msg);
-                }
             }
         }, mService.getSid());
     }
@@ -196,6 +194,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         showNoCancelDialog();
+        LogHelper.e("omg", "create order"+ mService.getInsiderId()+"|"+ mService.getSid()+"|"+ mService.getName()+"|"+
+                Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY)+"|"+
+                mCount.getText().toString()+"|"+ mService.getPrice()+"|"+ mService.getMoneyType());
         OrderBusiness.createOrder(this, mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
@@ -212,9 +213,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onFailure(LabResponse response, Object data) {
                         hideNoCancelDialog();
-                        if(!isTokenInvalid(response)){
-                            MessageUtils.showToast(response.msg);
-                        }
+                        MessageUtils.showToast(response.msg);
                     }
                 }, mService.getInsiderId(), mService.getSid(), mService.getName(),
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY),

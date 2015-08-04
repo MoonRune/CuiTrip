@@ -138,7 +138,8 @@
 
         <Button
             android:id="@+id/ct_switch"
-            style="@style/ctMainAroundButton"
+            android:background="@drawable/ct_blue_no_corner"
+            style="@style/ctMainBackgroundRecButton"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"

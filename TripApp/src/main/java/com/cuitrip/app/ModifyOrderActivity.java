@@ -148,10 +148,8 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                if (!isTokenInvalid(response)) {
                     hideLoading();
                     MessageUtils.showToast(response.msg);
-                }
             }
         }, mOrder.getSid());
     }
@@ -230,10 +228,8 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onFailure(LabResponse response, Object data) {
-                        if(!isTokenInvalid(response)){
                             hideNoCancelDialog();
                             MessageUtils.showToast(response.msg);
-                        }
                     }
                 }, mOrder.getOid(), mOrder.getSid(), mService.getName(),
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY),

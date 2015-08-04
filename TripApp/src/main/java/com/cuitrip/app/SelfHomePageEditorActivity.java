@@ -54,8 +54,8 @@ public class SelfHomePageEditorActivity extends BaseActivity {
     private static final int CONTENT_SIE_LIMITION = 500;
 
     public static final String TAG = "SelfHomePageEditorActivity";
-    public static final String BITMAP_KEY = "@bit_map@://";
-    public static final String BITMAP_END = "//:@bit_map@";
+    public static final String BITMAP_KEY = "<bit_map>";
+    public static final String BITMAP_END = "</bit_map>";
 
     public static final String BITMAP_REMOTE_KEY = "<div><img src=\"";
     public static final String BITMAP_REMOTE_END = "\" width=\"100%\" /></div>";
@@ -74,6 +74,10 @@ public class SelfHomePageEditorActivity extends BaseActivity {
 
     //submition starts after image uploaded  .
     protected AtomicBoolean isSubmitting = new AtomicBoolean(false);
+
+    public static boolean isEdited(int requestCode, int resultCode, Intent data) {
+        return requestCode == REQUEST_HOME_PAGE_UPDATE && resultCode == HOME_PAGE_UPDATED;
+    }
 
     public static void startActivity(Activity context, String content) {
         Intent intent = new Intent(context, SelfHomePageEditorActivity.class);
@@ -352,7 +356,7 @@ public class SelfHomePageEditorActivity extends BaseActivity {
         mContentEt.setSelection(mContentEt.getText().length());
     }
 
-    protected void trySubmit() {
+    public void trySubmit() {
         String validate = validateSubmit();
         if (TextUtils.isEmpty(validate)) {
             showSubmitProgressing();
@@ -457,6 +461,7 @@ public class SelfHomePageEditorActivity extends BaseActivity {
                         .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
                             @Override
                             public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                mContentEt.setText("");
                                 mSubmitDialog.dismissWithAnimation();
                                 finish();
                             }
@@ -499,7 +504,6 @@ public class SelfHomePageEditorActivity extends BaseActivity {
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 MessageUtils.showToast(R.string.ct_home_page_update_posted);
-                mContentEt.setText("");
                 PersonalDescSaver.clean();
                 setResult(HOME_PAGE_UPDATED);
                 stopSubmitProgressing(true, "");

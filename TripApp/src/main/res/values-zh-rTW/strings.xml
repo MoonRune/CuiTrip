@@ -226,7 +226,7 @@
     <string name="ct_save">保存</string>
     <string name="ct_edit">編輯</string>
     <string name="ct_home_page_update_posted">更新已提交，等待審核中</string>
-    <string name="select_image_failed">圖片生成失敗，請重試</string>
+    <string name="select_image_failed">圖片生成失敗，請重試或者換壹個圖片選擇器</string>
     <string name="ct_personal_desc_limit_msg">個人介紹請不要超過%1$d個字符.</string>
     <string name="update_failed">更新失敗！</string>
 
@@ -296,7 +296,7 @@
     <string name="ct_my_comment">我的評價</string>
     <string name="ct_someones_comment">%1$s的評價</string>
     <string name="ct_order_status_close">結束旅程</string>
-    <string name="ct_order_people_num">-&#32;%1$s&#32;人</string>
+    <string name="ct_order_people_num">&#32;%1$s&#32;人</string>
     <string name="ct_please_input_freecode">請輸入免費體驗碼</string>
     <string name="ct_freecode_validate_msg">請輸入非空的驗證碼</string>
     <string name="ct_create_image_failed_msg">圖片生成失敗，請重試</string>
@@ -308,7 +308,7 @@
     <string name="ct_service_create_image_size_validate">創建發現至少需要上傳壹張圖片</string>
     <string name="ct_delete_suc">刪除成功</string>
     <string name="ct_delete_failed_can_try">刪除失敗，請稍後重試</string>
-    >>>>>>> feature/language
+    <string name="please_relogin">請重新登錄</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

@@ -84,12 +84,16 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
         return super.onCreateOptionsMenu(menu);
     }
 
+    public void requestEdit(){
+        SelfHomePageEditorActivity.startActivity(this, introduce);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_editor:
                 if (!mSwipRl.isRefreshing()) {
-                    SelfHomePageEditorActivity.startActivity(this, introduce);
+                    requestEdit();
                 }
                 break;
             default:

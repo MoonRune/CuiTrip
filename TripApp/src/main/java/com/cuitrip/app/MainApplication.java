@@ -1,11 +1,15 @@
 package com.cuitrip.app;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.cuitrip.login.LoginInstance;
+import com.cuitrip.service.R;
 import com.lab.app.BaseAppLication;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.MessageUtils;
 import com.lab.utils.SmsSdkHelper;
 
 
@@ -15,6 +19,10 @@ public class MainApplication extends BaseAppLication {
 
     private int mPageWidth;
     private int mPageHeight;
+
+    public static MainApplication getInstance() {
+        return sContext;
+    }
     public void onCreate() {
         super.onCreate();
         sContext = this;
@@ -22,6 +30,7 @@ public class MainApplication extends BaseAppLication {
         SmsSdkHelper.initSmsSDK(getApplicationContext());
         init();
     }
+
 
     private void init() {
         DisplayMetrics displaymetrics = new DisplayMetrics();
@@ -48,5 +57,12 @@ public class MainApplication extends BaseAppLication {
         return mPageHeight;
     }
 
+    public void logOut(){
+        MessageUtils.showToast(getString(R.string.please_relogin));
+        LoginInstance.logout(this);
+        Intent intent = new Intent(this, LogoActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(intent);
+    }
 
 }

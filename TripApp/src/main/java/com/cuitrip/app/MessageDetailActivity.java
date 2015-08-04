@@ -152,12 +152,10 @@ public class MessageDetailActivity extends BaseActivity implements View.OnClickL
         @Override
         public void onFailure(LabResponse response, Object data) {
             hideLoading();
-            if (!isTokenInvalid(response)) {
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     MessageUtils.showToast(response.msg);
                 }
                 return;
-            }
         }
     };
 
@@ -182,9 +180,7 @@ public class MessageDetailActivity extends BaseActivity implements View.OnClickL
                             @Override
                             public void onFailure(LabResponse response, Object data) {
                                 hideLoading();
-                                if (!isTokenInvalid(response)) {
                                     MessageUtils.showToast(response.msg);
-                                }
                             }
                         }, mOrderId, info.getToken(), info.getUid(), mData.getInsiderId(),
                         content, mData.getSid());

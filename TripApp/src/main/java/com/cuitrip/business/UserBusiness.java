@@ -11,7 +11,7 @@ import com.loopj.android.http.RequestHandle;
 public class UserBusiness {
 
     public static RequestHandle login(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                         String mobile, String countryCode, String passwd) {
+                                      String mobile, String countryCode, String passwd) {
         LabRequestParams params = new LabRequestParams();
         params.put("mobile", mobile);
         params.put("countryCode", countryCode);
@@ -20,7 +20,7 @@ public class UserBusiness {
     }
 
     public static RequestHandle register(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                      String mobile, String countryCode, String passwd, String vcode, String nick) {
+                                         String mobile, String countryCode, String passwd, String vcode, String nick) {
         LabRequestParams params = new LabRequestParams();
         params.put("mobile", mobile);
         params.put("countryCode", countryCode);
@@ -32,14 +32,14 @@ public class UserBusiness {
     }
 
     public static RequestHandle logout(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
-                                      ) {
+    ) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         return client.post(context, BusinessHelper.getApiUrl("logout"), params, handler);
     }
 
     public static RequestHandle checkVcode(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                      String mobile, String countryCode, String vcode) {
+                                           String mobile, String countryCode, String vcode) {
         LabRequestParams params = new LabRequestParams();
         params.put("mobile", mobile);
         params.put("countryCode", countryCode);
@@ -48,15 +48,16 @@ public class UserBusiness {
     }
 
     public static RequestHandle modifyPassword(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                       String newPasswd, String rePasswd) {
+                                               String newPasswd, String rePasswd) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("newPasswd", newPasswd);
         params.put("rePasswd", rePasswd);
         return client.post(context, BusinessHelper.getApiUrl("modifyPassword"), params, handler);
     }
+
     public static RequestHandle resetPassword(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                         String mobile, String countryCode, String newPasswd, String vcode, String rePasswd) {
+                                              String mobile, String countryCode, String newPasswd, String vcode, String rePasswd) {
         LabRequestParams params = new LabRequestParams();
         params.put("mobile", mobile);
         params.put("countryCode", countryCode);
@@ -68,7 +69,7 @@ public class UserBusiness {
     }
 
     public static RequestHandle modifyUserInfo(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                         String realName, String nick,
+                                               String realName, String nick,
                                                String gender, String city, String language, String career,
                                                String interests, String sign) {
         LabRequestParams params = new LabRequestParams();
@@ -86,16 +87,17 @@ public class UserBusiness {
     }
 
     public static RequestHandle upDevicetoken(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                              String deviceToken) {
+                                              String deviceToken, String uid, String token) {
         LabRequestParams params = new LabRequestParams();
-        params.setToken(context);
+        params.put("uid", uid);
+        params.put("token", token);
         params.put("client", "android");
         params.put("deviceToken", deviceToken);
         return client.post(context, BusinessHelper.getApiUrl("upDevicetoken"), params, handler);
     }
 
     public static RequestHandle changeType(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                              int type) {
+                                           int type) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("type", type);
@@ -103,7 +105,7 @@ public class UserBusiness {
     }
 
     public static RequestHandle updateIntroduce(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                  String uid, String token, String content) {
+                                                String uid, String token, String content) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("token", token);
@@ -117,7 +119,6 @@ public class UserBusiness {
         params.setToken(context);
         return client.post(context, BusinessHelper.getApiUrl("getIntroduce"), params, handler);
     }
-
 
 
     public static RequestHandle updateProfile(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
@@ -134,7 +135,7 @@ public class UserBusiness {
         }
         params.put("nick", nick);
         params.put("city", city);
-        params.put("language", language );
+        params.put("language", language);
         params.put("career", career);
         params.put("interests", interests);
         params.put("sign", sign);

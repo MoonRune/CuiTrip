@@ -121,12 +121,10 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                if (!isTokenInvalid(response)) {
                     if (response != null && !TextUtils.isEmpty(response.msg)) {
                         MessageUtils.showToast(response.msg);
                     }
                     return;
-                }
             }
 
             @Override

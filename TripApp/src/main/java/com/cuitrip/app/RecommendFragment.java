@@ -110,13 +110,11 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
         @Override
         public void onFailure(LabResponse response, Object data) {
 
-            if (!isTokenInvalid(response)) {
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     MessageUtils.showToast(response.msg);
                 }
                 refresh.setRefreshing(false);
                 onNetwokError(0, 0, 0);
-            }
         }
 
         @Override

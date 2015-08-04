@@ -166,10 +166,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         @Override
         public void onFailure(LabResponse response, Object data) {
             mRefresh.setRefreshing(false);
-            if (isTokenInvalid(response)) {
-                MessageUtils.showToast(response.msg);
-                return;
-            }
             if (response != null && !TextUtils.isEmpty(response.msg)) {
                 MessageUtils.showToast(response.msg);
             }
