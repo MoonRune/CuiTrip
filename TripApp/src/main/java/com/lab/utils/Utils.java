@@ -56,7 +56,6 @@ public class Utils {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+800"));
 
         String result=sdf.format(date);
-        LogHelper.e("reparse",result+"  |" + String.valueOf(time));
         return result ;
     }
 
@@ -65,7 +64,6 @@ public class Utils {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         try {
             long result = sdf.parse(time.trim()).getTime();
-            LogHelper.e("parse", time.trim()+"  |" + String.valueOf(result));
             return result;
         } catch (Exception e) {
             return -1;

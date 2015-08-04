@@ -198,21 +198,22 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     MessageUtils.showToast(R.string.ct_login_suc);
                     setResult(RESULT_OK);
                     String deviceId = UmengRegistrar.getRegistrationId(LoginActivity.this);
-                    LogHelper.d("LoginActivity", "device_id: " + deviceId);
+                    LogHelper.e("LoginActivity", "device_id: " + deviceId);
+                    UserInfo info = (UserInfo) data;
                     if(!TextUtils.isEmpty(deviceId)){
                         UserBusiness.upDevicetoken(LoginActivity.this, mClient, new LabAsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(LabResponse response, Object data) {
+                                LogHelper.e("LoginActivity", "device_id: suc" );
                             }
 
                             @Override
                             public void onFailure(LabResponse response, Object data) {
-                                //TODO 上传失败怎么办？
+                                LogHelper.e("LoginActivity", "device_id: failed " );
                             }
-                        }, deviceId);
+                        }, deviceId,((UserInfo) data).getUid(),((UserInfo) data).getToken());
                     }
                     //TODO 发现者模式下登录切换到旅行者？
-                    UserInfo info = (UserInfo) data;
                     info.setType(UserInfo.USER_TRAVEL);
                     UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
                     if(oldInfo == null || (oldInfo != null && !oldInfo.isTravel())){
