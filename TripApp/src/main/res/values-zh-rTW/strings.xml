@@ -347,4 +347,7 @@
     </string-array>
     <string name="ct_per_man">/人</string>
 
+    <string name="ct_pay_canceled">支付取消</string>
+    <string name="ct_pay_fail">支付失敗</string>
+    <string name="ct_pay_invalid">支付應用未安裝</string>
 </resources>
