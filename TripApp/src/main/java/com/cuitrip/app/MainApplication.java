@@ -10,7 +10,7 @@ import com.lab.utils.SmsSdkHelper;
 
 
 public class MainApplication extends BaseAppLication {
-    public static final boolean IS_DEV = true;
+    public static final boolean IS_DEV = false;
     public static MainApplication sContext;
 
     private int mPageWidth;
