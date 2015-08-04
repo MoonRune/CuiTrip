@@ -1,0 +1,55 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.umeng_social_sdk_res_lib"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+  <uses-sdk
+      android:minSdkVersion="14"
+      android:targetSdkVersion="21" />
+
+  <uses-permission android:name="android.permission.INTERNET" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+  <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+  <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+  <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+  <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+  <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+  <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
+  <uses-permission android:name="android.permission.WRITE_APN_SETTINGS"/>
+
+  <application android:allowBackup="true" >
+
+    <!-- ###################注册SDK使用的Activity###################### -->
+    <!--分享编辑页-->
+    <activity
+        android:name="com.umeng.socialize.view.ShareActivity"
+        android:configChanges="orientation|keyboard"
+        android:launchMode="singleTask"
+        android:noHistory="true"
+        android:theme="@style/Theme.UMDialog"
+        android:windowSoftInputMode="stateVisible|adjustResize" >
+    </activity>
+
+    <!-- ############ QQ空间和QQ SSO授权的Activity注册 ############ -->
+    <activity
+        android:name="com.tencent.tauth.AuthActivity"
+        android:launchMode="singleTask"
+        android:noHistory="true" >
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <!-- 100424468，如果你使用的公用账号，则不需要修改；否则修改成你在QQ开放平台申请的 APP ID tencent100424468 -->
+        <data android:scheme="tencent101189592" />
+      </intent-filter>
+    </activity>
+    <activity android:name="com.tencent.connect.common.AssistActivity"
+        android:theme="@android:style/Theme.Translucent.NoTitleBar"
+        android:screenOrientation="portrait">
+    </activity>
+
+  </application>
+
+</manifest>

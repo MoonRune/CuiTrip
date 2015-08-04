@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false" android:state_checked="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/ct_gray" />
+            <size android:height="@dimen/ct_date_item_size" android:width="@dimen/ct_date_item_size" />
+        </shape>
+    </item>
+    <item android:state_enabled="true" android:state_checked="true">
+        <shape android:shape="oval">
+            <solid android:color="@color/ct_main_color" />
+            <size android:height="@dimen/ct_date_item_size" android:width="@dimen/ct_date_item_size" />
+        </shape>
+    </item>
+    <item >
+        <shape android:shape="oval">
+            <solid android:color="@android:color/transparent" />
+            <size android:height="@dimen/ct_date_item_size" android:width="@dimen/ct_date_item_size" />
+        </shape>
+    </item>
+</selector>

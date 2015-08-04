@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_contact_cuibin"
+        android:orderInCategory="100"
+        android:title="@string/ct_relation_us"
+        android:visible="false"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_cancel"
+        android:orderInCategory="100"
+        android:title="@string/ct_order_cancel"
+        android:visible="false"
+        app:showAsAction="always" />
+</menu>

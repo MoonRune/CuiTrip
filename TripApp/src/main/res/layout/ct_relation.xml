@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="40dp"
+        android:src="@drawable/ct_erweima"
+        android:layout_gravity="center_horizontal"/>
+
+    <TextView
+        android:id="@+id/ct_version"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="25dp"
+        android:textColor="@color/ct_gray"
+        android:textSize="@dimen/ct_ts_4"
+        android:text="@string/ct_relation_tips_code_and_wx"/>
+
+    <TextView
+        android:id="@+id/ct_call"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:textColor="@color/ct_white"
+        android:textSize="@dimen/ct_ts_4"
+        android:text="@string/ct_relation_call"
+        android:background="@color/ct_main_color"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:drawableLeft="@drawable/ct_tell"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ct_mail"
+        android:layout_gravity="center_horizontal"/>
+    <TextView
+        android:id="@+id/ct_mail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/ct_main_color"
+        android:textSize="@dimen/ct_ts_4"
+        android:text="@string/ct_mail"
+        android:padding="5dp"/>
+</LinearLayout>

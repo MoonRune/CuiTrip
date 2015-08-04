@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/ct_white">
+
+    <ImageView
+        android:id="@+id/ct_log"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleType="centerCrop"
+        android:layout_marginTop="120dp"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ct_about"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|bottom"
+        android:layout_alignParentBottom="true"
+        android:textColor="@color/ct_text_hint"
+        android:text="@string/ct_copyright"
+        android:paddingBottom="20dp"
+        android:textSize="@dimen/ct_ts_6" />
+</RelativeLayout>

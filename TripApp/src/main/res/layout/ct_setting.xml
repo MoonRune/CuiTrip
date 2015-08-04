@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:id="@+id/ct_modify_passwd"
+        style="@style/ctMyProfile"
+        android:text="@string/ct_modify_pass"
+        android:layout_marginTop="20dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ct_single_px"
+        android:background="@color/ct_divider" />
+    <TextView
+        android:id="@+id/ct_about"
+        style="@style/ctMyProfile"
+        android:text="@string/ct_about" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ct_single_px"
+        android:background="@color/ct_divider" />
+    <TextView
+        android:id="@+id/ct_relation"
+        style="@style/ctMyProfile"
+        android:text="@string/ct_relation_us" />
+
+    <Button
+        android:id="@+id/logout"
+        style="@style/ctMainBackgroundButton"
+        android:text="@string/ct_login_out"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/ct_width_padding"
+        android:layout_marginLeft="@dimen/ct_width_padding"/>
+</LinearLayout>

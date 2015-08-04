@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/pay_block">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="20dp">
+
+            <ImageView
+                android:id="@+id/ct_order_banner_iv"
+                android:layout_width="match_parent"
+                android:layout_height="250dp"
+                android:scaleType="centerCrop"
+                tools:src="@drawable/ct_default" />
+
+            <TextView
+                android:id="@+id/ct_order_name_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@id/ct_order_banner_iv"
+                android:background="@drawable/ct_black_gradient_to_top"
+                android:gravity="center"
+                android:padding="5dp"
+                android:textColor="@color/ct_white"
+                android:textSize="19sp"
+                tools:text="追求蛋蛋的旅人回忆" />
+
+            <LinearLayout
+                android:id="@+id/ct_order_info_ll"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ct_order_banner_iv"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_white_bottom_corner"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ct_order_date_tv"
+                    style="@style/payInfoTv"
+                    tools:text="@string/ct_order_info_date" />
+
+                <TextView style="@style/payInfoDivide" />
+
+                <TextView
+                    android:id="@+id/ct_order_people_size_tv"
+                    style="@style/payInfoTv"
+                    tools:text="@string/ct_order_info_people" />
+
+                <TextView style="@style/payInfoDivide" />
+
+                <TextView
+                    android:id="@+id/ct_order_remote_cost_tv"
+                    style="@style/payInfoTv"
+                    tools:text="@string/ct_order_info_service_price" />
+
+                <TextView
+                    android:id="@+id/ct_abstract_line_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_abstract_line" />
+
+                <TextView
+                    android:id="@+id/ct_order_local_currency_tv"
+                    style="@style/payInfoTv"
+                    android:gravity="center"
+                    android:paddingBottom="1dp"
+                    android:textSize="17sp"
+                    tools:text="@string/ct_order_info_pay_currency" />
+
+                <TextView
+                    android:id="@+id/ct_order_local_cost_tv"
+                    style="@style/payInfoTv"
+                    android:layout_marginBottom="20dp"
+                    android:gravity="center"
+                    android:paddingTop="0dp"
+                    android:textColor="@color/ct_red"
+                    android:textSize="42sp"
+                    tools:text="300" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/ct_free_code_v"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ct_order_info_ll"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="-10dp"
+                android:background="@drawable/select_red_corner"
+                android:gravity="center"
+                android:paddingBottom="10dp"
+                android:paddingLeft="15dp"
+                android:paddingRight="15dp"
+                android:paddingTop="10dp"
+                android:singleLine="true"
+                android:text="使用体验码支付"
+                android:textColor="@color/ct_white"
+                android:textSize="17sp" />
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/pay_block"
+        android:layout_width="match_parent"
+        android:layout_height="58dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ct_alipay_v"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:background="@drawable/select_white_gray"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/trip_alipay" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="支付宝支付"
+                android:textColor="@color/ct_text_title"
+                android:textSize="17sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/ct_gray" />
+
+        <LinearLayout
+            android:id="@+id/ct_wxpay_v"
+            android:layout_width="wrap_content"
+            android:layout_height="58dp"
+            android:layout_weight="1"
+            android:background="@drawable/select_white_gray"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/trip_wpay" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="微信支付"
+                android:textColor="@color/ct_text_title"
+                android:textSize="17sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ct_black_gradient">
+
+        <ImageView
+            android:id="@+id/service_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ct_trip_back" />
+    </RelativeLayout>
+</RelativeLayout>

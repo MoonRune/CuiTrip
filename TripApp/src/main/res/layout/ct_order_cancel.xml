@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/service_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/ct_text_title"
+                android:textSize="@dimen/ct_ts_2" />
+
+            <TextView
+                android:id="@+id/service_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/service_name"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ct_position"
+                android:drawablePadding="5dp"
+                android:textColor="@color/ct_7c"
+                android:textSize="@dimen/ct_ts_5" />
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/author_img"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_below="@+id/service_address"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="20dp"
+                android:scaleType="centerCrop"
+                app:border_color="@color/ct_white"
+                app:border_width="@dimen/ct_logo_border" />
+
+            <TextView
+                android:id="@+id/cuthor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/author_img"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/ct_gray"
+                android:textSize="@dimen/ct_ts_4" />
+
+            <Button
+                android:id="@+id/order_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_below="@id/cuthor_name"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ct_blue_bg_stroke"
+                android:text="@string/ct_order_contact"
+                android:textColor="@color/ct_main_color"
+                android:textSize="@dimen/ct_ts_3" />
+
+
+            <EditText
+                android:id="@+id/content"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_below="@+id/order_contact"
+                android:layout_marginLeft="@dimen/ct_width_padding"
+                android:layout_marginRight="@dimen/ct_width_padding"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/ct_comment_bg"
+                android:gravity="top|left"
+                android:hint="@string/ct_order_cancel_reason"
+                android:padding="10dp"
+                android:textColor="@color/ct_content"
+                android:textColorHint="@color/ct_gray"
+                android:textSize="@dimen/ct_ts_4" />
+
+            <TextView
+                android:id="@+id/cancel_tips"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/content"
+                android:layout_marginLeft="@dimen/ct_width_padding"
+                android:layout_marginRight="@dimen/ct_width_padding"
+                android:layout_marginTop="10dp"
+                android:lineSpacingExtra="2dp"
+                android:paddingBottom="50dp"
+                android:text="@string/ct_message_cancel"
+                android:textColor="@color/ct_7c"
+                android:textSize="@dimen/ct_ts_5" />
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/cancel_order"
+        style="@style/ctMainBackgroundRecButton"
+        android:layout_alignParentBottom="true"
+        android:text="@string/ct_order_cancel_confir" />
+</RelativeLayout>

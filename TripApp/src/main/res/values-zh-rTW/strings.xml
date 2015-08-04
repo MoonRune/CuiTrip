@@ -1,0 +1,348 @@
+<resources>
+    <string name="app_name">脆餅旅行</string>
+    <string name="app_slogan">多壹個朋友,多壹種生活</string>
+    <string name="loading_text">加載中&#8230;</string>
+    <string name="load_error">網絡異常</string>
+    <string name="parameter_error">參數錯誤</string>
+    <string name="network_data_error">獲取數據失敗，請稍後再試</string>
+    <string name="ct_login_failed">登錄失敗，請登錄後重試</string>
+    <string name="ct_upload_failed">上傳失敗，請重試</string>
+    <string name="ct_confirm">確定</string>
+    <string name="ct_cancel">取消</string>
+    <string name="ct_finish">完成</string>
+    <string name="ct_exit_tip">再按壹次退出脆餅旅行</string>
+
+    <string name="ct_recommend">推薦</string>
+    <string name="ct_message">消息</string>
+    <string name="ct_order">旅程</string>
+    <string name="ct_my">我的</string>
+
+    <string name="ct_at_travel">在旅行</string>
+    <string name="ct_at_finder">在發現</string>
+    <string name="ct_empty_messae">妳還沒有消息</string>
+    <string name="ct_trip_messae">旅程：</string>
+    <string name="ct_trip_no_order_title">您的旅程</string>
+    <string name="ct_trip_no_order_message">如果您已經確認了旅程，將會在這裏看到</string>
+    <string name="ct_trip_no_order_recommend">來看看推薦旅程吧</string>
+    <string name="ct_trip_share">#臺灣自由行# 我在@脆餅旅行 發現壹個很有趣的旅程《%1$s》，感興趣的朋友看看吧</string>
+
+    <string name="ct_no_login">您還沒有登錄</string>
+    <string name="ct_no_login_hint">請點擊下面按鈕登錄</string>
+    <string name="ct_no_login_click">點擊登錄</string>
+
+    <string name="ct_no_finish">開發中，敬請期待...</string>
+
+    <string name="ct_hot_recommend">熱門推薦</string>
+    <string name="ct_watch_detail">查看詳情</string>
+    <string name="ct_author_register_time">註冊時間</string>
+    <string name="ct_author_identification">身份認證</string>
+    <string name="ct_author_career">職業</string>
+    <string name="ct_author_interest">興趣愛好</string>
+    <string name="ct_author_language">語言能力</string>
+    <string name="ct_service_introduce">旅程說明</string>
+    <string name="ct_service_order_date">可約日期</string>
+    <string name="ct_service_date_click">查看日期</string>
+    <string name="ct_service_duration">旅行時長</string>
+    <string name="ct_service_best_time">最佳時間</string>
+    <string name="ct_service_max_person">最多可接待人數</string>
+    <string name="ct_service_bill">費用說明</string>
+    <string name="ct_cuitrip_gongyue">脆餅公約</string>
+    <string name="ct_cuitrip_view_all">查看所有</string>
+    <string name="ct_cuitrip_book">聯系預訂</string>
+    <string name="ct_cuitrip_comment_count">條評論</string>
+    <string name="ct_cuitrip_comment_no">暫無評論</string>
+    <string name="ct_cuitrip_renzheng">已由脆餅旅行認證身份</string>
+    <string name="ct_cuitrip_renzheng_no">未認證</string>
+    <string name="ct_cuitrip_book_date">可約日期</string>
+
+    <string name="ct_detail_desc">詳情描述</string>
+    <string name="ct_all_reviews">所有評價</string>
+    <string name="ct_service_date_selected">選擇時間</string>
+    <string name="ct_service_date_title">%1$s年%2$s月</string>
+    <string name="ct_order_date">日期</string>
+    <string name="ct_order_person">人數</string>
+    <string name="ct_order_bill">費用</string>
+    <string name="ct_order_select_date">選擇日期</string>
+    <string name="ct_order_select_person_count">選擇人數</string>
+    <string name="ct_create_order">提交預約</string>
+    <string name="ct_create_order_null_date">請選擇日期</string>
+    <string name="ct_create_order_null_person">請選擇人數</string>
+    <string name="ct_create_order_suc_tip">您的預約已經發送給發現者\n妳可以在消息中關註最新的反饋信息</string>
+    <string name="ct_go_to_order">前往旅程</string>
+    <string name="ct_order_contact">聯系TA</string>
+    <string name="ct_order_order_date">預約日期</string>
+    <string name="ct_order_detail_person">約定人數</string>
+    <string name="ct_order_detail_bill">服務費用</string>
+    <string name="ct_order_my_comment">我的評價</string>
+    <string name="ct_order_cancel">取消旅程</string>
+    <string name="ct_order_cancel_suc">旅程取消成功</string>
+    <string name="ct_order_modify">修改預約</string>
+    <string name="ct_order_modify_confirm">修改預約</string>
+    <string name="ct_order_cancel_confir">確認取消</string>
+    <string name="ct_order_cancel_reason">請填寫取消原因</string>
+    <string name="ct_go_order_list">返回訂單列表</string>
+    <string name="ct_go_recommend">查看其他推薦</string>
+    <string name="ct_cancel_null_reason">請填寫取消原因</string>
+    <string name="ct_cancel_suc">取消成功</string>
+    <string name="ct_order_start">您的旅程已經開始了，享受旅程吧！</string>
+    <string name="ct_order_start_tip">在旅程中遇到的問題請點擊右上角“聯系脆餅”與我們取得聯系</string>
+    <string name="ct_call_phone_fail">無法自動轉到撥號應用，請撥打 </string>
+    <string name="ct_null_phone_num">暫無電話 </string>
+    <string name="ct_order_comment">評價</string>
+    <string name="ct_order_comment_tip">為妳的發現者寫段評價吧!</string>
+    <string name="ct_order_comment_hint">所說您的感受吧！</string>
+    <string name="ct_order_comment_commit">提交評價</string>
+    <string name="ct_order_comment_suc">評價成功</string>
+    <string name="ct_order_comment_thanks">感謝您的評價！</string>
+    <string name="ct_order_comment_share">分享給小夥伴吧</string>
+    <string name="ct_order_me">我</string>
+    <string name="ct_order_confirm">妳要確認該預約嗎？</string>
+    <string name="ct_order_confirm_suc">預約確認成功</string>
+    <string name="ct_order_begin_suc">旅程已開始</string>
+    <string name="ct_order_end_suc">旅程已成功結束</string>
+
+    <string name="ct_message_go_order">查看旅程</string>
+    <string name="ct_message_send">發送</string>
+    <string name="ct_order_cancel_successed">妳的行程已取消！</string>
+
+    <string name="ct_message_cancel" formatted="false">若取消操作在旅程開始的48⼩小時外,扣取費⽤用的10%\n若取消操作在旅程開始的48⼩小時內,扣取費⽤用的50%\n若取消操作在旅程開始的24⼩小時內,不予退款\n若有其他特殊原因,請聯系脆餅</string>
+    <string name="ct_yestoday">昨天</string>
+    <string name="ct_sun">日</string>
+    <string name="ct_mon">壹</string>
+    <string name="ct_tues">二</string>
+    <string name="ct_wed">三</string>
+    <string name="ct_thur">四</string>
+    <string name="ct_fri">五</string>
+    <string name="ct_sat">六</string>
+    <string name="ct_can_book">可以預訂</string>
+    <string name="ct_booked">已被預訂</string>
+
+    <string name="ct_country">國家/地區</string>
+    <string name="ct_mobile_hint">手機號碼</string>
+    <string name="ct_mobile_vcode">驗證碼</string>
+    <string name="ct_get_vcode">獲取驗證碼</string>
+    <string name="ct_mobile_passwd">密碼</string>
+    <string name="ct_mobile_new_passwd">請輸入新密碼</string>
+    <string name="ct_mobile_again">請再次輸入密碼</string>
+    <string name="ct_ok">確認</string>
+    <string name="ct_modify_suc">密碼修改成功，請重新登錄</string>
+    <string name="ct_mobile_nick">昵稱</string>
+    <string name="ct_register_confirm">註冊</string>
+    <string name="ct_register">註冊</string>
+    <string name="ct_register_head">我已閱讀並同意脆餅</string>
+    <string name="ct_register_mid">使用條款和隱私政策</string>
+    <string name="ct_register_vcode_suc">驗證碼已發送，請註意查收</string>
+    <string name="ct_gongyue">脆餅公約</string>
+    <string name="ct_null_phone">請填寫手機號碼</string>
+    <string name="ct_null_vcode">請填寫驗證碼</string>
+    <string name="ct_null_nick">請填寫昵稱</string>
+    <string name="ct_null_country">請選擇國家</string>
+    <string name="ct_null_passwd">請填寫密碼</string>
+    <string name="ct_error_phone">請填寫正確的手機號碼</string>
+    <string name="ct_geting_vcode">獲取中...</string>
+    <string name="ct_registerd_suc">註冊成功</string>
+    <string name="ct_registerd_suc_login">註冊成功,請登錄</string>
+    <string name="ct_login_suc">登錄成功</string>
+    <string name="ct_login">登錄</string>
+    <string name="ct_login_confirm">登錄</string>
+    <string name="ct_login_forget">忘記密碼？</string>
+    <string name="ct_login_go_regist">還沒有賬號？來這裏註冊吧</string>
+    <string name="ct_login_find_passed">找回密碼</string>
+    <string name="ct_login_input_pw_again">請再次輸入密碼</string>
+    <string name="ct_find_suc">找回密碼成功</string>
+    <string name="ct_find_suc_login">找回密碼成功成功,請重新登錄</string>
+    <string name="ct_login_find_now">立即找回</string>
+    <string name="ct_login_out">退出登錄</string>
+
+    <string name="ct_setting">設置</string>
+    <string name="ct_profile">個人資料</string>
+    <string name="ct_homepage">我的主頁</string>
+    <string name="ct_homepage_eidt">介紹自己</string>
+    <string name="ct_id">身份認證</string>
+    <string name="ct_friends">邀請朋友</string>
+    <string name="ct_help">幫助</string>
+    <string name="ct_to_finder">切換到發現者模式</string>
+    <string name="ct_to_travel">切換到旅行者模式</string>
+    <string name="ct_no_sign">暫無簽名</string>
+
+    <string name="ct_modify_pass">修改密碼</string>
+    <string name="ct_about">關於脆餅</string>
+    <string name="ct_relation_us">聯系脆餅</string>
+    <string name="ct_relation_tips_code_and_wx">請掃描二維碼或加微信號：cuibinglvxing</string>
+    <string name="ct_relation_call">緊急情況請致電我們</string>
+    <string name="ct_mail">service@cuitrip.com</string>
+    <string name="ct_copyright">Copyright © 2015 Cuitrip All Rights Reserved</string>
+
+    <string name="ct_finder">發現</string>
+    <string name="ct_your_find">妳的發現</string>
+    <string name="ct_your_find_tip">妳有什麽有趣的發現要告訴哦旅行者嗎？</string>
+    <string name="ct_create_my_find">創建我的發現</string>
+    <string name="ct_new_service">新建</string>
+    <string name="ct_service_to_edit">待編輯</string>
+    <string name="ct_service_checking">審核中...</string>
+    <string name="ct_service_no_pass">審核未通過</string>
+    <string name="ct_service_date_edit">安排日程與編輯</string>
+    <string name="ct_next">下壹步</string>
+    <string name="ct_add_service">添加發現</string>
+    <string name="ct_create_service_title_hint">請輸入標題</string>
+    <string name="ct_set_main_pic">設為主圖</string>
+    <string name="ct_mainpic_setted">已設為主圖</string>
+    <string name="ct_add_pic">添加圖片</string>
+    <string name="ct_select_pic_poition">請選擇圖片插入的位置</string>
+    <string name="ct_at_most_image_size_nine_limition">描述最多只能添加9張圖片</string>
+    <string name="ct_delete">刪除</string>
+    <string name="ct_i_know">知道了</string>
+    <string name="ct_delete_pic_confirm">確定要刪除圖片？</string>
+    <string name="ct_service_confirm">確認提交</string>
+    <string name="ct_service_address">地點</string>
+    <string name="ct_service_address_hint">城市</string>
+    <string name="ct_service_address_null">請輸入地點</string>
+    <string name="ct_service_enjoy_time">遊玩時長</string>
+    <string name="ct_service_persons">可接待人數</string>
+    <string name="ct_service_pay_way">計費方式</string>
+    <string name="ct_service_money">費用</string>
+    <string name="ct_service_money_set">請設置費用</string>
+    <string name="ct_service_free">免費</string>
+    <string name="ct_service_one_price">壹口價</string>
+    <string name="ct_service_price_by_count">按人數計費</string>
+    <string name="ct_service_time_selected">請選擇遊玩時長</string>
+    <string name="ct_service_pay_way_selecte_hint">請選擇計費方式</string>
+    <string name="ct_service_max_count">最多選擇為6人</string>
+    <string name="ct_service_count_null">請選擇人數</string>
+    <string name="ct_service_unit">\/人</string>
+    <string name="ct_service_create_sucess">提交成功</string>
+    <string name="ct_go_service_list">返回發現列表</string>
+    <string name="ct_create_new_again">再新追加壹個發現</string>
+    <string name="ct_create_suc_tip">您的發現已提交審核\n審核通過後您可以安排日程</string>
+    <string name="ct_country_selected">地區</string>
+    <string name="ct_country_selected_null">請選擇地區</string>
+    <string name="ct_selected_service_date">安排日程</string>
+    <string name="ct_service_booked">已被預訂，不能取消</string>
+    <string name="ct_service_cancelable">可以取消</string>
+    <string name="ct_service_date_setted">提交成功</string>
+    <string name="ct_waiting">請稍後...</string>
+
+    <string name="ct_submit">提交</string>
+    <string name="ct_save">保存</string>
+    <string name="ct_edit">編輯</string>
+    <string name="ct_home_page_update_posted">更新已提交，等待審核中</string>
+    <string name="select_image_failed">圖片生成失敗，請重試</string>
+    <string name="ct_personal_desc_limit_msg">個人介紹請不要超過%1$d個字符.</string>
+    <string name="update_failed">更新失敗！</string>
+
+
+    <string name="ct_male">男</string>
+    <string name="ct_female">女</string>
+
+    <string name="ct_male_code">1</string>
+    <string name="ct_female_code">2</string>
+    <string name="ct_profile_title_name">頭像</string>
+    <string name="ct_profile_title_realname">姓名</string>
+    <string name="ct_profile_hint_realname">請填寫真實姓名</string>
+    <string name="ct_profile_title_nick">昵稱</string>
+    <string name="ct_profile_hint_nick">您的昵稱</string>
+    <string name="ct_profile_title_gender">性別</string>
+    <string name="ct_profile_hint_gender">請選擇性別</string>
+    <string name="ct_profile_title_area">地區</string>
+    <string name="ct_profile_hint_area">請填寫地區</string>
+    <string name="ct_profile_title_job">職業</string>
+    <string name="ct_profile_hint_job">請填寫職業</string>
+    <string name="ct_profile_title_hobby">愛好</string>
+    <string name="ct_profile_hint_hobby">您的興趣愛好</string>
+    <string name="ct_profile_title_language">語言</string>
+    <string name="ct_profile_hint_language">您會哪些語言</string>
+    <string name="ct_profile_title_sign">簽名</string>
+    <string name="ct_profile_hint_sign">您的個性簽名</string>
+    <string name="ct_profile_name_edit_alert">您的真實姓名為%1$s,保存後不可修改</string>
+    <string name="ct_profile_gender_edit_alert">您的性別為%1$s,保存後不可修改</string>
+    <string name="ct_profile_nick_edit_alert">昵稱30天內只可修改壹次</string>
+    <string name="ct_data_submiting">正在提交數據..</string>
+    <string name="ct_submmit_suc">提交成功</string>
+    <string name="ct_submmit_failed">提交失敗</string>
+    <string name="ct_invitation_friends">邀請朋友</string>
+    <string name="ct_invitation_friends_msg">分享給朋友</string>
+    <string name="ct_wx_not_install">微信未安裝</string>
+    <string name="ct_qq_not_install">QQ未安裝</string>
+    <string name="ct_share_suc">分享成功</string>
+    <string name="ct_share_cancel">分享取消</string>
+    <string name="ct_share_failed">分享失敗</string>
+    <string name="ct_fetch_failed">獲取失敗</string>
+
+
+    <string name="ct_homepage_status_ing">審核中</string>
+    <string name="ct_homepage_status_suc">已審核</string>
+    <string name="ct_homepage_status_not_suc">未審核</string>
+    <string name="ct_homepage_status_failed">審核未通過</string>
+    <string name="ct_order_info_date">預約的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
+    <string name="ct_order_info_people">預約的人數:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
+    <string name="ct_order_info_service_price">服務總費用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
+    <string name="ct_order_info_pay_currency">%1$s支付</string>
+    <string name="ct_pay_failed">支付失敗</string>
+    <string name="ct_pay_suc">您已支付成功</string>
+    <string name="ct_pay_suc_content">可以在旅程中查看您的預約</string>
+    <string name="ct_watch_trips">去到旅程中看預定的服務</string>
+    <string name="ct_cny">人民幣</string>
+    <string name="ct_twd">新臺幣</string>
+    <string name="ct_please_relogin">請重新登錄</string>
+    <string name="ct_message_please_switch_mode">請切換到發現者模式查看詳情</string>
+    <string name="ct_error_no_authorized">沒有授權</string>
+    <string name="ct_cancel_order_tips">若您取消旅程，旅行者已支付的費用將全額返還</string>
+    <string name="ct_modify_only_suc">修改成功</string>
+    <string name="ct_order_status_confirm">確認預約</string>
+    <string name="ct_order_status_start">開始旅程</string>
+    <string name="ct_order_status_modify">修改預約</string>
+    <string name="ct_order_status_pay">立即支付</string>
+    <string name="ct_order_status_comment">評價</string>
+    <string name="ct_my_comment">我的評價</string>
+    <string name="ct_someones_comment">%1$s的評價</string>
+    <string name="ct_order_status_close">結束旅程</string>
+    <string name="ct_order_people_num">-&#32;%1$s&#32;人</string>
+    <string name="ct_please_input_freecode">請輸入免費體驗碼</string>
+    <string name="ct_freecode_validate_msg">請輸入非空的驗證碼</string>
+    <string name="ct_create_image_failed_msg">圖片生成失敗，請重試</string>
+    <string name="ct_edit_give_up">放棄編輯</string>
+    <string name="ct_close_and_save">保存並關閉</string>
+    <string name="ct_service_create_header_validate">請輸入標題</string>
+    <string name="ct_service_create_image_upload_validate">有圖片正在上傳，請等待...</string>
+    <string name="ct_service_create_content_validate">請輸入發現的具體描述</string>
+    <string name="ct_service_create_image_size_validate">創建發現至少需要上傳壹張圖片</string>
+    <string name="ct_delete_suc">刪除成功</string>
+    <string name="ct_delete_failed_can_try">刪除失敗，請稍後重試</string>
+    >>>>>>> feature/language
+
+    <string-array name="ct_gender_list">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="ct_service_times_list">
+        <item>1小時</item>
+        <item>2小時</item>
+        <item>3小時</item>
+        <item>4小時</item>
+        <item>5小時</item>
+        <item>6小時</item>
+        <item>7小時</item>
+        <item>8小時</item>
+        <item>9小時</item>
+        <item>10小時</item>
+        <item>11小時</item>
+        <item>12小時</item>
+    </string-array>
+
+    <string-array name="ct_service_people_list">
+        <item>1人</item>
+        <item>2人</item>
+        <item>3人</item>
+        <item>4人</item>
+        <item>5人</item>
+        <item>6人</item>
+    </string-array>
+
+    <string-array name="ct_service_pay_list">
+        <item>壹口價</item>
+        <item>按人計費</item>
+        <item>免費</item>
+    </string-array>
+
+</resources>

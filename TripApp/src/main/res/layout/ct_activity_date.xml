@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#90000000"
+    android:orientation="vertical"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp">
+
+    <View
+        android:id="@+id/head_top"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:background="@color/ct_main_color"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="@string/ct_cuitrip_book_date"
+            android:textColor="@color/ct_white"
+            android:textSize="@dimen/ct_ts_2" />
+        <TextView
+            android:id="@+id/finish"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:text="@string/ct_finish"
+            android:textColor="@color/ct_white"
+            android:textSize="@dimen/ct_ts_3"
+            android:layout_alignParentRight="true"
+            android:visibility="gone"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/head"
+        android:layout_width="match_parent"
+        android:layout_height="51dp"
+        android:background="@color/ct_white">
+
+        <ImageView
+            android:id="@+id/before_month"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ct_trip_cal_left" />
+
+        <TextView
+            android:id="@+id/month_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/after_month"
+            android:layout_toRightOf="@+id/before_month"
+            android:gravity="center"
+            android:paddingTop="10dp"
+            android:textColor="@color/ct_main_color"
+            android:textSize="@dimen/ct_ts_2" />
+
+        <ImageView
+            android:id="@+id/after_month"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ct_trip_cal_right" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/day_names"
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:layout_below="@+id/head"
+        android:background="@color/ct_divider"
+        android:gravity="center"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_sun"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_mon"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_tues"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_wed"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_thur"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_fri"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:layout_width="0dip"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/ct_sat"
+            android:textColor="@color/ct_info"
+            android:textSize="@dimen/ct_ts_5" />
+    </LinearLayout>
+
+    <com.lab.widget.CtGridView
+        android:id="@+id/date_week_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/day_names"
+        android:background="@color/ct_white"
+        android:horizontalSpacing="5dp"
+        android:listSelector="@android:color/transparent"
+        android:numColumns="7"
+        android:columnWidth="@dimen/ct_date_item_size"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:cacheColorHint="@android:color/transparent"
+        android:stretchMode="spacingWidth"
+        android:verticalSpacing="5dp" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/ct_main_color" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ct_white"
+        android:padding="8dp">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:src="@color/ct_gray" />
+
+        <TextView
+            android:id="@+id/ct_booked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/ct_booked"
+            android:textColor="@color/ct_gray"
+            android:textSize="@dimen/ct_ts_5" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="15dp"
+            android:src="@color/ct_main_color" />
+
+        <TextView
+            android:id="@+id/ct_can_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="5dp"
+            android:text="@string/ct_can_book"
+            android:textColor="@color/ct_gray"
+            android:textSize="@dimen/ct_ts_5" />
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:id="@+id/bottom_top"
+        android:layout_weight="1" />
+</LinearLayout>
+

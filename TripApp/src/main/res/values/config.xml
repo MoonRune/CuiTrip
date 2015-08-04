@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="channel_id">test</string>
+    <string name="umeng_key">test</string>
+    <string name="mop_key">test</string>
+    <string name="mop_secret">test</string>
+</resources>

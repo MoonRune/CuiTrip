@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:layout_marginLeft="30dp"
+    android:layout_marginRight="30dp"
+    android:background="@drawable/ct_white_round"
+    android:orientation="vertical">
+
+    <ImageView
+        android:id="@+id/dialog_image_iv"
+        android:layout_width="285dp"
+        android:layout_height="150dp"
+        android:layout_centerVertical="true"
+        android:layout_margin="5dp"
+        android:scaleType="centerCrop"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/dialog_name_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ellipsize="end"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="24dp"
+        android:singleLine="true"
+        android:textColor="@color/ct_text_title"
+        android:textSize="19sp"
+        tools:text="header" />
+
+    <TextView
+        android:id="@+id/dialog_content_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="5dp"
+        android:textColor="@color/ct_text_content"
+        android:textSize="15sp"
+        tools:text="content" />
+
+    <Button
+        android:id="@+id/dialog_click_v"
+        style="@style/ctMainBackgroundButton"
+        android:layout_marginTop="10dp"
+        android:singleLine="true"
+        tools:text="@string/ct_go_to_order" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingTop="8dp"
+        android:text="TRIPPING"
+        android:textColor="@color/ct_cc"
+        android:textSize="@dimen/ct_ts_6" />
+
+</LinearLayout>
+
+

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="ct_common_bg_tt">#fffffbf4</color>
+    <color name="ct_common_bg">#ffeeeeee</color>
+    <color name="ct_main_color">#ff00ccdd</color>
+    <color name="ct_title">#ff3d3d3d</color>
+    <color name="ct_content">#ff6d6d6d</color>
+    <color name="ct_text_bg">#ffd8d8d8</color>
+    <color name="ct_divider">#ffeeeeee</color>
+    <color name="ct_white">#ffffffff</color>
+    <color name="ct_black">#ff000000</color>
+
+    <color name="ct_text_title">#ff4A4A4A</color>
+    <color name="ct_text_content">#999999</color>
+    <color name="ct_text_hint">#ffcccccc</color>
+
+    <color name="ct_blue_pressed">#ff7ed321</color>
+
+    <color name="ct_info">#ff5d5d5d</color>
+
+    <color name="ct_gray">#ff9b9b9b</color>
+
+    <color name="ct_a8">#ffa8a8a8</color>
+    <color name="ct_red">#ffff0058</color>
+    <color name="ct_red_darker">#ffee0038</color>
+    <color name="ct_d8">#ffd8d8d8</color>
+
+    <color name="ct_7c">#ff7c7c7c</color>
+
+    <color name="ct_cc">#ffcccccc</color>
+
+    <color name="ct_ffcc00">#ffcccc00</color>
+
+    <color name="ct_alpha">#00000000</color>
+
+    <color name="ct_alpha_black">#80000000</color>
+
+    <color name="ct_light_alpha_gray">#228a8a8a</color>
+
+</resources>

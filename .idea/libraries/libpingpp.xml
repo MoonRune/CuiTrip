@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="libpingpp">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/TripApp/libs/libpingpp.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

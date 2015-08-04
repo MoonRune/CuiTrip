@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+  <style name="share_panel_anim">
+    <item name="android:windowEnterAnimation">@anim/share_panel_in</item>
+    <item name="android:windowExitAnimation">@anim/share_panel_out</item>
+  </style>
+
+</resources>

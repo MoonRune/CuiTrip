@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/author_img"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_below="@+id/service_click"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="40dp"
+            android:scaleType="centerCrop"
+            app:border_color="@color/ct_white"
+            app:border_width="@dimen/ct_logo_border" />
+
+        <TextView
+            android:id="@+id/author_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_img"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/ct_text_title"
+            android:textSize="@dimen/ct_ts_2" />
+
+        <TextView
+            android:id="@+id/author_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_name"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:paddingLeft="@dimen/ct_width_padding"
+            android:paddingRight="@dimen/ct_width_padding"
+            android:textColor="@color/ct_gray"
+            android:textSize="@dimen/ct_ts_6" />
+
+        <WebView
+            android:id="@+id/author_introduce"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_sign"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="20dp"
+            android:lineSpacingExtra="3dp"
+            android:textColor="@color/ct_7c"
+            android:textSize="@dimen/ct_ts_4" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/author_introduce"
+            android:paddingLeft="@dimen/ct_width_padding"
+            android:paddingRight="@dimen/ct_width_padding">
+
+            <TextView
+                android:id="@+id/author_register_time_title"
+                style="@style/ctDetailLeft"
+                android:text="@string/ct_author_register_time" />
+
+            <TextView
+                android:id="@+id/author_register_time_value"
+                style="@style/ctDetailRight" />
+
+            <View
+                android:id="@+id/divider1"
+                style="@style/ctDivider"
+                android:layout_below="@+id/author_register_time_title"
+                android:background="@color/ct_divider" />
+
+            <TextView
+                android:id="@+id/author_identification_title"
+                style="@style/ctDetailLeft"
+                android:layout_below="@+id/divider1"
+                android:text="@string/ct_author_identification" />
+
+            <TextView
+                android:id="@+id/author_identification_value"
+                style="@style/ctDetailRight"
+                android:layout_below="@+id/divider1"
+                android:textColor="@color/ct_red" />
+
+            <View
+                android:id="@+id/divider2"
+                style="@style/ctDivider"
+                android:layout_below="@+id/author_identification_title" />
+
+            <TextView
+                android:id="@+id/author_career_title"
+                style="@style/ctDetailLeft"
+                android:layout_below="@+id/divider2"
+                android:text="@string/ct_author_career" />
+
+            <TextView
+                android:id="@+id/author_career_value"
+                style="@style/ctDetailRight"
+                android:layout_below="@+id/divider2" />
+
+            <View
+                android:id="@+id/divider3"
+                style="@style/ctDivider"
+                android:layout_below="@+id/author_career_title" />
+
+            <TextView
+                android:id="@+id/author_interest_title"
+                style="@style/ctDetailLeft"
+                android:layout_below="@+id/divider3"
+                android:text="@string/ct_author_interest" />
+
+            <TextView
+                android:id="@+id/author_interest_value"
+                style="@style/ctDetailRight"
+                android:layout_below="@+id/divider3" />
+
+            <View
+                android:id="@+id/divider4"
+                style="@style/ctDivider"
+                android:layout_below="@+id/author_interest_title" />
+
+            <TextView
+                android:id="@+id/author_language_title"
+                style="@style/ctDetailLeft"
+                android:layout_below="@+id/divider4"
+                android:text="@string/ct_author_language" />
+
+            <TextView
+                android:id="@+id/author_language_value"
+                style="@style/ctDetailRight"
+                android:layout_below="@+id/divider4" />
+        </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>

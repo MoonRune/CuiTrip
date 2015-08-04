@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="60dp">
+
+            <ImageView
+                android:id="@+id/order_img"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:scaleType="centerCrop" />
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/author_img"
+                android:layout_width="65dp"
+                android:layout_height="65dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="8dp"
+                android:layout_marginTop="-33dp"
+                android:scaleType="centerCrop"
+                app:border_color="@color/ct_white"
+                app:border_width="@dimen/ct_logo_border" />
+
+            <TextView
+                android:id="@+id/cuthor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/ct_gray"
+                android:textSize="@dimen/ct_ts_4" />
+
+            <Button
+                android:id="@+id/order_contact"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/ct_blue_bg_stroke"
+                android:text="@string/ct_order_contact"
+                android:textColor="@color/ct_main_color"
+                android:textSize="@dimen/ct_ts_3" />
+
+            <TextView
+                android:id="@+id/service_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:textColor="@color/ct_text_title"
+                android:textSize="@dimen/ct_ts_2" />
+
+            <TextView
+                android:id="@+id/service_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:drawableLeft="@drawable/ct_position"
+                android:drawablePadding="5dp"
+                android:textColor="@color/ct_7c"
+                android:textSize="@dimen/ct_ts_5" />
+
+            <View
+                style="@style/ctDivider"
+                android:layout_marginTop="20dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ct_width_padding"
+                android:layout_marginLeft="@dimen/ct_width_padding"
+                android:layout_marginRight="@dimen/ct_width_padding">
+
+                <TextView
+                    android:id="@+id/order_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:text="@string/ct_order_order_date"
+                    android:textColor="@color/ct_7c"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <TextView
+                    android:id="@+id/order_date_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <View style="@style/ctDivider"
+                    android:layout_below="@+id/order_date"/>
+
+                <TextView
+                    android:id="@+id/order_persons"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_below="@+id/order_date"
+                    android:gravity="center_vertical"
+                    android:text="@string/ct_order_detail_person"
+                    android:textColor="@color/ct_7c"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <TextView
+                    android:id="@+id/order_persons_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/order_date"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <View style="@style/ctDivider"
+                    android:layout_below="@+id/order_persons"/>
+
+                <TextView
+                    android:id="@+id/order_bill"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_below="@+id/order_persons"
+                    android:gravity="center_vertical"
+                    android:text="@string/ct_order_detail_bill"
+                    android:textColor="@color/ct_7c"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <TextView
+                    android:id="@+id/order_bill_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="44dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/order_persons"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/comment_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingLeft="@dimen/ct_width_padding"
+                android:paddingRight="@dimen/ct_width_padding"
+                android:visibility="gone">
+
+                <View
+                    style="@style/ctDivider" />
+                <TextView
+                    android:id="@+id/comment_person"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/ct_order_my_comment"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <RatingBar
+                    android:id="@+id/service_score"
+                    style="@style/ctStarMini"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:isIndicator="true"
+                    android:max="5"
+                    android:numStars="5" />
+
+                <TextView
+                    android:id="@+id/comment_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/status_button"
+        style="@style/ctMainBackgroundRecButton"
+        android:layout_alignParentBottom="true"
+        android:visibility="invisible"
+        android:background="@drawable/ct_blue_no_corner" />
+</RelativeLayout>

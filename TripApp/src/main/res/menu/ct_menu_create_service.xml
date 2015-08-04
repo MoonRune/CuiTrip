@@ -1,0 +1,15 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+    <item
+        android:id="@+id/action_add_pic"
+        android:orderInCategory="100"
+        android:title="@string/ct_add_pic"
+        android:icon="@drawable/ct_add_pic"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_next"
+        android:orderInCategory="100"
+        android:title="@string/ct_next"
+        app:showAsAction="always" />
+</menu>

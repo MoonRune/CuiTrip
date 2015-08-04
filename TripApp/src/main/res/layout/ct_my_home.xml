@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/ct_swipe_refresh_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:background="@color/ct_white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ct_ava_riv"
+                android:layout_width="@dimen/ct_personal_desc_ava_size"
+                android:layout_height="@dimen/ct_personal_desc_ava_size"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/ct_personal_desc_ava_margintop"
+                android:scaleType="centerCrop"
+                app:border_color="@color/ct_white"
+                app:border_width="@dimen/ct_logo_border"
+                tools:src="@drawable/ct_default_user" />
+
+            <TextView
+                android:id="@+id/ct_nick_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ct_personal_desc_name_margintop"
+                android:singleLine="true"
+
+                android:textSize="@dimen/ct_personal_desc_nick_size"
+                tools:text="Nick name" />
+
+
+            <TextView
+                android:id="@+id/ct_sign_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/ct_personal_desc_sign_margintop"
+                android:singleLine="true"
+                android:textSize="@dimen/ct_personal_desc_sign_size"
+
+                tools:text="this is my sign" />
+
+            <TextView
+                android:id="@+id/ct_content_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/ct_personal_desc_content_marginbottom"
+                android:layout_marginTop="@dimen/ct_personal_desc_content_margintop"
+                android:padding="@dimen/ct_personal_desc_content_paddingLeft"
+
+                android:textSize="@dimen/ct_personal_desc_content_size"
+                tools:text="Hi ! My name is Nick Name i'm from this" />
+        </LinearLayout>
+    </ScrollView>
+</android.support.v4.widget.SwipeRefreshLayout>

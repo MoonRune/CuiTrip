@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white"
+    android:paddingLeft="@dimen/ct_width_padding"
+    android:paddingRight="@dimen/ct_width_padding">
+
+    <!--<android.support.v4.widget.SwipeRefreshLayout-->
+        <!--android:id="@+id/refresh_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content">-->
+
+        <ListView
+            android:id="@+id/ct_list"
+            style="@style/default_list_style"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@color/ct_divider"
+            android:dividerHeight="1px"/>
+    <!--</android.support.v4.widget.SwipeRefreshLayout>-->
+
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/ct_ts_3"
+        android:textColor="@color/ct_gray"
+        android:text="@string/ct_cuitrip_comment_no"
+        android:visibility="gone"/>
+</FrameLayout>

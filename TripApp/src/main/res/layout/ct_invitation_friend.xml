@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/ct_content_ll"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal">
+    <ImageView
+        android:id="@+id/ct_invitation_friend_iv"
+        android:layout_marginTop="85dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ct_about"/>
+
+    <TextView
+        android:id="@+id/ct_invitation_friend_tv"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:singleLine="true"
+        android:drawableLeft="@drawable/trip_share_wx"
+        android:text="@string/ct_invitation_friends_msg"
+        android:drawablePadding="5dp"
+        android:textColor="@color/ct_white"
+        android:background="@drawable/ct_blue_bg"/>
+</LinearLayout>

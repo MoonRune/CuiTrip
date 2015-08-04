@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/my_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_above="@+id/ct_switch">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="60dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/author_img"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="30dp"
+                    android:scaleType="centerCrop"
+                    app:border_width="@dimen/ct_logo_border"
+                    app:border_color="@color/ct_white"
+
+                    tools:src="@drawable/ct_default_user"
+                    />
+
+                <TextView
+                    android:id="@+id/author_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/ct_text_title"
+                    android:textSize="@dimen/ct_ts_3"
+
+                    tools:text="user name"/>
+
+                <TextView
+                    android:id="@+id/author_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_5"
+                    tools:text="user desc"/>
+
+                <TextView
+                    android:id="@+id/author_profile"
+                    style="@style/ctMyProfile"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/ct_profile" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ct_single_px"
+                    android:background="@color/ct_divider" />
+
+                <LinearLayout
+                    style="@style/ctMyProfileLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:addStatesFromChildren="true">
+                    <TextView
+                        style="@style/ctMyProfile"
+                        android:id="@+id/author_homepage"
+                        android:text="@string/ct_homepage"
+                        android:layout_weight="1"
+                        android:background="@color/ct_alpha"
+                        android:drawableRight="@color/ct_alpha"/>
+                    <TextView
+                        android:id="@+id/ct_home_page_status_tv"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="10dp"
+                        android:layout_marginLeft="10dp"
+                        android:textSize="13sp"
+                        android:textColor="@color/ct_text_hint"
+                        tools:text="in progressing"/>
+                    <ImageView
+                        android:id="@+id/ct_homepage_arrow_v"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ct_narrow_right"/>
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ct_single_px"
+                    android:background="@color/ct_divider" />
+                <TextView
+                    android:id="@+id/ct_home_page_error"
+                    style="@style/ctMyProfileError"
+                    tools:text="YOU SHALL NOT PASS"/>
+
+                <TextView
+                    android:id="@+id/author_identification"
+                    style="@style/ctMyProfile"
+                    android:visibility="gone"
+                    android:text="@string/ct_id" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ct_single_px"
+                    android:background="@color/ct_divider"
+                    android:visibility="gone"/>
+
+                <TextView
+                    android:id="@+id/author_call_friends"
+                    style="@style/ctMyProfile"
+                    android:text="@string/ct_friends" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ct_single_px"
+                    android:background="@color/ct_divider" />
+
+                <TextView
+                    android:id="@+id/ct_help"
+                    style="@style/ctMyProfile"
+                    android:visibility="gone"
+                    android:text="@string/ct_help" />
+            </LinearLayout>
+
+        </ScrollView>
+
+        <Button
+            android:id="@+id/ct_switch"
+            style="@style/ctMainAroundButton"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="@dimen/ct_width_padding"
+            android:layout_marginRight="@dimen/ct_width_padding"
+            android:text="@string/ct_to_finder" />
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/ct_no_login"
+        layout="@layout/ct_no_login"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        android:background="@color/ct_white"/>
+</FrameLayout>
+
+

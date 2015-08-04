@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90000000"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/ct_white_round">
+
+            <ImageView
+                android:id="@+id/service_img"
+                android:layout_height="150dp"
+                android:layout_width="285dp"
+                android:layout_centerVertical="true"
+                android:scaleType="centerCrop"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:id="@+id/service_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:paddingTop="10dp"
+                android:textColor="@color/ct_main_color"
+                android:textSize="@dimen/ct_ts_2" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:text="@string/ct_create_order_suc_tip"
+                android:textColor="@color/ct_7c"
+                android:textSize="@dimen/ct_ts_5" />
+
+            <Button
+                android:id="@+id/go_order"
+                style="@style/ctMainBackgroundButton"
+                android:layout_margin="10dp"
+                android:text="@string/ct_go_to_order"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingRight="10dp"
+                android:paddingLeft="10dp"
+                android:gravity="center"
+                android:paddingTop="8dp"
+                android:text="TRIPPING"
+                android:textColor="@color/ct_cc"
+                android:textSize="@dimen/ct_ts_6"
+                android:paddingBottom="10dp"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+    </LinearLayout>
+</LinearLayout>
+

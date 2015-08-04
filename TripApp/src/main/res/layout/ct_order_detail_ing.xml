@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/tip_block">
+
+            <ImageView
+                android:id="@+id/order_img"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ct_default" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="vertical"
+                android:background="@drawable/ct_half_black_to_top">
+
+                <TextView
+                    android:id="@+id/service_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_above="@id/service_address"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/app_name"
+                    android:textColor="@color/ct_white"
+                    android:textSize="@dimen/ct_ts_2" />
+
+                <TextView
+                    android:id="@+id/service_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="8dp"
+                    android:drawableLeft="@drawable/ct_position"
+                    android:drawablePadding="5dp"
+                    android:ellipsize="end"
+                    android:paddingBottom="15dp"
+                    android:singleLine="true"
+                    android:text="@string/app_name"
+                    android:textColor="@color/ct_white"
+                    android:textSize="@dimen/ct_ts_5" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <LinearLayout
+            android:id="@+id/tip_block"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ct_white"
+            android:orientation="vertical"
+            android:paddingTop="80dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/ct_order_start"
+                android:textColor="@color/ct_main_color"
+                android:textSize="@dimen/ct_ts_2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/service_address"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="5dp"
+                android:text="@string/ct_order_start_tip"
+                android:textColor="@color/ct_d8"
+                android:textSize="@dimen/ct_ts_6" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:id="@+id/user_block"
+            android:layout_width="match_parent"
+            android:layout_height="213dp"
+            android:layout_alignParentBottom="true"
+            android:paddingLeft="@dimen/ct_width_padding"
+            android:paddingRight="@dimen/ct_width_padding">
+
+            <LinearLayout
+                android:id="@+id/find_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/finder_img"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_below="@id/service_name"
+                    android:scaleType="centerCrop"
+                    app:border_color="@color/ct_white"
+                    app:border_width="@dimen/ct_logo_border" />
+
+                <TextView
+                    android:id="@+id/finder_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/app_name"
+                    android:textColor="@color/ct_7c"
+                    android:textSize="@dimen/ct_ts_4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/travel_block"
+                android:layout_toRightOf="@+id/find_block"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:layout_width="135dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/service_name"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="50dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/ct_connect" />
+
+                <TextView
+                    android:id="@+id/travel_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:textColor="@color/ct_main_color"
+                    android:textSize="@dimen/ct_ts_4" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/travel_block"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:orientation="vertical">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/travel_img"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_below="@id/service_name"
+                    android:scaleType="centerCrop"
+                    app:border_color="@color/ct_white"
+                    app:border_width="@dimen/ct_logo_border" />
+
+                <TextView
+                    android:id="@+id/travel_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="@string/app_name"
+                    android:textColor="@color/ct_7c"
+                    android:textSize="@dimen/ct_ts_4" />
+            </LinearLayout>
+
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/status_button"
+        style="@style/ctMainBackgroundRecButton"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ct_blue_no_corner" />
+</RelativeLayout>

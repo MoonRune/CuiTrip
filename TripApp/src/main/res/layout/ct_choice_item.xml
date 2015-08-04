@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="40dp">
+
+    <CheckedTextView
+        android:id="@+id/checktext"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:clickable="false"
+        android:focusable="false"
+        android:gravity="center"
+        android:paddingBottom="8dp"
+        android:paddingLeft="@dimen/ct_width_padding"
+        android:paddingRight="@dimen/ct_width_padding"
+        android:paddingTop="8dp"
+        android:textColor="@color/ct_title"
+        android:textSize="@dimen/ct_ts_3" />
+</LinearLayout>

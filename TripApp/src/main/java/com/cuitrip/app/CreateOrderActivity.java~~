@@ -1,0 +1,198 @@
+package com.cuitrip.app;
+
+import android.app.Dialog;
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.CheckedTextView;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.cuitrip.model.ServiceInfo;
+import com.cuitrip.service.R;
+import com.lab.app.BaseActivity;
+import com.lab.utils.MessageUtils;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+
+/**
+ * Created on 7/18.
+ */
+public class CreateOrderActivity extends BaseActivity implements View.OnClickListener {
+    public static final String SERVICE_INFO = "ORDER_SERVICE_INFO";
+
+    private ServiceInfo mService;
+
+    private TextView mDate, mCount;
+    private TextView mMoneyDesc, mMoney;
+
+    private Dialog mSelectDialog;
+    private ListView mSelectListView;
+    private SelectBaseAdapter mAdapter;
+
+    private List<String> mPersons;
+    private Map<Long, String> mDates;
+
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Intent intent = getIntent();
+        if (intent == null) {
+            MessageUtils.showToast(R.string.parameter_error);
+            finish();
+            return;
+        }
+        mService = (ServiceInfo) intent.getSerializableExtra(SERVICE_INFO);
+        if (mService == null) {
+            MessageUtils.showToast(R.string.parameter_error);
+            finish();
+            return;
+        }
+        showActionBar(mService.getName());
+        setContentView(R.layout.ct_create_order);
+        mDate = (TextView) findViewById(R.id.selected_date);
+
+        mCount = (TextView) findViewById(R.id.selected_count);
+        mMoneyDesc = (TextView) findViewById(R.id.money_desc);
+        mMoney = (TextView) findViewById(R.id.bill_count);
+        findViewById(R.id.order_date).setOnClickListener(this);
+        findViewById(R.id.order_person).setOnClickListener(this);
+        findViewById(R.id.create_order).setOnClickListener(this);
+
+        mSelectDialog = MessageUtils.createHoloBuilder(this).setCancelable(true).create();
+
+    }
+
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.order_date:
+                break;
+            case R.id.order_person:
+                showSelectedDialog(SelectBaseAdapter.TYPE_PERSON);
+                break;
+            case R.id.create_order:
+                break;
+        }
+    }
+
+    void showSelectedDialog(int type) {
+        if (mSelectListView == null) {
+            mSelectListView = (ListView) View.inflate(this, R.layout.ct_choice_list, null);
+            mSelectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    mSelectDialog.dismiss();
+                    if (mAdapter.isDate()) {
+                        mDate.setText(mAdapter.getData().get(i));
+                    } else {
+                        mCount.setText(mAdapter.getData().get(i));
+                    }
+                }
+            });
+        }
+        if (mAdapter == null) {
+            mAdapter = new SelectBaseAdapter();
+        }
+        if (type == SelectBaseAdapter.TYPE_PERSON) {
+            if (mPersons == null) {
+                mPersons = new ArrayList<>();
+                for (int i = 1; i <= mService.getMaxbuyerNum(); i++) {
+                    mPersons.add(String.valueOf(i));
+                }
+            }
+            mAdapter.setData(mPersons, SelectBaseAdapter.TYPE_PERSON);
+        }
+        mSelectDialog.show();
+        mSelectListView.setAdapter(mAdapter);
+        mSelectDialog.setContentView(mSelectListView);
+    }
+
+    class SelectBaseAdapter extends BaseAdapter {
+
+        public static final int TYPE_DATE = 1;
+        public static final int TYPE_PERSON = 2;
+
+        private int mType;
+        private List<String> mData = new ArrayList<>();
+
+        public void setData(List<String> items, int type) {
+            mData.clear();
+            if (items != null) {
+                mData.addAll(items);
+            }
+            mType = type;
+        }
+
+        public List<String> getData(){
+            return mData;
+        }
+
+        public boolean isDate() {
+            return mType == TYPE_DATE;
+        }
+
+
+        @Override
+        public int getCount() {
+            return mData.size();
+        }
+
+        @Override
+        public String getItem(int i) {
+            if (i < 0 || i >= mData.size()) {
+                return null;
+            }
+            return mData.get(i);
+        }
+
+        @Override
+        public long getItemId(int i) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int i, View view, ViewGroup viewGroup) {
+            ChoiceViewholder viewholder;
+            if (null == view || !(view instanceof CheckedTextView)) {
+                view = View.inflate(CreateOrderActivity.this, R.layout.ct_choice_item, null);
+                viewholder = new ChoiceViewholder();
+                viewholder.mText = (CheckedTextView)view.findViewById(R.id.checktext);
+                view.setTag(viewholder);
+            }else{
+                viewholder = (ChoiceViewholder)view.getTag();
+            }
+            viewholder.mText.setText(getItem(i));
+            if (isDate()) {
+                if (mDate.getText().toString().equals(getItem(i))) {
+                    viewholder.mText.setChecked(true);
+                } else {
+                    viewholder.mText.setChecked(false);
+                }
+            } else {
+                if (mCount.getText().toString().equals(getItem(i))) {
+                    viewholder.mText.setChecked(true);
+                } else {
+                    viewholder.mText.setChecked(false);
+                }
+            }
+            view.setOnClickListener(new View.OnClickListener(){
+
+                @Override
+                public void onClick(View view) {
+                    mSelectDialog.dismiss();
+                }
+            });
+            return view;
+        }
+    }
+
+    class ChoiceViewholder{
+        public CheckedTextView mText;
+    }
+}

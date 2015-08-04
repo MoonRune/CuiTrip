@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/service_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@null"
+        android:hint="@string/ct_create_service_title_hint"
+        android:paddingBottom="10dp"
+        android:paddingLeft="@dimen/ct_width_padding"
+        android:paddingRight="@dimen/ct_width_padding"
+        android:paddingTop="20dp"
+        android:textColor="@color/ct_text_title"
+        android:textColorHint="@color/ct_gray"
+        android:textSize="@dimen/ct_ts_2" />
+
+    <View style="@style/ctDivider"
+        android:layout_height="1dp"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.lab.widget.PicTextEditView
+            android:id="@+id/service_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingLeft="@dimen/ct_width_padding"
+            android:paddingRight="@dimen/ct_width_padding"
+            android:paddingTop="20dp">
+
+        </com.lab.widget.PicTextEditView>
+    </ScrollView>
+</LinearLayout>

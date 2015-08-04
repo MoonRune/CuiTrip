@@ -1,0 +1,17 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 17
+    }
+}
+
+dependencies {
+    compile files('libs/mframework.jar')
+    compile files('libs/MobTools.jar')
+    compile files('libs/SMSSDK-1.2.0.jar')
+}
