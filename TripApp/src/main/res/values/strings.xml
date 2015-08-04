@@ -226,7 +226,7 @@
     <string name="ct_save">保存</string>
     <string name="ct_edit">编辑</string>
     <string name="ct_home_page_update_posted">更新已提交，等待审核中</string>
-    <string name="select_image_failed">图片获取失败，请重试或者换一个图片选择器</string>
+    <string name="select_image_failed">图片生成失败，请重试或者换一个图片选择器</string>
     <string name="ct_personal_desc_limit_msg">个人介绍请不要超过%1$d个字符.</string>
     <string name="update_failed">更新失败！</string>
 
@@ -296,7 +296,7 @@
     <string name="ct_my_comment">我的评价</string>
     <string name="ct_someones_comment">%1$s的评价</string>
     <string name="ct_order_status_close">结束旅程</string>
-    <string name="ct_order_people_num">-&#32;%1$s&#32;人</string>
+    <string name="ct_order_people_num">&#32;%1$s&#32;人</string>
     <string name="ct_please_input_freecode">请输入免费体验码</string>
     <string name="ct_freecode_validate_msg">请输入非空的验证码</string>
     <string name="ct_create_image_failed_msg">图片生成失败，请重试</string>
@@ -309,7 +309,6 @@
     <string name="ct_delete_suc">删除成功</string>
     <string name="ct_delete_failed_can_try">删除失败，请稍后重试</string>
     <string name="please_relogin">请重新登录</string>
-    >>>>>>> feature/language
 
     <string-array name="ct_gender_list">
         <item>男</item>
