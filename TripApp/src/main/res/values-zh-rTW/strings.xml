@@ -284,7 +284,8 @@
     <string name="ct_cny">人民幣</string>
     <string name="ct_twd">新臺幣</string>
     <string name="ct_please_relogin">請重新登錄</string>
-    <string name="ct_message_please_switch_mode">請切換到發現者模式查看詳情</string>
+    <string name="ct_message_please_switch_mode_to_discover">請切換到發現者模式查看詳情</string>
+    <string name="ct_message_please_switch_mode_to_traveler">請切換到旅行者模式查看詳情</string>
     <string name="ct_error_no_authorized">沒有授權</string>
     <string name="ct_cancel_order_tips">若您取消旅程，旅行者已支付的費用將全額返還</string>
     <string name="ct_modify_only_suc">修改成功</string>

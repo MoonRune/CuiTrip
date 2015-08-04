@@ -22,6 +22,7 @@ import com.lab.app.BrowserActivity;
 import com.lab.location.LocationHelper;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -198,10 +199,12 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                         startActivity(new Intent(CreateServiceOtherActivity.this, CreateServiceSuccessActivity.class));
                         setResult(RESULT_OK);
                         finish();
+                        LogHelper.e("omg","suc");
                     }
 
                     @Override
                     public void onFailure(LabResponse response, Object data) {
+                        LogHelper.e("omg","failed");
                         hideNoCancelDialog();
                             MessageUtils.showToast(response.msg);
                     }

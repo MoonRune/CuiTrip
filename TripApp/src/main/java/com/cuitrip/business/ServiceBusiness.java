@@ -2,9 +2,7 @@ package com.cuitrip.business;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.login.LoginInstance;
@@ -17,7 +15,6 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
 
 import org.apache.http.entity.ByteArrayEntity;
-import org.apache.http.entity.StringEntity;
 
 import java.io.UnsupportedEncodingException;
 import java.util.List;
@@ -73,6 +70,7 @@ public class ServiceBusiness {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
+        LogHelper.e("omg","send commitServiceInfo"+object.toJSONString());
         return client.post(context, BusinessHelper.getApiUrl("commitServiceInfo"), entity, "application/json", handler);
     }
 
