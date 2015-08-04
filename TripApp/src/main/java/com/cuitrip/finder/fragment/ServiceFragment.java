@@ -132,7 +132,7 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
         if (mContentView == null) {
             mContentView = inflater.inflate(R.layout.ct_finder_service_list, container, false);
             mListView = (ListView) mContentView.findViewById(R.id.ct_list);
-            mListView.addHeaderView( inflater.inflate(R.layout.ct_list_padding_header, null));
+            mListView.addHeaderView(inflater.inflate(R.layout.ct_list_padding_header, null));
             mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
@@ -148,6 +148,9 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                                 .putExtra(CreateServiceActivity.LOCAL_SERVICE, true));
                     } else {
                         ServiceInfo info = (ServiceInfo) serviceInfo;
+                        if (info == null) {
+                            return;
+                        }
                         if (info.getCheckStatus() == 0) {
                             //do nothing
                         } else if (info.getCheckStatus() == 1) {
@@ -227,8 +230,8 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             @Override
             public void onFailure(LabResponse response, Object data) {
 
-                    hideNoCancelDialog();
-                    MessageUtils.showToast(getActivity().getString(R.string.ct_delete_failed_can_try));
+                hideNoCancelDialog();
+                MessageUtils.showToast(getActivity().getString(R.string.ct_delete_failed_can_try));
             }
         }, sid);
     }
@@ -244,11 +247,11 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
     LabAsyncHttpResponseHandler responseHandler = new LabAsyncHttpResponseHandler(RecommendOutData.class) {
         @Override
         public void onFailure(LabResponse response, Object data) {
-                if (response != null && !TextUtils.isEmpty(response.msg)) {
-                    MessageUtils.showToast(response.msg);
-                }
-                refresh.setRefreshing(false);
-                onNetwokError(0, 0, 0);
+            if (response != null && !TextUtils.isEmpty(response.msg)) {
+                MessageUtils.showToast(response.msg);
+            }
+            refresh.setRefreshing(false);
+            onNetwokError(0, 0, 0);
         }
 
         @Override
