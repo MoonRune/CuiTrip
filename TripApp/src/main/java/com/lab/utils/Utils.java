@@ -73,6 +73,10 @@ public class Utils {
 
     static SimpleDateFormat H_M = new SimpleDateFormat("HH:mm", Locale.CHINA);
     static SimpleDateFormat Y_M_D_H_M = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+    {
+        H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+        Y_M_D_H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+    }
 
     public static String getDateFormat(long dateTime) {
         Calendar calendar = Calendar.getInstance();

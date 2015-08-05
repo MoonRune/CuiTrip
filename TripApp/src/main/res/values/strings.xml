@@ -209,7 +209,7 @@
     <string name="ct_service_pay_way_selecte_hint">请选择计费方式</string>
     <string name="ct_service_max_count">最多选择为6人</string>
     <string name="ct_service_count_null">请选择人数</string>
-    <string name="ct_service_unit">\/人</string>
+    <string name="ct_service_unit">/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
     <string name="ct_go_service_list">返回发现列表</string>
     <string name="ct_create_new_again">再新追加一个发现</string>
@@ -275,7 +275,7 @@
     <string name="ct_homepage_status_failed">审核未通过</string>
     <string name="ct_order_info_date">预约的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_people">预约的人数:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
-    <string name="ct_order_info_service_price">服务总费用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
+    <string name="ct_order_info_service_price">服务费用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
     <string name="ct_order_info_pay_currency">%1$s支付</string>
     <string name="ct_pay_failed">支付失败</string>
     <string name="ct_pay_suc">您已支付成功</string>

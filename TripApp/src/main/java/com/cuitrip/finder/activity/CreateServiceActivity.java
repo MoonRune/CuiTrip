@@ -19,6 +19,7 @@ import com.lab.location.LocationHelper;
 import com.lab.utils.GetImageHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.SavedDescSharedPreferences;
+import com.lab.utils.imageupload.URLImageParser;
 import com.lab.widget.PicTextEditView;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -68,7 +69,7 @@ public class CreateServiceActivity extends BaseActivity {
         mPicEditTextView.setActivity(this);
         mPicEditTextView.setAsyncHttpClient(mClient);
         if (mInEdit) {
-            mPicEditTextView.initDesc(mServiceInfo.getDescpt(), mServiceInfo.getBackPic());
+            mPicEditTextView.initDesc( URLImageParser.replae(mServiceInfo.getDescpt()), mServiceInfo.getBackPic());
             mTitle.setText(mServiceInfo.getName());
         } else {
             mPicEditTextView.initDesc("", null);
