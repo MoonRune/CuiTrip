@@ -266,7 +266,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case 5: //待评价
                 mStatus.setText(R.string.ct_order_status_comment);
                 mStatus.setOnClickListener(this);
-                mCancel.setVisible(true);
+                mCancel.setVisible(false);
                 break;
             case 6: //已完成
                 mStatus.setText(info.getStatusContent());
