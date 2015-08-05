@@ -66,7 +66,7 @@ public class CommentSuccessActivity extends BaseActivity implements View.OnClick
 
     private void share() {
 
-        ShareUtil.share(this, findViewById(R.id.service_pic),
+        ShareUtil.share(this, findViewById(R.id.service_name),
                 mOrderInfo.getServiceName(), String.format(Locale.ENGLISH,
                         getString(R.string.ct_trip_share), mOrderInfo.getServiceName()),
                 "http://www.cuitrip.com/mobile/serviceDetail.html?sid=" + mOrderInfo.getSid(), ""
