@@ -348,6 +348,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mCancel.setVisible(true);
                 mStatus.setText(R.string.ct_order_status_start);
                 mStatus.setOnClickListener(this);
+                mStatus.setEnabled(false);
                 mContactFinder.setVisibility(View.VISIBLE);
                 break;
             case 4: //进行中
