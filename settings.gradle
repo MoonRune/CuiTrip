@@ -1,1 +1,1 @@
-include ':TripApp', ':SMSSDK', ':social_sdk_library_project'
+include ':TripApp', ':SMSSDK', ':social_sdk_library_project', ':IMKit'

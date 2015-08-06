@@ -12,6 +12,9 @@ import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.SmsSdkHelper;
 
+import io.rong.imkit.RongContext;
+import io.rong.imlib.RongIMClient;
+
 
 public class MainApplication extends BaseAppLication {
     public static final boolean IS_DEV = true;
@@ -28,6 +31,8 @@ public class MainApplication extends BaseAppLication {
         sContext = this;
         ImageHelper.initImageLoader(getApplicationContext());
         SmsSdkHelper.initSmsSDK(getApplicationContext());
+        RongIMClient.init(this);
+        RongContext.init(this);
         init();
     }
 
