@@ -72,7 +72,7 @@
     <string name="ct_order_contact">聯系TA</string>
     <string name="ct_order_order_date">預約日期</string>
     <string name="ct_order_detail_person">約定人數</string>
-    <string name="ct_order_detail_bill">服務費用</string>
+    <string name="ct_order_detail_bill">訂單費用</string>
     <string name="ct_order_my_comment">我的評價</string>
     <string name="ct_order_cancel">取消旅程</string>
     <string name="ct_order_cancel_suc">旅程取消成功</string>
@@ -310,6 +310,7 @@
     <string name="ct_delete_suc">刪除成功</string>
     <string name="ct_delete_failed_can_try">刪除失敗，請稍後重試</string>
     <string name="please_relogin">請重新登錄</string>
+    <string name="ct_invalidate_service_failed_with_no_reason">審核失敗,請聯系客服</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

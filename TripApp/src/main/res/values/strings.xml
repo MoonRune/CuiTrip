@@ -72,7 +72,7 @@
     <string name="ct_order_contact">联系TA</string>
     <string name="ct_order_order_date">预约日期</string>
     <string name="ct_order_detail_person">约定人数</string>
-    <string name="ct_order_detail_bill">服务费用</string>
+    <string name="ct_order_detail_bill">订单费用</string>
     <string name="ct_order_my_comment">我的评价</string>
     <string name="ct_order_cancel">取消旅程</string>
     <string name="ct_order_cancel_suc">旅程取消成功</string>
@@ -314,6 +314,7 @@
     <string name="ct_pay_canceled">支付取消</string>
     <string name="ct_pay_fail">支付失败</string>
     <string name="ct_pay_invalid">支付应用未安装</string>
+    <string name="ct_invalidate_service_failed_with_no_reason">审核失败,请联系客服</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>
