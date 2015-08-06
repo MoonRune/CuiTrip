@@ -51,14 +51,7 @@ android {
     }
 
     productFlavors {
-        tecent {}
-        baidu {}
-        c360 {}
-        xiaomi {}
-        c91 {}
-        wandoujia {}
-        googleplay {}
-        InnerChannel {}
+        今日头条{}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
