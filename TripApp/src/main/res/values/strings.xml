@@ -72,7 +72,7 @@
     <string name="ct_order_contact">联系TA</string>
     <string name="ct_order_order_date">预约日期</string>
     <string name="ct_order_detail_person">约定人数</string>
-    <string name="ct_order_detail_bill">服务费用</string>
+    <string name="ct_order_detail_bill">订单费用</string>
     <string name="ct_order_my_comment">我的评价</string>
     <string name="ct_order_cancel">取消旅程</string>
     <string name="ct_order_cancel_suc">旅程取消成功</string>
@@ -115,7 +115,7 @@
     <string name="ct_fri">五</string>
     <string name="ct_sat">六</string>
     <string name="ct_can_book">可以预订</string>
-    <string name="ct_booked">已被预订</string>
+    <string name="ct_booked">不可预订</string>
 
     <string name="ct_country">国家/地区</string>
     <string name="ct_mobile_hint">手机号码</string>
@@ -209,7 +209,7 @@
     <string name="ct_service_pay_way_selecte_hint">请选择计费方式</string>
     <string name="ct_service_max_count">最多选择为6人</string>
     <string name="ct_service_count_null">请选择人数</string>
-    <string name="ct_service_unit">\/人</string>
+    <string name="ct_service_unit">/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
     <string name="ct_go_service_list">返回发现列表</string>
     <string name="ct_create_new_again">再新追加一个发现</string>
@@ -217,8 +217,8 @@
     <string name="ct_country_selected">地区</string>
     <string name="ct_country_selected_null">请选择地区</string>
     <string name="ct_selected_service_date">安排日程</string>
-    <string name="ct_service_booked">已被预订，不能取消</string>
-    <string name="ct_service_cancelable">可以取消</string>
+    <string name="ct_service_booked">不可安排</string>
+    <string name="ct_service_cancelable">可以安排</string>
     <string name="ct_service_date_setted">提交成功</string>
     <string name="ct_waiting">请稍后...</string>
 
@@ -275,7 +275,7 @@
     <string name="ct_homepage_status_failed">审核未通过</string>
     <string name="ct_order_info_date">预约的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_people">预约的人数:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
-    <string name="ct_order_info_service_price">服务总费用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
+    <string name="ct_order_info_service_price">服务费用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
     <string name="ct_order_info_pay_currency">%1$s支付</string>
     <string name="ct_pay_failed">支付失败</string>
     <string name="ct_pay_suc">您已支付成功</string>
@@ -284,7 +284,8 @@
     <string name="ct_cny">人民币</string>
     <string name="ct_twd">新台币</string>
     <string name="ct_please_relogin">请重新登录</string>
-    <string name="ct_message_please_switch_mode">请切换到发现者模式查看详情</string>
+    <string name="ct_message_please_switch_mode_to_discover">请切换到发现者模式查看详情</string>
+    <string name="ct_message_please_switch_mode_to_traveler">请切换到旅行者模式查看详情</string>
     <string name="ct_error_no_authorized">没有授权</string>
     <string name="ct_cancel_order_tips">若您取消旅程，旅行者已支付的费用将全额返还</string>
     <string name="ct_modify_only_suc">修改成功</string>
@@ -309,6 +310,16 @@
     <string name="ct_delete_suc">删除成功</string>
     <string name="ct_delete_failed_can_try">删除失败，请稍后重试</string>
     <string name="please_relogin">请重新登录</string>
+    <string name="ct_per_man">/人</string>
+    <string name="ct_pay_canceled">支付取消</string>
+    <string name="ct_pay_fail">支付失败</string>
+    <string name="ct_pay_invalid">支付应用未安装</string>
+    <string name="ct_invalidate_service_failed_with_no_reason">审核失败,请联系客服</string>
+    <string name="ct_discount_suc">优惠成功</string>
+    <string name="ct_send_voice_validation">点击发送语音验证</string>
+    <string name="ct_pay_with_freecode">使用体验码支付</string>
+    <string name="ct_pay_with_ali">支付宝支付</string>
+    <string name="ct_pay_with_wx">微信支付</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

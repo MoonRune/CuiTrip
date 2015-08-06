@@ -1,7 +1,6 @@
 package com.cuitrip.adapter;
 
 import android.content.Context;
-import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,23 +8,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cuitrip.business.MessageBusiness;
-import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.DialogItem;
 import com.cuitrip.model.DialogList;
-import com.cuitrip.model.RecommendItem;
-import com.cuitrip.model.RecommendOutData;
 import com.cuitrip.service.R;
 import com.lab.adapter.PagedEndlessAdapter;
-import com.lab.adapter.ViewHolder;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
 import com.loopj.android.http.SyncHttpClient;
 
 import java.util.List;
-
-import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created on 7/19.
@@ -93,10 +86,10 @@ public class MessageDetailListAdapter extends PagedEndlessAdapter<DialogItem> {
                 if (LoginInstance.getInstance(getContext()).getUserInfo().getUid()
                         .equals(dialogItem.getFrom())) {
                     //自己发送
-                    return TYPE_MY;
+                    return TYPE_TA;
                 }else{
                     //他人发送
-                    return TYPE_TA;
+                    return TYPE_MY;
                 }
             } else {
                 //系统消息

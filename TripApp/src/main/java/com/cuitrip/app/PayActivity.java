@@ -27,6 +27,7 @@ import com.lab.utils.CurrencyHelper;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import org.apache.http.conn.util.InetAddressUtils;
@@ -121,10 +122,10 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                    if (response != null && !TextUtils.isEmpty(response.msg)) {
-                        MessageUtils.showToast(response.msg);
-                    }
-                    return;
+                if (response != null && !TextUtils.isEmpty(response.msg)) {
+                    MessageUtils.showToast(response.msg);
+                }
+                return;
             }
 
             @Override
@@ -136,9 +137,10 @@ public class PayActivity extends BaseActivity implements OnClickListener {
     }
 
     @OnClick(R.id.service_back)
-    public void clickBack(){
+    public void clickBack() {
         finish();
     }
+
     public void render() {
         ImageHelper.displayCtImage(mOrderInfo.getServicePIC(), mOrderBannerIv, null);
         mOrderNameTv.setText(mOrderInfo.getServiceName());
@@ -151,16 +153,22 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
         mOrderDateTv.setText(Html.fromHtml(getString(R.string.ct_order_info_date, time)));
         mOrderPeopleSizeTv.setText(Html.fromHtml(getString(R.string.ct_order_info_people, mOrderInfo.getBuyerNum())));
-        mOrderRemoteCostTv.setText(Html.fromHtml(getString(R.string.ct_order_info_service_price, mOrderInfo.getOrderPrice(),
-                CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getMoneyType()))));
+        String append = mOrderInfo.isPricePerMan() ? getString(R.string.ct_per_man) : "";
+        mOrderRemoteCostTv.setText(Html.fromHtml(getString(R.string.ct_order_info_service_price, mOrderInfo.getServicePrice(),
+                CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getMoneyType())) + append));
         mOrderLocalCurrencyTv.setText(Html.fromHtml(getString(R.string.ct_order_info_pay_currency,
                 CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getPayCurrency()))));
         mOrderLocalCostTv.setText(String.valueOf(mOrderInfo.getOrderPrice()));
 
-        mFreeCodeV.setOnClickListener(this);
+        if (!mOrderInfo.isDiscount()) {
+            mFreeCodeV.setVisibility(View.VISIBLE);
+            mFreeCodeV.setOnClickListener(this);
+            resetFreeButtonPrice();
+        }else {
+            mFreeCodeV.setVisibility(View.GONE);
+        }
         mAlipayV.setOnClickListener(this);
         mWxpayV.setOnClickListener(this);
-        resetFreeButtonPrice();
     }
 
     public void resetFreeButtonPrice() {
@@ -253,7 +261,7 @@ public class PayActivity extends BaseActivity implements OnClickListener {
         OrderBusiness.payOrder(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
-                onPaySuccess();
+                freeCodeContinueRefresh();
             }
 
             @Override
@@ -273,6 +281,39 @@ public class PayActivity extends BaseActivity implements OnClickListener {
             }
         }, mOrderId, code);
 
+    }
+
+    public void freeCodeContinueRefresh() {
+        showLoading();
+        OrderBusiness.getOrderInfo(this, mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                hideLoading();
+                if (data != null) {
+                    mOrderInfo = (OrderItem) data;
+                    if (mOrderInfo.getStatus() == 8) {
+                        onPaySuccess();
+                    } else {
+                        MessageUtils.showToast(getString(R.string.ct_discount_suc));
+                        render();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                if (response != null && !TextUtils.isEmpty(response.msg)) {
+                    MessageUtils.showToast(response.msg);
+                }
+                return;
+            }
+
+            @Override
+            public void onFinish() {
+                super.onFinish();
+                hideLoading();
+            }
+        }, String.valueOf(mOrderId));
     }
 
     @Override
@@ -319,7 +360,11 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
         switch (v.getId()) {
             case R.id.ct_alipay_v:
-                requestForOrderInfo(PAY_CHANEL_ALIPAY);
+                if (Utils.isAliInstalled()) {
+                    requestForOrderInfo(PAY_CHANEL_ALIPAY);
+                } else {
+                    onPayFailed("请先安装支付宝应用");
+                }
                 break;
 
             case R.id.ct_wxpay_v:

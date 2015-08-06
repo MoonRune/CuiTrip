@@ -258,6 +258,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mCancel.setVisible(true);
                 mStatus.setText(info.getStatusContent());
                 mStatus.setClickable(false);
+                mStatus.setEnabled(false);
                 mContactFinder.setVisibility(View.VISIBLE);
                 break;
             case 4: //进行中
@@ -265,16 +266,18 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case 5: //待评价
                 mStatus.setText(R.string.ct_order_status_comment);
                 mStatus.setOnClickListener(this);
-                mCancel.setVisible(true);
+                mCancel.setVisible(false);
                 break;
             case 6: //已完成
                 mStatus.setText(info.getStatusContent());
                 mStatus.setEnabled(false);
+                mCancel.setVisible(false);
                 break;
             case 7: //已失效
                 mStatus.setText(info.getStatusContent());
                 mContactCuibin.setVisible(true);
                 mStatus.setEnabled(false);
+                mCancel.setVisible(false);
                 break;
             default:
                 mStatus.setVisibility(View.INVISIBLE);
@@ -338,12 +341,14 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 mCancel.setVisible(true);
                 mStatus.setText(info.getStatusContent());
                 mStatus.setClickable(false);
+                mStatus.setEnabled(false);
                 mContactFinder.setVisibility(View.VISIBLE);
                 break;
             case 3: //待开始
                 mCancel.setVisible(true);
                 mStatus.setText(R.string.ct_order_status_start);
                 mStatus.setOnClickListener(this);
+                mStatus.setEnabled(false);
                 mContactFinder.setVisibility(View.VISIBLE);
                 break;
             case 4: //进行中
@@ -351,18 +356,22 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case 5: //待评价
                 mStatus.setText(info.getStatusContent());
                 mStatus.setEnabled(false);
+                mCancel.setVisible(false);
                 break;
             case 6: //已完成
                 mStatus.setText(info.getStatusContent());
                 mStatus.setEnabled(false);
+                mCancel.setVisible(false);
                 break;
             case 7: //已失效
                 mStatus.setText(info.getStatusContent());
                 mStatus.setEnabled(false);
+                mCancel.setVisible(false);
                 mContactCuibin.setVisible(true);
                 break;
             default:
                 mStatus.setVisibility(View.INVISIBLE);
+                mCancel.setVisible(false);
                 break;
         }
     }

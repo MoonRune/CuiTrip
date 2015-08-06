@@ -24,6 +24,10 @@ import java.util.HashMap;
  */
 public class URLImageParser implements Html.ImageGetter {
     public static final String TAG = "URLImageParser";
+    public static final String BAD_IMAGE="< img src=";
+    public static final String GOOD_IMAGE="<img src=";
+    public static final String BAD_WIDTH="width=\"100\"";
+    public static final String GOOD_WITDH="width=\"100%\"";
     Context c;
     TextView container;
     public HashMap<String, Drawable> urlMap = new HashMap<>();
@@ -38,7 +42,19 @@ public class URLImageParser implements Html.ImageGetter {
     public URLImageParser(TextView t, Context c, String html) {
         this.c = c;
         this.container = t;
-        this.html = html;
+        this.html = replae(html);
+    }
+
+    public static String replae(String oldContent){
+        return oldContent.replaceAll(BAD_IMAGE,GOOD_IMAGE);
+    }
+    public static String replaeWidth(String oldContent){
+        return oldContent.replaceAll(BAD_WIDTH,GOOD_WITDH);
+    }
+
+
+    public static String badReplae(String oldContent){
+        return oldContent.replaceAll(GOOD_IMAGE,BAD_IMAGE);
     }
 
     public Drawable getDrawable(String source) {

@@ -405,7 +405,8 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                         serviceViewHolder.mServiceReason.setVisibility(View.VISIBLE);
                         serviceViewHolder.mServiceReason.setText(item.getExtInfoObject().getRefuseReason());
                     } else {
-                        serviceViewHolder.mServiceReason.setVisibility(View.GONE);
+                        serviceViewHolder.mServiceReason.setText(R.string.ct_invalidate_service_failed_with_no_reason);
+                        serviceViewHolder.mServiceReason.setVisibility(View.VISIBLE);
                     }
                     serviceViewHolder.mServiceChecking.setVisibility(View.GONE);
                 }

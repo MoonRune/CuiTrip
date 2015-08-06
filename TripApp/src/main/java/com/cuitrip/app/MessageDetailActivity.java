@@ -113,8 +113,10 @@ public class MessageDetailActivity extends BaseActivity implements View.OnClickL
                 } else if (mData == null) {
                     MessageUtils.showToast(R.string.loading_text);
 
+                }  else if (!info.getUid().equals(mData.getInsiderId()) && !info.isTravel()) {
+                    MessageUtils.showToast(getString(R.string.ct_message_please_switch_mode_to_traveler));
                 } else if (info.getUid().equals(mData.getInsiderId()) && info.isTravel()) {
-                    MessageUtils.showToast(getString(R.string.ct_message_please_switch_mode));
+                    MessageUtils.showToast(getString(R.string.ct_message_please_switch_mode_to_discover));
                 } else {
                     Intent intent = new Intent(this, OrderDetailActivity.class);
                     intent.putExtra(OrderDetailActivity.ORDER_ID, mOrderId);

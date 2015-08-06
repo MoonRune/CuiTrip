@@ -137,11 +137,25 @@ public class BaseActivity extends AppCompatActivity {
              *
              * 如果是银联渠道返回 invalid，调用 UPPayAssistEx.installUPPayPlugin(this); 安装银联安全支付控件。
              */
-                if(result != null && result.equals("success")){
-                    onPaySuccess();
-                }else{
-                    String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
-                    onPayFailed(errorMsg);
+                if (result!=null){
+                    switch (result){
+                        case "success":
+                            onPaySuccess();
+                            break;
+                        case "fail":
+                            onPayFailed(getString(R.string.ct_pay_fail));
+                            break;
+                        case "cancel":
+                            onPayFailed(getString(R.string.ct_pay_canceled));
+                            break;
+                        case "invalid":
+                            onPayFailed(getString(R.string.ct_pay_invalid));
+                            break;
+                        default:
+                            String errorMsg = data.getExtras().getString("error_msg"); // 错误信息
+                            onPayFailed(errorMsg);
+                            break;
+                    }
                 }
 //                Toast.makeText(this, result, Toast.LENGTH_SHORT).show();
             } else if (resultCode == RESULT_CANCELED) {

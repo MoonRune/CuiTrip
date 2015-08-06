@@ -112,11 +112,11 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
     }
 
     public void startRefresh() {
-        mSwipRl.setRefreshing(true);
+       hideLoading();
     }
 
     public void stopRerfresh() {
-        mSwipRl.setRefreshing(false);
+       showLoading();
     }
 
     public void fetchData() {
@@ -150,6 +150,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
                     mSignTv.setText(TextUtils.isEmpty(sign) ? getString(R.string.ct_no_sign) : sign);
 
                     introduce = json.getString("introduce");
+                    introduce=URLImageParser.replae(introduce);
                     URLImageParser p = new URLImageParser(mContentTv, SelfHomePageActivity.this, introduce);
                     mContentTv.setText(Html.fromHtml(introduce, p, null));
                 } catch (Exception e) {

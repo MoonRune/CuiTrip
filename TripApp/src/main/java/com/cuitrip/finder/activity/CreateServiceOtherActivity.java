@@ -22,7 +22,9 @@ import com.lab.app.BrowserActivity;
 import com.lab.location.LocationHelper;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.imageupload.URLImageParser;
 import com.loopj.android.http.AsyncHttpClient;
 
 /**
@@ -191,6 +193,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         }
 
         showNoCancelDialog();
+        String desc = mServiceInfo.getDescpt();
+        desc = URLImageParser.badReplae(desc);
         ServiceBusiness.commitServiceInfo(this, mClient, new LabAsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
@@ -198,14 +202,16 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                         startActivity(new Intent(CreateServiceOtherActivity.this, CreateServiceSuccessActivity.class));
                         setResult(RESULT_OK);
                         finish();
+                        LogHelper.e("omg","suc");
                     }
 
                     @Override
                     public void onFailure(LabResponse response, Object data) {
+                        LogHelper.e("omg","failed");
                         hideNoCancelDialog();
                             MessageUtils.showToast(response.msg);
                     }
-                }, mServiceInfo.getSid(), mServiceInfo.getName(), mAddress.getText().toString().trim(), mServiceInfo.getDescpt(),
+                }, mServiceInfo.getSid(), mServiceInfo.getName(), mAddress.getText().toString().trim(), desc,
                 mServiceInfo.getPic(), mServiceInfo.getBackPic(), paywayValue == 2 ? "0" : mMoney.getText().toString().trim(),
                 countValue, timeValue, null, null, paywayValue, "TW", mPriceType.getText().toString().trim(),
                 LocationHelper.getLoation());
