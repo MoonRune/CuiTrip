@@ -19,8 +19,8 @@ public class Constants {
 
     public static final String IMAGE_URL_END = "\" width=\"100%\"/></div>";
 
-    public static final String IMAGE_PATTERN = "<div>\\s*<\\s+img\\s+src=\\s*\"([^\"]*)\"\\s+width=[^/>]*/>\\s*</div>";
-    public static final String ONLY_IMAGE_PATTERN = "<\\s+img\\s+src=\\s*\"([^\"]*)\"\\s+width=[^/>]*/>";
+    public static final String IMAGE_PATTERN = "<div>\\s*<\\s*img\\s+src=\\s*\"([^\"]*)\"\\s+width=[^/>]*/>\\s*</div>";
+    public static final String ONLY_IMAGE_PATTERN = "<\\s*img\\s+src=\\s*\"([^\"]*)\"\\s+width=[^/>]*/>";
 
     public static String dealHtmlLine(String input){
         return input == null ? null : input.replaceAll("\n", "</p><p>");
