@@ -70,10 +70,9 @@ public class OrderItem implements Serializable{
     private String comment;
     private String commentScore;
     private String priceType;
-    private boolean isDiscount;
 
     public boolean isDiscount() {
-        return isDiscount;
+        return "2".equals(paymentWay);
     }
 
     public boolean isPricePerMan(){
