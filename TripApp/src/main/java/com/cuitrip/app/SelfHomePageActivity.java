@@ -112,11 +112,11 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
     }
 
     public void startRefresh() {
-        mSwipRl.setRefreshing(true);
+       hideLoading();
     }
 
     public void stopRerfresh() {
-        mSwipRl.setRefreshing(false);
+       showLoading();
     }
 
     public void fetchData() {
