@@ -70,6 +70,11 @@ public class OrderItem implements Serializable{
     private String comment;
     private String commentScore;
     private String priceType;
+    private boolean isDiscount;
+
+    public boolean isDiscount() {
+        return isDiscount;
+    }
 
     public boolean isPricePerMan(){
         return "1".equals(priceType );

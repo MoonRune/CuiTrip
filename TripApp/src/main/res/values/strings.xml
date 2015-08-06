@@ -315,6 +315,7 @@
     <string name="ct_pay_fail">支付失败</string>
     <string name="ct_pay_invalid">支付应用未安装</string>
     <string name="ct_invalidate_service_failed_with_no_reason">审核失败,请联系客服</string>
+    <string name="ct_discount_suc">优惠成功</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>
