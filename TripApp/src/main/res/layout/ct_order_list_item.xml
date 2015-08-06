@@ -78,7 +78,7 @@
             android:textColor="@color/ct_7c"
             android:paddingLeft="20dp"
             android:paddingRight="10dp"
-            android:text="台湾"
+            android:text="123"
             android:textSize="@dimen/ct_ts_5"
             android:drawableLeft="@drawable/ct_position"
             android:drawablePadding="5dp"/>
@@ -90,6 +90,6 @@
             android:singleLine="true"
             android:textColor="@color/ct_blue_gray"
             android:textSize="@dimen/ct_ts_5"
-            android:text="进行中"/>
+            android:text="progressing"/>
     </LinearLayout>
 </RelativeLayout>

@@ -32,7 +32,7 @@
                 android:padding="5dp"
                 android:textColor="@color/ct_white"
                 android:textSize="19sp"
-                tools:text="追求蛋蛋的旅人回忆" />
+                tools:text="123" />
 
             <LinearLayout
                 android:id="@+id/ct_order_info_ll"
@@ -102,7 +102,7 @@
                 android:paddingRight="15dp"
                 android:paddingTop="10dp"
                 android:singleLine="true"
-                android:text="使用体验码支付"
+                android:text="@string/ct_pay_with_freecode"
                 android:textColor="@color/ct_white"
                 android:textSize="17sp" />
         </RelativeLayout>
@@ -133,7 +133,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="支付宝支付"
+                android:text="@string/ct_pay_with_ali"
                 android:textColor="@color/ct_text_title"
                 android:textSize="17sp" />
         </LinearLayout>
@@ -163,7 +163,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="微信支付"
+                android:text="@string/ct_pay_with_wx"
                 android:textColor="@color/ct_text_title"
                 android:textSize="17sp" />
         </LinearLayout>

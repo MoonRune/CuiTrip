@@ -311,6 +311,7 @@
     <string name="ct_delete_failed_can_try">刪除失敗，請稍後重試</string>
     <string name="please_relogin">請重新登錄</string>
     <string name="ct_invalidate_service_failed_with_no_reason">審核失敗,請聯系客服</string>
+    <string name="ct_discount_suc">優惠成功</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>
