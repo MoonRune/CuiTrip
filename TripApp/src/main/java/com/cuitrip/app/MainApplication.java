@@ -1,5 +1,6 @@
 package com.cuitrip.app;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.util.DisplayMetrics;
@@ -13,6 +14,7 @@ import com.lab.utils.MessageUtils;
 import com.lab.utils.SmsSdkHelper;
 
 import io.rong.imkit.RongContext;
+import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 
 
@@ -31,11 +33,48 @@ public class MainApplication extends BaseAppLication {
         sContext = this;
         ImageHelper.initImageLoader(getApplicationContext());
         SmsSdkHelper.initSmsSDK(getApplicationContext());
+        RongIM.init(this);
         RongIMClient.init(this);
         RongContext.init(this);
+        if("io.rong.app".equals(getCurProcessName(getApplicationContext())) ||
+                "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
+
+
+            /**
+             * 融云SDK事件监听处理
+             *
+             * 注册相关代码，只需要在主进程里做。
+             */
+            if ("io.rong.app".equals(getCurProcessName(getApplicationContext()))) {
+
+//                RongCloudEvent.init(this);
+//                DemoContext.init(this);
+//                Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));
+//                try {
+//                    RongIM.registerMessageType(DeAgreedFriendRequestMessage.class);
+//                    RongIM.registerMessageTemplate(new DeContactNotificationMessageProvider());
+////                RongIM.registerMessageTemplate(new DeAgreedFriendRequestMessageProvider());
+//
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+            }
+        }
         init();
     }
 
+    public static String getCurProcessName(Context context) {
+        int pid = android.os.Process.myPid();
+        ActivityManager activityManager = (ActivityManager) context
+                .getSystemService(Context.ACTIVITY_SERVICE);
+        for (ActivityManager.RunningAppProcessInfo appProcess : activityManager
+                .getRunningAppProcesses()) {
+            if (appProcess.pid == pid) {
+                return appProcess.processName;
+            }
+        }
+        return null;
+    }
 
     private void init() {
         DisplayMetrics displaymetrics = new DisplayMetrics();

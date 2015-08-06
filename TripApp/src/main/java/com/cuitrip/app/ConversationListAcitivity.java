@@ -2,6 +2,7 @@ package com.cuitrip.app;
 
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
@@ -19,8 +20,7 @@ public class ConversationListAcitivity extends BaseActivity {
         setContentView(R.layout.conversationlist); /*加载您上面的 conversationlist */
 
         /* 创建 conversationlist 的Fragment */
-        ConversationListFragment fragment =
-                (ConversationListFragment)getSupportFragmentManager().findFragmentById(R.id.conversationlist);
+        ConversationListFragment fragment =new ConversationListFragment();
 
         /* 给 IMKit 传递默认的参数，用于显示*/
         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon()
@@ -32,7 +32,8 @@ public class ConversationListAcitivity extends BaseActivity {
                 .build();
 
         fragment.setUri(uri);
+        FragmentTransaction transaction=getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.conversationlist,fragment).commit();
 
     }
-}
 }
