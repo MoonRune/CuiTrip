@@ -27,6 +27,7 @@ import com.lab.utils.CurrencyHelper;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import org.apache.http.conn.util.InetAddressUtils;
@@ -359,7 +360,11 @@ public class PayActivity extends BaseActivity implements OnClickListener {
 
         switch (v.getId()) {
             case R.id.ct_alipay_v:
-                requestForOrderInfo(PAY_CHANEL_ALIPAY);
+                if (Utils.isAliInstalled()) {
+                    requestForOrderInfo(PAY_CHANEL_ALIPAY);
+                } else {
+                    onPayFailed("请先安装支付宝应用");
+                }
                 break;
 
             case R.id.ct_wxpay_v:

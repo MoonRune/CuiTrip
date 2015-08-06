@@ -15,6 +15,7 @@ import com.cuitrip.service.R;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -55,8 +56,8 @@ public class Utils {
         SimpleDateFormat sdf = new SimpleDateFormat(format, Locale.CHINA);
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+800"));
 
-        String result=sdf.format(date);
-        return result ;
+        String result = sdf.format(date);
+        return result;
     }
 
     public static long parseStringToLongTime(String time, String format) {
@@ -73,6 +74,7 @@ public class Utils {
 
     static SimpleDateFormat H_M = new SimpleDateFormat("HH:mm", Locale.CHINA);
     static SimpleDateFormat Y_M_D_H_M = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
+
     {
         H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         Y_M_D_H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
@@ -119,5 +121,17 @@ public class Utils {
         } else {
             MessageUtils.showToast(activity.getString(R.string.ct_null_phone_num));
         }
+    }
+
+    public static boolean isAliInstalled() {
+        String packageName = "com.eg.android.AlipayGphone";
+        final PackageManager packageManager = MainApplication.getInstance().getPackageManager();
+        // 获取所有已安装程序的包信息
+        List<PackageInfo> pinfo = packageManager.getInstalledPackages(0);
+        for (int i = 0; i < pinfo.size(); i++) {
+            if (pinfo.get(i).packageName.equalsIgnoreCase(packageName))
+                return true;
+        }
+        return false;
     }
 }

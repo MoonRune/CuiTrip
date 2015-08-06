@@ -2,8 +2,8 @@
     <string name="app_name">脆餅旅行</string>
     <string name="app_slogan">多壹個朋友,多壹種生活</string>
     <string name="loading_text">加載中&#8230;</string>
-    <string name="load_error">網絡異常</string>
-    <string name="parameter_error">參數錯誤</string>
+    <string name="load_error">網酪異常</string>
+    <string name="parameter_error">慘數錯誤</string>
     <string name="network_data_error">獲取數據失敗，請稍後再試</string>
     <string name="ct_login_failed">登錄失敗，請登錄後重試</string>
     <string name="ct_upload_failed">上傳失敗，請重試</string>
@@ -72,7 +72,7 @@
     <string name="ct_order_contact">聯系TA</string>
     <string name="ct_order_order_date">預約日期</string>
     <string name="ct_order_detail_person">約定人數</string>
-    <string name="ct_order_detail_bill">訂單費用</string>
+    <string name="ct_order_detail_bill">服務費用</string>
     <string name="ct_order_my_comment">我的評價</string>
     <string name="ct_order_cancel">取消旅程</string>
     <string name="ct_order_cancel_suc">旅程取消成功</string>
@@ -115,7 +115,7 @@
     <string name="ct_fri">五</string>
     <string name="ct_sat">六</string>
     <string name="ct_can_book">可以預訂</string>
-    <string name="ct_booked">不可預訂</string>
+    <string name="ct_booked">已被預訂</string>
 
     <string name="ct_country">國家/地區</string>
     <string name="ct_mobile_hint">手機號碼</string>
@@ -146,7 +146,7 @@
     <string name="ct_login">登錄</string>
     <string name="ct_login_confirm">登錄</string>
     <string name="ct_login_forget">忘記密碼？</string>
-    <string name="ct_login_go_regist">還沒有賬號？來這裏註冊吧</string>
+    <string name="ct_login_go_regist">還沒有帳號？來這裏註冊吧</string>
     <string name="ct_login_find_passed">找回密碼</string>
     <string name="ct_login_input_pw_again">請再次輸入密碼</string>
     <string name="ct_find_suc">找回密碼成功</string>
@@ -175,7 +175,7 @@
 
     <string name="ct_finder">發現</string>
     <string name="ct_your_find">妳的發現</string>
-    <string name="ct_your_find_tip">妳有什麽有趣的發現要告訴哦旅行者嗎？</string>
+    <string name="ct_your_find_tip">妳有什麼有趣的發現要告訴哦旅行者嗎？</string>
     <string name="ct_create_my_find">創建我的發現</string>
     <string name="ct_new_service">新建</string>
     <string name="ct_service_to_edit">待編輯</string>
@@ -209,7 +209,7 @@
     <string name="ct_service_pay_way_selecte_hint">請選擇計費方式</string>
     <string name="ct_service_max_count">最多選擇為6人</string>
     <string name="ct_service_count_null">請選擇人數</string>
-    <string name="ct_service_unit">/人</string>
+    <string name="ct_service_unit">\/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
     <string name="ct_go_service_list">返回發現列表</string>
     <string name="ct_create_new_again">再新追加壹個發現</string>
@@ -217,8 +217,8 @@
     <string name="ct_country_selected">地區</string>
     <string name="ct_country_selected_null">請選擇地區</string>
     <string name="ct_selected_service_date">安排日程</string>
-    <string name="ct_service_booked">不可安排</string>
-    <string name="ct_service_cancelable">可以安排</string>
+    <string name="ct_service_booked">已被預訂，不能取消</string>
+    <string name="ct_service_cancelable">可以取消</string>
     <string name="ct_service_date_setted">提交成功</string>
     <string name="ct_waiting">請稍後...</string>
 
@@ -275,17 +275,16 @@
     <string name="ct_homepage_status_failed">審核未通過</string>
     <string name="ct_order_info_date">預約的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_people">預約的人數:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
-    <string name="ct_order_info_service_price">服務費用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
+    <string name="ct_order_info_service_price">服務總費用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
     <string name="ct_order_info_pay_currency">%1$s支付</string>
     <string name="ct_pay_failed">支付失敗</string>
     <string name="ct_pay_suc">您已支付成功</string>
     <string name="ct_pay_suc_content">可以在旅程中查看您的預約</string>
     <string name="ct_watch_trips">去到旅程中看預定的服務</string>
-    <string name="ct_cny">人民幣</string>
-    <string name="ct_twd">新臺幣</string>
+    <string name="ct_cny">人民蔽</string>
+    <string name="ct_twd">新臺蔽</string>
     <string name="ct_please_relogin">請重新登錄</string>
-    <string name="ct_message_please_switch_mode_to_discover">請切換到發現者模式查看詳情</string>
-    <string name="ct_message_please_switch_mode_to_traveler">請切換到旅行者模式查看詳情</string>
+    <string name="ct_message_please_switch_mode">請切換到發現者模式查看詳情</string>
     <string name="ct_error_no_authorized">沒有授權</string>
     <string name="ct_cancel_order_tips">若您取消旅程，旅行者已支付的費用將全額返還</string>
     <string name="ct_modify_only_suc">修改成功</string>
@@ -310,8 +309,7 @@
     <string name="ct_delete_suc">刪除成功</string>
     <string name="ct_delete_failed_can_try">刪除失敗，請稍後重試</string>
     <string name="please_relogin">請重新登錄</string>
-    <string name="ct_invalidate_service_failed_with_no_reason">審核失敗,請聯系客服</string>
-    <string name="ct_discount_suc">優惠成功</string>
+    <string name="ct_please_install_alipay">請先安裝支付寶應用</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>
@@ -347,9 +345,5 @@
         <item>按人計費</item>
         <item>免費</item>
     </string-array>
-    <string name="ct_per_man">/人</string>
 
-    <string name="ct_pay_canceled">支付取消</string>
-    <string name="ct_pay_fail">支付失敗</string>
-    <string name="ct_pay_invalid">支付應用未安裝</string>
 </resources>
