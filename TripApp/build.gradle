@@ -74,4 +74,5 @@ dependencies {
     compile project(':SMSSDK')
     compile project(':social_sdk_library_project')
     compile 'cn.pedant.sweetalert:library:1.3'
+    compile project(':kit')
 }

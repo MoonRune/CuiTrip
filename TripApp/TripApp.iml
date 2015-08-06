@@ -139,5 +139,6 @@
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-Core-2.6.0" level="project" />
     <orderEntry type="module" module-name="SMSSDK" exported="" />
     <orderEntry type="module" module-name="social_sdk_library_project" exported="" />
+    <orderEntry type="module" module-name="kit" exported="" />
   </component>
 </module>
