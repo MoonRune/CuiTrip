@@ -160,7 +160,7 @@ public class PayActivity extends BaseActivity implements OnClickListener {
                 CurrencyHelper.getInstance().getCurrencyName(mOrderInfo.getPayCurrency()))));
         mOrderLocalCostTv.setText(String.valueOf(mOrderInfo.getOrderPrice()));
 
-        if (mOrderInfo.isClosed()) {
+        if (mOrderInfo.isDiscount()) {
             mFreeCodeV.setVisibility(View.VISIBLE);
             mFreeCodeV.setOnClickListener(this);
             resetFreeButtonPrice();
