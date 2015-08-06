@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
+import android.widget.TextView;
 
 import com.cuitrip.finder.fragment.ServiceFragment;
 import com.cuitrip.login.LoginInstance;
@@ -84,7 +85,7 @@ public class IndexActivity extends BaseTabHostActivity {
                     null);
         }else{
             mTabHost.addTab(mTabHost.newTabSpec(RECOMMEND_TAB)
-                            .setIndicator(createTabView(R.drawable.ct_recommend,
+                            .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_recommend))), RecommendFragment.class,
                     null);
         }
@@ -113,6 +114,7 @@ public class IndexActivity extends BaseTabHostActivity {
         View parent = View.inflate(this, R.layout.ct_tab_widget, null);
         ((ImageView)parent.findViewById(R.id.tabIcon)).setImageResource(drawable);
         parent.findViewById(R.id.tab_new).setVisibility(View.GONE);
+        ((TextView) parent.findViewById(R.id.tab_tv)).setText(text);
         return parent;
     }
 
@@ -121,6 +123,7 @@ public class IndexActivity extends BaseTabHostActivity {
         ((ImageView)parent.findViewById(R.id.tabIcon)).setImageResource(drawable);
         mNewMessageDot = parent.findViewById(R.id.tab_new);
         mNewMessageDot.setVisibility(View.GONE);
+        ((TextView) parent.findViewById(R.id.tab_tv)).setText(text);
         return parent;
     }
 
