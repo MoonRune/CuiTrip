@@ -146,7 +146,7 @@
     <string name="ct_login">登錄</string>
     <string name="ct_login_confirm">登錄</string>
     <string name="ct_login_forget">忘記密碼？</string>
-    <string name="ct_login_go_regist">還沒有賬號？來這裏註冊吧</string>
+    <string name="ct_login_go_regist">註冊新帳號</string>
     <string name="ct_login_find_passed">找回密碼</string>
     <string name="ct_login_input_pw_again">請再次輸入密碼</string>
     <string name="ct_find_suc">找回密碼成功</string>
@@ -320,6 +320,8 @@
     <string name="ct_pay_with_freecode">使用體驗碼支付</string>
     <string name="ct_pay_with_ali">支付寶支付</string>
     <string name="ct_pay_with_wx">微信支付</string>
+    <string name="ct_forget_password">忘記密碼？</string>
+    <string name="ct_has_account">已有帳號,去登錄</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>
