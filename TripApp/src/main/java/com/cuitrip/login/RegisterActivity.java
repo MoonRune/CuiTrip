@@ -99,7 +99,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
         mGetcode = (TextView) findViewById(R.id.ct_get_vcode);
         mGetcode.setOnClickListener(this);
-        mNick.setVisibility(mFindPasswd ? View.VISIBLE : View.GONE);
+        findViewById(R.id.nick_layout).setVisibility(mFindPasswd ? View.VISIBLE : View.GONE);
         if (mFindPasswd) {
             mNick.setHint(R.string.ct_login_input_pw_again);
             mNick.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
