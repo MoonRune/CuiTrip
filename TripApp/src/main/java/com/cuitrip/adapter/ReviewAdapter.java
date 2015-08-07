@@ -35,10 +35,10 @@ public class ReviewAdapter extends BaseListAdapter<ReviewListItem> {
     @Override
     protected void bindView(ViewHolder holder, ReviewListItem item, int position) {
         ReViewHolder reViewHolder = (ReViewHolder) holder;
-        reViewHolder.name.setText(item.getInsiderNickName());
+        reViewHolder.name.setText(item.getNick());
         reViewHolder.time.setText(item.getGmtCreated());
         reViewHolder.content.setText(item.getContent());
-        ImageHelper.displayPersonImage(item.getInsiderHeadPic(), reViewHolder.author_img, null);
+        ImageHelper.displayPersonImage(item.getHeadPic(), reViewHolder.author_img, null);
     }
 
     public static class ReViewHolder extends ViewHolder {

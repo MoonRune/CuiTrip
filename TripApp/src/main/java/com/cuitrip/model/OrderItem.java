@@ -71,6 +71,14 @@ public class OrderItem implements Serializable{
     private String commentScore;
     private String priceType;
 
+    public String getPriceType() {
+        return priceType;
+    }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
     public boolean isDiscount() {
         return "2".equals(paymentWay);
     }
