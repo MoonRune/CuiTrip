@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.ViewParent;
 import android.widget.CheckedTextView;
 
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
@@ -45,6 +46,30 @@ public class MessageFragment extends BaseFragment {
         super.onDestroy();
     }
 
+    public void validateLogin() {
+        if (LoginInstance.isLogin(getActivity())) {
+            showTabs();
+        } else {
+            hideTabs();
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser){
+            validateLogin();
+        }
+    }
+
+    public void hideTabs() {
+        getView().findViewById(R.id.tabs).setVisibility(View.GONE);
+    }
+
+    public void showTabs() {
+        getView().findViewById(R.id.tabs).setVisibility(View.VISIBLE);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -67,7 +92,7 @@ public class MessageFragment extends BaseFragment {
                 }
             });
 
-            mMessageTravel.setOnClickListener(new View.OnClickListener(){
+            mMessageTravel.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
@@ -83,7 +108,13 @@ public class MessageFragment extends BaseFragment {
         return mContentView;
     }
 
-    private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener(){
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        validateLogin();
+    }
+
+    private ViewPager.OnPageChangeListener mOnPageChangeListener = new ViewPager.OnPageChangeListener() {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -92,10 +123,10 @@ public class MessageFragment extends BaseFragment {
 
         @Override
         public void onPageSelected(int position) {
-            if(position == 0){
+            if (position == 0) {
                 mMessageFinder.setChecked(false);
                 mMessageTravel.setChecked(true);
-            }else{
+            } else {
                 mMessageFinder.setChecked(true);
                 mFinderMessageNew.setVisibility(View.GONE);
                 mMessageTravel.setChecked(false);
@@ -124,11 +155,11 @@ public class MessageFragment extends BaseFragment {
                 return MessageListFragment.newInstance(UserInfo.USER_TRAVEL);
             } else {
                 MessageListFragment fragment = MessageListFragment.newInstance(UserInfo.USER_FINDER);
-                fragment.setOnNewMessageCallback(new MessageListFragment.OnNewMessageCallback(){
+                fragment.setOnNewMessageCallback(new MessageListFragment.OnNewMessageCallback() {
 
                     @Override
                     public void onNewMessage(boolean hasNew) {
-                        if(hasNew && !mMessageFinder.isChecked()){
+                        if (hasNew && !mMessageFinder.isChecked()) {
                             mFinderMessageNew.setVisibility(View.VISIBLE);
                         }
                     }

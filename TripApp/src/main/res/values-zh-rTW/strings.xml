@@ -218,7 +218,7 @@
     <string name="ct_country_selected_null">請選擇地區</string>
     <string name="ct_selected_service_date">安排日程</string>
     <string name="ct_service_booked">不可安排</string>
-    <string name="ct_service_cancelable">可以安排</string>
+    <string name="ct_service_cancelable">已經安排</string>
     <string name="ct_service_date_setted">提交成功</string>
     <string name="ct_waiting">請稍後...</string>
 
