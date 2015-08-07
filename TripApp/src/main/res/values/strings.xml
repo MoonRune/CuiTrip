@@ -321,6 +321,7 @@
     <string name="ct_pay_with_ali">支付宝支付</string>
     <string name="ct_pay_with_wx">微信支付</string>
     <string name="ct_forget_password">忘记密码？</string>
+    <string name="ct_has_account">已有帐号,去登录</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

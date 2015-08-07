@@ -172,7 +172,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.ct_account_clear:
                 mPhoneNumber.setText("");
                 break;
-            case R.id.ct_passwd:
+            case R.id.ct_passwd_clear:
                 mPassWd.setText("");
                 break;
             case R.id.back_press:
