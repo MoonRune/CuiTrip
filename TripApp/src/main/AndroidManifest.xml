@@ -118,16 +118,19 @@
         <activity
             android:name="com.cuitrip.login.RegisterActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.cuitrip.login.LoginActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
             android:name="com.cuitrip.login.FindPasswdActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity

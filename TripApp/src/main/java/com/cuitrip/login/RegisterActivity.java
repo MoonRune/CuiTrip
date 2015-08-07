@@ -6,18 +6,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.InputType;
 import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cuitrip.business.UserBusiness;
@@ -58,7 +53,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private TextView mPassWd;
     private TextView mCountry;
-    private Button mGetcode;
+    private TextView mGetcode;
     private TextView mPhoneNumber;
     private TextView mNick;
     private TextView mVcode;
@@ -104,7 +99,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 return true;
             }
         });
-        mGetcode = (Button) findViewById(R.id.ct_get_vcode);
+        mGetcode = (TextView) findViewById(R.id.ct_get_vcode);
         mGetcode.setOnClickListener(this);
         if(mFindPasswd){
             mNick.setHint(R.string.ct_login_input_pw_again);
@@ -114,30 +109,81 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }else{
             findViewById(R.id.ct_register_mid).setOnClickListener(this);
         }
+        findViewById(R.id.back_press).setOnClickListener(this);
         findViewById(R.id.ct_regist).setOnClickListener(this);
-        findViewById(R.id.counrty_selected).setOnClickListener(this);
-        ((CheckBox) findViewById(R.id.toggle_pw)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        findViewById(R.id.ct_contry).setOnClickListener(this);
+        findViewById(R.id.login_in).setOnClickListener(this);
+        findViewById(R.id.ct_account_clear).setOnClickListener(this);
+        findViewById(R.id.ct_passwd_clear).setOnClickListener(this);
+        findViewById(R.id.ct_nick_clear).setOnClickListener(this);
+        mPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    if(mFindPasswd){
-                        mNick.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                    }
-                    mPassWd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    if(mFindPasswd){
-                        mNick.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                    }
-                    mPassWd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onAccountChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
+
+        mPassWd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onPasswordChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mNick.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onNickChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
         mHandler = new Handler(this);
         String[] country = getCurrentCountry();
         if (country != null) {
             currentCode = country[1];
-            mCountry.setText(country[0] + "  +" + currentCode);
+            mCountry.setText("+" + currentCode);
         }
+    }
+    public void onAccountChanged(){
+        findViewById(R.id.ct_account_clear).setVisibility(TextUtils.isEmpty(mPhoneNumber.getText().toString())?View.INVISIBLE:View.VISIBLE);
+    }
+
+    public void onPasswordChanged(){
+        findViewById(R.id.ct_passwd_clear).setVisibility(TextUtils.isEmpty(mPassWd.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
+    }
+
+    public void onNickChanged(){
+        findViewById(R.id.ct_nick_clear).setVisibility(TextUtils.isEmpty(mNick.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
     }
 
     protected void onDestroy() {
@@ -146,19 +192,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mClient.cancelAllRequests(true);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ct_menu_register, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_login:
-                finish();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
 
         private String[] getCurrentCountry() {
         String mcc = getMCC();
@@ -221,6 +254,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                     }
                 }
                 break;
+
+            case R.id.ct_account_clear:
+                mPhoneNumber.setText("");
+                break;
+            case R.id.ct_passwd_clear:
+                mPassWd.setText("");
+                break;
+            case R.id.ct_nick_clear:
+                mNick.setText("");
+                break;
             case R.id.ct_register_mid:
                 startActivity(new Intent(this, BrowserActivity.class)
                         .putExtra(BrowserActivity.DATA, "file:///android_asset/html_about.html")
@@ -239,13 +282,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 mGetcode.setText(R.string.ct_geting_vcode);
                 mGetcode.setClickable(false);
                 break;
-            case R.id.counrty_selected:
+            case R.id.ct_contry:
                 // 国家列表
                 CountryPage countryPage = new CountryPage();
                 countryPage.setCountryId(currentId);
                 countryPage.setCountryRuls(countryRules);
                 countryPage.setOnResultListener(this);
                 countryPage.showForResult(this, null);
+                break;
+            case R.id.login_in:
+                finish();
+                break;
+            case R.id.back_press:
+                finish();
                 break;
         }
     }
@@ -461,7 +510,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String[] country = SMSSDK.getCountry(currentId);
                 if (country != null) {
                     currentCode = country[1];
-                    mCountry.setText(country[0] + "  +" + currentCode);
+                    mCountry.setText("+" + currentCode);
                 }
                 checkPhoneNum(mPhoneNumber.getText().toString().trim(), currentCode);
             }

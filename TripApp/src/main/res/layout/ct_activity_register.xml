@@ -1,73 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/login_bg">
 
     <LinearLayout
+        android:id="@+id/edit_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/ct_white"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding">
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp">
 
-        <RelativeLayout
-            android:id="@+id/counrty_selected"
+
+        <ImageView
+            android:id="@+id/back_press"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/select_alpha_gray"
+            android:padding="10dp"
+            android:src="@drawable/clear_w" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/logo_login_w" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_white_corner"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/ct_country"
-                android:textSize="@dimen/ct_ts_4"
-                android:textColor="@color/ct_text_title"
-                android:layout_toLeftOf="@+id/ct_contry"/>
 
             <TextView
                 android:id="@+id/ct_contry"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="10dp"
+                android:background="@drawable/select_alpha_gray"
+                android:gravity="center"
+                android:paddingRight="15dp"
+                android:textColor="@color/ct_text_hint"
+                android:textSize="@dimen/ct_ts_4"
+                tools:text="+86" />
+
+            <TextView
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="5dp"
+                android:background="@color/gray" />
+
+            <EditText
+                android:id="@+id/ct_mobile"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
+                android:layout_weight="1"
+                android:background="@null"
                 android:gravity="center_vertical"
-                android:textSize="@dimen/ct_ts_5"
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
-                android:textColor="@color/ct_gray"/>
-        </RelativeLayout>
+                android:hint="@string/ct_mobile_hint"
+                android:paddingLeft="15dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/ct_text_title"
+                android:textColorHint="@color/ct_text_hint"
+                android:textSize="@dimen/ct_ts_4" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ct_single_px"
-            android:background="@color/ct_divider" />
-
-        <EditText
-            android:id="@+id/ct_mobile"
-            android:layout_width="match_parent"
-            android:layout_height="44dp"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="@string/ct_mobile_hint"
-            android:singleLine="true"
-            android:textColorHint="@color/ct_text_hint"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ct_single_px"
-            android:background="@color/ct_divider" />
+            <ImageView
+                android:id="@+id/ct_account_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/clear_s_g"
+                android:visibility="invisible" />
+        </LinearLayout>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="44dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_white_corner"
             android:orientation="horizontal">
 
             <EditText
@@ -75,22 +98,24 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp"
                 android:layout_centerVertical="true"
+                android:layout_marginLeft="15dp"
+                android:layout_toLeftOf="@+id/ct_get_vcode"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/ct_mobile_vcode"
                 android:singleLine="true"
                 android:textColor="@color/ct_text_title"
                 android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4"
-                android:layout_toLeftOf="@+id/ct_get_vcode"/>
+                android:textSize="@dimen/ct_ts_4" />
 
-            <Button
+            <TextView
                 android:id="@+id/ct_get_vcode"
                 android:layout_width="95dp"
                 android:layout_height="25dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
-                android:background="@drawable/ct_blue_bg"
+                android:layout_marginRight="10dp"
+                android:background="@drawable/select_light_green_corner"
                 android:gravity="center"
                 android:hint="@string/ct_get_vcode"
                 android:textColor="@color/ct_white"
@@ -98,100 +123,147 @@
                 android:textSize="@dimen/ct_ts_6" />
         </RelativeLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ct_single_px"
-            android:background="@color/ct_divider" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp">
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/shape_white_corner"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/ct_passwd"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="44dp"
                 android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/toggle_pw"
+                android:layout_weight="1"
                 android:background="@null"
                 android:gravity="center_vertical"
                 android:hint="@string/ct_mobile_passwd"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:singleLine="true"
                 android:textColor="@color/ct_text_title"
                 android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4"
-                android:inputType="textPassword"
-                android:layout_toLeftOf="@+id/toggle_pw"/>
+                android:textSize="@dimen/ct_ts_4" />
 
-            <CheckBox
-                android:id="@+id/toggle_pw"
+            <ImageView
+                android:id="@+id/ct_passwd_clear"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text=""
-                android:checked="false"
-                android:button="@drawable/ct_passwd"/>
-        </RelativeLayout>
+                android:layout_marginRight="10dp"
+                android:src="@drawable/clear_s_g"
+                android:visibility="invisible" />
+        </LinearLayout>
 
-        <View
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/ct_single_px"
-            android:background="@color/ct_divider"/>
+            android:layout_height="44dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/shape_white_corner"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/ct_nick"
+            <EditText
+                android:id="@+id/ct_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="44dp"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/toggle_pw"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="@string/ct_mobile_nick"
+                android:inputType="textPassword"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:singleLine="true"
+                android:textColor="@color/ct_text_title"
+                android:textColorHint="@color/ct_text_hint"
+                android:textSize="@dimen/ct_ts_4" />
+
+            <ImageView
+                android:id="@+id/ct_nick_clear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/clear_s_g"
+                android:visibility="invisible" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/ct_regist"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:background="@null"
-            android:gravity="center_vertical"
-            android:hint="@string/ct_mobile_nick"
-            android:singleLine="true"
-            android:textColor="@color/ct_text_title"
-            android:textColorHint="@color/ct_text_hint"
-            android:textSize="@dimen/ct_ts_4" />
-    </LinearLayout>
+            android:background="@drawable/select_yellow_corner"
+            android:gravity="center"
+            android:text="@string/ct_register_confirm"
+            android:textColor="@color/ct_white"
+            android:textSize="@dimen/ct_ts_3" />
 
-    <Button
-        android:id="@+id/ct_regist"
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_margin="15dp"
-        android:background="@drawable/ct_blue_bg"
-        android:gravity="center"
-        android:textColor="@color/ct_white"
-        android:text="@string/ct_register_confirm"
-        android:textSize="@dimen/ct_ts_3" />
+        <LinearLayout
+            android:id="@+id/ct_register_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/ct_width_padding"
+            android:layout_marginLeft="@dimen/ct_width_padding"
+            android:layout_marginRight="@dimen/ct_width_padding"
+            android:layout_marginTop="10dp"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
 
-    <LinearLayout
-        android:id="@+id/ct_register_agreement"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/ct_width_padding"
-        android:layout_marginLeft="@dimen/ct_width_padding"
-        android:layout_marginRight="@dimen/ct_width_padding"
-        android:orientation="horizontal"
-        android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="3dp"
+
+                android:text="@string/ct_register_head"
+                android:textColor="@color/ct_white"
+                android:textSize="@dimen/ct_ts_5" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/ct_register_mid"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ct_register_mid"
+                    android:textColor="@color/ct_white"
+                    android:textSize="@dimen/ct_ts_5" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/ct_white" />
+            </LinearLayout>
+
+        </LinearLayout>
 
         <TextView
+            android:layout_marginTop="20dp"
+            android:id="@+id/login_in"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:drawableLeft="@drawable/ct_trip_selected"
-            android:drawablePadding="3dp"
-            android:text="@string/ct_register_head"
-            android:textColor="@color/ct_info"
-            android:textSize="@dimen/ct_ts_5"/>
-
-        <TextView
-            android:id="@+id/ct_register_mid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_register_mid"
-            android:textColor="@color/ct_main_color"
-            android:textSize="@dimen/ct_ts_5" />
+            android:layout_gravity="right"
+            android:drawablePadding="10dp"
+            android:drawableRight="@drawable/back_next_w_little"
+            android:text="@string/ct_has_account"
+            android:background="@drawable/select_alpha_gray"
+            android:textColor="@color/ct_white"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="10dp"
+            android:textSize="15sp" />
     </LinearLayout>
-
-</LinearLayout>
+</ScrollView>

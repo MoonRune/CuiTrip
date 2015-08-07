@@ -4,14 +4,15 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:padding="10dp">
 
     <ImageView
         android:id="@+id/tabIcon"
-        android:layout_centerInParent="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="centerInside"
+        android:layout_centerHorizontal="true"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:scaleType="fitXY"
         android:paddingBottom="2dp"
         android:src="@drawable/ct_finder"/>
 
@@ -23,5 +24,16 @@
         android:layout_marginTop="10dp"
         android:src="@color/ct_red"
         android:visibility="visible"/>
+    <TextView
+        android:id="@+id/tab_tv"
+        android:layout_centerHorizontal="true"
+        android:singleLine="true"
+        android:textSize="13sp"
+        android:duplicateParentState="true"
+        android:textColor="@color/ct_gray_blue"
+        android:layout_below="@+id/tabIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="123"/>
 
 </RelativeLayout>
