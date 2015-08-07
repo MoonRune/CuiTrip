@@ -16,6 +16,9 @@ public class MessageItem {
     private String gmtCreated;
     private String nick;
 
+    public boolean isSystemMsg(){
+        return "1".equals(type);
+    }
     public String getType() {
         return type;
     }
