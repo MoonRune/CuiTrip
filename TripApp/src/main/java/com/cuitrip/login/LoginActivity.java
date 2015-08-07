@@ -73,7 +73,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         });
         findViewById(R.id.ct_login).setOnClickListener(this);
         findViewById(R.id.ct_go_regist).setOnClickListener(this);
-        findViewById(R.id.counrty_selected).setOnClickListener(this);
+        findViewById(R.id.ct_contry).setOnClickListener(this);
         ((CheckBox) findViewById(R.id.toggle_pw)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
@@ -147,7 +147,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     submit();
                 }
                 break;
-            case R.id.counrty_selected:
+            case R.id.ct_contry:
                 // 国家列表
                 CountryPage countryPage = new CountryPage();
                 countryPage.setCountryId(currentId);
