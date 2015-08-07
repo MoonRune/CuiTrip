@@ -110,7 +110,21 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.cuitrip.app.ConversationAcitivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize">
 
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <data
+                    android:host="com.cuitrip.service"
+                    android:pathPrefix="/conversation/"
+                    android:scheme="rong" />
+            </intent-filter>
+        </activity>
         <activity
             android:name="com.cuitrip.app.IndexActivity"
             android:label="@string/app_name"

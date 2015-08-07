@@ -27,7 +27,7 @@ public class LogoActivity extends BaseActivity implements Handler.Callback {
         Handler handler = new Handler(this);
         handler.sendMessage(handler.obtainMessage(INIT));
         handler.sendMessageDelayed(handler.obtainMessage(GO_MAIN), DURATION);
-        RongIM.connect("4bj7SeWfNmanwmYzfo/1zVUJjq/G011LMurM5xSobnU6P4c/rhvqXyJhNzHcChxnVdcFRFmhHqR1WC8KOcAiRg==", new RongIMClient.ConnectCallback() {
+        RongIM.connect("+vxFW/YC81BKdar9uHKMxmsPNHhQWfeATmnDz5/QSg/BmrE+6qTjXbWPfZThUMDBGk0Cq7/9GRk=", new RongIMClient.ConnectCallback() {
             @Override
             public void onSuccess(String userId) {
 
