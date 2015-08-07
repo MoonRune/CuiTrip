@@ -16,7 +16,7 @@
         android:id="@+id/back_press"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="10dp"
         android:background="@drawable/select_alpha_gray"
         android:layout_marginTop="30dp"
         android:src="@drawable/clear_w" />

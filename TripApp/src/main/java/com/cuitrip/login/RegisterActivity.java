@@ -13,7 +13,6 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.cuitrip.business.UserBusiness;
@@ -54,7 +53,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     private TextView mPassWd;
     private TextView mCountry;
-    private Button mGetcode;
+    private TextView mGetcode;
     private TextView mPhoneNumber;
     private TextView mNick;
     private TextView mVcode;
@@ -100,7 +99,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 return true;
             }
         });
-        mGetcode = (Button) findViewById(R.id.ct_get_vcode);
+        mGetcode = (TextView) findViewById(R.id.ct_get_vcode);
         mGetcode.setOnClickListener(this);
         if(mFindPasswd){
             mNick.setHint(R.string.ct_login_input_pw_again);
@@ -172,7 +171,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String[] country = getCurrentCountry();
         if (country != null) {
             currentCode = country[1];
-            mCountry.setText(country[0] + "  +" + currentCode);
+            mCountry.setText("+" + currentCode);
         }
     }
     public void onAccountChanged(){
@@ -180,11 +179,11 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void onPasswordChanged(){
-        findViewById(R.id.ct_passwd_clear).setVisibility(TextUtils.isEmpty(mPassWd.getText().toString())?View.INVISIBLE:View.VISIBLE);
+        findViewById(R.id.ct_passwd_clear).setVisibility(TextUtils.isEmpty(mPassWd.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
     }
 
     public void onNickChanged(){
-        findViewById(R.id.ct_nick_clear).setVisibility(TextUtils.isEmpty(mNick.getText().toString())?View.INVISIBLE:View.VISIBLE);
+        findViewById(R.id.ct_nick_clear).setVisibility(TextUtils.isEmpty(mNick.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
     }
 
     protected void onDestroy() {
@@ -511,7 +510,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String[] country = SMSSDK.getCountry(currentId);
                 if (country != null) {
                     currentCode = country[1];
-                    mCountry.setText(country[0] + "  +" + currentCode);
+                    mCountry.setText("+" + currentCode);
                 }
                 checkPhoneNum(mPhoneNumber.getText().toString().trim(), currentCode);
             }

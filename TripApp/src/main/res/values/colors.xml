@@ -20,7 +20,11 @@
     <color name="ct_login_green_click">#c8f976</color>
 
     <color name="ct_regist_yellow">#ffcc00</color>
-    <color name="ct_regist_yellow_click">#ffcc11</color>
+    <color name="ct_regist_yellow_click">#ffac11</color>
+
+
+    <color name="ct_regist_light_green">#7ed321</color>
+    <color name="ct_regist_light_green_click">#7ea321</color>
 
     <color name="ct_info">#ff5d5d5d</color>
 
