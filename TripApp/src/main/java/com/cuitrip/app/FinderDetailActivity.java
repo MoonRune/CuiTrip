@@ -12,8 +12,7 @@ import com.lab.app.BaseActivity;
 import com.lab.utils.Constants;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
-
-import org.json.JSONObject;
+import com.lab.utils.imageupload.URLImageParser;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -68,6 +67,8 @@ public class FinderDetailActivity extends BaseActivity {
             try {
                 com.alibaba.fastjson.JSONObject json = com.alibaba.fastjson.JSONObject.parseObject(mUserInfo.getExtInfo());
                 String desc = json.getString("introduce");
+                desc = URLImageParser.replae(desc);
+                desc = URLImageParser.replaeWidth(desc);
                 Integer status = json.getInteger("introduceAuditStatus");
                 if (status != null && status == 1 && !TextUtils.isEmpty(desc)) { //审核通过才展示
                     mWebView.loadDataWithBaseURL(null, Constants.CT_HTML_HEAD
