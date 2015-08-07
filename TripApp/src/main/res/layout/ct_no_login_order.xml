@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center"
-    android:background="@color/ct_main_color"
+    android:background="@drawable/login_bg"
     android:orientation="vertical"
     android:paddingBottom="30dp"
     android:paddingLeft="@dimen/ct_width_padding"
