@@ -70,12 +70,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        if(intent != null && intent.getBooleanExtra(FIND_PASSWD, false)){
+        if (intent != null && intent.getBooleanExtra(FIND_PASSWD, false)) {
             mFindPasswd = true;
-            showActionBar(R.string.ct_login_find_passed);
-        }else{
+        } else {
             mFindPasswd = false;
-            showActionBar(R.string.ct_register);
         }
         setContentView(R.layout.ct_activity_register);
         SmsSdkHelper.registerEventHandler(mEventHandler);
@@ -89,10 +87,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         mNick.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if(valid()){
-                    if(mFindPasswd){
+                if (valid()) {
+                    if (mFindPasswd) {
                         submitForForget();
-                    }else{
+                    } else {
                         submit();
                     }
                 }
@@ -101,12 +99,13 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         });
         mGetcode = (TextView) findViewById(R.id.ct_get_vcode);
         mGetcode.setOnClickListener(this);
-        if(mFindPasswd){
+        mNick.setVisibility(mFindPasswd ? View.VISIBLE : View.GONE);
+        if (mFindPasswd) {
             mNick.setHint(R.string.ct_login_input_pw_again);
             mNick.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
             findViewById(R.id.ct_register_agreement).setVisibility(View.GONE);
-            ((TextView)findViewById(R.id.ct_regist)).setText(R.string.ct_login_find_now);
-        }else{
+            ((TextView) findViewById(R.id.ct_regist)).setText(R.string.ct_login_find_now);
+        } else {
             findViewById(R.id.ct_register_mid).setOnClickListener(this);
         }
         findViewById(R.id.back_press).setOnClickListener(this);
@@ -174,15 +173,16 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             mCountry.setText("+" + currentCode);
         }
     }
-    public void onAccountChanged(){
-        findViewById(R.id.ct_account_clear).setVisibility(TextUtils.isEmpty(mPhoneNumber.getText().toString())?View.INVISIBLE:View.VISIBLE);
+
+    public void onAccountChanged() {
+        findViewById(R.id.ct_account_clear).setVisibility(TextUtils.isEmpty(mPhoneNumber.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
     }
 
-    public void onPasswordChanged(){
+    public void onPasswordChanged() {
         findViewById(R.id.ct_passwd_clear).setVisibility(TextUtils.isEmpty(mPassWd.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
     }
 
-    public void onNickChanged(){
+    public void onNickChanged() {
         findViewById(R.id.ct_nick_clear).setVisibility(TextUtils.isEmpty(mNick.getText().toString()) ? View.INVISIBLE : View.VISIBLE);
     }
 
@@ -193,7 +193,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     }
 
 
-        private String[] getCurrentCountry() {
+    private String[] getCurrentCountry() {
         String mcc = getMCC();
         String[] country = null;
         if (!TextUtils.isEmpty(mcc)) {
@@ -246,10 +246,10 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ct_regist:
-                if(valid()){
-                    if(mFindPasswd){
+                if (valid()) {
+                    if (mFindPasswd) {
                         submitForForget();
-                    }else{
+                    } else {
                         submit();
                     }
                 }
@@ -299,7 +299,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
-    private boolean valid(){
+    private boolean valid() {
         if (TextUtils.isEmpty(mCountry.getText())) {
             MessageUtils.showToast(R.string.ct_null_country);
             return false;
@@ -317,9 +317,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             return false;
         }
         if (TextUtils.isEmpty(mNick.getText())) {
-            if(mFindPasswd){
+            if (mFindPasswd) {
                 MessageUtils.showToast(R.string.ct_login_input_pw_again);
-            }else{
+            } else {
                 MessageUtils.showToast(R.string.ct_null_nick);
             }
             return false;
@@ -327,36 +327,36 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         return true;
     }
 
-    private void submit(){
+    private void submit() {
         showLoading();
         UserBusiness.register(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
-            @Override
-            public void onSuccess(LabResponse response, Object data) {
-                hideLoading();
-                if(data != null){
-                    UserInfo info = (UserInfo)data;
-                    LoginInstance.update(RegisterActivity.this, info);
-                    MessageUtils.showToast(R.string.ct_registerd_suc);
-                }else{
-                    MessageUtils.showToast(R.string.ct_registerd_suc_login);
-                    LoginInstance.logout(RegisterActivity.this);
-                }
-                setResult(RESULT_OK);
-                finish();
-            }
+                    @Override
+                    public void onSuccess(LabResponse response, Object data) {
+                        hideLoading();
+                        if (data != null) {
+                            UserInfo info = (UserInfo) data;
+                            LoginInstance.update(RegisterActivity.this, info);
+                            MessageUtils.showToast(R.string.ct_registerd_suc);
+                        } else {
+                            MessageUtils.showToast(R.string.ct_registerd_suc_login);
+                            LoginInstance.logout(RegisterActivity.this);
+                        }
+                        setResult(RESULT_OK);
+                        finish();
+                    }
 
-            @Override
-            public void onFailure(LabResponse response, Object data) {
-                hideLoading();
-                if(response != null && !TextUtils.isEmpty(response.msg)){
-                    MessageUtils.showToast(response.msg);
-                }
-            }
-        }, mPhoneNumber.getText().toString(), currentCode, mPassWd.getText().toString(),
+                    @Override
+                    public void onFailure(LabResponse response, Object data) {
+                        hideLoading();
+                        if (response != null && !TextUtils.isEmpty(response.msg)) {
+                            MessageUtils.showToast(response.msg);
+                        }
+                    }
+                }, mPhoneNumber.getText().toString(), currentCode, mPassWd.getText().toString(),
                 mVcode.getText().toString(), mNick.getText().toString());
     }
 
-    private void submitForForget(){
+    private void submitForForget() {
         showLoading();
         UserBusiness.resetPassword(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
                     @Override

@@ -129,8 +129,8 @@
     <string name="ct_mobile_nick">昵稱</string>
     <string name="ct_register_confirm">註冊</string>
     <string name="ct_register">註冊</string>
-    <string name="ct_register_head">我已閱讀並同意脆餅</string>
-    <string name="ct_register_mid">使用條款和隱私政策</string>
+    <string name="ct_register_head">我已閱讀並同意</string>
+    <string name="ct_register_mid">脆餅使用條款和隱私政策</string>
     <string name="ct_register_vcode_suc">驗證碼已發送，請註意查收</string>
     <string name="ct_gongyue">脆餅公約</string>
     <string name="ct_null_phone">請填寫手機號碼</string>
