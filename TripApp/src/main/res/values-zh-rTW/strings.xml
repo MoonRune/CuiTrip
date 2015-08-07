@@ -323,6 +323,10 @@
     <string name="ct_forget_password">忘記密碼？</string>
     <string name="ct_has_account">已有帳號,去登錄</string>
 
+    <string name="ct_no_login_hint_message">告訴發現者您的出⾏行計劃和喜好\n你們就從這裡開始認識</string>
+    <string name="ct_no_login_hint_order">預訂您喜歡的旅程\n您的出⾏行安排就在這⾥裏確認</string>
+    <string name="ct_hint_service">發布您最有趣的⾏行程\n告訴旅⾏行者地道的旅⾏行體驗</string>
+
     <string-array name="ct_gender_list">
         <item>男</item>
         <item>女</item>

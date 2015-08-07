@@ -43,14 +43,32 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogHelper.e("omg", "oncreate");
         ActionBar bar = getActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(false);
         }
     }
 
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        onVisiableToUser();
+    }
+
+    public void onVisiableToUser() {
+        LogHelper.e("omg", "islogin" + LoginInstance.isLogin(MainApplication.sContext));
+        if (!LoginInstance.isLogin(MainApplication.sContext)) {
+            reLogin();
+            if (getActivity() instanceof IndexActivity) {
+                ((IndexActivity) getActivity()).revertTab();
+            }
+        }
+    }
+
     public void onResume() {
         super.onResume();
+        LogHelper.e("omg", "onresume");
         showActionBar(getString(R.string.ct_my));
         setHasOptionsMenu(true);
         if (LoginInstance.isLogin(MainApplication.sContext)) {
@@ -90,6 +108,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        LogHelper.e("omg", "onCreateView");
         if (mContentView == null) {
             mContentView = inflater.inflate(R.layout.ct_my, container, false);
             mContentView.findViewById(R.id.author_profile).setOnClickListener(this);
@@ -108,13 +127,16 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 ((ViewGroup) parent).removeView(mContentView);
             }
         }
+        onVisiableToUser();
         return mContentView;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requestForHomepageStatus();
+        if (LoginInstance.isLogin(MainApplication.sContext)) {
+            requestForHomepageStatus();
+        }
     }
 
     @Override

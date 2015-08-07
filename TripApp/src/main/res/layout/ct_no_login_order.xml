@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/ct_main_color"
+    android:orientation="vertical"
+    android:paddingBottom="30dp"
+    android:paddingLeft="@dimen/ct_width_padding"
+    android:paddingRight="@dimen/ct_width_padding">
+
+    <RelativeLayout
+        android:layout_marginTop="70dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="bottom">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/luggage_img_w"/>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginTop="20dp"
+        android:gravity="center_horizontal"
+        android:text="@string/ct_no_login_hint_order"
+        android:textColor="@color/ct_white"
+        android:textSize="@dimen/ct_ts_3" />
+
+    <TextView
+        android:id="@+id/ct_login"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:gravity="center"
+        android:layout_below="@+id/edit_block"
+        android:background="@drawable/select_green_corner"
+        android:text="@string/ct_login"
+        android:textColor="@color/ct_white"
+        android:textSize="@dimen/ct_ts_3" />
+</LinearLayout>

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ct_white">
+    android:background="@color/ct_regist_yellow">
 
     <android.support.v4.widget.SwipeRefreshLayout
     android:id="@+id/refresh_layout"
@@ -16,9 +17,11 @@
         android:layout_height="wrap_content"
         android:divider="@color/ct_divider"
         android:dividerHeight="@dimen/ct_single_px"
+        tools:visibility="gone"
         android:paddingLeft="@dimen/ct_width_padding" />
     </android.support.v4.widget.SwipeRefreshLayout>
     <TextView
+        android:background="@color/ct_red"
         android:id="@+id/ct_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -30,9 +33,10 @@
 
     <include
         android:id="@+id/ct_no_login"
-        layout="@layout/ct_no_login"
+        layout="@layout/ct_no_login_message"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        tools:visibility="visible"
         android:visibility="gone" />
 
 </FrameLayout>

@@ -40,7 +40,7 @@ public class IndexActivity extends BaseTabHostActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
-        if(intent != null){
+        if (intent != null) {
             String tabTag = intent.getStringExtra(GO_TO_TAB);
             if (!TextUtils.isEmpty(tabTag)) {
                 mTabHost.setCurrentTabByTag(tabTag);
@@ -53,7 +53,7 @@ public class IndexActivity extends BaseTabHostActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(intent != null){
+        if (intent != null) {
             String tabTag = intent.getStringExtra(GO_TO_TAB);
             if (!TextUtils.isEmpty(tabTag)) {
                 mTabHost.setCurrentTabByTag(tabTag);
@@ -71,19 +71,21 @@ public class IndexActivity extends BaseTabHostActivity {
         }
     }
 
-    public void testClickMy(){
+    public void testClickMy() {
         tab.performClick();
     }
+
     View tab;
+
     @Override
     protected void initTabs() {
         UserInfo info = LoginInstance.getInstance(this).getUserInfo();
-        if(info != null && !info.isTravel()){
+        if (info != null && !info.isTravel()) {
             mTabHost.addTab(mTabHost.newTabSpec(SERVICE_TAB)
                             .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_finder))), ServiceFragment.class,
                     null);
-        }else{
+        } else {
             mTabHost.addTab(mTabHost.newTabSpec(RECOMMEND_TAB)
                             .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_recommend))), RecommendFragment.class,
@@ -91,13 +93,13 @@ public class IndexActivity extends BaseTabHostActivity {
         }
 
         mTabHost.addTab(mTabHost.newTabSpec(MESSAGE_TAB)
-                .setIndicator(createMeeageTabView(R.drawable.ct_mennsage, getString(R.string.ct_message))),
+                        .setIndicator(createMeeageTabView(R.drawable.ct_mennsage, getString(R.string.ct_message))),
                 MessageFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec(ORDER_TAB)
-                .setIndicator(createTabView(R.drawable.ct_order, getString(R.string.ct_order))),
+                        .setIndicator(createTabView(R.drawable.ct_order, getString(R.string.ct_order))),
                 OrderFragment.class, null);
-        mTabHost.addTab( mTabHost.newTabSpec(MY_TAB)
-                        .setIndicator(tab =createTabView(R.drawable.ct_my, getString(R.string.ct_my))),
+        mTabHost.addTab(mTabHost.newTabSpec(MY_TAB)
+                        .setIndicator(tab = createTabView(R.drawable.ct_my, getString(R.string.ct_my))),
                 MyFragment.class, null);
         mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
@@ -108,11 +110,27 @@ public class IndexActivity extends BaseTabHostActivity {
                 }
             }
         });
+        mTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                lastTabId = CurrentId;
+                CurrentId = tabId;
+            }
+        });
     }
+
+    public void revertTab() {
+        if (!TextUtils.isEmpty(lastTabId)) {
+            mTabHost.setCurrentTabByTag(lastTabId);
+        }
+    }
+
+    String lastTabId;
+    String CurrentId;
 
     private View createTabView(int drawable, String text) {
         View parent = View.inflate(this, R.layout.ct_tab_widget, null);
-        ((ImageView)parent.findViewById(R.id.tabIcon)).setImageResource(drawable);
+        ((ImageView) parent.findViewById(R.id.tabIcon)).setImageResource(drawable);
         parent.findViewById(R.id.tab_new).setVisibility(View.GONE);
         ((TextView) parent.findViewById(R.id.tab_tv)).setText(text);
         return parent;
@@ -120,7 +138,7 @@ public class IndexActivity extends BaseTabHostActivity {
 
     private View createMeeageTabView(int drawable, String text) {
         View parent = View.inflate(this, R.layout.ct_tab_widget, null);
-        ((ImageView)parent.findViewById(R.id.tabIcon)).setImageResource(drawable);
+        ((ImageView) parent.findViewById(R.id.tabIcon)).setImageResource(drawable);
         mNewMessageDot = parent.findViewById(R.id.tab_new);
         mNewMessageDot.setVisibility(View.GONE);
         ((TextView) parent.findViewById(R.id.tab_tv)).setText(text);
@@ -129,7 +147,7 @@ public class IndexActivity extends BaseTabHostActivity {
 
     @Override
     public void onBackPressed() {
-        if(!mExiting){
+        if (!mExiting) {
             mExiting = true;
             MessageUtils.showToast(R.string.ct_exit_tip);
             mTabHost.postDelayed(new Runnable() {
@@ -138,16 +156,16 @@ public class IndexActivity extends BaseTabHostActivity {
                     mExiting = false;
                 }
             }, EXIT_TIME);
-        }else{
+        } else {
             finish();
         }
     }
 
-    public void setNewMessageComingListener(NewMessageComingListener messageComingListener){
+    public void setNewMessageComingListener(NewMessageComingListener messageComingListener) {
         mMessageComingListener = messageComingListener;
     }
 
-    public interface NewMessageComingListener{
+    public interface NewMessageComingListener {
         void onNewMessage();
     }
 
@@ -156,18 +174,18 @@ public class IndexActivity extends BaseTabHostActivity {
     private BroadcastReceiver mNewMessageComing = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent != null && PushService.NEW_MESSAGE_BROADCAT.equals(intent.getAction())){
-                if(!MESSAGE_TAB.equals(mTabHost.getCurrentTabTag())){
+            if (intent != null && PushService.NEW_MESSAGE_BROADCAT.equals(intent.getAction())) {
+                if (!MESSAGE_TAB.equals(mTabHost.getCurrentTabTag())) {
                     mNewMessageDot.setVisibility(View.VISIBLE);
                 }
-                if(mMessageComingListener != null){
+                if (mMessageComingListener != null) {
                     mMessageComingListener.onNewMessage();
                 }
             }
         }
     };
 
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
         unregisterReceiver(mNewMessageComing);
     }
