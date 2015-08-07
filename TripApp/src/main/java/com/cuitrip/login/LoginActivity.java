@@ -65,6 +65,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 return true;
             }
         });
+        findViewById(R.id.ct_account_clear).setOnClickListener(this);
+        findViewById(R.id.ct_passwd_clear).setOnClickListener(this);
         findViewById(R.id.back_press).setOnClickListener(this);
         findViewById(R.id.find_password).setOnClickListener(this);
         findViewById(R.id.ct_login).setOnClickListener(this);
@@ -108,7 +110,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String[] country = getCurrentCountry();
         if (country != null) {
             currentCode = country[1];
-            mCountry.setText(country[0] + "  +" + currentCode);
+            mCountry.setText( "+" + currentCode);
         }
     }
 
@@ -166,6 +168,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case R.id.find_password:
                 finPassword();
+                break;
+            case R.id.ct_account_clear:
+                mPhoneNumber.setText("");
+                break;
+            case R.id.ct_passwd:
+                mPassWd.setText("");
                 break;
             case R.id.back_press:
                 finish();
@@ -281,7 +289,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 String[] country = SMSSDK.getCountry(currentId);
                 if (country != null) {
                     currentCode = country[1];
-                    mCountry.setText(country[0] + "  +" + currentCode);
+                    mCountry.setText("+" + currentCode);
                 }
                 checkPhoneNum(mPhoneNumber.getText().toString().trim(), currentCode);
             }
