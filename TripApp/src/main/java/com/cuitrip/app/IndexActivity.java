@@ -77,15 +77,18 @@ public class IndexActivity extends BaseTabHostActivity {
 
     View tab;
 
+    public String firstTag;
     @Override
     protected void initTabs() {
         UserInfo info = LoginInstance.getInstance(this).getUserInfo();
         if (info != null && !info.isTravel()) {
+            firstTag =SERVICE_TAB;
             mTabHost.addTab(mTabHost.newTabSpec(SERVICE_TAB)
                             .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_finder))), ServiceFragment.class,
                     null);
         } else {
+            firstTag =RECOMMEND_TAB;
             mTabHost.addTab(mTabHost.newTabSpec(RECOMMEND_TAB)
                             .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_recommend))), RecommendFragment.class,
@@ -122,6 +125,8 @@ public class IndexActivity extends BaseTabHostActivity {
     public void revertTab() {
         if (!TextUtils.isEmpty(lastTabId)) {
             mTabHost.setCurrentTabByTag(lastTabId);
+        } else {
+            mTabHost.setCurrentTabByTag(firstTag);
         }
     }
 
