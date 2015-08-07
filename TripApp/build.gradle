@@ -51,6 +51,7 @@ android {
     }
 
     productFlavors {
+        今日头条{}
         tecent {}
         baidu {}
         c360 {}
