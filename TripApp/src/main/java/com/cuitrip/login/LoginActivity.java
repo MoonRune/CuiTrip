@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cuitrip.app.IndexActivity;
@@ -55,8 +51,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showActionBar(R.string.ct_login);
-
         setContentView(R.layout.ct_activity_login);
         mPassWd = (TextView) findViewById(R.id.ct_passwd);
         mCountry = (TextView) findViewById(R.id.ct_contry);
@@ -71,17 +65,43 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 return true;
             }
         });
+        findViewById(R.id.back_press).setOnClickListener(this);
+        findViewById(R.id.find_password).setOnClickListener(this);
         findViewById(R.id.ct_login).setOnClickListener(this);
         findViewById(R.id.ct_go_regist).setOnClickListener(this);
         findViewById(R.id.ct_contry).setOnClickListener(this);
-        ((CheckBox) findViewById(R.id.toggle_pw)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+        mPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    mPassWd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    mPassWd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onAccountChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mPassWd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onPasswordChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -93,24 +113,21 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
 
+    public void onAccountChanged(){
+        findViewById(R.id.ct_account_clear).setVisibility(TextUtils.isEmpty(mPhoneNumber.getText().toString())?View.INVISIBLE:View.VISIBLE);
+    }
+
+    public void onPasswordChanged(){
+        findViewById(R.id.ct_passwd_clear).setVisibility(TextUtils.isEmpty(mPassWd.getText().toString())?View.INVISIBLE:View.VISIBLE);
+    }
     protected void onDestroy() {
         super.onDestroy();
         //mClient.cancelAllRequests(true);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ct_menu_login, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
-            case R.id.action_find:
-                startActivityForResult(new Intent(this, RegisterActivity.class)
-                        .putExtra(RegisterActivity.FIND_PASSWD, true), GO_REGISTEER);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void finPassword() {
+        startActivityForResult(new Intent(this, RegisterActivity.class)
+                .putExtra(RegisterActivity.FIND_PASSWD, true), GO_REGISTEER);
     }
 
     private String[] getCurrentCountry() {
@@ -147,6 +164,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     submit();
                 }
                 break;
+            case R.id.find_password:
+                finPassword();
+                break;
+            case R.id.back_press:
+                finish();
+                break;
             case R.id.ct_contry:
                 // 国家列表
                 CountryPage countryPage = new CountryPage();
@@ -163,8 +186,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == GO_REGISTEER && resultCode == RESULT_OK
-                && LoginInstance.isLogin(this)){
+        if (requestCode == GO_REGISTEER && resultCode == RESULT_OK
+                && LoginInstance.isLogin(this)) {
             setResult(RESULT_OK);
             finish();
             return;
@@ -172,7 +195,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private boolean valid(){
+    private boolean valid() {
         if (TextUtils.isEmpty(mCountry.getText())) {
             MessageUtils.showToast(R.string.ct_null_country);
             return false;
@@ -188,7 +211,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         return true;
     }
 
-    private void submit(){
+    private void submit() {
         showLoading();
         UserBusiness.login(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
             @Override
@@ -200,28 +223,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     String deviceId = UmengRegistrar.getRegistrationId(LoginActivity.this);
                     LogHelper.e("LoginActivity", "device_id: " + deviceId);
                     UserInfo info = (UserInfo) data;
-                    if(!TextUtils.isEmpty(deviceId)){
+                    if (!TextUtils.isEmpty(deviceId)) {
                         UserBusiness.upDevicetoken(LoginActivity.this, mClient, new LabAsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(LabResponse response, Object data) {
-                                LogHelper.e("LoginActivity", "device_id: suc" );
+                                LogHelper.e("LoginActivity", "device_id: suc");
                             }
 
                             @Override
                             public void onFailure(LabResponse response, Object data) {
-                                LogHelper.e("LoginActivity", "device_id: failed " );
+                                LogHelper.e("LoginActivity", "device_id: failed ");
                             }
-                        }, deviceId,((UserInfo) data).getUid(),((UserInfo) data).getToken());
+                        }, deviceId, ((UserInfo) data).getUid(), ((UserInfo) data).getToken());
                     }
                     //TODO 发现者模式下登录切换到旅行者？
                     info.setType(UserInfo.USER_TRAVEL);
                     UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
-                    if(oldInfo == null || (oldInfo != null && !oldInfo.isTravel())){
+                    if (oldInfo == null || (oldInfo != null && !oldInfo.isTravel())) {
                         LoginInstance.update(LoginActivity.this, info);
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                    }else {
+                    } else {
                         LoginInstance.update(LoginActivity.this, info);
                     }
 
@@ -229,7 +252,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                     try {
                         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -264,6 +287,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         }
     }
+
     /**
      * 检查电话号码
      */

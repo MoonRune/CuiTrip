@@ -16,6 +16,9 @@
 
     <color name="ct_blue_pressed">#ff7ed321</color>
 
+    <color name="ct_login_green">#ffb8e986</color>
+    <color name="ct_login_green_click">#ffc8f976</color>
+
     <color name="ct_info">#ff5d5d5d</color>
 
     <color name="ct_gray">#ff9b9b9b</color>
