@@ -196,6 +196,7 @@ public class MessageListFragment extends BaseFragment implements SwipeRefreshLay
             holder.mTime = (TextView)view.findViewById(R.id.message_time);
             holder.mImage = (ImageView)view.findViewById(R.id.author_img);
             holder.mNewMessage = view.findViewById(R.id.message_new);
+            holder.mMessageAnchor = view.findViewById(R.id.message_new);
             return holder;
         }
 
@@ -209,6 +210,7 @@ public class MessageListFragment extends BaseFragment implements SwipeRefreshLay
             }else{
                 messageHolder.mTime.setText(Utils.getDateFormat(item.getGmtCreated(), Utils.DATE_FORMAT_SECOND));
             }
+
             messageHolder.mService.setText(item.getTopic());
             if(MessagePrefs.isDialogHasNewMessage(item.getOrderId(),
                     Utils.parseStringToLongTime(item.getGmtCreated(),
@@ -222,6 +224,7 @@ public class MessageListFragment extends BaseFragment implements SwipeRefreshLay
             }else{
                 messageHolder.mNewMessage.setVisibility(View.GONE);
             }
+            messageHolder.mMessageAnchor.setVisibility(item.isSystemMsg()?View.INVISIBLE:View.VISIBLE);
             ImageHelper.displayPersonImage(item.getHeadPic(), messageHolder.mImage, null);
             //TODO
         }
@@ -234,6 +237,7 @@ public class MessageListFragment extends BaseFragment implements SwipeRefreshLay
         public TextView mService;
         public TextView mTime;
         public View mNewMessage;
+        public View mMessageAnchor;
     }
 
     public interface OnNewMessageCallback{
