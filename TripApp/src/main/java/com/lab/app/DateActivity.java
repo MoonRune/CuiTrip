@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class DateActivity extends BaseActivity implements View.OnClickListener {
 
@@ -68,6 +69,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.after_month).setOnClickListener(this);
         mMonth = (TextView) findViewById(R.id.month_title);
         mCalendar = Calendar.getInstance();
+        mCalendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         mMonth.setText(String.format(Locale.ENGLISH, getString(R.string.ct_service_date_title),
                 mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH) + 1));
 
@@ -140,6 +142,10 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
 
         private Calendar calendar = Calendar.getInstance();
 
+        {
+
+            calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+        }
         public void setCalendar(Calendar cal) {
             this.calendar.setTimeInMillis(cal.getTimeInMillis());
         }
@@ -199,6 +205,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 }
                 if (!match) {
                     Calendar today = Calendar.getInstance();
+                    today.setTimeZone(TimeZone.getTimeZone("GMT+800"));
                     today.set(Calendar.HOUR_OF_DAY, 0);
                     today.set(Calendar.MINUTE, 0);
                     today.set(Calendar.SECOND, 0);
