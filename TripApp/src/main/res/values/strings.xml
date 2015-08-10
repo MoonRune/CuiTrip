@@ -220,7 +220,7 @@
     <string name="ct_service_booked">不可安排</string>
     <string name="ct_service_cancelable">已经安排</string>
     <string name="ct_service_date_setted">提交成功</string>
-    <string name="ct_waiting">请稍后...</string>
+    <string name="ct_waiting">请稍后&#8230;</string>
 
     <string name="ct_submit">提交</string>
     <string name="ct_save">保存</string>
