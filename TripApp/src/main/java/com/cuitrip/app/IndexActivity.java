@@ -122,14 +122,6 @@ public class IndexActivity extends BaseTabHostActivity {
         });
     }
 
-    public void revertTab() {
-        if (!TextUtils.isEmpty(lastTabId)) {
-            mTabHost.setCurrentTabByTag(lastTabId);
-        } else {
-            mTabHost.setCurrentTabByTag(firstTag);
-        }
-    }
-
     String lastTabId;
     String CurrentId;
 
