@@ -1,4 +1,4 @@
-package com.cuitrip.app;
+package com.cuitrip.app.conversation;
 
 import android.content.Context;
 import android.content.Intent;
