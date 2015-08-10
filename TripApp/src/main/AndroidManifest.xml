@@ -75,7 +75,7 @@
         <!-- 友盟埋点 push-->
         <meta-data
             android:name="UMENG_APPKEY"
-            android:value="559c8fb567e58ef79a00528c" >
+            android:value="55c802a0e0f55a20f5006653" >
         </meta-data>
         <meta-data
             android:name="UMENG_MESSAGE_SECRET"

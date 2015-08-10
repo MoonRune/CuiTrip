@@ -51,7 +51,7 @@ android {
     }
 
     productFlavors {
-        今日头条{}
+        develop{}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
