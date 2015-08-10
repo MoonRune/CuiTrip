@@ -118,15 +118,15 @@
     <string name="ct_booked">不可预订</string>
 
     <string name="ct_country">国家/地区</string>
-    <string name="ct_mobile_hint">手机号码</string>
-    <string name="ct_mobile_vcode">验证码</string>
+    <string name="ct_mobile_hint">请输入手机号</string>
+    <string name="ct_mobile_vcode">请输入验证码</string>
     <string name="ct_get_vcode">获取验证码</string>
-    <string name="ct_mobile_passwd">密码</string>
+    <string name="ct_mobile_passwd">请输入新密码</string>
     <string name="ct_mobile_new_passwd">请输入新密码</string>
     <string name="ct_mobile_again">请再次输入密码</string>
     <string name="ct_ok">确认</string>
     <string name="ct_modify_suc">密码修改成功，请重新登录</string>
-    <string name="ct_mobile_nick">昵称</string>
+    <string name="ct_mobile_nick">请输入昵称</string>
     <string name="ct_register_confirm">注册</string>
     <string name="ct_register">注册</string>
     <string name="ct_register_head">我已阅读并同意</string>
