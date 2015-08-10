@@ -35,6 +35,7 @@ android {
 
     buildTypes {
         release {
+            debuggable false
             minifyEnabled true
             proguardFile 'proguard-rules.pro'
             signingConfig signingConfigs.release
@@ -51,15 +52,7 @@ android {
     }
 
     productFlavors {
-        今日头条{}
-        tecent {}
-        baidu {}
-        c360 {}
-        xiaomi {}
-        c91 {}
-        wandoujia {}
         googleplay {}
-        InnerChannel {}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
