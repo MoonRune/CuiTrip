@@ -1,4 +1,4 @@
-package com.cuitrip.base;
+package com.cuitrip.app.base;
 
 import java.util.List;
 

@@ -1,15 +1,14 @@
-package com.cuitrip.base;
+package com.cuitrip.app.base;
 
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-
-import com.malinskiy.superrecyclerview.swipe.BaseSwipeAdapter;
 
 import butterknife.ButterKnife;
 
 /**
  * Created by baziii on 15/8/7.
  */
-public abstract class RecycleViewHolder<T> extends BaseSwipeAdapter.BaseSwipeableViewHolder{
+public abstract class RecycleViewHolder<T> extends RecyclerView.ViewHolder{
     public RecycleViewHolder(View itemView) {
         super(itemView);
         ButterKnife.inject(this, itemView);

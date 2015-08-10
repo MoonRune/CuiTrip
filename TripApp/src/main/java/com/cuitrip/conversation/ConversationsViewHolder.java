@@ -3,7 +3,7 @@ package com.cuitrip.conversation;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cuitrip.base.RecycleViewHolder;
+import com.cuitrip.app.base.RecycleViewHolder;
 import com.cuitrip.service.R;
 import com.lab.utils.ImageHelper;
 

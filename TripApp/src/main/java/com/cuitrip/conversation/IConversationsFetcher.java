@@ -1,6 +1,6 @@
 package com.cuitrip.conversation;
 
-import com.cuitrip.base.ListFetchCallback;
+import com.cuitrip.app.base.ListFetchCallback;
 
 /**
  * Created by baziii on 15/8/7.

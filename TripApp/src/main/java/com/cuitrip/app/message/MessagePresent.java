@@ -2,7 +2,7 @@ package com.cuitrip.app.message;
 
 import android.os.AsyncTask;
 
-import com.cuitrip.base.ListFetchCallback;
+import com.cuitrip.app.base.ListFetchCallback;
 import com.lab.utils.LogHelper;
 
 import java.util.ArrayList;

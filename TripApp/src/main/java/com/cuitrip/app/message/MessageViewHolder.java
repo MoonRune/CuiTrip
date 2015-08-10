@@ -1,11 +1,10 @@
 package com.cuitrip.app.message;
 
 import android.view.View;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.cuitrip.base.RecycleViewHolder;
+import com.cuitrip.app.base.RecycleViewHolder;
 import com.cuitrip.service.R;
 import com.malinskiy.superrecyclerview.swipe.SwipeLayout;
 
@@ -21,11 +20,12 @@ public class MessageViewHolder extends RecycleViewHolder<MessageMode> {
     @InjectView(R.id.ct_message_time)
     TextView mMessageTime;
     @InjectView(R.id.ct_delete)
-    Button mDelete;
+    View mDelete;
     @InjectView(R.id.ct_swip_layout)
     SwipeLayout mSwipLayout;
     @InjectView(R.id.ct_message_layout)
     LinearLayout mMessageLayout;
+    MessageMode messageMode;
 
     public MessageViewHolder(View itemView, View.OnClickListener mOnClickListener) {
         super(itemView);
@@ -37,6 +37,7 @@ public class MessageViewHolder extends RecycleViewHolder<MessageMode> {
 
     @Override
     public void render(MessageMode messageMode) {
+        this.messageMode=messageMode;
         mMessageLayout.setTag(messageMode);
         mDelete.setTag(messageMode);
         mMessageName.setText(messageMode.getName());

@@ -15,7 +15,7 @@ import butterknife.InjectView;
 /**
  * Created by baziii on 15/8/10.
  */
-public abstract class BaseVerticalListActivity extends BaseActivity {
+public abstract class BaseVerticalListActivity<T> extends BaseActivity implements ILoadMoreView<T> {
     public static final String TAG = "BaseVerticalListActivity";
     @InjectView(R.id.ct_recycler_view)
     protected RecyclerView mRecyclerView;
@@ -102,12 +102,36 @@ public abstract class BaseVerticalListActivity extends BaseActivity {
     public void uiShowRefreshLoading() {
         LogHelper.e(TAG, "uiShowRefreshLoading");
         mSwipeRefreshLayout.setRefreshing(true);
+        onLoadStarted();
     }
 
     public void uiHideRefreshLoading() {
         LogHelper.e(TAG, "uiHideRefreshLoading");
         mSwipeRefreshLayout.setRefreshing(false);
         isResumeRefresh = false;
+        onLoadFinished();
+    }
+
+    @Override
+    public void uiShowLoadMore() {
+        onLoadStarted();
+        //foot view show
+    }
+
+    @Override
+    public void uiHideLoadMore() {
+        onLoadFinished();
+        //foot view hiden
+    }
+
+    @Override
+    public void disableEvent() {
+
+    }
+
+    @Override
+    public void enableEvent() {
+
     }
 
 }

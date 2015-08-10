@@ -118,6 +118,7 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" exported="" name="libpingpp" level="project" />
     <orderEntry type="library" exported="" name="cwac-adapter-1.0.3" level="project" />
+    <orderEntry type="library" exported="" name="recyclerview-animators-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="recyclerview-v7-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-22.2.1" level="project" />
     <orderEntry type="library" exported="" name="ShareSDK-Wechat-2.6.0" level="project" />

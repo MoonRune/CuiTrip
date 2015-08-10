@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ct_swip_layout"
     android:layout_width="match_parent"
-    android:layout_height="44dp"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical">
 
     <RelativeLayout
@@ -23,26 +23,9 @@
     </RelativeLayout>
 
 
-    <LinearLayout
-        tools:visibility="gone"
-        android:id="@+id/ct_message_layout"
+    <include
+        android:id="@+id/ct_service"
+        layout="@layout/ct_recommend_list_item"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@drawable/select_white_gray"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/ct_message_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            tools:text="name" />
-
-        <TextView
-            android:id="@+id/ct_message_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            tools:text="content" />
-    </LinearLayout>
+        android:layout_height="match_parent"/>
 </com.lab.widget.CanClickSwipeLayout>

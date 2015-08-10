@@ -1,6 +1,6 @@
 package com.cuitrip.conversation;
 
-import com.cuitrip.base.ListFetchCallback;
+import com.cuitrip.app.base.ListFetchCallback;
 import com.cuitrip.conversation.rong.ConversationFetcherRong;
 
 import java.util.List;

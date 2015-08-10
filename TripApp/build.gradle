@@ -69,4 +69,6 @@ dependencies {
     compile 'cn.pedant.sweetalert:library:1.3'
     compile project(':IMKit')
     compile 'com.malinskiy:superrecyclerview:1.1.1'
+    compile 'jp.wasabeef:recyclerview-animators:1.0.1'
+
 }

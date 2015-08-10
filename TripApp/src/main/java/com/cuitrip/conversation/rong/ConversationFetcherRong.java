@@ -1,6 +1,6 @@
 package com.cuitrip.conversation.rong;
 
-import com.cuitrip.base.ListFetchCallback;
+import com.cuitrip.app.base.ListFetchCallback;
 import com.cuitrip.conversation.ConversationItem;
 import com.cuitrip.conversation.IConversationsFetcher;
 import com.lab.utils.LogHelper;
