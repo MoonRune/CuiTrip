@@ -7,5 +7,5 @@ import com.cuitrip.app.base.ILoadMoreView;
  */
 public interface IMessageView extends ILoadMoreView<MessageMode> {
     void jumpMessage(MessageMode messageMode);
-    void moveLeftMessage(MessageMode messageMode);
+    void deleteMessage(MessageMode messageMode);
 }

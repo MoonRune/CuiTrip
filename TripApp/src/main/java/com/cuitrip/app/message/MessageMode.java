@@ -59,4 +59,12 @@ public class MessageMode {
     public void setIsLeft(boolean isLeft) {
         this.isLeft = isLeft;
     }
+
+    public MessageMode(String name, String id, String date, String content, boolean isLeft) {
+        this.name = name;
+        this.id = id;
+        this.date = date;
+        this.content = content;
+        this.isLeft = isLeft;
+    }
 }

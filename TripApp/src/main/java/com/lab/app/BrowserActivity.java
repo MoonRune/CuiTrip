@@ -1,5 +1,6 @@
 package com.lab.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -49,6 +50,12 @@ public class BrowserActivity extends BaseActivity {
 
     static final String LOGTAG = "HTMLViewerActivity";
 
+    public static void startWithData(Context context,String data){
+        Intent intent =new Intent(context,BrowserActivity.class);
+        intent.putExtra(IS_DATA,true);
+        intent.putExtra(DATA,data);
+        context.startActivity(intent);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_PROGRESS);

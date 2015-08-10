@@ -68,5 +68,5 @@ dependencies {
     compile project(':social_sdk_library_project')
     compile 'cn.pedant.sweetalert:library:1.3'
     compile project(':IMKit')
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.malinskiy:superrecyclerview:1.1.1'
 }

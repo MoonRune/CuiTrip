@@ -18,17 +18,20 @@ import butterknife.InjectView;
 public abstract class BaseVerticalListActivity extends BaseActivity {
     public static final String TAG = "BaseVerticalListActivity";
     @InjectView(R.id.ct_recycler_view)
-    protected  RecyclerView mRecyclerView;
+    protected RecyclerView mRecyclerView;
     @InjectView(R.id.ct_swipe_refresh_layout)
     protected SwipeRefreshLayout mSwipeRefreshLayout;
     LinearLayoutManager mLayoutManager;
 
+    //包括刷新和loadMore
     boolean loading = false;
     boolean hasMore = true;
+    boolean isResumeRefresh = false;
 
     protected RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
 
-        @Override public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
             super.onScrolled(recyclerView, dx, dy);
             int pastVisiblesItems, visibleItemCount, totalItemCount;
 
@@ -45,10 +48,11 @@ public abstract class BaseVerticalListActivity extends BaseActivity {
     protected SwipeRefreshLayout.OnRefreshListener onRefreshListener = new SwipeRefreshLayout.OnRefreshListener() {
         @Override
         public void onRefresh() {
-            LogHelper.e(TAG,"ui onrefresh call");
+            LogHelper.e(TAG, "ui onrefresh call");
             requestPresentRefresh();
         }
     };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,18 +65,49 @@ public abstract class BaseVerticalListActivity extends BaseActivity {
         mSwipeRefreshLayout.setOnRefreshListener(onRefreshListener);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        LogHelper.e(TAG, " is ui show refresh:" + mSwipeRefreshLayout.isRefreshing());
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            isResumeRefresh = true;
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (isResumeRefresh) {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                }
+            }, 300);
+        }
+    }
+
+    public void onLoadStarted(){
+        loading = true;
+    }
+
+    public void onLoadFinished(){
+        loading = false;
+    }
+
+    public void setHasMore(boolean hasMore) {
+        this.hasMore = hasMore;
+    }
+
     public abstract void requestPresentLoadMore();
 
     public abstract void requestPresentRefresh();
 
-    public void uiShowRefreshLoading(){
-        LogHelper.e(TAG,"uiShowRefreshLoading");
+    public void uiShowRefreshLoading() {
+        LogHelper.e(TAG, "uiShowRefreshLoading");
         mSwipeRefreshLayout.setRefreshing(true);
     }
 
-    public void uiHideRefreshLoading(){
-        LogHelper.e(TAG,"uiHideRefreshLoading");
+    public void uiHideRefreshLoading() {
+        LogHelper.e(TAG, "uiHideRefreshLoading");
         mSwipeRefreshLayout.setRefreshing(false);
+        isResumeRefresh = false;
     }
 
 }
