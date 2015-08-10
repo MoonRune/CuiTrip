@@ -50,32 +50,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    @Override
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        super.setUserVisibleHint(isVisibleToUser);
-        onVisiableToUser();
-    }
-
-    public void onVisiableToUser() {
-        LogHelper.e("omg", "islogin" + LoginInstance.isLogin(MainApplication.sContext));
-        if (!LoginInstance.isLogin(MainApplication.sContext)) {
-            reLogin();
-        }
-    }
-
-    public void revertTab() {
-        if (!LoginInstance.isLogin(MainApplication.sContext)) {
-
-            if (getActivity() instanceof IndexActivity) {
-                ((IndexActivity) getActivity()).revertTab();
-            }
-        }
-    }
-
     public void onResume() {
         super.onResume();
         LogHelper.e("omg", "onresume");
-        revertTab();
         showActionBar(getString(R.string.ct_my));
         setHasOptionsMenu(true);
         if (LoginInstance.isLogin(MainApplication.sContext)) {
@@ -134,7 +111,6 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 ((ViewGroup) parent).removeView(mContentView);
             }
         }
-        onVisiableToUser();
         return mContentView;
     }
 
