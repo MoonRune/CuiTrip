@@ -5,13 +5,10 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.text.TextUtils;
 
-import com.cuitrip.business.BusinessHelper;
 import com.cuitrip.login.LoginActivity;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
-import com.lab.network.LabResponse;
 import com.lab.utils.MessageUtils;
 
 public class BaseFragment extends Fragment {

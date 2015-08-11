@@ -11,7 +11,6 @@ import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
-import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
 /**
@@ -53,15 +52,13 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
                         hideNoCancelDialog();
-                        LoginInstance.logout(SettingActivity.this);
-                        finish();
+                        MainApplication.getInstance().logOut();
                     }
 
                     @Override
                     public void onFailure(LabResponse response, Object data) {
                         hideNoCancelDialog();
-                        LoginInstance.logout(SettingActivity.this);
-                        finish();
+                        MainApplication.getInstance().logOut();
                     }
                 });
         }

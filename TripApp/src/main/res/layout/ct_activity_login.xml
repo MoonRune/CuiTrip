@@ -1,125 +1,178 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+
+    android:id="@+id/edit_block"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:background="@drawable/login_bg"
+    android:orientation="vertical"
+    android:paddingLeft="30dp"
+    android:paddingRight="30dp">
+
+    <ImageView
+        android:id="@+id/back_press"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:background="@drawable/select_alpha_gray"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/clear_w" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:src="@drawable/logo_login_w" />
 
     <LinearLayout
-        android:id="@+id/edit_block"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/ct_white"
-        android:orientation="vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding">
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/shape_white_corner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-        <RelativeLayout
-            android:id="@+id/counrty_selected"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/ct_contry"
+            android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:orientation="horizontal">
+            android:gravity="center"
+            android:background="@drawable/select_alpha_gray"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:paddingRight="15dp"
+            android:textColor="@color/ct_text_hint"
+            android:textSize="@dimen/ct_ts_4"
+            tools:text="+86" />
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:text="@string/ct_country"
-                android:textSize="@dimen/ct_ts_4"
-                android:textColor="@color/ct_text_title"
-                android:layout_toLeftOf="@+id/ct_contry"/>
-
-            <TextView
-                android:id="@+id/ct_contry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:gravity="center_vertical"
-                android:textSize="@dimen/ct_ts_5"
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
-                android:textColor="@color/ct_gray"/>
-        </RelativeLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ct_single_px"
-            android:background="@color/ct_divider" />
+        <TextView
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/gray" />
 
         <EditText
             android:id="@+id/ct_mobile"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="44dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
+            android:layout_weight="1"
             android:background="@null"
             android:gravity="center_vertical"
             android:hint="@string/ct_mobile_hint"
+            android:paddingLeft="15dp"
+            android:paddingRight="10dp"
             android:singleLine="true"
-            android:textColorHint="@color/ct_text_hint"
             android:textColor="@color/ct_text_title"
+            android:textColorHint="@color/ct_text_hint"
             android:textSize="@dimen/ct_ts_4" />
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/ct_single_px"
-            android:background="@color/ct_divider" />
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="44dp">
-
-            <EditText
-                android:id="@+id/ct_passwd"
-                android:layout_width="match_parent"
-                android:layout_height="44dp"
-                android:layout_centerVertical="true"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:hint="@string/ct_mobile_passwd"
-                android:textColor="@color/ct_text_title"
-                android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4"
-                android:singleLine="true"
-                android:inputType="textPassword"
-                android:layout_toLeftOf="@+id/toggle_pw"/>
-
-            <CheckBox
-                android:id="@+id/toggle_pw"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:text=""
-                android:checked="false"
-                android:button="@drawable/ct_passwd"/>
-        </RelativeLayout>
+        <ImageView
+            android:id="@+id/ct_account_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/clear_s_g"
+            android:visibility="invisible" />
     </LinearLayout>
 
-    <Button
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/shape_white_corner"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/ct_passwd"
+            android:layout_width="wrap_content"
+            android:layout_height="44dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/toggle_pw"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="@string/ct_mobile_passwd"
+            android:inputType="textPassword"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:singleLine="true"
+            android:textColor="@color/ct_text_title"
+            android:textColorHint="@color/ct_text_hint"
+            android:textSize="@dimen/ct_ts_4" />
+
+        <ImageView
+            android:id="@+id/ct_passwd_clear"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/clear_s_g"
+            android:visibility="invisible" />
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/ct_login"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:layout_alignParentRight="true"
+        android:layout_below="@+id/edit_block"
         android:layout_centerVertical="true"
-        android:layout_margin="15dp"
-        android:background="@drawable/ct_blue_bg"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/select_green_corner"
         android:gravity="center"
-        android:textColor="@color/ct_white"
         android:text="@string/ct_login_confirm"
-        android:textSize="@dimen/ct_ts_3"
-        android:layout_below="@+id/edit_block"/>
+        android:textColor="@color/ct_white"
+        android:textSize="@dimen/ct_ts_3" />
 
-    <Button
-        android:id="@+id/ct_go_regist"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="15dp"
-        android:background="@drawable/ct_main_bg_around"
-        android:gravity="center"
-        android:textColor="@color/ct_main_color"
-        android:text="@string/ct_login_go_regist"
-        android:textSize="@dimen/ct_ts_3"/>
-</RelativeLayout>
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|bottom"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ct_go_regist"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/back_arrow_w_little"
+            android:drawablePadding="5dp"
+            android:gravity="center"
+            android:background="@drawable/select_alpha_gray"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/ct_login_go_regist"
+            android:textColor="@color/ct_white"
+            android:textSize="15sp" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/find_password"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@drawable/select_alpha_gray"
+            android:paddingBottom="20dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingTop="10dp"
+            android:text="@string/ct_forget_password"
+            android:textColor="@color/ct_white"
+            android:textSize="15sp" />
+    </LinearLayout>
+</LinearLayout>

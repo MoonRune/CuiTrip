@@ -1,6 +1,5 @@
 package com.cuitrip.login;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
@@ -89,7 +88,7 @@ public class ModifyPasswdActivity extends BaseActivity {
             public void onSuccess(LabResponse response, Object data) {
                 hideNoCancelDialog();
                 MessageUtils.showToast(R.string.ct_modify_suc);
-                startActivity(new Intent(ModifyPasswdActivity.this, LoginActivity.class));
+//                startActivity(new Intent(ModifyPasswdActivity.this, LoginActivity.class));
                 finish();
             }
 
