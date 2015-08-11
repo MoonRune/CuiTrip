@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.cuitrip.app.message.MessageListActivity;
+import com.cuitrip.app.favorite.FavoriteListActivity;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 
@@ -53,7 +53,7 @@ public class LogoActivity extends BaseActivity implements Handler.Callback {
     public boolean handleMessage(Message message) {
         if (message.what == GO_MAIN) {
 
-            MessageListActivity.start(this);
+            FavoriteListActivity.start(this);
 //            startActivity(new Intent(this, IndexActivity.class));
             finish();
             return true;

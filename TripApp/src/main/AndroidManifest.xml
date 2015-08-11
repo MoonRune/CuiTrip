@@ -97,6 +97,18 @@
         </activity>
 
         <activity
+            android:name="com.cuitrip.app.favorite.FavoriteListActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
+            android:name="com.cuitrip.app.favorite.FavorityUnvaliableActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
             android:name="com.cuitrip.app.message.MessageListActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" >

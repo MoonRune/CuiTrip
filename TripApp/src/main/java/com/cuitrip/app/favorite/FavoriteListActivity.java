@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.cuitrip.app.base.BaseVerticalListActivity;
-import com.cuitrip.app.base.IRefreshLoadMoreJumpDeleteView;
 import com.cuitrip.service.R;
 
 import java.util.List;
@@ -16,7 +15,7 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 /**
  * Created by baziii on 15/8/10.
  */
-public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode> implements IRefreshLoadMoreJumpDeleteView<FavoriteMode> {
+public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode> implements IFavoriteView{
     public static final String TAG = "FavoriteListActivity";
     FavoritePresent<FavoriteMode> mFavoritePresent = new FavoritePresent<>(this);
     public static void start(Context context) {
@@ -71,12 +70,12 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
 
     @Override
     public void renderUIWithAppendData(List items) {
-
+        mAdapter.appendModeList(items);
     }
 
     @Override
     public void renderUIWithData(List items) {
-
+        mAdapter.appendModeList(items);
     }
 
     @Override
@@ -86,6 +85,13 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
 
     @Override
     public void delete(FavoriteMode messageMode) {
+        mAdapter.remove(messageMode);
+
+    }
+
+    @Override
+    public void jumpUnvaliable(FavoriteMode mode) {
+        FavorityUnvaliableActivity.start(FavoriteListActivity.this);
 
     }
 }

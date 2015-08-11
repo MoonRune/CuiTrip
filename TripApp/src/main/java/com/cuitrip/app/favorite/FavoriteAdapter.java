@@ -52,7 +52,7 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteViewHolder> {
         }
     }
 
-    public void remove(FavoriteViewHolder messageMode) {
+    public void remove(FavoriteMode messageMode) {
         int index = mModeList.indexOf(messageMode);
         LogHelper.e(TAG, " remove " + index);
         if (index >= 0) {
