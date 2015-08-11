@@ -12,14 +12,29 @@ public class ServicePartRenderData {
     protected String orderPeopleSize;
     protected String serviceTime;
     protected String priceWithCurrency;
+    protected String priceDesc;
 
-    public ServicePartRenderData(String serviceName, String orderStatus, String orderDate, String orderPeopleSize, String serviceTime, String priceWithCurrency) {
+    public String getServiceTime() {
+        return serviceTime;
+    }
+
+    public String getPriceDesc() {
+        return priceDesc;
+    }
+
+    public void setPriceDesc(String priceDesc) {
+        this.priceDesc = priceDesc;
+    }
+
+    public ServicePartRenderData(String serviceName, String orderStatus, String orderDate, String orderPeopleSize, String serviceTime, String priceWithCurrency, String priceDesc) {
+
         this.serviceName = serviceName;
         this.orderStatus = orderStatus;
         this.orderDate = orderDate;
         this.orderPeopleSize = orderPeopleSize;
         this.serviceTime = serviceTime;
         this.priceWithCurrency = priceWithCurrency;
+        this.priceDesc = priceDesc;
     }
 
     public String getServiceName() {

@@ -27,6 +27,8 @@ public class ServicePartViewHolder {
     TextView mServiceDurationTv;
     @InjectView(R.id.ct_order_price_tv)
     TextView mOrderPriceTv;
+    @InjectView(R.id.ct_order_price_desc_tv)
+    TextView mOrderPriceDescTv;
     @InjectView(R.id.ct_service_duration_layout)
     LinearLayout mServiceDurationLayout;
     @InjectView(R.id.ct_ct_service_duration_divide)
@@ -44,5 +46,7 @@ public class ServicePartViewHolder {
         }
         mOrderTimeTv.setText(data.getOrderDate());
         mOrderPriceTv.setText(data.getPriceWithCurrency());
+        mPersonSizeTv.setText(data.getOrderPeopleSize());
+        mOrderPriceDescTv.setText(data.getPriceDesc());
     }
 }
