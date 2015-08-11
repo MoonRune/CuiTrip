@@ -1,7 +1,7 @@
-package com.cuitrip.conversation;
+package com.cuitrip.app.conversation;
 
 import com.cuitrip.app.base.ListFetchCallback;
-import com.cuitrip.conversation.rong.ConversationFetcherRong;
+import com.cuitrip.app.conversation.rong.ConversationFetcherRong;
 
 import java.util.List;
 
@@ -28,6 +28,7 @@ public class ConversationsPresent {
     }
 
     public void onConversationClick(ConversationItem item) {
+        iConversationView.jumpConversation(item);
 
     }
 

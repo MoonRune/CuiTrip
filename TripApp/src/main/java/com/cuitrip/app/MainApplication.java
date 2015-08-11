@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.lab.app.BaseAppLication;
@@ -28,14 +29,22 @@ public class MainApplication extends BaseAppLication {
     public static MainApplication getInstance() {
         return sContext;
     }
+
+    public void initRongIM(){
+        RongIM.init(this);
+        RongIMClient.init(this);
+        RongContext.init(this);
+        RongCloudEvent rongCloudEvent = new RongCloudEvent();
+        RongIM.setUserInfoProvider(rongCloudEvent, true);
+        RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(rongCloudEvent);
+
+    }
     public void onCreate() {
         super.onCreate();
         sContext = this;
         ImageHelper.initImageLoader(getApplicationContext());
+        initRongIM();
         SmsSdkHelper.initSmsSDK(getApplicationContext());
-        RongIM.init(this);
-        RongIMClient.init(this);
-        RongContext.init(this);
         if("io.rong.app".equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
 

@@ -5,12 +5,9 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
-import com.cuitrip.conversation.ConversationAdapter;
-import com.cuitrip.conversation.ConversationItem;
-import com.cuitrip.conversation.ConversationsPresent;
-import com.cuitrip.conversation.IConversationsView;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
+import com.lab.utils.LogHelper;
 
 import java.util.List;
 
@@ -75,6 +72,7 @@ public class ConversationListAcitivity extends BaseActivity implements IConversa
 
     @Override
     public void jumpConversation(ConversationItem item) {
+        LogHelper.e("jump",""+item.getId()+"|"+""+item.getName()+"|"+""+item.getLastWords());
             ConversationAcitivity.startActivity(this,item.getId(),item.getName());
     }
 

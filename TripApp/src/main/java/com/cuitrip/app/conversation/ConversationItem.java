@@ -1,4 +1,4 @@
-package com.cuitrip.conversation;
+package com.cuitrip.app.conversation;
 
 /**
  * Created by baziii on 15/8/7.

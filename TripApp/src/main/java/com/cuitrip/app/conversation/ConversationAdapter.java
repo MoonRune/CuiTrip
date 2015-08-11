@@ -1,4 +1,4 @@
-package com.cuitrip.conversation;
+package com.cuitrip.app.conversation;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

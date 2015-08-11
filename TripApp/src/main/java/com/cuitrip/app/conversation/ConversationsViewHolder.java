@@ -1,4 +1,4 @@
-package com.cuitrip.conversation;
+package com.cuitrip.app.conversation;
 
 import android.view.View;
 import android.widget.TextView;

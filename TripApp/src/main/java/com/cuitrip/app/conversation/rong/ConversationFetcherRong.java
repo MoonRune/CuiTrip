@@ -1,8 +1,8 @@
-package com.cuitrip.conversation.rong;
+package com.cuitrip.app.conversation.rong;
 
 import com.cuitrip.app.base.ListFetchCallback;
-import com.cuitrip.conversation.ConversationItem;
-import com.cuitrip.conversation.IConversationsFetcher;
+import com.cuitrip.app.conversation.ConversationItem;
+import com.cuitrip.app.conversation.IConversationsFetcher;
 import com.lab.utils.LogHelper;
 
 import java.util.ArrayList;

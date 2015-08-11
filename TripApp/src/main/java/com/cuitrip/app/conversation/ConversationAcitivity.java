@@ -30,7 +30,7 @@ public class ConversationAcitivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.conversations_item); /*加载您上面的 conversationlist */
+        setContentView(R.layout.conversation_detail); /*加载您上面的 conversationlist */
 
         /* 创建 conversationlist 的Fragment */
         ConversationFragment fragment = new ConversationFragment();

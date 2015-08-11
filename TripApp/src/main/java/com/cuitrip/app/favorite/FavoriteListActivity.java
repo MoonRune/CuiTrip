@@ -28,7 +28,7 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
         @Override
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.ct_message_layout:
+                case R.id.ct_service:
                     if (v.getTag()!=null &&v.getTag() instanceof FavoriteMode) {
                         FavoriteMode messageMode = (FavoriteMode) v.getTag();
                         mFavoritePresent.onClick(messageMode);

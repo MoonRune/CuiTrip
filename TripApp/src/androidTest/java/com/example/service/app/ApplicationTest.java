@@ -5,8 +5,8 @@ import android.test.suitebuilder.annotation.SmallTest;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.base.ListFetchCallback;
-import com.cuitrip.conversation.ConversationItem;
-import com.cuitrip.conversation.rong.ConversationFetcherRong;
+import com.cuitrip.app.conversation.ConversationItem;
+import com.cuitrip.app.conversation.rong.ConversationFetcherRong;
 import com.lab.utils.LogHelper;
 
 import java.util.List;
