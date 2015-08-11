@@ -52,6 +52,7 @@ android {
     }
 
     productFlavors {
+        umeng {}
         tecent {}
         baidu {}
         c360 {}
