@@ -217,7 +217,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         protected ViewHolder view2Holder(View view) {
             MessageHolder holder = new MessageHolder();
             holder.mStatus = (TextView) view.findViewById(R.id.order_status);
-            holder.mName = (TextView) view.findViewById(R.id.service_author);
             holder.mService = (TextView) view.findViewById(R.id.service_name);
             holder.mTime = (TextView) view.findViewById(R.id.order_time);
             holder.mImage = (ImageView) view.findViewById(R.id.author_img);
@@ -236,14 +235,11 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             } else {
                 OrderHolder.mTime.setText(item.getGmtCreated());
             }
-            OrderHolder.mName.setEnabled(!item.isClosed());
 
             if (mType == TYPE_TRAVEL) {
-                OrderHolder.mName.setText(item.getServiceName());
                 OrderHolder.mService.setText(item.getUserNick());
                 OrderHolder.mAddress.setText(item.getServiceAddress());
             } else {
-                OrderHolder.mName.setText(item.getUserNick());
                 OrderHolder.mService.setText(item.getServiceName());
                 OrderHolder.mAddress.setText(getString(R.string.ct_order_people_num, item.getBuyerNum() ));
                 OrderHolder.mAddress.setCompoundDrawables(null, null, null, null);
@@ -254,7 +250,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
     class MessageHolder extends ViewHolder {
         public ImageView mImage;
-        public TextView mName;
         public TextView mStatus;
         public TextView mService;
         public TextView mTime;

@@ -3,7 +3,7 @@ package com.cuitrip.app.favorite;
 import android.view.View;
 import android.widget.TextView;
 
-import com.cuitrip.app.pro.ServiceNonViewHolder;
+import com.cuitrip.app.pro.RecommendItemViewHolder;
 import com.cuitrip.app.base.RecycleViewHolder;
 import com.cuitrip.service.R;
 import com.lab.widget.CanClickSwipeLayout;
@@ -16,7 +16,7 @@ import butterknife.InjectView;
  */
 public class FavoriteViewHolder extends RecycleViewHolder<FavoriteMode> {
     public static int RES = R.layout.favorite_item;
-    ServiceNonViewHolder serviceNonViewHolder;
+    RecommendItemViewHolder serviceNonViewHolder;
     @InjectView(R.id.ct_delete)
     TextView mDelete;
     @InjectView(R.id.ct_swip_layout)
@@ -31,7 +31,7 @@ public class FavoriteViewHolder extends RecycleViewHolder<FavoriteMode> {
         mSwipLayout.setShowMode(SwipeLayout.ShowMode.PullOut);
         mFavoriteLayout.setOnClickListener(mOnClickListener);
         mDelete.setOnClickListener(mOnClickListener);
-        serviceNonViewHolder = new ServiceNonViewHolder(mFavoriteLayout);
+        serviceNonViewHolder = new RecommendItemViewHolder(mFavoriteLayout);
     }
 
     @Override

@@ -16,7 +16,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 /**
  * Created by baziii on 15/8/10.
  */
-public class ServiceNonViewHolder {
+public class RecommendItemViewHolder {
     public static final int RES = R.layout.ct_recommend_list_item;
     @InjectView(R.id.service_img)
     RoundedImageView serviceImg;
@@ -55,7 +55,7 @@ public class ServiceNonViewHolder {
         return authorBlock;
     }
 
-    public ServiceNonViewHolder(View view){
+    public RecommendItemViewHolder(View view){
         ButterKnife.inject(this,view);
 
     }

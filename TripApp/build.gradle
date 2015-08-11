@@ -70,5 +70,5 @@ dependencies {
     compile project(':IMKit')
     compile 'com.malinskiy:superrecyclerview:1.1.1'
     compile 'jp.wasabeef:recyclerview-animators:1.0.1'
-
+    compile 'org.quanqi:android-view-pager-indicator:0.9.0'
 }

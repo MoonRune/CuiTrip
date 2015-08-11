@@ -3,9 +3,15 @@ package com.cuitrip.model;
 
 import java.io.Serializable;
 
-public class OrderItem implements Serializable{
+public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1523183235771740008L;
-
+    public static final int STATUS_WAIT_COFIRM = 1;
+    public static final int STATUS_WAIT_PAY = 2;
+    public static final int STATUS_WAIT_START = 3;
+    public static final int STATUS_WAIT_END = 4;
+    public static final int STATUS_WAIT_COMMENT = 5;
+    public static final int STATUS_OVER = 6;
+    public static final int STATUS_UNVALIABLE = 7;
 //    public enum OrderStatus {
 //        CREATED(1), CONFIRMED(2), PAYED(8), WILL_BEGIN(3),BEGIN(4),END(5),CANCEL(6),CLOSED(7);
 //        private int status;
@@ -75,9 +81,10 @@ public class OrderItem implements Serializable{
         return "2".equals(paymentWay);
     }
 
-    public boolean isPricePerMan(){
-        return "1".equals(priceType );
+    public boolean isPricePerMan() {
+        return "1".equals(priceType);
     }
+
     public String getPayCurrency() {
         return payCurrency;
     }
@@ -95,9 +102,9 @@ public class OrderItem implements Serializable{
     }
 
     public float getCommentScore() {
-        try{
+        try {
             return Float.valueOf(commentScore);
-        }catch (Exception e){
+        } catch (Exception e) {
             return -1;
         }
     }
@@ -106,7 +113,7 @@ public class OrderItem implements Serializable{
         this.commentScore = commentScore;
     }
 
-    public boolean isClosed(){
+    public boolean isClosed() {
         return (status == 6) || (status == 7);
     }
 
@@ -120,6 +127,7 @@ public class OrderItem implements Serializable{
 
     /**
      * createOrder接口中为orderId
+     *
      * @param orderId
      */
     public void setOrderId(String orderId) {
