@@ -19,6 +19,7 @@ import com.cuitrip.push.PushService;
 import com.cuitrip.service.R;
 import com.lab.app.BaseTabHostActivity;
 import com.lab.utils.MessageUtils;
+import com.umeng.update.UmengUpdateAgent;
 
 public class IndexActivity extends BaseTabHostActivity {
 
@@ -39,6 +40,7 @@ public class IndexActivity extends BaseTabHostActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        UmengUpdateAgent.update(this);
         Intent intent = getIntent();
         if (intent != null) {
             String tabTag = intent.getStringExtra(GO_TO_TAB);
