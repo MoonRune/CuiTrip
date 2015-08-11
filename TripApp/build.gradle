@@ -52,6 +52,12 @@ android {
     }
 
     productFlavors {
+        tecent {}
+        baidu {}
+        c360 {}
+        xiaomi {}
+        c91 {}
+        wandoujia {}
         googleplay {}
 
         productFlavors.all { flavor ->
