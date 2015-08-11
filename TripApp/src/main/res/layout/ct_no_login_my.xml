@@ -29,7 +29,7 @@
         android:layout_weight="1"
         android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:text="@string/ct_no_login_hint_message"
+        android:text="@string/ct_no_login_hint_mine"
         android:textColor="@color/ct_white"
         android:textSize="@dimen/ct_ts_3" />
 

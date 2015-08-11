@@ -57,8 +57,12 @@ public class MainApplication extends BaseAppLication {
         return mPageHeight;
     }
 
-    public void logOut(){
+    public void logOutWithError(){
         MessageUtils.showToast(getString(R.string.please_relogin));
+       logOut();
+    }
+
+    public void logOut(){
         LoginInstance.logout(this);
         Intent intent = new Intent(this, LogoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

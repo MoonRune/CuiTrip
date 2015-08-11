@@ -9,6 +9,7 @@ import com.cuitrip.service.R;
 import com.lab.adapter.BaseListAdapter;
 import com.lab.adapter.ViewHolder;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.Utils;
 
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -36,7 +37,7 @@ public class ReviewAdapter extends BaseListAdapter<ReviewListItem> {
     protected void bindView(ViewHolder holder, ReviewListItem item, int position) {
         ReViewHolder reViewHolder = (ReViewHolder) holder;
         reViewHolder.name.setText(item.getNick());
-        reViewHolder.time.setText(item.getGmtCreated());
+        reViewHolder.time.setText(Utils.getDateFormat(item.getGmtCreated(), Utils.DATE_FORMAT_SECOND));
         reViewHolder.content.setText(item.getContent());
         ImageHelper.displayPersonImage(item.getHeadPic(), reViewHolder.author_img, null);
     }
