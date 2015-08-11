@@ -1,21 +1,29 @@
 package com.cuitrip.app.favorite;
 
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 
 import com.cuitrip.app.base.BaseVerticalListActivity;
 import com.cuitrip.app.base.IRefreshLoadMoreJumpDeleteView;
-import com.cuitrip.app.message.MessagePresent;
 import com.cuitrip.service.R;
 
 import java.util.List;
+
+import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 
 /**
  * Created by baziii on 15/8/10.
  */
 public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode> implements IRefreshLoadMoreJumpDeleteView<FavoriteMode> {
     public static final String TAG = "FavoriteListActivity";
-    FavoritePresent<FavoriteMode> mFavoritePresent = new MessagePresent(this);
-
+    FavoritePresent<FavoriteMode> mFavoritePresent = new FavoritePresent<>(this);
+    public static void start(Context context) {
+        if (context != null) {
+            context.startActivity(new Intent(context, FavoriteListActivity.class));
+        }
+    }
     protected View.OnClickListener mOnClickListener = new View.OnClickListener(){
 
         @Override
@@ -38,6 +46,16 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
             }
         }
     };
+
+    FavoriteAdapter mAdapter = new FavoriteAdapter(mOnClickListener);
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mRecyclerView.setAdapter(mAdapter);
+        SlideInLeftAnimator animator =  new SlideInLeftAnimator();
+        mRecyclerView.setItemAnimator(animator);
+        requestPresentRefresh();
+    }
     @Override
     public void requestPresentLoadMore() {
         uiShowLoadMore();
