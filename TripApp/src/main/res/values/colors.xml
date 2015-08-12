@@ -3,6 +3,7 @@
     <color name="ct_common_bg_tt">#fffffbf4</color>
     <color name="ct_common_bg">#ffeeeeee</color>
     <color name="ct_main_color">#ff00ccdd</color>
+    <color name="ct_main_color_light">#00ddee</color>
     <color name="ct_title">#ff3d3d3d</color>
     <color name="ct_content">#ff6d6d6d</color>
     <color name="ct_text_bg">#ffd8d8d8</color>
@@ -26,6 +27,7 @@
     <color name="ct_d8">#ffd8d8d8</color>
 
     <color name="ct_7c">#ff7c7c7c</color>
+    <color name="ct_a7">#a7a7a7</color>
 
     <color name="ct_cc">#ffcccccc</color>
 

@@ -9,11 +9,44 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewStub;
+import android.widget.TextView;
 
-import com.cuitrip.login.LoginInstance;
+import com.cuitrip.app.CancelOrderActivity;
+import com.cuitrip.app.CommentActivity;
+import com.cuitrip.app.ModifyOrderActivity;
+import com.cuitrip.app.PayActivity;
+import com.cuitrip.app.base.CtApiCallback;
+import com.cuitrip.app.base.CtException;
+import com.cuitrip.app.base.PartViewHolder;
+import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
+import com.cuitrip.app.orderdetail.orderstatus.IOrderFetcher;
+import com.cuitrip.app.orderdetail.orderstatus.IOrderFormPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderOverPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderUnvaliablePresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitCommentPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitConfirmPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitEndPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitPayPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitStartPresent;
+import com.cuitrip.app.pro.CommentPartRenderData;
+import com.cuitrip.app.pro.CommentPartViewHolder;
+import com.cuitrip.app.pro.OrderProgressingRenderData;
+import com.cuitrip.app.pro.OrderProgressingViewHolder;
+import com.cuitrip.app.pro.ServicePartRenderData;
+import com.cuitrip.app.pro.ServicePartViewHolder;
+import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
+import com.loopj.android.http.AsyncHttpClient;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by baziii on 15/8/11.
@@ -25,6 +58,88 @@ public class OrderFormFragment extends BaseFragment {
     MenuItem mOptionMenuItem;
     String mActionTitle;
     IOrderDetailView mOrderDetailView;
+    AsyncHttpClient mClient = new AsyncHttpClient();
+
+    StubViewHolder<ServicePartRenderData> mServiceStub = new StubViewHolder(new ServicePartViewHolder());
+    StubViewHolder<CommentPartRenderData>  mCommentstub = new StubViewHolder(new CommentPartViewHolder());
+    StubViewHolder<OrderProgressingRenderData>  mProgressingStub = new StubViewHolder(new OrderProgressingViewHolder());
+
+
+    @InjectView(R.id.ct_service_info_v)
+    ViewStub ctServiceInfoV;
+    @InjectView(R.id.ct_service_comment_v)
+    ViewStub ctServiceCommentV;
+    @InjectView(R.id.ct_bottom_tv)
+    TextView ctBottomTv;
+    BaseOrderFormPresent baseOrderFormPresent;
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
+    }
+
+    public class StubViewHolder<T> implements PartViewHolder<T> {
+        PartViewHolder<T> partViewHolder;
+        ViewStub stub;
+        View inflatedView;
+        boolean isInflated = false;
+
+        public StubViewHolder(PartViewHolder<T> partViewHolder) {
+            this.partViewHolder = partViewHolder;
+        }
+
+        public PartViewHolder<T> getPartViewHolder() {
+            return partViewHolder;
+        }
+
+        @Override
+        public void build(View view) {
+            stub = (ViewStub) view;
+
+        }
+
+        @Override
+        public void render(T o) {
+            if (o != null) {
+                if (!isInflated) {
+                    isInflated = true;
+                    inflatedView = stub.inflate();
+                    partViewHolder.build(inflatedView);
+                    partViewHolder.render(o);
+                } else {
+                    partViewHolder.render(o);
+                }
+            }
+        }
+
+        void show() {
+            if (isInflated) {
+                inflatedView.setVisibility(View.VISIBLE);
+            } else {
+                stub.setVisibility(View.VISIBLE);
+            }
+        }
+
+        void hide() {
+            if (isInflated) {
+                inflatedView.setVisibility(View.GONE);
+            } else {
+                stub.setVisibility(View.GONE);
+            }
+        }
+    }
+
+    public void showOption(String text) {
+        mActionTitle = text;
+        getActivity().supportInvalidateOptionsMenu();
+    }
+
+    public void hideOptionMenu() {
+        mActionTitle = null;
+        getActivity().supportInvalidateOptionsMenu();
+
+    }
 
     public static OrderFormFragment newInstance(OrderItem orderItem) {
         Bundle args = new Bundle();
@@ -34,6 +149,12 @@ public class OrderFormFragment extends BaseFragment {
         return fragment;
     }
 
+    public void refresh(OrderItem orderItem){
+        getArguments().putSerializable(ORDER_KEY,orderItem);
+        if (ctBottomTv!=null) {
+            renderWithData();
+        }
+    }
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,120 +179,249 @@ public class OrderFormFragment extends BaseFragment {
         super.onPrepareOptionsMenu(menu);
     }
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action:
+                baseOrderFormPresent.clickMenu();
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @OnClick(R.id.ct_bottom_tv)
+    public void onBottomCLick() {
+        baseOrderFormPresent.clickBottom();
+    }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.ct_order_form_order, null);
+        ButterKnife.inject(this, view);
+        mServiceStub.build(ctServiceInfoV);
+        mCommentstub.build(ctServiceCommentV);
         return view;
     }
 
     public void renderWithData() {
         if (getArguments().containsKey(ORDER_KEY)) {
             OrderItem orderItem = (OrderItem) getArguments().getSerializable(ORDER_KEY);
-            boolean isImTravel = LoginInstance.getInstance(getActivity()).getUserInfo().isTravel();
-            mOrderDetailView = isImTravel ? new TravelOrderDetailView() : new FinderOrderDetailView();
-            switch (orderItem.getStatus()) {
-                case OrderItem.STATUS_WAIT_COFIRM:
-                    mOrderDetailView.switchOver();
-                    break;
-                case OrderItem.STATUS_WAIT_PAY:
-                    mOrderDetailView.switchWaitPay();
-                    break;
-                case OrderItem.STATUS_WAIT_START:
-                    mOrderDetailView.switchWaitStart();
-                    break;
-                case OrderItem.STATUS_WAIT_END:
-                    mOrderDetailView.switchWaitEnd();
-                    break;
-                case OrderItem.STATUS_WAIT_COMMENT:
-                    mOrderDetailView.switchWaitComment();
-                    break;
-                case OrderItem.STATUS_OVER:
-                    mOrderDetailView.switchOver();
-                    break;
-                default:
-                    mOrderDetailView.switchUnvaliable();
-                    break;
-            }
+//            boolean isImTravel = LoginInstance.getInstance(getActivity()).getUserInfo().isTravel();
+//            mOrderDetailView = isImTravel ? new TravelOrderDetailView() : new FinderOrderDetailView();
+            mOrderDetailView = new FinderOrderDetailView();
+            mOrderDetailView.requestPresentRender(orderItem);
         }
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        renderWithData();
+    }
+    IOrderFetcher orderFetcher = new IOrderFetcher() {
+        @Override
+        public void cancelOrder(OrderItem orderItem, final String reason, final CtApiCallback callback) {
+            showLoading();
+            OrderBusiness.cancelOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    callback.onSuc();
+                    hideLoading();
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    callback.onFailed(new CtException(response.msg));
+                    hideLoading();
+
+                }
+            },orderItem.getOid(),reason);
+
+        }
+
+        @Override
+        public void confirmOrder(OrderItem orderItem, final CtApiCallback callback) {
+            showLoading();
+            OrderBusiness.confirmOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    callback.onSuc();
+                    hideLoading();
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    callback.onFailed(new CtException(response.msg));
+                    hideLoading();
+
+                }
+            }, orderItem.getOid());
+        }
+
+        @Override
+        public void startOrder(OrderItem orderItem, final CtApiCallback callback) {
+            showLoading();
+            OrderBusiness.beginOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    callback.onSuc();
+                    hideLoading();
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    callback.onFailed(new CtException(response.msg));
+                    hideLoading();
+
+                }
+            },orderItem.getOid());
+        }
+    };
+
+    public class ProxyPresent extends IOrderFormPresent<ITravelerOrderDetailView> {
+
+        public ProxyPresent(ITravelerOrderDetailView orderDetailView) {
+            super(orderDetailView);
+        }
+
+        public void changeOrderItem(OrderItem orderItem) {
+            setOrderItem(orderItem);
+            switch (orderItem.getStatus()) {
+                case OrderItem.STATUS_WAIT_COFIRM:
+                    baseOrderFormPresent = new FinderWaitConfirmPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_PAY:
+                    baseOrderFormPresent = new FinderWaitPayPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_START:
+                    baseOrderFormPresent = new FinderWaitStartPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_END:
+                    baseOrderFormPresent = new FinderWaitEndPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_COMMENT:
+                    baseOrderFormPresent = new FinderWaitCommentPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_OVER:
+                    baseOrderFormPresent = new FinderOverPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_UNVALIABLE:
+                    baseOrderFormPresent = new FinderUnvaliablePresent(mOrderDetailView, orderItem);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void render() {
+            baseOrderFormPresent.render();
+        }
+
+        @Override
+        public void clickBottom() {
+            baseOrderFormPresent.clickBottom();
+        }
+
+        @Override
+        public void clickMenu() {
+            baseOrderFormPresent.clickMenu();
+        }
+
     }
 
-    public class TravelOrderDetailView implements IOrderDetailView {
+//    public class TravelOrderDetailView implements IOrderDetailView {
+//
+//        @Override
+//        public void renderUi(OrderMode orderMode) {
+//
+//        }
+//
+//        @Override
+//        public void requestPresentRender(OrderItem orderItem) {
+//        }
+//    }
+
+    public class FinderOrderDetailView implements ITravelerOrderDetailView {
+        ProxyPresent present = new ProxyPresent(this);
+
+
         @Override
-        public void switchWaitConfirm() {
+        public void showLoading() {
+            OrderFormFragment.this.showLoading();
+        }
+
+        @Override
+        public void hideLoading() {
+            OrderFormFragment.this.hideLoading();
+        }
+
+        @Override
+        public void renderUi(OrderMode orderMode) {
+            LogHelper.e("omg", "FinderOrderDetailView renderUi");
+            mServiceStub.render(orderMode.getServiceData());
+            mCommentstub.render(orderMode.getCommentData());
+            mProgressingStub.render(orderMode.getProgressData());
+            showOption(orderMode.getMenuText());
+            if (TextUtils.isEmpty(orderMode.getBottomText())) {
+                ctBottomTv.setVisibility(View.GONE);
+            } else {
+                ctBottomTv.setVisibility(View.VISIBLE);
+                ctBottomTv.setText(orderMode.getBottomText());
+                ctBottomTv.setEnabled(orderMode.isBottomEnable());
+            }
+        }
+
+        @Override
+        public void requestPresentRender(OrderItem orderItem) {
+            present.changeOrderItem(orderItem);
+            present.render();
 
         }
 
         @Override
-        public void switchWaitPay() {
+        public void jumpModifyOrder(OrderItem orderItem) {
+            LogHelper.e("omg", "jumpModifyOrder");
+            ModifyOrderActivity.startModify(getActivity(),orderItem);
+        }
+
+        @Override
+        public void jumpCancelOrder(OrderItem orderItem) {
+            LogHelper.e("omg", "jumpCancelOrder");
+            CancelOrderActivity.start(getActivity(),orderItem);
+        }
+
+        @Override
+        public void jumpPayOrder(OrderItem orderItem) {
+            PayActivity.startActivity(getActivity(), orderItem.getOid());
+            LogHelper.e("omg", "jumpPayOrder");
 
         }
 
         @Override
-        public void switchWaitStart() {
+        public void jumpMapOrder(OrderItem orderItem) {
+            LogHelper.e("omg", "jumpMapOrder");
 
         }
 
         @Override
-        public void switchWaitEnd() {
+        public void jumpCommentOrder(OrderItem orderItem) {
+            CommentActivity.start(getActivity(), orderItem);
+            LogHelper.e("omg", "jumpCommentOrder");
 
         }
 
         @Override
-        public void switchWaitComment() {
+        public void jumpHelp(OrderItem orderItem) {
 
         }
 
         @Override
-        public void switchOver() {
+        public void jumpEndOrder(OrderItem orderItem) {
 
         }
 
-        @Override
-        public void switchUnvaliable() {
 
-        }
-    }
-
-    public class FinderOrderDetailView implements IOrderDetailView {
-        @Override
-        public void switchWaitConfirm() {
-
-        }
-
-        @Override
-        public void switchWaitPay() {
-
-        }
-
-        @Override
-        public void switchWaitStart() {
-
-        }
-
-        @Override
-        public void switchWaitEnd() {
-
-        }
-
-        @Override
-        public void switchWaitComment() {
-
-        }
-
-        @Override
-        public void switchOver() {
-
-        }
-
-        @Override
-        public void switchUnvaliable() {
-
-        }
     }
 }

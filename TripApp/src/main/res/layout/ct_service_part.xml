@@ -5,62 +5,71 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center">
+    android:gravity="center"
+    android:background="@color/ct_white">
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="64dp"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/ct_service_name_tv"
             tools:text="service_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:textSize="19sp"
+            android:textColor="@color/ct_black"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="64dp"
             android:layout_weight="1"/>
         <TextView
             android:id="@+id/ct_order_status_tv"
             tools:text="order_status"
+            android:gravity="center_vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="64dp"
+            android:paddingRight="18dp"/>
     </LinearLayout>
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/ct_divider"
+      />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="horizontal">
             <TextView
-                tools:text="order_time_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="预订日期"
+                style="@style/order_form_hint"/>
             <TextView
                 android:id="@+id/ct_order_time_tv"
                 tools:text="order_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                style="@style/order_form_value" />
         </LinearLayout>
+
+    <View
+        style="@style/order_form_divide"
+        />
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_weight="1">
+            android:orientation="horizontal">
             <TextView
-                tools:text="order_person_size_hint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="预订人数"
+                style="@style/order_form_hint" />
             <TextView
                 android:id="@+id/ct_person_size_tv"
-                tools:text="order_person_size"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:text="order_person_size"
+                tools:text="order_time"
+                style="@style/order_form_value" />
         </LinearLayout>
-    </LinearLayout>
+    <View
+        style="@style/order_form_divide"
+        />
     <LinearLayout
         android:id="@+id/ct_service_duration_layout"
         android:layout_width="match_parent"
@@ -68,40 +77,85 @@
         android:orientation="horizontal">
 
         <TextView
-            tools:text="service_time_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:text="游玩时间"
+            style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_service_duration_tv"
             tools:text="service_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/order_form_value"/>
     </LinearLayout>
+
     <View
-        android:id="@+id/ct_ct_service_duration_divide"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/ct_gray"/>
+        style="@style/order_form_divide"
+        />
     <LinearLayout
+        android:id="@+id/ct_service_meet_location_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:text="order_cost_hint"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"/>
+            android:text="见面地点"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_service_meet_location_tv"
+            tools:text="ct_service_meet_location_tv"
+            android:drawableRight="@drawable/map_b"
+            android:drawablePadding="8dp"
+            style="@style/order_form_value" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_ct_service_duration_divide"
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="费用"
+            style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_order_price_tv"
             tools:text="order_cost"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            style="@style/order_form_value"/>
     </LinearLayout>
-    <TextView
-        android:id="@+id/ct_order_price_desc_tv"
-        tools:text="order_cost"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <View
+        style="@style/order_form_divide"
+        />
+
+    <LinearLayout
+        android:id="@+id/ct_order_price_include_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="费用包含"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_order_price_include_tv"
+            tools:text="order_price_include"
+            style="@style/order_form_value" />
+    </LinearLayout>
+    <View
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:id="@+id/ct_order_price_uninclude_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="费用不包含"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_order_price_uninclude_tv"
+            tools:text="order_price_uninclude"
+            style="@style/order_form_value" />
+    </LinearLayout>
 </LinearLayout>

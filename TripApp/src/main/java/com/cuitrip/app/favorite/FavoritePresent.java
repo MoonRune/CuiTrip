@@ -2,7 +2,8 @@ package com.cuitrip.app.favorite;
 
 import android.os.AsyncTask;
 
-import com.cuitrip.app.base.FetchCallback;
+import com.cuitrip.app.base.CtApiCallback;
+import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.ListFetchCallback;
 import com.lab.utils.LogHelper;
 
@@ -78,7 +79,7 @@ public class FavoritePresent<T extends FavoriteMode> {
         }
 
         @Override
-        public void deleteFavorite(FavoriteMode favoriteMode, final FetchCallback callback) {
+        public void deleteFavorite(FavoriteMode favoriteMode, final CtApiCallback callback) {
             new AsyncTask() {
                 @Override
                 protected Object doInBackground(Object[] params) {
@@ -131,14 +132,14 @@ public class FavoritePresent<T extends FavoriteMode> {
     }
 
     public void onMove(final T messageMode) {
-        mFavoriteFetcher.deleteFavorite(messageMode, new FetchCallback() {
+        mFavoriteFetcher.deleteFavorite(messageMode, new CtApiCallback() {
             @Override
             public void onSuc() {
                 mFavoriteView.delete(messageMode);
             }
 
             @Override
-            public void onFailed(Throwable throwable) {
+            public void onFailed(CtException throwable) {
 
             }
         });

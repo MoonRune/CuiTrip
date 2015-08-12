@@ -4,15 +4,16 @@ package com.cuitrip.app.pro;
  * Created by baziii on 15/8/10.
  */
 public class CommentPartRenderData {
+    public static final int DEFAULT_MAX_SCORE=5;
     //favorite name
     protected String authorName;
     protected String authorAva;
-    protected int starts;
+    protected float starts;
     protected int startsMax;
 
     protected String commentContent;
 
-    public CommentPartRenderData(String authorName, String authorAva, int starts, int startsMax, String commentContent) {
+    public CommentPartRenderData(String authorName, String authorAva, float starts, int startsMax, String commentContent) {
         this.authorName = authorName;
         this.authorAva = authorAva;
         this.starts = starts;
@@ -36,11 +37,11 @@ public class CommentPartRenderData {
         this.authorAva = authorAva;
     }
 
-    public int getStarts() {
+    public float getStarts() {
         return starts;
     }
 
-    public void setStarts(int starts) {
+    public void setStarts(float starts) {
         this.starts = starts;
     }
 

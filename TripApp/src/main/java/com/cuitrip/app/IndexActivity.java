@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
 
+import com.cuitrip.app.conversation.ConversationListFragment;
 import com.cuitrip.finder.fragment.ServiceFragment;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
@@ -91,7 +92,7 @@ public class IndexActivity extends BaseTabHostActivity {
 
         mTabHost.addTab(mTabHost.newTabSpec(MESSAGE_TAB)
                 .setIndicator(createMeeageTabView(R.drawable.ct_mennsage, getString(R.string.ct_message))),
-                MessageFragment.class, null);
+                ConversationListFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec(ORDER_TAB)
                 .setIndicator(createTabView(R.drawable.ct_order, getString(R.string.ct_order))),
                 OrderFragment.class, null);

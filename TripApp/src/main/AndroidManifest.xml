@@ -119,7 +119,7 @@
             android:configChanges="keyboardHidden|orientation|screenSize" >
             </activity>
         <activity
-            android:name="com.cuitrip.app.conversation.ConversationListAcitivity"
+            android:name="com.cuitrip.app.conversation.ConversationListFragment"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" >
             <intent-filter>

@@ -62,7 +62,7 @@ public class OrderItem implements Serializable {
     private String travellerName; //": "Andy",
     private String paymentWay; //": "1",
     private String serviceName; //": "bobby带你看花莲老火车",
-    private String serviceDate; //": "2015-06-29 00:00:00",
+    private String serviceDate; //": "2015-06-29 00:00:00", TODO 啥？？订单时间吗
     private String servicePIC; //": "http://cuitrip.oss-cn-shenzhen.aliyuncs.com/13_1434945983861",
     private String serviceAddress; //": "花莲",
     private String orderPrice; //": "0",
@@ -318,4 +318,9 @@ public class OrderItem implements Serializable {
     public void setGmtModified(String gmtModified) {
         this.gmtModified = gmtModified;
     }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
 }

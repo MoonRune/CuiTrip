@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
@@ -126,8 +127,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             mOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    startActivity(new Intent(getActivity(), OrderDetailActivity.class)
-                            .putExtra(OrderDetailActivity.ORDER_ID, mAdapter.getItem(i).getOid()));
+                    OrderFormActivity.start(getActivity(),mAdapter.getItem(i).getOid());
                 }
             });
             mNoLogin = mContentView.findViewById(R.id.ct_no_login);
@@ -244,7 +244,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 OrderHolder.mAddress.setText(getString(R.string.ct_order_people_num, item.getBuyerNum() ));
                 OrderHolder.mAddress.setCompoundDrawables(null, null, null, null);
             }
-            ImageHelper.displayPersonImage(item.getHeadPic(), OrderHolder.mImage, null);
+            ImageHelper.displayCtImage(item.getServicePIC(), OrderHolder.mImage, null);
         }
     }
 

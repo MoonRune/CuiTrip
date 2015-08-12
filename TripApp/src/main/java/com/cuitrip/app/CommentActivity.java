@@ -1,5 +1,6 @@
 package com.cuitrip.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
@@ -28,7 +29,18 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
     private TextView mContent;
     private RatingBar mRatingBar;
 
+    public static final String ORDER_KEY="CommentActivity.ORDER_KEY";
+    public static final int REQUEST_COMMENT = 33;
 
+    public static void start(Activity activity,OrderItem orderItem){
+        activity.startActivityForResult(new Intent(activity, CommentActivity.class)
+                .putExtra(ORDER_KEY, orderItem), REQUEST_COMMENT);
+
+    }
+    public static boolean isComment(int requestCode,int resultcode ,Intent bUndle){
+        return requestCode == REQUEST_COMMENT && resultcode== RESULT_OK;
+
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -37,7 +49,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
             finish();
             return;
         }
-        mOrderInfo = (OrderItem) intent.getSerializableExtra(OrderDetailActivity.ORDER_INFO);
+        mOrderInfo = (OrderItem) intent.getSerializableExtra(ORDER_KEY);
         if (mOrderInfo == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();

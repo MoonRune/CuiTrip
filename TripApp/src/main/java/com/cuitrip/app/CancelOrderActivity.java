@@ -1,25 +1,31 @@
 package com.cuitrip.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cuitrip.app.pro.ServicePartRenderData;
+import com.cuitrip.app.pro.ServicePartWithoutViewHolder;
 import com.cuitrip.business.OrderBusiness;
-import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
-import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
-import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+import butterknife.OnClick;
 
 
 /**
@@ -27,9 +33,27 @@ import com.loopj.android.http.AsyncHttpClient;
  */
 public class CancelOrderActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String ORDER_KEY = "CancelOrderActivity.ORDER_KEY";
+    public static final int REQUEST_CODE = 13;
+    @InjectView(R.id.cancel_tips)
+    TextView cancelTips;
+    @InjectView(R.id.content)
+    EditText content;
+    @InjectView(R.id.cancel_order)
+    Button cancelOrder;
+    ServicePartWithoutViewHolder servicePartViewHolder = new ServicePartWithoutViewHolder();
     private OrderItem mOrderInfo;
     private AsyncHttpClient mClient = new AsyncHttpClient();
-    private TextView mContent;
+
+    public static void start(Activity context, OrderItem orderItem) {
+        Intent intent = new Intent(context, CancelOrderActivity.class);
+        intent.putExtra(ORDER_KEY, orderItem);
+        context.startActivityForResult(intent, REQUEST_CODE);
+    }
+
+    public static boolean isCanceled(int requestCode, int resultCode, Intent data) {
+        return requestCode == REQUEST_CODE && resultCode == RESULT_OK;
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,53 +63,55 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
             finish();
             return;
         }
-        mOrderInfo = (OrderItem) intent.getSerializableExtra(OrderDetailActivity.ORDER_INFO);
+        mOrderInfo = (OrderItem) intent.getSerializableExtra(ORDER_KEY);
         if (mOrderInfo == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();
             return;
         }
         showActionBar(R.string.ct_order_cancel);
-        setContentView(R.layout.ct_order_cancel);
-        setViewText(R.id.service_name, mOrderInfo.getServiceName());
-        UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
-        if (userInfo.isTravel()) {
-            setViewText(R.id.cuthor_name, mOrderInfo.getInsiderName());
-        } else {
-            setViewText(R.id.cuthor_name, mOrderInfo.getTravellerName());
-            TextView cancelTips = (TextView) findViewById(R.id.cancel_tips);
-            cancelTips.setText(R.string.ct_cancel_order_tips);
-        }
-        setViewText(R.id.service_address, mOrderInfo.getServiceAddress());
-        ImageHelper.displayPersonImage(mOrderInfo.getHeadPic(), (ImageView) findViewById(R.id.author_img), null);
-        findViewById(R.id.order_contact).setOnClickListener(this);
-        findViewById(R.id.cancel_order).setOnClickListener(this);
-        mContent = (TextView) findViewById(R.id.content);
+        View view = LayoutInflater.from(this).inflate(R.layout.ct_order_cancel, null);
+        setContentView(view);
+        ButterKnife.inject(this);
+        servicePartViewHolder.build(view);
+        servicePartViewHolder.render(ServicePartRenderData.getInstance(mOrderInfo));
+    }
+
+
+    @OnClick({R.id.ct_finder_cancel_rb, R.id.ct_travel_change_rb})
+    public void hidenCOntent() {
+        content.setVisibility(View.GONE);
+    }
+
+
+    @OnClick(R.id.ct_other_rb)
+    public void showContent() {
+        content.setVisibility(View.VISIBLE);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.cancel_order:
-                if (TextUtils.isEmpty(mContent.getText())) {
+                String message = null;
+                if (TextUtils.isEmpty(content.getText())) {
                     MessageUtils.showToast(R.string.ct_cancel_null_reason);
                     return;
                 }
+                message = content.getText().toString();
+
+                final String msg = message;
                 MessageUtils.dialogBuilder(CancelOrderActivity.this, true, null, "确定要取消订单吗", null, getString(R.string.ct_confirm), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        cancelOrder();
+                        cancelOrder(msg);
                     }
                 });
-                break;
-            case R.id.order_contact:
-                startActivity(new Intent(this, MessageDetailActivity.class)
-                        .putExtra(OrderDetailActivity.ORDER_ID, mOrderInfo.getOid()));
                 break;
         }
     }
 
-    private void cancelOrder() {
+    private void cancelOrder(String msg) {
         showNoCancelDialog();
         LogHelper.e("cancel order", "" + mOrderInfo.getOid());
         OrderBusiness.cancelOrder(this, mClient, new LabAsyncHttpResponseHandler() {
@@ -108,7 +134,7 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
                 }
                 return;
             }
-        }, mOrderInfo.getOid(), mContent.getText().toString());
+        }, mOrderInfo.getOid(), msg);
     }
 
 }

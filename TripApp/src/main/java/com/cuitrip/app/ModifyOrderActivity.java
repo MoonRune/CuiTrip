@@ -1,5 +1,6 @@
 package com.cuitrip.app;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
@@ -36,6 +37,8 @@ import java.util.List;
  */
 public class ModifyOrderActivity extends BaseActivity implements View.OnClickListener{
 
+    public static final String ORDER_KEY="ModifyOrderActivity.ORDER_KEY";
+    public static final int REQUEST_MODIFY = 33;
     private OrderItem mOrder;
     private ServiceInfo mService;
 
@@ -50,6 +53,15 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
 
+    public static void startModify(Activity activity,OrderItem orderItem){
+        activity.startActivityForResult(new Intent(activity, ModifyOrderActivity.class)
+                .putExtra(ORDER_KEY, orderItem), REQUEST_MODIFY);
+
+    }
+    public static boolean isModifyed(int requestCode,int resultcode ,Intent bUndle){
+        return requestCode == REQUEST_MODIFY && resultcode== RESULT_OK;
+
+    }
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -58,7 +70,7 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
             finish();
             return;
         }
-        mOrder = (OrderItem) intent.getSerializableExtra(OrderDetailActivity.ORDER_INFO);
+        mOrder = (OrderItem) intent.getSerializableExtra(ORDER_KEY);
         if (mOrder == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();

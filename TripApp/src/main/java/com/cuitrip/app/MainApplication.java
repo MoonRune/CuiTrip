@@ -9,6 +9,8 @@ import android.view.WindowManager;
 import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
+import com.cuitrip.util.IResourceFetcher;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseAppLication;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
@@ -97,6 +99,14 @@ public class MainApplication extends BaseAppLication {
             mPageHeight ^= mPageWidth;
             mPageWidth ^= mPageHeight;
         }
+
+        //init platform about  like resourcefetchet
+        PlatformUtil.getInstance().setmResourceFetcher(new IResourceFetcher() {
+            @Override
+            public String getString(int id) {
+                return MainApplication.getInstance().getString(id);
+            }
+        });
     }
     public int dp2pixel(int i) {
         return (int) (0.5F + getResources().getDisplayMetrics().density * (float) i);
