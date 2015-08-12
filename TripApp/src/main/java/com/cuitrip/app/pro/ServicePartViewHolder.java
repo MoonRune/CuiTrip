@@ -1,5 +1,6 @@
 package com.cuitrip.app.pro;
 
+import android.app.Activity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -48,6 +49,9 @@ public class ServicePartViewHolder implements PartViewHolder<ServicePartRenderDa
 
     public void build(View view) {
         ButterKnife.inject(this, view);
+    }
+    public void build(Activity activity) {
+        ButterKnife.inject(this, activity);
     }
 
     public void render(ServicePartRenderData data) {

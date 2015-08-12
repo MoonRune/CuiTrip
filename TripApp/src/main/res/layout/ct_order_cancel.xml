@@ -5,9 +5,11 @@
     android:background="@color/ct_white">
 
     <ScrollView
+        android:layout_alignParentTop="true"
         android:layout_above="@+id/cancel_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -15,10 +17,10 @@
             android:orientation="vertical">
 
             <include
+                layout="@layout/ct_service_part_little"
                 android:id="@+id/ct_service_info_v"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout="@layout/ct_service_part" />
+                android:layout_height="wrap_content" />
 
             <View
                 android:layout_width="match_parent"
@@ -27,7 +29,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="18dp"
                 android:textSize="19sp"
@@ -59,6 +61,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dp"
                 android:textSize="19sp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:textColor="@color/ct_black"
                 android:text="退订原因" />
 
@@ -66,7 +70,6 @@
                 style="@style/order_form_divide"/>
 
             <EditText
-                android:visibility="gone"
                 android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"

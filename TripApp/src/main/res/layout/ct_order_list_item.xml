@@ -72,7 +72,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/content"
-        android:background="#fffafafa"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:paddingLeft="@dimen/ct_width_padding"

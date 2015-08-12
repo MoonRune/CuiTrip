@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,7 +24,6 @@ import com.loopj.android.http.AsyncHttpClient;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
-import butterknife.OnClick;
 
 
 /**
@@ -70,23 +68,11 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         showActionBar(R.string.ct_order_cancel);
-        View view = LayoutInflater.from(this).inflate(R.layout.ct_order_cancel, null);
-        setContentView(view);
+        setContentView(R.layout.ct_order_cancel);
         ButterKnife.inject(this);
-        servicePartViewHolder.build(view);
+        cancelOrder.setOnClickListener(this);
+        servicePartViewHolder.build(this);
         servicePartViewHolder.render(ServicePartRenderData.getInstance(mOrderInfo));
-    }
-
-
-    @OnClick({R.id.ct_finder_cancel_rb, R.id.ct_travel_change_rb})
-    public void hidenCOntent() {
-        content.setVisibility(View.GONE);
-    }
-
-
-    @OnClick(R.id.ct_other_rb)
-    public void showContent() {
-        content.setVisibility(View.VISIBLE);
     }
 
     @Override

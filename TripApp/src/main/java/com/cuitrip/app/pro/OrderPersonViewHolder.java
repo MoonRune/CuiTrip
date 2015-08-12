@@ -2,7 +2,6 @@ package com.cuitrip.app.pro;
 
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cuitrip.app.base.PartViewHolder;
@@ -43,16 +42,10 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
     TextView ctUserSignTv;
     @InjectView(R.id.ct_user_phone_tv)
     TextView ctUserPhoneTv;
-    @InjectView(R.id.ct_user_phone_img)
-    ImageView ctUserPhoneImg;
     @InjectView(R.id.ct_user_email_tv)
     TextView ctUserEmailTv;
-    @InjectView(R.id.ct_user_email_img)
-    ImageView ctUserEmailImg;
     @InjectView(R.id.ct_user_identity_tv)
     TextView ctUserIdentityTv;
-    @InjectView(R.id.ct_user_identity_img)
-    ImageView ctUserIdentityImg;
 
     public void build(View view) {
         ButterKnife.inject(this, view);
@@ -65,10 +58,6 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
         textView.setText(text);
     }
 
-    public void setValidated(ImageView image, boolean isValidate) {
-        image.setImageResource(isValidate ? R.drawable.ct_radio_checked_yes
-                : R.drawable.ct_radio_checked_no);
-    }
 
     public void render(OrderPersonRenderData data) {
         ImageHelper.displayPersonImage(data.getUserAva(), ctUserAvaIm, null);
@@ -86,13 +75,10 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
         setWithDefault(ctUserSignTv, data.getUserSign());
 
         ctUserPhoneTv.setText(data.getUserPhone());
-        setValidated(ctUserPhoneImg,data.isUserPhoneValidated());
 
         setWithDefault(ctUserEmailTv, data.getUserEmail());
-        setValidated(ctUserEmailImg,data.isUserEmailValidated());
 
         setWithDefault(ctUserIdentityTv, data.getUserIdentity());
-        setValidated(ctUserIdentityImg,data.isUserIdentityValidated());
 
     }
 

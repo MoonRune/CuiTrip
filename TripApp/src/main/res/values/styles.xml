@@ -26,7 +26,6 @@
 
     <style name="ctActionbarMenu" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">@dimen/ct_ts_4</item>
-        <item name="android:textColor">@color/ct_white</item>
     </style>
 
     <style name="cuiAppDialog" parent="android:Theme.Holo.Light.Dialog">

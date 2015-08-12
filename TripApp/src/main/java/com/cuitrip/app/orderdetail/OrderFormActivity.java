@@ -10,17 +10,18 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
-import com.cuitrip.app.OrderFragment;
 import com.cuitrip.app.PayActivity;
 import com.cuitrip.app.rong.RongTitleTagHelper;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -51,6 +52,8 @@ public class OrderFormActivity extends BaseActivity {
     IconPageIndicator mViewPagerIndicator;
     @InjectView(R.id.ct_view_pager)
     ViewPager mViewPager;
+    @InjectView(R.id.ct_user_name_tv)
+    TextView mItsNameTv;
     OrderViewsAdapter mAdapter;
     OrderItem orderItem = null;
 //    {
@@ -143,8 +146,8 @@ public class OrderFormActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            int count = orderItem == null ? 0 : (showTabs ? 3 : 1);
-//            LogHelper.e("omg", "count " + count + "|" + (orderItem == null) + "|" + showTabs);
+            int count = orderItem == null ? 0 : (showTabs ? (TextUtils.isEmpty(canConversationTargetId) ? 2 : 3) : 1);
+//            LogHelper.e("omg", "counset " + count + "|" + (orderItem == null) + "|" + showTabs);
             return count;
         }
 
@@ -163,23 +166,19 @@ public class OrderFormActivity extends BaseActivity {
                     }
                     return PersonInfoFragment.newInstance(id);
                 default:
-                    if (!TextUtils.isEmpty(canConversationTargetId)) {
 
-                        ConversationFragment fragment = new ConversationFragment();
-                        String target = canConversationTargetId;
-                        LogHelper.e("conversation target ",canConversationTargetId);
-                        String title = orderItem.getServiceName();
+                    ConversationFragment fragment = new ConversationFragment();
+                    String target = canConversationTargetId;
+                    LogHelper.e("conversation target ", canConversationTargetId);
+                    String title = orderItem.getServiceName();
         /* 传入私聊会话 PRIVATE 的参数*/
-                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
-                                .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
-                                .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
+                    Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                            .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
+                            .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
 
 //rong://com.cuitrip.service/conversation/discussion?targetId=21026d2b-7063-4d5b-bc3a-1d4600e3f935&title=ct_test_for_send_2_1
-                        fragment.setUri(uri);
-                        return fragment;
-                    } else {
-                        return OrderFragment.newInstance(OrderFragment.TYPE_FINDER);
-                    }
+                    fragment.setUri(uri);
+                    return fragment;
             }
         }
 
@@ -193,7 +192,7 @@ public class OrderFormActivity extends BaseActivity {
     }
 
     OrderFormFragment orderFormFragment;
-    String canConversationTargetId ;
+    String canConversationTargetId;
 
     public String buildOrderConversationTitle(OrderItem orderItem) {
         return RongTitleTagHelper.buildTitle(orderItem);
@@ -206,9 +205,10 @@ public class OrderFormActivity extends BaseActivity {
             public void onSuccess(List<Conversation> conversations) {
                 if (conversations != null) {
                     for (Conversation conversation : conversations) {
-                        if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(),orderItem)) {
-                            canConversationTargetId = conversation.getTargetId() ;
+                        if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(), orderItem)) {
+                            canConversationTargetId = conversation.getTargetId();
                             mAdapter.notifyDataSetChanged();
+                            mViewPagerIndicator.notifyDataSetChanged();
                             return;
                         }
                     }
@@ -228,12 +228,13 @@ public class OrderFormActivity extends BaseActivity {
         List<String> userIds = new ArrayList<>();
         userIds.add(orderItem.getInsiderId());
         userIds.add(orderItem.getTravellerId());
-        final String title=buildOrderConversationTitle(orderItem);
+        final String title = buildOrderConversationTitle(orderItem);
         RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
             @Override
             public void onSuccess(String tarid) {
                 canConversationTargetId = tarid;
                 mAdapter.notifyDataSetChanged();
+                mViewPagerIndicator.notifyDataSetChanged();
                 LogHelper.e("omg", "buildConversation suc " + tarid + " |" + title);
             }
 
@@ -245,11 +246,23 @@ public class OrderFormActivity extends BaseActivity {
         });
     }
 
+    public String buildItsname(OrderItem orderItem) {
+        UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
+        if (userInfo!=null && !TextUtils.isEmpty(userInfo.getUid()) &&TextUtils.isEmpty(orderItem.getInsiderId()) ) {
+            if (userInfo.getUid().equals(orderItem.getExtInfo())) {
+                return orderItem.getTravellerName();
+            }
+            return orderItem.getInsiderName();
+        }else{
+            return "error";
+        }
+    }
     public void renderUi(OrderItem orderItem) {
         this.orderItem = orderItem;
         mAdapter.notifyDataSetChanged();
         mViewPagerIndicator.notifyDataSetChanged();
-        if (orderItem!=null){
+        if (orderItem != null) {
+            mItsNameTv.setText(buildItsname(this.orderItem));
             validateHasConversation(this.orderItem);
         }
         if (orderItem != null && orderFormFragment != null) {
@@ -265,6 +278,7 @@ public class OrderFormActivity extends BaseActivity {
         showActionBar(R.string.ct_order);
         ButterKnife.inject(this);
         mViewPager.setAdapter(mAdapter = new OrderViewsAdapter(getSupportFragmentManager()));
+        mViewPager.setOffscreenPageLimit(2);
         mViewPagerIndicator.setViewPager(mViewPager);
         requestOrderDetail();
 

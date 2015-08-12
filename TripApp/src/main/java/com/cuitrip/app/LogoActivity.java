@@ -23,8 +23,8 @@ public class LogoActivity extends BaseActivity implements Handler.Callback {
     private static final int INIT = 101;
 
     String token =
-//            "iOYYGEULMn9cEFHJvU2KclUJjq/G011LMurM5xSobnWdFPeJcpSCKXQDIt1DpCe4kC4zt6Ilvdl1WC8KOcAiRg=="; //180
-    "anTVf0l/BWsxuHHSVIS9QVUJjq/G011LMurM5xSobnWdFPeJcpSCKaeojIan8MAUglmpfkJTWhp1WC8KOcAiRg=="; //179
+            "iOYYGEULMn9cEFHJvU2KclUJjq/G011LMurM5xSobnWdFPeJcpSCKXQDIt1DpCe4kC4zt6Ilvdl1WC8KOcAiRg=="; //180
+//    "anTVf0l/BWsxuHHSVIS9QVUJjq/G011LMurM5xSobnWdFPeJcpSCKaeojIan8MAUglmpfkJTWhp1WC8KOcAiRg=="; //179
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ct_activity_logo);

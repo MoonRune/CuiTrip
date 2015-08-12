@@ -70,46 +70,6 @@
         style="@style/order_form_divide"
         />
     <LinearLayout
-        android:id="@+id/ct_service_duration_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="游玩时间"
-            style="@style/order_form_hint"/>
-        <TextView
-            android:id="@+id/ct_service_duration_tv"
-            tools:text="service_duration"
-            style="@style/order_form_value"/>
-    </LinearLayout>
-
-    <View
-        style="@style/order_form_divide"
-        />
-    <LinearLayout
-        android:id="@+id/ct_service_meet_location_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="见面地点"
-            style="@style/order_form_hint"/>
-        <TextView
-            android:id="@+id/ct_service_meet_location_tv"
-            tools:text="ct_service_meet_location_tv"
-            android:drawableRight="@drawable/map_b"
-            android:drawablePadding="8dp"
-            style="@style/order_form_value" />
-    </LinearLayout>
-
-    <View
-        android:id="@+id/ct_ct_service_duration_divide"
-        style="@style/order_form_divide"
-        />
-    <LinearLayout
-        android:layout_marginTop="30dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -121,40 +81,5 @@
             android:id="@+id/ct_order_price_tv"
             tools:text="order_cost"
             style="@style/order_form_value"/>
-    </LinearLayout>
-    <View
-        style="@style/order_form_divide"
-        />
-
-    <LinearLayout
-        android:id="@+id/ct_order_price_include_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="费用包含"
-            style="@style/order_form_hint"/>
-        <TextView
-            android:id="@+id/ct_order_price_include_tv"
-            tools:text="order_price_include"
-            style="@style/order_form_value" />
-    </LinearLayout>
-    <View
-        style="@style/order_form_divide"
-        />
-    <LinearLayout
-        android:id="@+id/ct_order_price_uninclude_ll"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:text="费用不包含"
-            style="@style/order_form_hint"/>
-        <TextView
-            android:id="@+id/ct_order_price_uninclude_tv"
-            tools:text="order_price_uninclude"
-            style="@style/order_form_value" />
     </LinearLayout>
 </LinearLayout>
