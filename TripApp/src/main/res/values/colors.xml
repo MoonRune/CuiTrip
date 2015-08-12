@@ -39,4 +39,11 @@
 
     <color name="ct_light_alpha_gray">#228a8a8a</color>
 
+    <color name="ct_blue_circle_solid">#c8f8fc</color>
+    <color name="ct_blue_circle_stoken">#00ddee</color>
+
+
+    <color name="ct_green_circle_solid">#b8e986</color>
+    <color name="ct_green_circle_stoken">#7ed321</color>
+
 </resources>

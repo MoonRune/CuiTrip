@@ -321,6 +321,18 @@
     <string name="ct_pay_with_ali">支付宝支付</string>
     <string name="ct_pay_with_wx">微信支付</string>
     <string name="ct_discussion_unsupport">该版本不支持此会话</string>
+    <string name="order_person_real_name">真实姓名</string>
+    <string name="order_person_birth">出生年月</string>
+    <string name="order_person_gender">性别</string>
+    <string name="order_person_location">所在国家地区</string>
+    <string name="order_person_carrer">职业</string>
+    <string name="order_person_hobby">爱好</string>
+    <string name="order_person_language">语言</string>
+    <string name="order_person_sign">签名</string>
+    <string name="order_person_phone">电话号码</string>
+    <string name="order_person_email">电子邮件地址</string>
+    <string name="order_person_identity">身份证件</string>
+    <string name="order_person_validated">已验证身份</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

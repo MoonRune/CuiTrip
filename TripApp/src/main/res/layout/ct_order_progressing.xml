@@ -10,6 +10,9 @@
 
 
     <TextView
+        android:layout_marginTop="30dp"
+        android:textColor="@color/ct_black"
+        android:textSize="19sp"
         android:id="@+id/ct_service_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -19,19 +22,25 @@
         android:id="@+id/ct_service_address_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="13sp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/ct_a7"
+        android:drawablePadding="5dp"
         android:drawableLeft="@drawable/ct_position"
-        tools:text="ct_service_address_tv" />
+        tools:text="ct_service_address_tv"
+        android:layout_marginBottom="30dp"/>
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
 
         <LinearLayout
+            android:id="@+id/help_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginRight="20dp"
+            android:paddingRight="40dp"
             android:gravity="center_horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -39,7 +48,6 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
                 android:scaleType="centerCrop"
                 app:border_color="@color/ct_white"
                 app:border_width="@dimen/ct_logo_border"
@@ -47,17 +55,27 @@
                 tools:src="@drawable/ct_default_user" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/ct_travel_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/ct_green_circle_solid"
+                android:textSize="15sp"
                 tools:text="ct_travel_name_tv" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/shape_green_circle_stoken"/>
+
         </LinearLayout>
 
         <LinearLayout
+            android:layout_toRightOf="@+id/help_left"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginLeft="20dp"
+            android:paddingLeft="40dp"
             android:gravity="center_horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
@@ -65,7 +83,6 @@
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
                 android:scaleType="centerCrop"
                 app:border_color="@color/ct_white"
                 app:border_width="@dimen/ct_logo_border"
@@ -73,20 +90,43 @@
                 tools:src="@drawable/ct_default_user" />
 
             <TextView
+                android:layout_marginTop="10dp"
                 android:id="@+id/ct_finder_name_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/ct_blue_circle_solid"
+                android:textSize="15sp"
                 tools:text="ct_finder_name_tv" />
+            <ImageView
+                android:layout_marginTop="10dp"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/shape_blue_circle_stoken"/>
         </LinearLayout>
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/help_left"
+            android:src="@drawable/join_g"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
     <TextView
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal|top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
+        android:textSize="15sp"
+        android:textColor="@color/ct_a7"
         tools:text="your travel progressing" />
 
 
     <TextView
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textSize="13sp"
+        android:textColor="@color/ct_a7"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="if you need help" />

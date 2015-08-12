@@ -5,6 +5,7 @@
     android:background="@color/ct_white">
 
     <ScrollView
+        android:layout_above="@+id/cancel_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -19,11 +20,22 @@
                 android:layout_height="wrap_content"
                 android:layout="@layout/ct_service_part" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/ct_divider"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cancel rule" />
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="18dp"
+                android:textSize="19sp"
+                android:textColor="@color/ct_black"
+                android:text="退订条款" />
 
+            <View
+                style="@style/order_form_divide"/>
             <TextView
                 android:id="@+id/cancel_tips"
                 android:layout_width="match_parent"
@@ -38,11 +50,20 @@
                 android:textColor="@color/ct_7c"
                 android:textSize="@dimen/ct_ts_5" />
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/ct_divider"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="cancel reason" />
+                android:layout_marginLeft="18dp"
+                android:textSize="19sp"
+                android:textColor="@color/ct_black"
+                android:text="退订原因" />
 
+            <View
+                style="@style/order_form_divide"/>
 
             <EditText
                 android:visibility="gone"
@@ -64,8 +85,13 @@
     </ScrollView>
 
     <Button
+
         android:id="@+id/cancel_order"
         style="@style/ctMainBackgroundRecButton"
         android:layout_alignParentBottom="true"
+        android:background="@drawable/select_blue_corner"
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:text="@string/ct_order_cancel_confir" />
 </RelativeLayout>
