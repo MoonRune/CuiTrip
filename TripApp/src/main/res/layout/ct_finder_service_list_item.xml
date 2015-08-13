@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <RelativeLayout
         android:id="@+id/service_detail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="180dp">
 
         <ImageView
             android:id="@+id/service_img"
             android:layout_width="match_parent"
-            android:layout_height="160dp"
+            android:layout_height="180dp"
+            tools:src="@drawable/ct_default"
             android:scaleType="centerCrop" />
 
         <LinearLayout
@@ -24,22 +26,8 @@
             android:paddingLeft="75dp"
             android:paddingRight="@dimen/ct_width_padding"
             android:gravity="center_vertical"
-            android:background="@drawable/ct_black_gradient_to_top">
+            android:background="@color/alpha_dark">
 
-            <TextView
-                android:id="@+id/service_name"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/ct_date"
-                android:layout_toRightOf="@+id/author_img"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
-                android:ellipsize="end"
-                android:singleLine="true"
-                android:textColor="@color/ct_white"
-                android:textSize="@dimen/ct_ts_2" />
 
             <TextView
                 android:id="@+id/service_status"
@@ -55,26 +43,16 @@
                 android:textColor="@color/ct_white"
                 android:textSize="@dimen/ct_ts_5" />
 
-            <ImageView
-                android:id="@+id/ct_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerCrop"
-                android:layout_gravity="center_vertical"
-                android:src="@drawable/ct_cal" />
         </LinearLayout>
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/author_img"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginLeft="@dimen/ct_width_padding"
-            android:layout_marginRight="10dp"
+        <ImageView
+            android:id="@+id/ct_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:scaleType="centerCrop"
-            app:border_color="@color/ct_white"
-            android:layout_alignBottom="@+id/content_block"
-            android:layout_marginBottom="10dp"
-            app:border_width="@dimen/ct_logo_border" />
+            android:layout_alignParentRight="true"
+            android:layout_gravity="right|top"
+            android:src="@drawable/ct_cal" />
         <TextView
             android:id="@+id/service_reason"
             android:layout_width="match_parent"
@@ -88,12 +66,27 @@
             android:singleLine="true"
             android:textColor="@color/ct_white"
             android:textSize="@dimen/ct_ts_5" />
+
+        <TextView
+            android:id="@+id/service_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:layout_toRightOf="@+id/author_img"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:layout_gravity="center_vertical"
+            android:ellipsize="end"
+            android:singleLine="true"
+            android:textColor="@color/ct_white"
+            android:textSize="@dimen/ct_ts_2" />
     </RelativeLayout>
 
     <TextView
+        android:visibility="gone"
         android:id="@+id/service_checking"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="180dp"
         android:gravity="center"
         android:layout_centerInParent="true"
         android:text="@string/ct_service_checking"

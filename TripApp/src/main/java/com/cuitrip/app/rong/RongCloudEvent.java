@@ -124,6 +124,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         switch (connectionStatus) {
             case DISCONNECTED:
                 MessageUtils.showToast("失去连接");
+                ConnectRong();
                 break;
             case CONNECTED:
                 MessageUtils.showToast("已连接");
@@ -133,6 +134,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 break;
             case NETWORK_UNAVAILABLE:
                 MessageUtils.showToast("网络差");
+                ConnectRong();
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT:
                 MessageUtils.showToast("在其他设别上登录");
