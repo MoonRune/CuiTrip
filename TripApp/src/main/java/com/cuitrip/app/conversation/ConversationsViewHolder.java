@@ -25,6 +25,9 @@ public class ConversationsViewHolder extends RecycleViewHolder<ConversationItem>
     TextView ctMessageTime;
     ConversationsPresent present;
     ConversationItem item;
+    @InjectView(R.id.ct_message_service)
+    TextView ctMessageService;
+
     public ConversationsViewHolder(View itemView, final ConversationsPresent present) {
         super(itemView);
         this.present = present;
@@ -37,11 +40,12 @@ public class ConversationsViewHolder extends RecycleViewHolder<ConversationItem>
     }
 
     public void render(ConversationItem item) {
-        this.item= item;
-        ImageHelper.displayPersonImage("",ctMessageImg,null);
+        this.item = item;
+        ImageHelper.displayPersonImage(item.getAva(), ctMessageImg, null);
         ctMessageName.setText(item.getName());
         ctMessageContent.setText(item.getLastWords());
         ctMessageTime.setText(item.getTime());
+        ctMessageService.setText(item.getServiceName());
     }
 
 }

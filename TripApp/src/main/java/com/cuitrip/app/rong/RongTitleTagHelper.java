@@ -6,7 +6,9 @@ import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.utils.LogHelper;
 
+import java.lang.ref.SoftReference;
 import java.util.Date;
+import java.util.HashMap;
 
 import io.rong.imkit.util.RongDateUtils;
 
@@ -15,13 +17,33 @@ import io.rong.imkit.util.RongDateUtils;
  */
 public class RongTitleTagHelper {
 
+    public static HashMap<Integer, SoftReference<TitleMessage>> SCache = new HashMap<>();
+
     public static class TitleMessage {
         String orderId;
         String travellerId;
         String travellerAva;
+        String travellerName;
         String finderId;
         String finderAva;
+        String finderName;
         String serviceName;
+
+        public String getTravellerName() {
+            return travellerName;
+        }
+
+        public void setTravellerName(String travellerName) {
+            this.travellerName = travellerName;
+        }
+
+        public String getFinderName() {
+            return finderName;
+        }
+
+        public void setFinderName(String finderName) {
+            this.finderName = finderName;
+        }
 
         public String getOrderId() {
             return orderId;
@@ -74,12 +96,14 @@ public class RongTitleTagHelper {
             this.serviceName = serviceName;
         }
 
-        public TitleMessage(String orderId, String travellerId, String travellerAva, String finderId, String finderAva, String serviceName) {
+        public TitleMessage(String orderId, String travellerId, String travellerAva, String travellerName, String finderId, String finderAva, String finderName, String serviceName) {
             this.orderId = orderId;
             this.travellerId = travellerId;
             this.travellerAva = travellerAva;
+            this.travellerName = travellerName;
             this.finderId = finderId;
             this.finderAva = finderAva;
+            this.finderName = finderName;
             this.serviceName = serviceName;
         }
 
@@ -88,11 +112,19 @@ public class RongTitleTagHelper {
         }
 
         public static TitleMessage getInstance(String title) {
+            if (title == null) {
+                return null;
+            }
+            int key = title.hashCode();
+            if (SCache.containsKey(key) && SCache.get(key).get() != null) {
+                return SCache.get(key).get();
+            }
             TitleMessage data = null;
             try {
                 data = JSON.parseObject(title, TitleMessage.class);
+                SCache.put(key, new SoftReference<>(data));
             } catch (Exception e) {
-                LogHelper.e("omg","pasererror:"+title+"|"+e.getMessage());
+                LogHelper.e("omg", "pasererror:" + title + "|" + e.getMessage());
                 return null;
             }
             return data;
@@ -109,9 +141,42 @@ public class RongTitleTagHelper {
     }
 
     public static String buildTitle(OrderItem orderItem) {
-        return new TitleMessage(orderItem.getOid(), orderItem.getTravellerId(),
-                orderItem.getTravellerName(), orderItem.getInsiderId(), orderItem.getInsiderName(),
+        return new TitleMessage(orderItem.getOid(),
+                orderItem.getTravellerId(), orderItem.getTravellerName(), orderItem.getTravellerName(),
+                orderItem.getInsiderId(), orderItem.getInsiderName(), orderItem.getInsiderName(),
                 orderItem.getServiceName()).buildJson();
+    }
+
+    public static String filterTravellerName(String title) {
+        TitleMessage msg = TitleMessage.getInstance(title);
+        if (msg != null) {
+            return msg.getTravellerName();
+        }
+        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
+    }
+
+    public static String filterFinderName(String title) {
+        TitleMessage msg = TitleMessage.getInstance(title);
+        if (msg != null) {
+            return msg.getFinderName();
+        }
+        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
+    }
+
+    public static String filterTravellerAva(String title) {
+        TitleMessage msg = TitleMessage.getInstance(title);
+        if (msg != null) {
+            return msg.getTravellerAva();
+        }
+        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
+    }
+
+    public static String filterFinderAva(String title) {
+        TitleMessage msg = TitleMessage.getInstance(title);
+        if (msg != null) {
+            return msg.getFinderAva();
+        }
+        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
     }
 
     public static String filterServiceName(String title) {
@@ -140,6 +205,6 @@ public class RongTitleTagHelper {
     }
 
     public static String buildDateString(long date) {
-       return  RongDateUtils.getConversationListFormatDate(new Date(date));
+        return RongDateUtils.getConversationListFormatDate(new Date(date));
     }
 }

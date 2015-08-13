@@ -93,6 +93,8 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                         if (conversations != null) {
                             for (Conversation conversation : conversations) {
                                 ConversationItem item;
+                                String itsName;
+                                String itsAva;
                                 LogHelper.e("getTargetId", conversation.getTargetId() + "|" + conversation.getConversationTitle() + "|"
                                         + conversation.getObjectName() + "|" + conversation.getSenderUserName() + "|" + uid + "|" + RongTitleTagHelper.filterTravellerId(conversation.getConversationTitle())
                                         + "|" + RongTitleTagHelper.filterFinderId(conversation.getConversationTitle()));
@@ -101,56 +103,43 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                         "|" + !uid.equals(RongTitleTagHelper.filterFinderId(conversation.getConversationTitle())));
                                 if (isTravel &&
                                         !uid.equals(RongTitleTagHelper.filterTravellerId(conversation.getConversationTitle()))) {
-                                    LogHelper.e("omg", "i am travel but order belong travel");
                                     continue;
                                 } else if (!isTravel &&
                                         !uid.equals(RongTitleTagHelper.filterFinderId(conversation.getConversationTitle()))) {
-                                    LogHelper.e("omg", "i am finder but order belong finder");
                                     continue;
 
                                 }
-                                LogHelper.e("omg", "add");
+                                itsName = isTravel ? RongTitleTagHelper.filterFinderName(conversation.getConversationTitle()) :
+                                        RongTitleTagHelper.filterTravellerName(conversation.getConversationTitle());
+                                itsAva = isTravel ? RongTitleTagHelper.filterFinderAva(conversation.getConversationTitle()) :
+                                        RongTitleTagHelper.filterTravellerAva(conversation.getConversationTitle());
+                                item = new ConversationItem(conversation.getTargetId(),
+                                        RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
+                                        itsName,
+                                        String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime())),
+                                        itsAva);
 
-                                if (conversation.getLatestMessage() instanceof VoiceMessage) {
+                                if (conversation.getLatestMessage() == null) {
+                                    item.setLastWords("");
+
+                                } else if (conversation.getLatestMessage() instanceof VoiceMessage) {
                                     VoiceMessage voiceMessage = (VoiceMessage) conversation.getLatestMessage();
-                                    item = new ConversationItem(conversation.getTargetId(),
-                                            RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
-                                            "[voice]",
-                                            String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime()))
-                                    );
+                                    item.setLastWords("[语音]");
                                 } else if (conversation.getLatestMessage() instanceof TextMessage) {
                                     TextMessage textMessage = (TextMessage) conversation.getLatestMessage();
-                                    item = new ConversationItem(conversation.getTargetId(),
-                                            RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
-                                            textMessage.getContent(),
-                                            String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime()))
-                                    );
+                                    item.setLastWords(textMessage.getContent());
+
                                 } else if (conversation.getLatestMessage() instanceof RichContentMessage) {
                                     RichContentMessage richContentMessage = (RichContentMessage) conversation.getLatestMessage();
-                                    item = new ConversationItem(conversation.getTargetId(),
-                                            RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
-                                            richContentMessage.getContent(),
-                                            String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime()))
-                                    );
+                                    item.setLastWords(richContentMessage.getContent());
                                 } else if (conversation.getLatestMessage() instanceof DiscussionNotificationMessage) {
                                     DiscussionNotificationMessage discussionNotificationMessage = (DiscussionNotificationMessage) conversation.getLatestMessage();
-                                    item = new ConversationItem(conversation.getTargetId(),
-                                            RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
-                                            discussionNotificationMessage.getExtension(),
-                                            String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime()))
-                                    );
-                                }else if (conversation.getLatestMessage() instanceof ImageMessage) {
-                                    item = new ConversationItem(conversation.getTargetId(),
-                                            RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
-                                            "[图片]",
-                                            String.valueOf(conversation.getSentTime())
-                                    );
+
+                                    item.setLastWords(discussionNotificationMessage.getExtension());
+                                } else if (conversation.getLatestMessage() instanceof ImageMessage) {
+                                    item.setLastWords("[图片]");
                                 } else {
-                                    item = new ConversationItem(conversation.getTargetId(),
-                                            RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
-                                            conversation.getLatestMessage() != null ? conversation.getLatestMessage().toString() : "",
-                                            String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime()))
-                                    );
+                                    item.setLastWords("其他消息");
                                 }
                                 result.add(item);
                             }
