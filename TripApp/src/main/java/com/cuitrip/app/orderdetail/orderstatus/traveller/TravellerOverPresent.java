@@ -1,6 +1,6 @@
-package com.cuitrip.app.orderdetail.orderstatus.travel;
+package com.cuitrip.app.orderdetail.orderstatus.traveller;
 
-import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
+import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.CommentPartRenderData;
 import com.cuitrip.model.OrderItem;
@@ -8,9 +8,9 @@ import com.cuitrip.model.OrderItem;
 /**
  * Created by baziii on 15/8/11.
  */
-public class TravelOverPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
+public class TravellerOverPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
 
-    public TravelOverPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
+    public TravellerOverPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -31,7 +31,7 @@ public class TravelOverPresent extends BaseOrderFormPresent<IFinderOrderDetailVi
     @Override
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         CommentPartRenderData renderData =new CommentPartRenderData(
-                orderItem.getInsiderName()+"的评论",
+                "我的评论",
                 orderItem.getHeadPic(),
                 orderItem.getCommentScore() ,
                 CommentPartRenderData.DEFAULT_MAX_SCORE,

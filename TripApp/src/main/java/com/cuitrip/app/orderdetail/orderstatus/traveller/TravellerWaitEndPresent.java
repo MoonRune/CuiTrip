@@ -1,15 +1,16 @@
-package com.cuitrip.app.orderdetail.orderstatus.travel;
+package com.cuitrip.app.orderdetail.orderstatus.traveller;
 
-import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
+import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
+import com.cuitrip.app.pro.OrderProgressingRenderData;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class TravelWaitPayPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
+public class TravellerWaitEndPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
 
-    public TravelWaitPayPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
+    public TravellerWaitEndPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -24,8 +25,12 @@ public class TravelWaitPayPresent extends BaseOrderFormPresent<IFinderOrderDetai
 
     @Override
     public void clickMenu() {
+        mOrderDetailView.jumpHelp(mOrderItem);
     }
 
+    public OrderProgressingRenderData buildOrderProgress(OrderItem orderItem) {
+        return OrderProgressingRenderData.getInstance(orderItem);
+    }
     @Override
     public String getBottomText(OrderItem orderItem) {
         return "";
@@ -33,12 +38,13 @@ public class TravelWaitPayPresent extends BaseOrderFormPresent<IFinderOrderDetai
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "";
+        return "寻求帮助";
     }
 
     @Override
     public boolean getBottomEnable(OrderItem orderItem) {
         return true;
     }
+
 
 }

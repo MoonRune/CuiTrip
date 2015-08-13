@@ -1,15 +1,15 @@
 package com.cuitrip.app.orderdetail.orderstatus.finder;
 
-import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
+import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class FinderUnvaliablePresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
+public class FinderUnvaliablePresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
 
-    public FinderUnvaliablePresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
+    public FinderUnvaliablePresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -29,7 +29,7 @@ public class FinderUnvaliablePresent extends BaseOrderFormPresent<ITravelerOrder
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "已失效";
+        return "";
     }
 
     @Override

@@ -1,15 +1,15 @@
-package com.cuitrip.app.orderdetail.orderstatus.travel;
+package com.cuitrip.app.orderdetail.orderstatus.traveller;
 
-import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
+import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class TravelWaitStartPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
+public class TravellerWaitCommentPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
 
-    public TravelWaitStartPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
+    public TravellerWaitCommentPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -20,16 +20,17 @@ public class TravelWaitStartPresent extends BaseOrderFormPresent<IFinderOrderDet
 
     @Override
     public void clickBottom() {
-        mOrderDetailView.jumpStartOrder(mOrderItem);
+        mOrderDetailView.jumpCommentOrder(mOrderItem);
     }
 
     @Override
     public void clickMenu() {
+
     }
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "开始旅程";
+        return "立即评价";
     }
 
     @Override

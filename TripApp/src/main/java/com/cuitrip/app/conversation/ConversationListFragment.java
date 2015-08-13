@@ -9,6 +9,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cuitrip.app.MainApplication;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
 import com.lab.utils.LogHelper;
@@ -45,7 +47,9 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mPresent = new ConversationsPresent(this);
-        mPresent.onCallRefresh();
+        if (LoginInstance.isLogin(MainApplication.getInstance())) {
+            mPresent.onCallRefresh();
+        }
     }
 
     @Override

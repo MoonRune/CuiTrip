@@ -1,15 +1,15 @@
 package com.cuitrip.app.orderdetail.orderstatus.finder;
 
-import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
+import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class FinderWaitStartPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
+public class FinderWaitStartPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
 
-    public FinderWaitStartPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
+    public FinderWaitStartPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -20,7 +20,7 @@ public class FinderWaitStartPresent extends BaseOrderFormPresent<ITravelerOrderD
 
     @Override
     public void clickBottom() {
-        mOrderDetailView.jumpMapOrder(mOrderItem);
+        mOrderDetailView.jumpStartOrder(mOrderItem);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class FinderWaitStartPresent extends BaseOrderFormPresent<ITravelerOrderD
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "查看地图";
+        return "开始旅程";
     }
 
     @Override
@@ -42,4 +42,5 @@ public class FinderWaitStartPresent extends BaseOrderFormPresent<ITravelerOrderD
     public boolean getBottomEnable(OrderItem orderItem) {
         return true;
     }
+
 }

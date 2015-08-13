@@ -7,6 +7,9 @@ import com.cuitrip.model.OrderItem;
  */
 public interface IFinderOrderDetailView extends IOrderDetailView {
     void jumpConfirmOrder(OrderItem orderItem);
+    void jumpCancelOrder(OrderItem orderItem);
     void jumpRefuseOrder(OrderItem orderItem);
     void jumpStartOrder(OrderItem orderItem);
+    void jumpHelp(OrderItem orderItem);
+    void jumpEndOrder(OrderItem orderItem);
 }

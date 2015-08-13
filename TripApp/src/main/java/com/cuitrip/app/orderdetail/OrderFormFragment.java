@@ -1,7 +1,10 @@
 package com.cuitrip.app.orderdetail;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.ModifyOrderActivity;
+import com.cuitrip.app.OrderFragment;
 import com.cuitrip.app.PayActivity;
 import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
@@ -22,6 +26,13 @@ import com.cuitrip.app.base.PartViewHolder;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFetcher;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFormPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerOverPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerUnvaliablePresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitCommentPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitConfirmPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitEndPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitPayPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitStartPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderOverPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderUnvaliablePresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitCommentPresent;
@@ -36,12 +47,14 @@ import com.cuitrip.app.pro.OrderProgressingViewHolder;
 import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.app.pro.ServicePartViewHolder;
 import com.cuitrip.business.OrderBusiness;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
+import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import butterknife.ButterKnife;
@@ -207,9 +220,9 @@ public class OrderFormFragment extends BaseFragment {
     public void renderWithData() {
         if (getArguments().containsKey(ORDER_KEY)) {
             OrderItem orderItem = (OrderItem) getArguments().getSerializable(ORDER_KEY);
-//            boolean isImTravel = LoginInstance.getInstance(getActivity()).getUserInfo().isTravel();
-//            mOrderDetailView = isImTravel ? new TravelOrderDetailView() : new FinderOrderDetailView();
-            mOrderDetailView = new FinderOrderDetailView();
+            boolean isImTravel = LoginInstance.getInstance(getActivity()).getUserInfo().isTravel();
+            mOrderDetailView = isImTravel ? new TravellerOrderDetailView() : new FinderOrderDetailView();
+//            mOrderDetailView = new FinderOrderDetailView();
             mOrderDetailView.requestPresentRender(orderItem);
         }
     }
@@ -279,9 +292,61 @@ public class OrderFormFragment extends BaseFragment {
         }
     };
 
-    public class ProxyPresent extends IOrderFormPresent<ITravelerOrderDetailView> {
+    public class TravelProxyPresent extends IOrderFormPresent<ITravelerOrderDetailView> {
 
-        public ProxyPresent(ITravelerOrderDetailView orderDetailView) {
+        public TravelProxyPresent(ITravelerOrderDetailView orderDetailView) {
+            super(orderDetailView);
+        }
+
+        public void changeOrderItem(OrderItem orderItem) {
+            setOrderItem(orderItem);
+            switch (orderItem.getStatus()) {
+                case OrderItem.STATUS_WAIT_COFIRM:
+                    baseOrderFormPresent = new TravellerWaitConfirmPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_PAY:
+                    baseOrderFormPresent = new TravellerWaitPayPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_START:
+                    baseOrderFormPresent = new TravellerWaitStartPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_END:
+                    baseOrderFormPresent = new TravellerWaitEndPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_WAIT_COMMENT:
+                    baseOrderFormPresent = new TravellerWaitCommentPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_OVER:
+                    baseOrderFormPresent = new TravellerOverPresent(mOrderDetailView, orderItem);
+                    break;
+                case OrderItem.STATUS_UNVALIABLE:
+                    baseOrderFormPresent = new TravellerUnvaliablePresent(mOrderDetailView, orderItem);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        @Override
+        public void render() {
+            baseOrderFormPresent.render();
+        }
+
+        @Override
+        public void clickBottom() {
+            baseOrderFormPresent.clickBottom();
+        }
+
+        @Override
+        public void clickMenu() {
+            baseOrderFormPresent.clickMenu();
+        }
+
+    }
+
+    public class FinderProxyPresent extends IOrderFormPresent<IFinderOrderDetailView> {
+
+        public FinderProxyPresent(IFinderOrderDetailView orderDetailView) {
             super(orderDetailView);
         }
 
@@ -331,20 +396,134 @@ public class OrderFormFragment extends BaseFragment {
 
     }
 
-//    public class TravelOrderDetailView implements IOrderDetailView {
-//
-//        @Override
-//        public void renderUi(OrderMode orderMode) {
-//
-//        }
-//
-//        @Override
-//        public void requestPresentRender(OrderItem orderItem) {
-//        }
-//    }
+    public class FinderOrderDetailView implements IFinderOrderDetailView {
+        FinderProxyPresent present = new FinderProxyPresent(this);
+        @Override
+        public void showLoading() {
+            OrderFormFragment.this.showLoading();
+        }
 
-    public class FinderOrderDetailView implements ITravelerOrderDetailView {
-        ProxyPresent present = new ProxyPresent(this);
+        @Override
+        public void hideLoading() {
+            OrderFormFragment.this.hideLoading();
+        }
+
+        @Override
+        public void renderUi(OrderMode orderMode) {
+            LogHelper.e("omg", "FinderOrderDetailView renderUi");
+            mServiceStub.render(orderMode.getServiceData());
+            mCommentstub.render(orderMode.getCommentData());
+            mProgressingStub.render(orderMode.getProgressData());
+            showOption(orderMode.getMenuText());
+            if (TextUtils.isEmpty(orderMode.getBottomText())) {
+                ctBottomTv.setVisibility(View.GONE);
+            } else {
+                ctBottomTv.setVisibility(View.VISIBLE);
+                ctBottomTv.setText(orderMode.getBottomText());
+                ctBottomTv.setEnabled(orderMode.isBottomEnable());
+            }
+        }
+
+        @Override
+        public void requestPresentRender(OrderItem orderItem) {
+            present.changeOrderItem(orderItem);
+            present.render();
+
+        }
+
+        @Override
+        public void jumpConfirmOrder(final OrderItem orderItem) {
+
+            MessageUtils.createHoloBuilder(getActivity()).setMessage(R.string.ct_order_confirm)
+                    .setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            showNoCancelDialog();
+                            OrderBusiness.confirmOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(LabResponse response, Object data) {
+                                    hideNoCancelDialog();
+                                    MessageUtils.showToast(R.string.ct_order_confirm_suc);
+                                    ((OrderFormActivity) getActivity()).requestOrderDetail();
+                                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
+                                            new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
+                                }
+
+                                @Override
+                                public void onFailure(LabResponse response, Object data) {
+                                    hideNoCancelDialog();
+                                    MessageUtils.showToast(response.msg);
+                                }
+                            }, orderItem.getOid());
+                        }
+                    })
+                    .setNegativeButton(R.string.ct_cancel, null)
+                    .show();
+        }
+
+        @Override
+        public void jumpCancelOrder(OrderItem orderItem) {
+            CancelOrderActivity.start(getActivity(),orderItem);
+
+        }
+
+        @Override
+        public void jumpRefuseOrder(OrderItem orderItem) {
+
+        }
+
+        @Override
+        public void jumpStartOrder(final  OrderItem orderItem) {
+            showNoCancelDialog();
+            OrderBusiness.beginOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    hideNoCancelDialog();
+                    MessageUtils.showToast(R.string.ct_order_begin_suc);
+                    ((OrderFormActivity) getActivity()).requestOrderDetail();
+                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
+                            new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    hideNoCancelDialog();
+                    MessageUtils.showToast(response.msg);
+                }
+            }, orderItem.getOid());
+
+        }
+
+        @Override
+        public void jumpHelp(OrderItem orderItem) {
+
+        }
+
+        @Override
+        public void jumpEndOrder(final OrderItem orderItem) {
+
+            showNoCancelDialog();
+            OrderBusiness.endOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    hideNoCancelDialog();
+                    MessageUtils.showToast(R.string.ct_order_end_suc);
+                    ((OrderFormActivity) getActivity()).requestOrderDetail();
+                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
+                            new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    hideNoCancelDialog();
+                    MessageUtils.showToast(response.msg);
+                }
+            }, orderItem.getOid());
+        }
+    }
+
+    public class TravellerOrderDetailView implements ITravelerOrderDetailView {
+        TravelProxyPresent present = new TravelProxyPresent(this);
 
 
         @Override
@@ -414,11 +593,6 @@ public class OrderFormFragment extends BaseFragment {
 
         @Override
         public void jumpHelp(OrderItem orderItem) {
-
-        }
-
-        @Override
-        public void jumpEndOrder(OrderItem orderItem) {
 
         }
 

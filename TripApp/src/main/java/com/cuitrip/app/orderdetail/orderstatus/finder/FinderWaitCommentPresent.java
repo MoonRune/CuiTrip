@@ -1,15 +1,15 @@
 package com.cuitrip.app.orderdetail.orderstatus.finder;
 
-import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
+import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class FinderWaitCommentPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
+public class FinderWaitCommentPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
 
-    public FinderWaitCommentPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
+    public FinderWaitCommentPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -20,17 +20,15 @@ public class FinderWaitCommentPresent extends BaseOrderFormPresent<ITravelerOrde
 
     @Override
     public void clickBottom() {
-        mOrderDetailView.jumpCommentOrder(mOrderItem);
     }
 
     @Override
     public void clickMenu() {
-
     }
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "立即评价";
+        return "";
     }
 
     @Override

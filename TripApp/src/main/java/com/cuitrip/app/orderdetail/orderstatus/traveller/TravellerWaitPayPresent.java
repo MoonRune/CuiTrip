@@ -1,15 +1,15 @@
-package com.cuitrip.app.orderdetail.orderstatus.travel;
+package com.cuitrip.app.orderdetail.orderstatus.traveller;
 
-import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
+import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class TravelUnvaliablePresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
+public class TravellerWaitPayPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
 
-    public TravelUnvaliablePresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
+    public TravellerWaitPayPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -20,26 +20,27 @@ public class TravelUnvaliablePresent extends BaseOrderFormPresent<IFinderOrderDe
 
     @Override
     public void clickBottom() {
+        mOrderDetailView.jumpPayOrder(mOrderItem);
     }
 
     @Override
     public void clickMenu() {
+        mOrderDetailView.jumpCancelOrder(mOrderItem);
 
     }
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "";
+        return "立即支付";
     }
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "";
+        return "取消预订";
     }
 
     @Override
     public boolean getBottomEnable(OrderItem orderItem) {
-        return false;
+        return true;
     }
-
 }

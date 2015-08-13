@@ -1,6 +1,6 @@
 package com.cuitrip.app.orderdetail.orderstatus.finder;
 
-import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
+import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
 import com.cuitrip.model.OrderItem;
@@ -8,9 +8,9 @@ import com.cuitrip.model.OrderItem;
 /**
  * Created by baziii on 15/8/11.
  */
-public class FinderWaitEndPresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
+public class FinderWaitEndPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
 
-    public FinderWaitEndPresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
+    public FinderWaitEndPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -32,6 +32,7 @@ public class FinderWaitEndPresent extends BaseOrderFormPresent<ITravelerOrderDet
     public OrderProgressingRenderData buildOrderProgress(OrderItem orderItem) {
         return OrderProgressingRenderData.getInstance(orderItem);
     }
+
     @Override
     public String getBottomText(OrderItem orderItem) {
         return "结束旅程";
@@ -46,6 +47,5 @@ public class FinderWaitEndPresent extends BaseOrderFormPresent<ITravelerOrderDet
     public boolean getBottomEnable(OrderItem orderItem) {
         return true;
     }
-
 
 }

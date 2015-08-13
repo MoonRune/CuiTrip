@@ -24,7 +24,8 @@ import io.rong.message.VoiceMessage;
  * Created by baziii on 15/8/7.
  */
 public class ConversationFetcherRong implements IConversationsFetcher {
-    boolean isTravel = false;
+
+
 
     @Override
     public void getConversations(final ListFetchCallback<ConversationItem> itemListFetchCallback) {
@@ -32,22 +33,31 @@ public class ConversationFetcherRong implements IConversationsFetcher {
         RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(List<Conversation> conversations) {
+                UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+                String uid = userInfo.getUid();
+                boolean isTravel = userInfo.isTravel();
                 List<ConversationItem> result = new ArrayList<>();
                 if (conversations != null) {
                     for (Conversation conversation : conversations) {
                         ConversationItem item;
+
                         LogHelper.e("getTargetId", conversation.getTargetId() + "|" + conversation.getConversationTitle() + "|"
-                                + conversation.getObjectName() + "|" + conversation.getSenderUserName());
-                        UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
-                        String uid = userInfo.getUid();
+                                + conversation.getObjectName() + "|" + conversation.getSenderUserName()+"|"+uid+"|"+RongTitleTagHelper.filterTravellerId(conversation.getConversationTitle())
+                        +"|"+RongTitleTagHelper.filterFinderId(conversation.getConversationTitle()));
+
+                        LogHelper.e("omg",""+isTravel+"|"+( !uid.equals(RongTitleTagHelper.filterTravellerId(conversation.getConversationTitle())))+
+                        "|"+ !uid.equals(RongTitleTagHelper.filterFinderId(conversation.getConversationTitle())));
                         if (isTravel &&
                                 !uid.equals(RongTitleTagHelper.filterTravellerId(conversation.getConversationTitle()))) {
+                            LogHelper.e("omg","i am travel but order belong travel");
                             continue;
                         } else if (!isTravel &&
                                 !uid.equals(RongTitleTagHelper.filterFinderId(conversation.getConversationTitle()))) {
+                            LogHelper.e("omg","i am finder but order belong finder");
                             continue;
 
                         }
+                        LogHelper.e("omg","add");
 
                         if (conversation.getLatestMessage() instanceof VoiceMessage) {
                             VoiceMessage voiceMessage = (VoiceMessage) conversation.getLatestMessage();

@@ -12,5 +12,4 @@ public interface ITravelerOrderDetailView extends IOrderDetailView{
     void jumpMapOrder(OrderItem orderItem);
     void jumpCommentOrder(OrderItem orderItem);
     void jumpHelp(OrderItem orderItem);
-    void jumpEndOrder(OrderItem orderItem);
 }
