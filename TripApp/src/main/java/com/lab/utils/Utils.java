@@ -140,4 +140,12 @@ public class Utils {
         }
         return false;
     }
+    public static int dp2pixel(int i) {
+        return (int) (0.5F + MainApplication.getInstance().getResources().getDisplayMetrics().density * (float) i);
+    }
+
+    public static float dp2pixelF(int i) {
+        return (0.5F +  MainApplication.getInstance().getResources().getDisplayMetrics().density * (float) i);
+    }
+
 }

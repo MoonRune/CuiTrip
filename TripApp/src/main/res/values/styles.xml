@@ -7,8 +7,7 @@
         <item name="android:windowBackground">@color/ct_common_bg</item>
         <item name="android:colorBackground">@color/ct_common_bg</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionMenuTextColor">@color/ct_white</item>
-        <item name="actionMenuTextColor">@color/ct_white</item>
+        <item name="actionMenuTextColor">@color/ct_main_color</item>
         <item name="android:actionMenuTextAppearance">@style/ctActionbarMenu</item>
 
         <!--<item name="android:dropDownListViewStyle">@style/drop_down_style</item>-->
@@ -45,12 +44,12 @@
         <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="ctMyActionBar" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="background">@drawable/ct_actionbar_bg</item>
+        <item name="background">@color/ct_white</item>
         <item name="titleTextStyle">@style/ct_ActionBar_Text</item>
-        <item name="homeAsUpIndicator">@drawable/ct_trip_back</item>
+        <item name="homeAsUpIndicator">@drawable/back_arrow_b</item>
     </style>
     <style name="ct_ActionBar_Text" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/ct_white</item>
+        <item name="android:textColor">@color/ct_black</item>
         <item name="android:textSize">@dimen/ct_ts_3</item>
     </style>
 
@@ -264,6 +263,14 @@
         <item name="android:textColor">@color/ct_black</item>
         <item name="android:singleLine">true</item>
         <item name="android:layout_weight">1</item>
+    </style>
+
+
+    <style name="create_service_divide" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@color/ct_divider</item>
     </style>
     <!--<style name="selectorItem" parent="Widget.AppCompat.Light.DropDownItem.Spinner">-->
         <!--<item name="android:textColor">@color/B_black_85</item>-->

@@ -20,7 +20,9 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -34,6 +36,7 @@ import com.cuitrip.model.ServiceInfo;
 import com.cuitrip.model.ServiceListInterface;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.adapter.ViewHolder;
 import com.lab.app.BaseFragment;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -44,6 +47,9 @@ import com.lab.utils.SavedDescSharedPreferences;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.List;
+
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 
 /**
  * Created on 7/23.
@@ -364,63 +370,138 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
 
         protected ViewHolder view2Holder(View view) {
             ServiceViewHolder holder = new ServiceViewHolder();
-            holder.mDate = view.findViewById(R.id.ct_date);
-            holder.mServiceChecking = view.findViewById(R.id.service_checking);
-            holder.mServiceName = (TextView) view.findViewById(R.id.service_name);
-            holder.mServiceStatus = (TextView) view.findViewById(R.id.service_status);
-            holder.mServiceReason = (TextView) view.findViewById(R.id.service_reason);
-            holder.mAuthor = (ImageView) view.findViewById(R.id.author_img);
-            holder.mServicePic = (ImageView) view.findViewById(R.id.service_img);
+            ButterKnife.inject(holder, view);
             return holder;
         }
 
+        private String getVisitedString(ServiceInfo serviceInfo) {
+            return "visit wait api";
+        }
+
+        private String getLikedString(ServiceInfo serviceInfo) {
+            return "like wait api";
+        }
+
+        private String getAvaliabeString(ServiceInfo serviceInfo) {
+            return "date wait api";
+        }
+
+        private String getFailedString(ServiceInfo serviceInfo) {
+            if (serviceInfo.getExtInfoObject() == null && !TextUtils.isEmpty(serviceInfo.getExtInfoObject().getRefuseReason())) {
+                return serviceInfo.getExtInfoObject().getRefuseReason();
+            }
+            return PlatformUtil.getInstance().getString(R.string.ct_invalidate_service_failed_with_no_reason);
+        }
+
+        protected void showLocal(ServiceViewHolder serviceViewHolder, SavedLocalService localService) {
+
+            serviceViewHolder.ctDate.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctDate.setImageResource(R.drawable.edit_w);
+
+            serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctServiceName.setText(localService.getName());
+
+            serviceViewHolder.contentBlock.setVisibility(View.GONE);
+            serviceViewHolder.serviceReason.setVisibility(View.GONE);
+            serviceViewHolder.serviceChecking.setVisibility(View.GONE);
+
+        }
+
+        protected void showChecking(ServiceViewHolder serviceViewHolder, ServiceInfo serviceInfo) {
+
+            serviceViewHolder.ctDate.setVisibility(View.GONE);
+            serviceViewHolder.ctServiceName.setVisibility(View.GONE);
+            serviceViewHolder.contentBlock.setVisibility(View.GONE);
+            serviceViewHolder.serviceReason.setVisibility(View.GONE);
+            serviceViewHolder.serviceChecking.setVisibility(View.VISIBLE);
+
+        }
+
+
+        protected void showChecked(ServiceViewHolder serviceViewHolder, ServiceInfo serviceInfo) {
+
+            serviceViewHolder.ctDate.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctDate.setImageResource(R.drawable.calendar_w);
+
+            serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctServiceName.setText(serviceInfo.getName());
+
+            serviceViewHolder.contentBlock.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctVisitNumTv.setText(getVisitedString(serviceInfo));
+            serviceViewHolder.ctFavoriteNumTv.setText(getLikedString(serviceInfo));
+            serviceViewHolder.ctAvaliableDateTv.setText(getAvaliabeString(serviceInfo));
+
+            serviceViewHolder.serviceReason.setVisibility(View.GONE);
+            serviceViewHolder.serviceChecking.setVisibility(View.GONE);
+
+        }
+
+        protected void showCheckFailed(ServiceViewHolder serviceViewHolder, ServiceInfo serviceInfo) {
+            serviceViewHolder.ctDate.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctDate.setImageResource(R.drawable.edit_w);
+
+            serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctServiceName.setText(serviceInfo.getName());
+
+            serviceViewHolder.contentBlock.setVisibility(View.GONE);
+
+            serviceViewHolder.serviceReason.setVisibility(View.VISIBLE);
+            serviceViewHolder.serviceReason.setText(getFailedString(serviceInfo));
+            serviceViewHolder.serviceChecking.setVisibility(View.GONE);
+
+        }
+
+        protected void showError(ServiceViewHolder serviceViewHolder, ServiceInfo serviceInfo) {
+
+            serviceViewHolder.ctDate.setVisibility(View.GONE);
+            serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
+            serviceViewHolder.ctServiceName.setText(R.string.network_data_error);
+            serviceViewHolder.contentBlock.setVisibility(View.GONE);
+            serviceViewHolder.serviceReason.setVisibility(View.GONE);
+            serviceViewHolder.serviceChecking.setVisibility(View.GONE);
+        }
+
+
         protected void bindView(ViewHolder holder, ServiceListInterface serviceItem, int position) {
             ServiceViewHolder serviceViewHolder = (ServiceViewHolder) holder;
-            serviceViewHolder.mServiceName.setText(serviceItem.getName());
-            ImageHelper.displayCtImage(serviceItem.getBackPic(), serviceViewHolder.mServicePic, null);
-            ImageHelper.displayPersonImage(mUserPic, serviceViewHolder.mAuthor, null);
+            ImageHelper.displayCtImage(serviceItem.getBackPic(), serviceViewHolder.ctServiceImg, null);
             if (serviceItem instanceof SavedLocalService) {
-                serviceViewHolder.mDate.setVisibility(View.GONE);
-                serviceViewHolder.mServiceReason.setVisibility(View.GONE);
-                serviceViewHolder.mServiceChecking.setVisibility(View.GONE);
-                serviceViewHolder.mServiceStatus.setVisibility(View.VISIBLE);
-                serviceViewHolder.mServiceStatus.setText(R.string.ct_service_to_edit);
+                showLocal(serviceViewHolder, ((SavedLocalService) serviceItem));
             } else {
                 ServiceInfo item = (ServiceInfo) serviceItem;
-                if (item.getCheckStatus() == 0) {
-                    serviceViewHolder.mDate.setVisibility(View.GONE);
-                    serviceViewHolder.mServiceStatus.setVisibility(View.GONE);
-                    serviceViewHolder.mServiceReason.setVisibility(View.GONE);
-                    serviceViewHolder.mServiceChecking.setVisibility(View.VISIBLE);
-                } else if (item.getCheckStatus() == 1) {
-                    serviceViewHolder.mDate.setVisibility(View.VISIBLE);
-                    serviceViewHolder.mServiceStatus.setVisibility(View.GONE);
-                    serviceViewHolder.mServiceReason.setVisibility(View.GONE);
-                    serviceViewHolder.mServiceChecking.setVisibility(View.GONE);
-                } else if (item.getCheckStatus() == 2) {
-                    serviceViewHolder.mDate.setVisibility(View.GONE);
-                    serviceViewHolder.mServiceStatus.setVisibility(View.VISIBLE);
-                    serviceViewHolder.mServiceStatus.setText(R.string.ct_service_no_pass);
-                    if (item.getExtInfoObject() != null && !TextUtils.isEmpty(item.getExtInfoObject().getRefuseReason())) {
-                        serviceViewHolder.mServiceReason.setVisibility(View.VISIBLE);
-                        serviceViewHolder.mServiceReason.setText(item.getExtInfoObject().getRefuseReason());
-                    } else {
-                        serviceViewHolder.mServiceReason.setText(R.string.ct_invalidate_service_failed_with_no_reason);
-                        serviceViewHolder.mServiceReason.setVisibility(View.VISIBLE);
-                    }
-                    serviceViewHolder.mServiceChecking.setVisibility(View.GONE);
+                if (item.isChecking()) {
+                    showChecking(serviceViewHolder, item);
+                } else if (item.isChecked()) {
+                    showChecked(serviceViewHolder, item);
+                } else if (item.isCheckFailed()) {
+                    showCheckFailed(serviceViewHolder, item);
+                } else {
+                    showError(serviceViewHolder, item);
                 }
             }
         }
     }
 
     class ServiceViewHolder extends ViewHolder {
-        public ImageView mServicePic;
-        public ImageView mAuthor;
-        public TextView mServiceName;
-        public TextView mServiceStatus;
-        public TextView mServiceReason;
-        public View mDate;
-        public View mServiceChecking;
+        @InjectView(R.id.service_img)
+        ImageView ctServiceImg;
+        @InjectView(R.id.ct_visit_num_tv)
+        TextView ctVisitNumTv;
+        @InjectView(R.id.ct_favorite_num_tv)
+        TextView ctFavoriteNumTv;
+        @InjectView(R.id.ct_avaliable_date_tv)
+        TextView ctAvaliableDateTv;
+        @InjectView(R.id.content_block)
+        LinearLayout contentBlock;
+        @InjectView(R.id.service_reason)
+        TextView serviceReason;
+        @InjectView(R.id.ct_date)
+        ImageView ctDate;
+        @InjectView(R.id.service_name)
+        TextView ctServiceName;
+        @InjectView(R.id.service_detail)
+        RelativeLayout serviceDetail;
+        @InjectView(R.id.service_checking)
+        TextView serviceChecking;
     }
 }

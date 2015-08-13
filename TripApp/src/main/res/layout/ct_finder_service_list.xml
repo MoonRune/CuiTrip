@@ -14,8 +14,7 @@
             style="@style/default_list_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@color/ct_divider"
-            android:dividerHeight="10dp" />
+            android:divider="@null" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <LinearLayout

@@ -239,7 +239,7 @@
     <string name="ct_i_know">知道了</string>
     <string name="ct_delete_pic_confirm">确定要删除图片？</string>
     <string name="ct_service_confirm">确认提交</string>
-    <string name="ct_service_address">地点</string>
+    <string name="ct_service_address">游玩的地点</string>
     <string name="ct_service_address_hint">城市</string>
     <string name="ct_service_address_null">请输入地点</string>
     <string name="ct_service_enjoy_time">游玩时长</string>
@@ -251,6 +251,7 @@
     <string name="ct_service_one_price">一口价</string>
     <string name="ct_service_price_by_count">按人数计费</string>
     <string name="ct_service_time_selected">请选择游玩时长</string>
+    <string name="ct_service_meet_selected">请选择见面地点</string>
     <string name="ct_service_pay_way_selecte_hint">请选择计费方式</string>
     <string name="ct_service_max_count">最多选择为6人</string>
     <string name="ct_service_count_null">请选择人数</string>
@@ -386,6 +387,13 @@
     <string name="R.string.order_status_wait_comment">等待评价</string>
     <string name="R.string.order_status_over">旅程已结束</string>
     <string name="R.string.order_status_unavaliable">预订已失效</string>
+    <string name="ct_create_service_hint">几段精心的文字，几张精美的图片，让您的发现与众不同，更会获得旅行者的青睐。(最多2500个字，9张图片)</string>
+    <string name="ct_meet_location">见面地点</string>
+    <string name="ct_service_tag">特色标签</string>
+    <string name="ct_price_desc">费用说明</string>
+    <string name="ct_price_desc_hint">请输入费用说明</string>
+    <string name="ct_tag_hint">请选择标签</string>
+    <string name="max_tag_limit">最多%1$d个标签</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

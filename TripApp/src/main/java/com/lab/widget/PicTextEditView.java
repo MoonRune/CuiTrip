@@ -75,7 +75,10 @@ public class PicTextEditView extends LinearLayout implements ImageSelectView.OnI
 
     public void initDesc(String desc, String mainPic) {
         if (TextUtils.isEmpty(desc)) {
-            addView(new TextEditSplit(getContext()));
+            TextEditSplit textEditSplit = new  TextEditSplit(getContext());
+            textEditSplit.setHint(R.string.ct_create_service_hint);
+            textEditSplit.setHintTextColor(getContext().getResources().getColor(R.color.ct_text_hint));
+            addView(textEditSplit);
         } else {
             generateView(desc, mainPic);
         }

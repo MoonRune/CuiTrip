@@ -1,211 +1,239 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ct_white"
-    android:orientation="vertical">
+    android:background="@color/ct_common_bg">
 
-    <RelativeLayout
-        android:id="@+id/address_block"
+
+    <LinearLayout
+        android:id="@+id/create_order_v"
         android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/ct_white_gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:background="@color/ct_white"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/country_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_service_address"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
 
-        <!--<TextView-->
-            <!--android:id="@+id/service_country"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_weight="1"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_toLeftOf="@+id/service_address"-->
-            <!--android:layout_toRightOf="@+id/country_title"-->
-            <!--android:hint="@string/ct_country_selected"-->
-            <!--android:gravity="right"-->
-            <!--android:paddingRight="10dp"-->
-            <!--android:textColor="@color/ct_gray"-->
-            <!--android:textColorHint="@color/ct_gray"-->
-            <!--android:textSize="@dimen/ct_ts_4" />-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_toLeftOf="@+id/service_address"-->
-            <!--android:layout_toRightOf="@+id/country_title"-->
-            <!--android:textColor="@color/ct_gray"-->
-            <!--android:textColorHint="@color/ct_gray"-->
-            <!--android:textSize="@dimen/ct_ts_4"-->
-            <!--android:text="/"/>-->
-        <EditText
-            android:id="@+id/service_address"
-            android:layout_width="wrap_content"
-            android:minWidth="60dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:background="@null"
-            android:gravity="right"
-            android:hint="@string/ct_service_address_hint"
-            android:textColor="@color/ct_gray"
-            android:textColorHint="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_4" />
-    </RelativeLayout>
-
-    <View style="@style/ctDivider" />
-
-    <RelativeLayout
-        android:id="@+id/time_block"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/ct_white_gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_service_enjoy_time"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
-
-        <TextView
-            android:id="@+id/service_duration"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="@string/ct_service_time_selected"
-            android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_4" />
-    </RelativeLayout>
-
-    <View style="@style/ctDivider" />
-
-    <RelativeLayout
-        android:id="@+id/person_block"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/ct_white_gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_service_persons"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
-
-        <TextView
-            android:id="@+id/service_persons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:text="@string/ct_service_max_count"
-            android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_4" />
-    </RelativeLayout>
-
-    <View style="@style/ctDivider" />
-
-    <RelativeLayout
-        android:id="@+id/pay_block"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/ct_white_gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding">
-
-        <TextView
-            android:id="@+id/pay_introduce"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawableRight="@drawable/ct_info"
-            android:gravity="center_vertical"
-            android:text="@string/ct_service_pay_way"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
-
-        <TextView
-            android:id="@+id/service_pay_way"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:text="@string/ct_service_pay_way_selecte_hint"
-            android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_4" />
-    </RelativeLayout>
-
-    <View style="@style/ctDivider" />
-
-    <RelativeLayout
-        android:id="@+id/price_block"
-        android:layout_width="match_parent"
-        android:layout_height="54dp"
-        android:background="@drawable/ct_white_gray"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/ct_width_padding"
-        android:paddingRight="@dimen/ct_width_padding"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/ct_service_money"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
-
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/ct_common_bg"/>
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ct_tag_block"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:background="@drawable/select_white_gray"
             android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/service_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:gravity="right"
-                android:hint="@string/ct_service_money_set"
-                android:paddingRight="5dp"
-                android:textColor="@color/ct_gray"
-                android:textColorHint="@color/ct_gray"
-                android:textSize="@dimen/ct_ts_4" />
+            <TextView
+                style="@style/order_info_hint"
+                android:text="@string/ct_service_tag" />
 
             <TextView
-                android:id="@+id/service_price_type"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_alignParentRight="true"
-                android:text="TWD"
-                android:paddingLeft="3dp"
-                android:textColor="@color/ct_main_color"
-                android:textSize="@dimen/ct_ts_4" />
-
-            <TextView
-                android:id="@+id/service_price_type_unit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:text="@string/ct_service_unit"
-                android:textColor="@color/ct_gray"
-                android:textSize="@dimen/ct_ts_4"
-                android:visibility="gone" />
+                android:id="@+id/ct_tag_tv"
+                style="@style/order_info_value"
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:hint="@string/ct_tag_hint" />
         </LinearLayout>
 
-    </RelativeLayout>
+        <View style="@style/create_service_divide" />
 
-    <View style="@style/ctDivider" />
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/address_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/select_white_gray"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/country_title"
+                style="@style/order_info_hint"
+                android:text="@string/ct_service_address" />
+
+            <TextView
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:id="@+id/service_address"
+                style="@style/order_info_value"
+                android:background="@null"
+                android:hint="@string/ct_service_address_hint" />
+        </LinearLayout>
+
+        <View style="@style/create_service_divide" />
+
+        <LinearLayout
+            android:id="@+id/time_block"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/ct_white_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/order_info_hint"
+                android:text="@string/ct_service_enjoy_time" />
+
+            <TextView
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:id="@+id/service_duration"
+                style="@style/order_info_value"
+                android:hint="@string/ct_service_time_selected" />
+        </LinearLayout>
+
+        <View style="@style/create_service_divide" />
+
+        <LinearLayout
+            android:id="@+id/meet_block"
+            android:layout_width="match_parent"
+            android:layout_height="54dp"
+            android:background="@drawable/ct_white_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/order_info_hint"
+                android:text="@string/ct_meet_location" />
+
+            <TextView
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:id="@+id/service_meet"
+                style="@style/order_info_value"
+                android:hint="@string/ct_service_meet_selected" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp" 
+            android:background="@color/ct_common_bg"/>
+
+        <LinearLayout
+            android:id="@+id/pay_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ct_white_gray">
+
+            <TextView
+                android:id="@+id/pay_introduce"
+                style="@style/order_info_hint"
+                android:text="@string/ct_service_pay_way" />
+
+            <TextView
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:id="@+id/service_pay_way"
+                style="@style/order_info_value"
+                android:hint="@string/ct_service_pay_way_selecte_hint" />
+        </LinearLayout>
+
+        <View style="@style/create_service_divide" />
+
+        <LinearLayout
+            android:id="@+id/person_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ct_white_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/order_info_hint"
+                android:text="@string/ct_service_persons" />
+
+            <TextView
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:id="@+id/service_persons"
+                style="@style/order_info_value"
+                android:hint="@string/ct_service_max_count" />
+        </LinearLayout>
+
+        <View style="@style/create_service_divide" />
+
+
+        <LinearLayout
+            android:id="@+id/price_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ct_white_gray"
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <TextView
+                style="@style/order_info_hint"
+                android:text="@string/ct_service_money" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    style="@style/order_info_value"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:hint="@string/ct_service_money_set"
+                    android:paddingRight="5dp"
+                    android:textColor="@color/ct_gray"
+                    android:textColorHint="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <TextView
+                    android:id="@+id/service_price_type"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    android:paddingLeft="3dp"
+                    android:text="TWD"
+                    android:textColor="@color/ct_main_color"
+                    android:textSize="@dimen/ct_ts_4" />
+
+                <TextView
+                    android:id="@+id/service_price_type_unit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/ct_service_unit"
+                    android:textColor="@color/ct_gray"
+                    android:textSize="@dimen/ct_ts_4"
+                    android:visibility="gone" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <View style="@style/create_service_divide" />
+
+        <LinearLayout
+            android:id="@+id/price_desc_block"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ct_white_gray"
+            android:gravity="center_vertical">
+
+            <TextView
+                style="@style/order_info_hint"
+                android:text="@string/ct_price_desc" />
+
+            <TextView
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:drawablePadding="5dp"
+                android:id="@+id/price_desc_tv"
+                style="@style/order_info_value"
+                android:hint="@string/ct_price_desc_hint" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@color/ct_common_bg"/>
+
+    </LinearLayout>
+</ScrollView>

@@ -18,62 +18,92 @@
             android:scaleType="centerCrop" />
 
         <LinearLayout
+            tools:visibility="gone"
             android:id="@+id/content_block"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="32dp"
+            android:paddingLeft="15dp"
             android:layout_alignBottom="@+id/service_img"
             android:orientation="horizontal"
-            android:paddingLeft="75dp"
-            android:paddingRight="@dimen/ct_width_padding"
+            android:paddingRight="15dp"
             android:gravity="center_vertical"
             android:background="@color/alpha_dark">
 
 
             <TextView
-                android:id="@+id/service_status"
+                android:id="@+id/ct_visit_num_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/ct_date"
-                android:layout_toRightOf="@+id/author_img"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
-                android:layout_gravity="center_vertical"
                 android:singleLine="true"
+                tools:text="3 visited"
                 android:textColor="@color/ct_white"
-                android:textSize="@dimen/ct_ts_5" />
+                android:textSize="13sp" />
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ct_favorite_num_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:layout_weight="1"
+                tools:text="10 likes"
+                android:textColor="@color/ct_white"
+                android:textSize="13sp" />
+
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:id="@+id/ct_avaliable_date_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                tools:text="avaliable 3 days"
+                android:textColor="@color/ct_white"
+                android:textSize="13sp" />
+
 
         </LinearLayout>
 
+        <TextView
+            tools:visibility="gone"
+            android:id="@+id/service_reason"
+            android:layout_width="match_parent"
+            android:layout_height="31dp"
+            android:layout_alignParentBottom="true"
+            android:background="@color/ct_blue_circle_stoken"
+            android:ellipsize="end"
+            tools:text="sto sexy to show"
+            android:gravity="center_vertical"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:singleLine="true"
+            android:textColor="@color/ct_white"
+            android:textSize="13sp" />
+
         <ImageView
+            tools:visibility="visible"
             android:id="@+id/ct_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:layout_marginRight="6dp"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
             android:scaleType="centerCrop"
             android:layout_alignParentRight="true"
             android:layout_gravity="right|top"
             android:src="@drawable/ct_cal" />
         <TextView
-            android:id="@+id/service_reason"
-            android:layout_width="match_parent"
-            android:layout_height="31dp"
-            android:layout_below="@+id/service_img"
-            android:background="@color/ct_red"
-            android:ellipsize="end"
-            android:gravity="center_vertical"
-            android:paddingLeft="@dimen/ct_width_padding"
-            android:paddingRight="@dimen/ct_width_padding"
-            android:singleLine="true"
-            android:textColor="@color/ct_white"
-            android:textSize="@dimen/ct_ts_5" />
-
-        <TextView
+            tools:visibility="visible"
             android:id="@+id/service_name"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:layout_toRightOf="@+id/author_img"
             android:layout_weight="1"
+            tools:text="df"
             android:gravity="center_vertical"
             android:layout_gravity="center_vertical"
             android:ellipsize="end"
@@ -83,7 +113,7 @@
     </RelativeLayout>
 
     <TextView
-        android:visibility="gone"
+        tools:visibility="gone"
         android:id="@+id/service_checking"
         android:layout_width="match_parent"
         android:layout_height="180dp"
@@ -91,6 +121,6 @@
         android:layout_centerInParent="true"
         android:text="@string/ct_service_checking"
         android:background="#80000000"
-        android:textColor="@color/ct_white"
+        android:textColor="@color/ct_main_color"
         android:textSize="@dimen/ct_ts_2" />
 </FrameLayout>

@@ -12,6 +12,21 @@ import java.util.regex.Pattern;
 public class ServiceInfo implements Serializable, ServiceListInterface {
 
     private static final long serialVersionUID = -3984338984164873535L;
+    public static final int STATUS_CHECKING = 0;
+    public static final int STATUS_CHECHED = 1;
+    public static final int STATUS_CHECK_FAILED = 2;
+
+    public boolean isChecking() {
+        return STATUS_CHECKING == checkStatus;
+    }
+
+    public boolean isChecked() {
+        return STATUS_CHECHED == checkStatus;
+    }
+
+    public boolean isCheckFailed() {
+        return STATUS_CHECK_FAILED == checkStatus;
+    }
 
 //    public static final String[] PAY_TYPE = new String[]{"一口价", "按人计费", "免费"};
 
@@ -77,6 +92,44 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
     private Integer priceType;
 
     private String descptWithNoPic;
+
+    private String tags;
+    private String meetLocation;
+    private String priceInclude;
+    private String priceUninclude;
+
+    // tag &&tags??
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public String getMeetLocation() {
+        return meetLocation;
+    }
+
+    public void setMeetLocation(String meetLocation) {
+        this.meetLocation = meetLocation;
+    }
+
+    public String getPriceInclude() {
+        return priceInclude;
+    }
+
+    public void setPriceInclude(String priceInclude) {
+        this.priceInclude = priceInclude;
+    }
+
+    public String getPriceUninclude() {
+        return priceUninclude;
+    }
+
+    public void setPriceUninclude(String priceUninclude) {
+        this.priceUninclude = priceUninclude;
+    }
 
     public Integer getPriceType() {
         return priceType;
@@ -192,8 +245,8 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
 
     public void setDescpt(String descpt) {
         this.descpt = descpt;
-        try{
-            if(descpt != null){
+        try {
+            if (descpt != null) {
                 StringBuilder sb = new StringBuilder();
                 Pattern pattern = Pattern.compile(Constants.IMAGE_PATTERN);
                 Matcher matcher = pattern.matcher(descpt);
@@ -204,12 +257,12 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
                     index = matcher.end();
                     sb.append(temp);
                 }
-                if(index < descpt.length() - 1){
+                if (index < descpt.length() - 1) {
                     sb.append(descpt.substring(index, descpt.length()));
                 }
                 descptWithNoPic = sb.toString();
             }
-        }catch(Exception e){
+        } catch (Exception e) {
             descptWithNoPic = descpt;
         }
     }
@@ -309,17 +362,19 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
     public void setExtInfo(String extInfo) {
         this.extInfo = extInfo;
     }
+
     public ExtInfo getExtInfoObject() {
-        if(extInfo == null){
+        if (extInfo == null) {
             return null;
         }
-        try{
+        try {
             return JSON.parseObject(extInfo, ExtInfo.class);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+
     public String getIsDeleted() {
         return isDeleted;
     }
@@ -352,7 +407,7 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
         this.country = country;
     }
 
-    public static class ExtInfo{
+    public static class ExtInfo {
         private String refuseReason;
 
         public String getRefuseReason() {
