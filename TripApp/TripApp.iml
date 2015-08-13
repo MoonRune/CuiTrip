@@ -147,6 +147,10 @@
     <orderEntry type="library" exported="" name="superrecyclerview-1.1.1" level="project" />
     <orderEntry type="module" module-name="SMSSDK" exported="" />
     <orderEntry type="module" module-name="social_sdk_library_project" exported="" />
+<<<<<<< HEAD
     <orderEntry type="module" module-name="IMKit" exported="" />
+=======
+    <orderEntry type="module" module-name="kit" exported="" />
+>>>>>>> e79461cb35c8d453186822c186068b2da4467922
   </component>
 </module>
