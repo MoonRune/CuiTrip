@@ -37,9 +37,8 @@ public class MainApplication extends BaseAppLication {
         RongIMClient.init(this);
         RongContext.init(this);
         RongCloudEvent rongCloudEvent = new RongCloudEvent();
-        RongIM.setUserInfoProvider(rongCloudEvent, true);
+        RongIM.setUserInfoProvider(rongCloudEvent, false);
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(rongCloudEvent);
-
     }
     public void onCreate() {
         super.onCreate();

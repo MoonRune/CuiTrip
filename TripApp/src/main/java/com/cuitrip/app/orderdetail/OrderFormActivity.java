@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
@@ -17,11 +18,11 @@ import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
 import com.cuitrip.app.PayActivity;
+import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.app.rong.RongTitleTagHelper;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
-import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -32,7 +33,9 @@ import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -40,6 +43,7 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Discussion;
 
 /**
  * Created by baziii on 15/8/11.
@@ -54,6 +58,8 @@ public class OrderFormActivity extends BaseActivity {
     ViewPager mViewPager;
     @InjectView(R.id.ct_user_name_tv)
     TextView mItsNameTv;
+    @InjectView(R.id.ct_top_v)
+    View mTopV;
     OrderViewsAdapter mAdapter;
     OrderItem orderItem = null;
 //    {
@@ -104,9 +110,7 @@ public class OrderFormActivity extends BaseActivity {
                 if (data != null) {
                     LogHelper.e(TAG, "requestOrderDetail suc " + (data == null));
                     try {
-                        orderItem = (OrderItem) data;
-                        showTabs = orderItem.getStatus() != orderItem.STATUS_WAIT_END;
-                        renderUi(orderItem);
+                        renderUi((OrderItem) data);
                     } catch (Exception e) {
                         LogHelper.e("omg", e.getMessage());
                     }
@@ -146,8 +150,7 @@ public class OrderFormActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            int count = orderItem == null ? 0 : (showTabs ? (TextUtils.isEmpty(canConversationTargetId) ? 2 : 3) : 1);
-//            LogHelper.e("omg", "counset " + count + "|" + (orderItem == null) + "|" + showTabs);
+            int count = orderItem == null ? 0 : (showTabs ? ((null == canConversationTargetId) ? 2 : 3) : 1);
             return count;
         }
 
@@ -168,16 +171,25 @@ public class OrderFormActivity extends BaseActivity {
                 default:
 
                     ConversationFragment fragment = new ConversationFragment();
-                    String target = canConversationTargetId;
-                    LogHelper.e("conversation target ", canConversationTargetId);
-                    String title = orderItem.getServiceName();
+                    if (canConversationTargetId.needBuild()) {
+                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation").
+                                appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase()).
+                                appendQueryParameter("targetIds", TextUtils.join(",", canConversationTargetId.getUserIds())).
+                                appendQueryParameter("delimiter", ",").appendQueryParameter("title", canConversationTargetId.getTitle()).build();
+                        fragment.setUri(uri);
+                    } else {
+                        String target = canConversationTargetId.getTargetId();
+                        LogHelper.e("conversation target ", target);
+                        String title = orderItem.getServiceName();
         /* 传入私聊会话 PRIVATE 的参数*/
-                    Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
-                            .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
-                            .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
+
+                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                                .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
+                                .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
 
 //rong://com.cuitrip.service/conversation/discussion?targetId=21026d2b-7063-4d5b-bc3a-1d4600e3f935&title=ct_test_for_send_2_1
-                    fragment.setUri(uri);
+                        fragment.setUri(uri);
+                    }
                     return fragment;
             }
         }
@@ -192,7 +204,7 @@ public class OrderFormActivity extends BaseActivity {
     }
 
     OrderFormFragment orderFormFragment;
-    String canConversationTargetId;
+    ConversationDependy canConversationTargetId;
 
     public String buildOrderConversationTitle(OrderItem orderItem) {
         return RongTitleTagHelper.buildTitle(orderItem);
@@ -202,19 +214,68 @@ public class OrderFormActivity extends BaseActivity {
         LogHelper.e("omg", "has validateHasConversation  ");
         RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
-            public void onSuccess(List<Conversation> conversations) {
-                if (conversations != null) {
-                    for (Conversation conversation : conversations) {
-                        if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(), orderItem)) {
-                            canConversationTargetId = conversation.getTargetId();
-                            mAdapter.notifyDataSetChanged();
-                            mViewPagerIndicator.notifyDataSetChanged();
-                            return;
+            public void onSuccess(final List<Conversation> conversations) {
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        //getConversationList 无法获取到title  通过 getDiscussion 注射title
+                        HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
+                        for (Conversation conversation : conversations) {
+                            if (TextUtils.isEmpty(conversation.getConversationTitle())) {
+                                noTitleConversations.put(conversation.getTargetId(), conversation);
+                            }
+                        }
+                        final CountDownLatch countDownLatch = new CountDownLatch(noTitleConversations.size());
+                        for (final String key : noTitleConversations.keySet()) {
+                            final Conversation conversation = noTitleConversations.get(key);
+                            RongIM.getInstance().getRongIMClient().getDiscussion(key, new RongIMClient.ResultCallback<Discussion>() {
+                                public void onSuccess(Discussion discussion) {
+                                    conversation.setConversationTitle(discussion.getName());
+                                    countDownLatch.countDown();
+                                }
+
+
+                                public void onError(RongIMClient.ErrorCode errorCode) {
+                                    countDownLatch.countDown();
+                                }
+                            });
+                        }
+                        try {
+                            countDownLatch.await();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        if (conversations != null) {
+                            for (Conversation conversation : conversations) {
+                                if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(), orderItem)) {
+                                    //todo  actiivty关闭情况 eventbus
+                                    if (!isFinishing()) {
+                                        final String targetId = conversation.getTargetId();
+                                        runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                canConversationTargetId = new ConversationDependy(targetId);
+                                                mAdapter.notifyDataSetChanged();
+                                                mViewPagerIndicator.notifyDataSetChanged();
+                                            }
+                                        });
+                                    }
+                                    return;
+                                }
+                            }
+                        }
+                        //todo  actiivty关闭情况 eventbus
+                        if (!isFinishing()) {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    buildConversation(orderItem);
+                                }
+                            });
                         }
                     }
-                }
+                }).start();
                 LogHelper.e("omg", "validateHasConversation none ");
-                buildConversation(orderItem);
             }
 
             @Override
@@ -224,50 +285,65 @@ public class OrderFormActivity extends BaseActivity {
         });
     }
 
+    public class ConversationDependy {
+        String targetId;
+
+        List<String> userIds;
+        String title;
+
+        public ConversationDependy(String targetId) {
+            this.targetId = targetId;
+        }
+
+        public ConversationDependy(List<String> userIds, String title) {
+            this.userIds = userIds;
+            this.title = title;
+        }
+
+        public String getTargetId() {
+            return targetId;
+        }
+
+        public List<String> getUserIds() {
+            return userIds;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public boolean needBuild() {
+            return TextUtils.isEmpty(targetId);
+        }
+    }
+
     public void buildConversation(OrderItem orderItem) {
         List<String> userIds = new ArrayList<>();
         userIds.add(orderItem.getInsiderId());
         userIds.add(orderItem.getTravellerId());
-        final String title = buildOrderConversationTitle(orderItem);
-        RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
-            @Override
-            public void onSuccess(String tarid) {
-                canConversationTargetId = tarid;
-                mAdapter.notifyDataSetChanged();
-                mViewPagerIndicator.notifyDataSetChanged();
-                LogHelper.e("omg", "buildConversation suc " + tarid + " |" + title);
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-
-                LogHelper.e("omg", "buildConversation error " + errorCode.getMessage());
-            }
-        });
+        String title = buildOrderConversationTitle(orderItem);
+        canConversationTargetId = new ConversationDependy(userIds, title);
+        mAdapter.notifyDataSetChanged();
+        mViewPagerIndicator.notifyDataSetChanged();
     }
 
     public String buildItsname(OrderItem orderItem) {
-        UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
-        if (userInfo!=null && !TextUtils.isEmpty(userInfo.getUid()) &&TextUtils.isEmpty(orderItem.getInsiderId()) ) {
-            if (userInfo.getUid().equals(orderItem.getExtInfo())) {
-                return orderItem.getTravellerName();
-            }
-            return orderItem.getInsiderName();
-        }else{
-            return "error";
-        }
+        return ServicePartRenderData.getStatusText(orderItem);
     }
+
     public void renderUi(OrderItem orderItem) {
         this.orderItem = orderItem;
-        mAdapter.notifyDataSetChanged();
-        mViewPagerIndicator.notifyDataSetChanged();
         if (orderItem != null) {
+            showTabs = orderItem.getStatus() != orderItem.STATUS_WAIT_END;
             mItsNameTv.setText(buildItsname(this.orderItem));
             validateHasConversation(this.orderItem);
         }
         if (orderItem != null && orderFormFragment != null) {
             orderFormFragment.refresh(orderItem);
         }
+        mTopV.setVisibility(showTabs ? View.VISIBLE : View.GONE);
+        mAdapter.notifyDataSetChanged();
+        mViewPagerIndicator.notifyDataSetChanged();
 
     }
 

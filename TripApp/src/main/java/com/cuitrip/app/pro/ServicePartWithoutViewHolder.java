@@ -17,8 +17,6 @@ public class ServicePartWithoutViewHolder implements PartViewHolder<ServicePartR
     public static final int RES = R.layout.ct_service_part_little;
     @InjectView(R.id.ct_service_name_tv)
     TextView mServiceNameTv;
-    @InjectView(R.id.ct_order_status_tv)
-    TextView mOrderStatusTv;
     @InjectView(R.id.ct_order_time_tv)
     TextView mOrderTimeTv;
     @InjectView(R.id.ct_person_size_tv)
@@ -36,7 +34,6 @@ public class ServicePartWithoutViewHolder implements PartViewHolder<ServicePartR
 
     public void render(ServicePartRenderData data) {
         mServiceNameTv.setText(data.getServiceName());
-        mOrderStatusTv.setText(data.getOrderStatus());
         mOrderTimeTv.setText(data.getOrderDate());
         mOrderPriceTv.setText(data.getPriceWithCurrency());
         mPersonSizeTv.setText(data.getOrderPeopleSize());

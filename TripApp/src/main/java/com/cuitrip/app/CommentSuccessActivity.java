@@ -47,17 +47,11 @@ public class CommentSuccessActivity extends BaseActivity implements View.OnClick
         } else {
             findViewById(R.id.go_share).setVisibility(View.GONE);
         }
-        findViewById(R.id.go_recommend).setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.go_recommend:
-                startActivity(new Intent(this, IndexActivity.class)
-                        .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.RECOMMEND_TAB));
-                finish();
-                break;
             case R.id.go_share:
                 share();
                 break;
@@ -65,7 +59,6 @@ public class CommentSuccessActivity extends BaseActivity implements View.OnClick
     }
 
     private void share() {
-
         ShareUtil.share(this, findViewById(R.id.service_name),
                 mOrderInfo.getServiceName(), String.format(Locale.ENGLISH,
                         getString(R.string.ct_trip_share), mOrderInfo.getServiceName()),

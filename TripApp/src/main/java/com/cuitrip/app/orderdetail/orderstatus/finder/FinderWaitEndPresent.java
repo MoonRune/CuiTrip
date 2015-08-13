@@ -3,6 +3,7 @@ package com.cuitrip.app.orderdetail.orderstatus.finder;
 import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
+import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.model.OrderItem;
 
 /**
@@ -31,6 +32,10 @@ public class FinderWaitEndPresent extends BaseOrderFormPresent<IFinderOrderDetai
 
     public OrderProgressingRenderData buildOrderProgress(OrderItem orderItem) {
         return OrderProgressingRenderData.getInstance(orderItem);
+    }
+
+    public ServicePartRenderData builServiceData(OrderItem orderItem) {
+        return null;
     }
 
     @Override

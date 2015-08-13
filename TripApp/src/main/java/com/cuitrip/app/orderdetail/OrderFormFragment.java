@@ -26,13 +26,6 @@ import com.cuitrip.app.base.PartViewHolder;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFetcher;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFormPresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerOverPresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerUnvaliablePresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitCommentPresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitConfirmPresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitEndPresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitPayPresent;
-import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitStartPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderOverPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderUnvaliablePresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitCommentPresent;
@@ -40,6 +33,13 @@ import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitConfirmPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitEndPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitPayPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitStartPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerOverPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerUnvaliablePresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitCommentPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitConfirmPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitEndPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitPayPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitStartPresent;
 import com.cuitrip.app.pro.CommentPartRenderData;
 import com.cuitrip.app.pro.CommentPartViewHolder;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
@@ -74,14 +74,16 @@ public class OrderFormFragment extends BaseFragment {
     AsyncHttpClient mClient = new AsyncHttpClient();
 
     StubViewHolder<ServicePartRenderData> mServiceStub = new StubViewHolder(new ServicePartViewHolder());
-    StubViewHolder<CommentPartRenderData>  mCommentstub = new StubViewHolder(new CommentPartViewHolder());
-    StubViewHolder<OrderProgressingRenderData>  mProgressingStub = new StubViewHolder(new OrderProgressingViewHolder());
+    StubViewHolder<CommentPartRenderData> mCommentstub = new StubViewHolder(new CommentPartViewHolder());
+    StubViewHolder<OrderProgressingRenderData> mProgressingStub = new StubViewHolder(new OrderProgressingViewHolder());
 
 
     @InjectView(R.id.ct_service_info_v)
     ViewStub ctServiceInfoV;
     @InjectView(R.id.ct_service_comment_v)
     ViewStub ctServiceCommentV;
+    @InjectView(R.id.ct_progressing_v)
+    ViewStub ctServiceProgressV;
     @InjectView(R.id.ct_bottom_tv)
     TextView ctBottomTv;
     BaseOrderFormPresent baseOrderFormPresent;
@@ -123,6 +125,9 @@ public class OrderFormFragment extends BaseFragment {
                 } else {
                     partViewHolder.render(o);
                 }
+                show();
+            }else {
+                hide();
             }
         }
 
@@ -162,12 +167,13 @@ public class OrderFormFragment extends BaseFragment {
         return fragment;
     }
 
-    public void refresh(OrderItem orderItem){
-        getArguments().putSerializable(ORDER_KEY,orderItem);
-        if (ctBottomTv!=null) {
+    public void refresh(OrderItem orderItem) {
+        getArguments().putSerializable(ORDER_KEY, orderItem);
+        if (ctBottomTv != null) {
             renderWithData();
         }
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -214,6 +220,7 @@ public class OrderFormFragment extends BaseFragment {
         ButterKnife.inject(this, view);
         mServiceStub.build(ctServiceInfoV);
         mCommentstub.build(ctServiceCommentV);
+        mProgressingStub.build(ctServiceProgressV);
         return view;
     }
 
@@ -232,31 +239,62 @@ public class OrderFormFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         renderWithData();
     }
+
     IOrderFetcher orderFetcher = new IOrderFetcher() {
+
         @Override
-        public void cancelOrder(OrderItem orderItem, final String reason, final CtApiCallback callback) {
-            showLoading();
+        public void refuseOrder(OrderItem orderItem, String reason, final CtApiCallback callback) {
+
             OrderBusiness.cancelOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
                     callback.onSuc();
-                    hideLoading();
                 }
 
                 @Override
                 public void onFailure(LabResponse response, Object data) {
                     callback.onFailed(new CtException(response.msg));
-                    hideLoading();
 
                 }
-            },orderItem.getOid(),reason);
-
+            }, orderItem.getOid(), reason);
         }
 
         @Override
         public void confirmOrder(OrderItem orderItem, final CtApiCallback callback) {
-            showLoading();
             OrderBusiness.confirmOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    callback.onSuc();
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    callback.onFailed(new CtException(response.msg));
+
+                }
+            }, orderItem.getOid());
+        }
+
+        @Override
+        public void startOrder(OrderItem orderItem, final CtApiCallback callback) {
+            OrderBusiness.beginOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    callback.onSuc();
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    callback.onFailed(new CtException(response.msg));
+
+                }
+            }, orderItem.getOid());
+        }
+
+        @Override
+        public void endOrder(OrderItem orderItem, final CtApiCallback callback) {
+            showLoading();
+            OrderBusiness.endOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
                     callback.onSuc();
@@ -270,25 +308,6 @@ public class OrderFormFragment extends BaseFragment {
 
                 }
             }, orderItem.getOid());
-        }
-
-        @Override
-        public void startOrder(OrderItem orderItem, final CtApiCallback callback) {
-            showLoading();
-            OrderBusiness.beginOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(LabResponse response, Object data) {
-                    callback.onSuc();
-                    hideLoading();
-                }
-
-                @Override
-                public void onFailure(LabResponse response, Object data) {
-                    callback.onFailed(new CtException(response.msg));
-                    hideLoading();
-
-                }
-            },orderItem.getOid());
         }
     };
 
@@ -398,6 +417,7 @@ public class OrderFormFragment extends BaseFragment {
 
     public class FinderOrderDetailView implements IFinderOrderDetailView {
         FinderProxyPresent present = new FinderProxyPresent(this);
+
         @Override
         public void showLoading() {
             OrderFormFragment.this.showLoading();
@@ -439,9 +459,9 @@ public class OrderFormFragment extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             showNoCancelDialog();
-                            OrderBusiness.confirmOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+                            orderFetcher.confirmOrder(orderItem, new CtApiCallback() {
                                 @Override
-                                public void onSuccess(LabResponse response, Object data) {
+                                public void onSuc() {
                                     hideNoCancelDialog();
                                     MessageUtils.showToast(R.string.ct_order_confirm_suc);
                                     ((OrderFormActivity) getActivity()).requestOrderDetail();
@@ -450,11 +470,12 @@ public class OrderFormFragment extends BaseFragment {
                                 }
 
                                 @Override
-                                public void onFailure(LabResponse response, Object data) {
+                                public void onFailed(CtException throwable) {
                                     hideNoCancelDialog();
-                                    MessageUtils.showToast(response.msg);
+                                    MessageUtils.showToast(throwable.getMessage());
+
                                 }
-                            }, orderItem.getOid());
+                            });
                         }
                     })
                     .setNegativeButton(R.string.ct_cancel, null)
@@ -463,34 +484,60 @@ public class OrderFormFragment extends BaseFragment {
 
         @Override
         public void jumpCancelOrder(OrderItem orderItem) {
-            CancelOrderActivity.start(getActivity(),orderItem);
+            CancelOrderActivity.start(getActivity(), orderItem);
 
         }
 
         @Override
-        public void jumpRefuseOrder(OrderItem orderItem) {
+        public void jumpRefuseOrder(final OrderItem orderItem) {
+            MessageUtils.createHoloBuilder(getActivity()).setMessage(R.string.ct_order_refuse)
+                    .setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            showNoCancelDialog();
+                            orderFetcher.refuseOrder(orderItem, "", new CtApiCallback() {
+                                @Override
+                                public void onSuc() {
+                                    hideNoCancelDialog();
+                                    MessageUtils.showToast(R.string.ct_order_refuse_suc);
+                                    ((OrderFormActivity) getActivity()).requestOrderDetail();
+                                    LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
+                                            new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
 
+                                }
+
+                                @Override
+                                public void onFailed(CtException throwable) {
+                                    hideNoCancelDialog();
+                                    MessageUtils.showToast(throwable.getMessage());
+                                }
+                            });
+                        }
+                    })
+                    .setNegativeButton(R.string.ct_cancel, null)
+                    .show();
         }
 
         @Override
-        public void jumpStartOrder(final  OrderItem orderItem) {
+        public void jumpStartOrder(final OrderItem orderItem) {
             showNoCancelDialog();
-            OrderBusiness.beginOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+            orderFetcher.startOrder(orderItem, new CtApiCallback() {
                 @Override
-                public void onSuccess(LabResponse response, Object data) {
+                public void onSuc() {
                     hideNoCancelDialog();
                     MessageUtils.showToast(R.string.ct_order_begin_suc);
                     ((OrderFormActivity) getActivity()).requestOrderDetail();
                     LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
                             new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
+
                 }
 
                 @Override
-                public void onFailure(LabResponse response, Object data) {
+                public void onFailed(CtException throwable) {
                     hideNoCancelDialog();
-                    MessageUtils.showToast(response.msg);
+                    MessageUtils.showToast(throwable.getMessage());
                 }
-            }, orderItem.getOid());
+            });
 
         }
 
@@ -503,22 +550,24 @@ public class OrderFormFragment extends BaseFragment {
         public void jumpEndOrder(final OrderItem orderItem) {
 
             showNoCancelDialog();
-            OrderBusiness.endOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+            orderFetcher.endOrder(orderItem, new CtApiCallback() {
                 @Override
-                public void onSuccess(LabResponse response, Object data) {
+                public void onSuc() {
                     hideNoCancelDialog();
                     MessageUtils.showToast(R.string.ct_order_end_suc);
                     ((OrderFormActivity) getActivity()).requestOrderDetail();
                     LocalBroadcastManager.getInstance(getActivity()).sendBroadcast(
                             new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
+
                 }
 
                 @Override
-                public void onFailure(LabResponse response, Object data) {
+                public void onFailed(CtException throwable) {
                     hideNoCancelDialog();
-                    MessageUtils.showToast(response.msg);
+                    MessageUtils.showToast(throwable.getMessage());
+
                 }
-            }, orderItem.getOid());
+            });
         }
     }
 
@@ -562,13 +611,13 @@ public class OrderFormFragment extends BaseFragment {
         @Override
         public void jumpModifyOrder(OrderItem orderItem) {
             LogHelper.e("omg", "jumpModifyOrder");
-            ModifyOrderActivity.startModify(getActivity(),orderItem);
+            ModifyOrderActivity.startModify(getActivity(), orderItem);
         }
 
         @Override
         public void jumpCancelOrder(OrderItem orderItem) {
             LogHelper.e("omg", "jumpCancelOrder");
-            CancelOrderActivity.start(getActivity(),orderItem);
+            CancelOrderActivity.start(getActivity(), orderItem);
         }
 
         @Override

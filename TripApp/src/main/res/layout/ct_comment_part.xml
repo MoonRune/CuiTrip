@@ -25,9 +25,10 @@
         android:layout_height="64dp"
         tools:src="@drawable/ct_default_user"/>
     <RatingBar
+        android:layout_marginTop="10dp"
         android:id="@+id/ct_comment_stars_rt"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="36dp"
         android:isIndicator="true"
         android:progressDrawable="@drawable/ct_rating_bar"
         android:stepSize="0.1"
@@ -39,6 +40,7 @@
         android:textSize="17sp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
+        android:layout_marginBottom="10dp"
         android:gravity="center_horizontal"
         android:id="@+id/ct_comment_content_tv"
         android:layout_width="match_parent"

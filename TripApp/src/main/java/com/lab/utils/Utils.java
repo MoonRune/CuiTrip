@@ -73,10 +73,12 @@ public class Utils {
 
 
     static SimpleDateFormat H_M = new SimpleDateFormat("HH:mm", Locale.CHINA);
+    static SimpleDateFormat Y_M_D = new SimpleDateFormat(DATE_FORMAT_DAY, Locale.CHINA);
     static SimpleDateFormat Y_M_D_H_M = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
 
     {
         H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+        Y_M_D.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         Y_M_D_H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
     }
 
@@ -101,6 +103,10 @@ public class Utils {
         }
     }
 
+    //
+    public static String getMsToD(String dateTime){
+        return Y_M_D.format(parseStringToLongTime(dateTime,DATE_FORMAT_SECOND));
+    }
     public static String getDateFormat(String dateTime, String format) {
         return getDateFormat(parseStringToLongTime(dateTime, format));
     }

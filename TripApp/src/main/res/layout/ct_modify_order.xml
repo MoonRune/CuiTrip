@@ -1,7 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ct_white"
     android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ct_service_name_tv"
+            tools:text="service_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:textSize="19sp"
+            android:textColor="@color/ct_black"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ct_divider"
+        />
+
+
+    <LinearLayout
+        android:id="@+id/order_date"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="预订日期"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:drawablePadding="@dimen/ct_narrow_right_padding"
+            android:drawableRight="@drawable/ct_narrow_right"
+            android:id="@+id/selected_date"
+            tools:text="order_time"
+            style="@style/order_form_value" />
+    </LinearLayout>
+
+    <View
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:id="@+id/order_person"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="预订人数"
+            style="@style/order_form_hint" />
+        <TextView
+            android:drawablePadding="@dimen/ct_narrow_right_padding"
+            android:drawableRight="@drawable/ct_narrow_right"
+            android:id="@+id/selected_count"
+            tools:text="order_time"
+            style="@style/order_form_value" />
+    </LinearLayout>
+    <View
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="费用"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:paddingRight="24dp"
+            android:drawablePadding="@dimen/ct_narrow_right_padding"
+            android:id="@+id/ct_order_price_tv"
+            tools:text="order_cost"
+            style="@style/order_form_value"/>
+    </LinearLayout>
 
 </LinearLayout>

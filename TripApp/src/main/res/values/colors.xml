@@ -4,6 +4,7 @@
     <color name="ct_common_bg">#ffeeeeee</color>
     <color name="ct_main_color">#ff00ccdd</color>
     <color name="ct_main_color_light">#00ddee</color>
+    <color name="ct_00aabb">#00aabb</color>
     <color name="ct_title">#ff3d3d3d</color>
     <color name="ct_content">#ff6d6d6d</color>
     <color name="ct_text_bg">#ffd8d8d8</color>

@@ -291,7 +291,7 @@ public class PayActivity extends BaseActivity implements OnClickListener {
                 hideLoading();
                 if (data != null) {
                     mOrderInfo = (OrderItem) data;
-                    if (mOrderInfo.getStatus() == 8) {
+                    if (mOrderInfo.getStatus() == OrderItem.STATUS_WAIT_START) {
                         onPaySuccess();
                     } else {
                         MessageUtils.showToast(getString(R.string.ct_discount_suc));

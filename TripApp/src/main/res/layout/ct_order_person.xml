@@ -239,7 +239,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:src="@drawable/phone_b" />
+                android:src="@drawable/phone_b" />
         </LinearLayout>
 
         <View
@@ -265,7 +265,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:src="@drawable/mail_b" />
+                android:src="@drawable/mail_b" />
         </LinearLayout>
 
         <View
@@ -291,7 +291,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:src="@drawable/idcard_b" />
+                android:src="@drawable/idcard_b" />
         </LinearLayout>
         <View
             style="@style/order_form_divide" />

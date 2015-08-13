@@ -5,9 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
-import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.utils.ImageHelper;
@@ -16,7 +14,7 @@ import com.lab.utils.MessageUtils;
 /**
  * Created on 7/22.
  */
-public class CancelOrderSuccessActivity extends BaseActivity implements View.OnClickListener {
+public class CancelOrderSuccessActivity extends BaseActivity  {
     private OrderItem mOrderInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +46,5 @@ public class CancelOrderSuccessActivity extends BaseActivity implements View.OnC
                 finish();
             }
         });
-        UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
-        if(userInfo.isTravel()){
-            findViewById(R.id.go_recommend).setOnClickListener(this);
-        }else{
-            findViewById(R.id.go_recommend).setVisibility(View.GONE);
-        }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.go_recommend:
-                startActivity(new Intent(this, IndexActivity.class)
-                        .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.RECOMMEND_TAB));
-                finish();
-                break;
-        }
     }
 }

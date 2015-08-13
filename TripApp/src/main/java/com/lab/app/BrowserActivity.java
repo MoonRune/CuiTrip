@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.View;
 import android.view.Window;
 import android.webkit.CookieSyncManager;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -56,6 +58,13 @@ public class BrowserActivity extends BaseActivity {
         intent.putExtra(DATA,data);
         context.startActivity(intent);
     }
+    public class JumpConcat{
+        @JavascriptInterface
+        public void jumpConcat(){
+           LogHelper.e("omg","asdfasdfasfsadf");
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_PROGRESS);
@@ -74,7 +83,9 @@ public class BrowserActivity extends BaseActivity {
         // Setup callback support for title and progress bar
         mWebView.setWebChromeClient(new WebChrome());
         mWebView.setWebViewClient(mWebViewClient);
-
+        mWebView.addJavascriptInterface(new JumpConcat(),"jumper");
+        mWebView.setScrollBarStyle(View.SCROLL_AXIS_VERTICAL);
+        mWebView.requestFocus();
         // Configure the webview
         WebSettings s = mWebView.getSettings();
         s.setUseWideViewPort(true);
@@ -88,6 +99,8 @@ public class BrowserActivity extends BaseActivity {
         // automatically run.
         s.setJavaScriptEnabled(true);
 
+
+        LogHelper.e("omg"," data"+getIntent().getStringExtra(DATA));
         // Restore a webview if we are meant to restore
         if (savedInstanceState != null) {
             mWebView.restoreState(savedInstanceState);
@@ -135,7 +148,7 @@ public class BrowserActivity extends BaseActivity {
         CookieSyncManager.getInstance().startSync();
     }
 
-    @Override
+        @Override
     protected void onSaveInstanceState(Bundle outState) {
         // the default implementation requires each view to have an id. As the
         // browser handles the state itself and it doesn't use id for the views,
@@ -172,6 +185,7 @@ public class BrowserActivity extends BaseActivity {
 
     class WebChrome extends WebChromeClient {
 
+
         @Override
         public void onReceivedTitle(WebView view, String title) {
             if(TextUtils.isEmpty(mTitle) && !TextUtils.isEmpty(title)){
@@ -192,6 +206,7 @@ public class BrowserActivity extends BaseActivity {
     private final WebViewClient mWebViewClient = new WebViewClient() {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            LogHelper.e("omg","url"+url);
             if(ACCEPTED_URI_SCHEMA.matcher(url).matches()){
                 return false;
             }

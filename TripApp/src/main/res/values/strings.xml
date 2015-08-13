@@ -74,13 +74,13 @@
     <string name="ct_order_detail_person">约定人数</string>
     <string name="ct_order_detail_bill">订单费用</string>
     <string name="ct_order_my_comment">我的评价</string>
-    <string name="ct_order_cancel">取消旅程</string>
+    <string name="ct_order_cancel">取消预订</string>
     <string name="ct_order_cancel_suc">旅程取消成功</string>
     <string name="ct_order_modify">修改预约</string>
     <string name="ct_order_modify_confirm">修改预约</string>
     <string name="ct_order_cancel_confir">确认取消</string>
-    <string name="ct_order_cancel_reason">请填写取消原因</string>
-    <string name="ct_go_order_list">返回订单列表</string>
+    <string name="ct_order_cancel_reason">请了解退订条款,并详细填写取消的原因&#32;&#32;(不超过1000个字)</string>
+    <string name="ct_go_order_list">返回</string>
     <string name="ct_go_recommend">查看其他推荐</string>
     <string name="ct_cancel_null_reason">请填写取消原因</string>
     <string name="ct_cancel_suc">取消成功</string>
@@ -93,19 +93,64 @@
     <string name="ct_order_comment_hint">所说您的感受吧！</string>
     <string name="ct_order_comment_commit">提交评价</string>
     <string name="ct_order_comment_suc">评价成功</string>
-    <string name="ct_order_comment_thanks">感谢您的评价！</string>
-    <string name="ct_order_comment_share">分享给小伙伴吧</string>
+    <string name="ct_order_comment_thanks">感谢您的评价!\n把您的旅程分享给小伙伴吧~</string>
+    <string name="ct_order_comment_share">分享给小伙伴吧~</string>
     <string name="ct_order_me">我</string>
-    <string name="ct_order_confirm">你要确认该预约吗？</string>
-    <string name="ct_order_confirm_suc">预约确认成功</string>
+    <string name="ct_order_confirm">你要确认该预订吗？</string>
+    <string name="ct_order_refuse">你要确认拒绝预订吗？</string>
+    <string name="ct_order_refuse_suc">预订已拒绝</string>
+    <string name="ct_order_confirm_suc">预订确认成功</string>
     <string name="ct_order_begin_suc">旅程已开始</string>
     <string name="ct_order_end_suc">旅程已成功结束</string>
 
     <string name="ct_message_go_order">查看旅程</string>
     <string name="ct_message_send">发送</string>
     <string name="ct_order_cancel_successed">你的行程已取消！</string>
+    <string name="ct_cancel_rule_little"></string>
+    <string name="ct_message_travel_cancel_little" formatted="false">
+如果您需要取消预订，请尽快进行操作。\n
+取消预订会对发现者的行程安排造成一定的影响，因此不是由于情有可原的情况而取消预订都将扣取一定的费用。
+    </string>
+      <string name="ct_message_finder_cancel_little" formatted="false">
+如果您需要取消旅行者的预订，请尽快进行操作。\n
+取消预订会对旅行者的旅程造成严重影响，因此不是由于情有可原的情况而取消预订都将受到处罚。
+    </string>
+     <string name="ct_message_travel_cancel" formatted="false">
+	<![CDATA[<p>如果您需要取消预订，请尽快进行操作。</p>
+ 
+<p>取消预订会对发现者的行程安排造成一定的影响，因此不是由于情有可原的情况而取消预订都将扣取一定的费用。</p>
+ 
+<p>·如果您在旅程开始的48小时或以上时间取消预订，将会扣取已支付费用的10%。</p>
+<p>·如果您在旅程开始的48小时内取消预订，将会扣取已支付费用的50%。</p>
+<p>·如果您在旅程开始的24小时内取消预订，将不会退还已支付的费用。</p>
+<p>·余下的费用将会在7个工作日内自动退还至您的账户。</p>
+<p>·如果您使用了优惠体验码，体验码将失效，只退还您现金支付的对应费用。</p>
 
-    <string name="ct_message_cancel" formatted="false">若取消操作在旅程开始的48⼩小时外,扣取费⽤用的10%\n若取消操作在旅程开始的48⼩小时内,扣取费⽤用的50%\n若取消操作在旅程开始的24⼩小时内,不予退款\n若有其他特殊原因,请联系脆饼</string>
+<p>如果有其他特殊原因，请<font color="#00ccdd"> <a onclick="jumper.jumpConcat()">联系脆饼</a></font></p>
+]]>
+    </string>
+      <string name="ct_message_finder_cancel" formatted="false">
+	<![CDATA[<p>如果您需要取消旅行者的预订，请尽快进行操作。</p>
+<p>取消预订会对旅行者的旅程造成严重影响，因此不是由于情有可原的情况而取消预订都将受到处罚。</p>
+
+<p>·扣取取消费用：如果您在行程开始的48小时或以上时间取消预订，将会被收取原预订价格50%的费用。我们将会自动从您的下一笔收款中扣除这笔款项，如果下一笔收款不满这笔费用，继续再从下一笔收款中扣除，直到扣取完成。</p>
+<p>·自动评价：您的行程评价页面将自动出现一条评价，指出您取消了一次预订。
+<p>·日历上的对应日期将被屏蔽，不可再被预订。您的日历将会保持屏蔽状态，因此被取消预订的所属日期无法接受其他预订。</p>
+
+<p>情有可原的情况</p>
+<p>如果出现极为罕见的情有可原的情况，您可能会需要取消已确认的预订。在这种情况下，我们可能会放弃执行服务条款中列出的取消预订处罚条例。要裁定是否属于情有可原的情况，您需要提供适当且有效的证明文件。这些情况包括：</p>
+<p>·家人去世</p>
+<p>·自己或家人患重疾</p>
+<p>·国内发生自然灾难</p>
+<p>·国内发生政治动乱</p>
+<p>·旅行目的地发生严重毁坏或处于停业状态</p>
+
+<p>如果有其他特殊原因，请<font color="#00ccdd"> <a onclick="jumper.jumpConcat()">联系脆饼</a></font></p>
+]]>
+    </string>
+    <string name="ct_cancel_rule_detail_title">
+        详细条款
+    </string>
     <string name="ct_yestoday">昨天</string>
     <string name="ct_sun">日</string>
     <string name="ct_mon">一</string>
@@ -333,6 +378,14 @@
     <string name="order_person_email">电子邮件地址</string>
     <string name="order_person_identity">身份证件</string>
     <string name="order_person_validated">已验证身份</string>
+    <string name="ct_modify_order_menu">修改预订</string>
+    <string name="order_status_wait_confirm">等待确认</string>
+    <string name="R.string.order_status_wait_pay">等待支付</string>
+    <string name="R.string.order_status_wait_start">等待开始</string>
+    <string name="R.string.order_status_wait_end">旅程进行中</string>
+    <string name="R.string.order_status_wait_comment">等待评价</string>
+    <string name="R.string.order_status_over">旅程已结束</string>
+    <string name="R.string.order_status_unavaliable">预订已失效</string>
 
     <string-array name="ct_gender_list">
         <item>男</item>

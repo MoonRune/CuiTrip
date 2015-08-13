@@ -3,6 +3,7 @@ package com.cuitrip.app.orderdetail.orderstatus.traveller;
 import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
+import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.model.OrderItem;
 
 /**
@@ -31,6 +32,11 @@ public class TravellerWaitEndPresent extends BaseOrderFormPresent<ITravelerOrder
     public OrderProgressingRenderData buildOrderProgress(OrderItem orderItem) {
         return OrderProgressingRenderData.getInstance(orderItem);
     }
+
+    public ServicePartRenderData builServiceData(OrderItem orderItem) {
+       return null;
+    }
+
     @Override
     public String getBottomText(OrderItem orderItem) {
         return "";

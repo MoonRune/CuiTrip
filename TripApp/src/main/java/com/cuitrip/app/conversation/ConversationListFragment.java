@@ -45,6 +45,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         super.onViewCreated(view, savedInstanceState);
         ButterKnife.inject(this, view);
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mPresent = new ConversationsPresent(this);
         if (LoginInstance.isLogin(MainApplication.getInstance())) {

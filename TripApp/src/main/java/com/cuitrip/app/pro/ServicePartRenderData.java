@@ -1,6 +1,9 @@
 package com.cuitrip.app.pro;
 
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
+import com.lab.utils.Utils;
 
 /**
  * Created by baziii on 15/8/10.
@@ -8,7 +11,6 @@ import com.cuitrip.model.OrderItem;
 public class ServicePartRenderData {
     //favorite name
     protected String serviceName;
-    protected String orderStatus;
     protected String orderDate;
     protected String meetLocation;
     protected String orderPeopleSize;
@@ -17,9 +19,9 @@ public class ServicePartRenderData {
     protected String priceInclude;
     protected String priceUninclude;
 
-    public ServicePartRenderData(String serviceName, String orderStatus, String orderDate, String meetLocation, String orderPeopleSize, String serviceDuration, String priceWithCurrency, String priceInclude, String priceUninclude) {
+    public ServicePartRenderData(String serviceName,
+                                 String orderDate, String meetLocation, String orderPeopleSize, String serviceDuration, String priceWithCurrency, String priceInclude, String priceUninclude) {
         this.serviceName = serviceName;
-        this.orderStatus = orderStatus;
         this.orderDate = orderDate;
         this.meetLocation = meetLocation;
         this.orderPeopleSize = orderPeopleSize;
@@ -61,14 +63,6 @@ public class ServicePartRenderData {
         this.serviceName = serviceName;
     }
 
-    public String getOrderStatus() {
-        return orderStatus;
-    }
-
-    public void setOrderStatus(String orderStatus) {
-        this.orderStatus = orderStatus;
-    }
-
     public String getOrderDate() {
         return orderDate;
     }
@@ -103,7 +97,7 @@ public class ServicePartRenderData {
 
 
     public static String getOrderDateText(OrderItem orderItem) {
-        return orderItem.getServiceDate();
+        return Utils.getMsToD(orderItem.getServiceDate());
     }
 
     public static String getOrderPeopleSizeText(OrderItem orderItem) {
@@ -116,25 +110,25 @@ public class ServicePartRenderData {
 
 
     public static String getOrderPriceWithCurrencyText(OrderItem orderItem) {
-        return orderItem.getPayCurrency() + orderItem.getOrderPrice();
+        return orderItem.getPayCurrency() +" "+ orderItem.getOrderPrice();
     }
 
-    public static String getStatusText(OrderItem orderItem){
+        public static String getStatusText(OrderItem orderItem){
         switch (orderItem.getStatus()) {
             case OrderItem.STATUS_WAIT_COFIRM:
-                return "等待发现者确认";
+                return PlatformUtil.getInstance().getString(R.string.order_status_wait_confirm);
             case OrderItem.STATUS_WAIT_PAY:
-                return "等待旅行者支付";
+                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_pay);
             case OrderItem.STATUS_WAIT_START:
-                return "等待发现者开始";
+                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_start);
             case OrderItem.STATUS_WAIT_END:
-                return "旅程进行中";
+                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_end);
             case OrderItem.STATUS_WAIT_COMMENT:
-                return "等待评价";
+                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_comment);
             case OrderItem.STATUS_OVER:
-                return "旅程结束";
+                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_over);
             case OrderItem.STATUS_UNVALIABLE:
-                return "预订失效";
+                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_unavaliable);
             default:
                 return orderItem.getStatusContent();
         }
@@ -142,6 +136,7 @@ public class ServicePartRenderData {
     public static String getOrderLocation(OrderItem orderItem) {
         return "  waitting api add location to orderitem!!";
     }
+
     public static String getOrderPriceInclude(OrderItem orderItem) {
         return "  waitting api add include to orderitem!!";
     }
@@ -154,9 +149,9 @@ public class ServicePartRenderData {
     public static ServicePartRenderData getInstance(OrderItem orderItem) {
 
         ServicePartRenderData result = new ServicePartRenderData(orderItem.getServiceName(),
-                getStatusText(orderItem), getOrderDateText(orderItem),
-                getOrderPeopleSizeText(orderItem),getOrderLocation(orderItem), getOrderDurationText(orderItem),
-                getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem),getOrderPriceUninclude(orderItem));
+                getOrderDateText(orderItem),
+                getOrderPeopleSizeText(orderItem), getOrderLocation(orderItem), getOrderDurationText(orderItem),
+                getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem));
         return result;
     }
 }
