@@ -52,6 +52,7 @@ public class OrderFormActivity extends BaseActivity {
 
     public static final String TAG = "OrderFormActivity";
     public static final String ORDER_ID = "OrderFormActivity.ORDER_ID";
+    public static final String TARGET_ID = "OrderFormActivity.TARGET_ID";
     @InjectView(R.id.ct_view_pager_indicator)
     IconPageIndicator mViewPagerIndicator;
     @InjectView(R.id.ct_view_pager)
@@ -62,31 +63,6 @@ public class OrderFormActivity extends BaseActivity {
     View mTopV;
     OrderViewsAdapter mAdapter;
     OrderItem orderItem = null;
-//    {
-//        orderItem.setStatus(OrderItem.STATUS_WAIT_COFIRM);
-//        orderItem.setOid("oid");
-//        orderItem.setBuyerNum("3");
-//        orderItem.setServiceName("mocked service ");
-//        orderItem.setServiceDate("2015-07-26 22:38:56.00");
-//        orderItem.setComment("comment");
-//        orderItem.setCommentScore("3");
-//        orderItem.setGmtCreated("2015-06-26 22:38:56.00");
-//        orderItem.setGmtModified("2015-09-26 22:38:56.00");
-//        orderItem.setInsiderId("sdf");
-//        orderItem.setHeadPic("http://cdn.aixifan.com/dotnet/artemis/u/cms/www/201508/07094633g8p80txx.jpg");
-//        orderItem.setServicePIC("http://static.acfun.mm111.net/dotnet/artemis/u/cms/www/201508/04103955tj3f.jpg");
-//        orderItem.setInsiderSign("setInsiderSign");
-//        orderItem.setTravellerId("setTravellerId");
-//        orderItem.setTravellerName("setTravellerName");
-//        orderItem.setInsiderName("setInsiderName");
-//        orderItem.setUserNick("setUserNick");
-//        orderItem.setPriceType("1");;
-//        orderItem.setMoneyType("twd");
-//        orderItem.setServicePrice("10");
-//        orderItem.setPayCurrency("cny");
-//        orderItem.setOrderPrice("2");
-//
-//    }
 
     AsyncHttpClient mClient = new AsyncHttpClient();
     boolean showTabs = false;
@@ -95,6 +71,13 @@ public class OrderFormActivity extends BaseActivity {
     public static void start(Context context, String orderId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
         intent.putExtra(ORDER_ID, orderId);
+        context.startActivity(intent);
+    }
+
+    public static void start(Context context, String orderId, String targetId) {
+        Intent intent = new Intent(context, OrderFormActivity.class);
+        intent.putExtra(ORDER_ID, orderId);
+        intent.putExtra(TARGET_ID, targetId);
         context.startActivity(intent);
     }
 
@@ -215,67 +198,7 @@ public class OrderFormActivity extends BaseActivity {
         RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(final List<Conversation> conversations) {
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //getConversationList 无法获取到title  通过 getDiscussion 注射title
-                        HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
-                        for (Conversation conversation : conversations) {
-                            if (TextUtils.isEmpty(conversation.getConversationTitle())) {
-                                noTitleConversations.put(conversation.getTargetId(), conversation);
-                            }
-                        }
-                        final CountDownLatch countDownLatch = new CountDownLatch(noTitleConversations.size());
-                        for (final String key : noTitleConversations.keySet()) {
-                            final Conversation conversation = noTitleConversations.get(key);
-                            RongIM.getInstance().getRongIMClient().getDiscussion(key, new RongIMClient.ResultCallback<Discussion>() {
-                                public void onSuccess(Discussion discussion) {
-                                    conversation.setConversationTitle(discussion.getName());
-                                    countDownLatch.countDown();
-                                }
-
-
-                                public void onError(RongIMClient.ErrorCode errorCode) {
-                                    countDownLatch.countDown();
-                                }
-                            });
-                        }
-                        try {
-                            countDownLatch.await();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                        if (conversations != null) {
-                            for (Conversation conversation : conversations) {
-                                if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(), orderItem)) {
-                                    //todo  actiivty关闭情况 eventbus
-                                    if (!isFinishing()) {
-                                        final String targetId = conversation.getTargetId();
-                                        runOnUiThread(new Runnable() {
-                                            @Override
-                                            public void run() {
-                                                canConversationTargetId = new ConversationDependy(targetId);
-                                                mAdapter.notifyDataSetChanged();
-                                                mViewPagerIndicator.notifyDataSetChanged();
-                                            }
-                                        });
-                                    }
-                                    return;
-                                }
-                            }
-                        }
-                        //todo  actiivty关闭情况 eventbus
-                        if (!isFinishing()) {
-                            runOnUiThread(new Runnable() {
-                                @Override
-                                public void run() {
-                                    buildConversation(orderItem);
-                                }
-                            });
-                        }
-                    }
-                }).start();
-                LogHelper.e("omg", "validateHasConversation none ");
+                queryForConversationList(orderItem, conversations);
             }
 
             @Override
@@ -283,6 +206,77 @@ public class OrderFormActivity extends BaseActivity {
                 LogHelper.e("omg", "validateHasConversation error " + errorCode.getMessage());
             }
         });
+    }
+
+    public void queryForConversationList(final OrderItem orderItem, final List<Conversation> conversations) {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //getConversationList 无法获取到title  通过 getDiscussion 注射title
+                HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
+                for (Conversation conversation : conversations) {
+                    if (TextUtils.isEmpty(conversation.getConversationTitle())) {
+                        noTitleConversations.put(conversation.getTargetId(), conversation);
+                    }
+                }
+                final CountDownLatch countDownLatch = new CountDownLatch(noTitleConversations.size());
+                for (final String key : noTitleConversations.keySet()) {
+                    final Conversation conversation = noTitleConversations.get(key);
+                    RongIM.getInstance().getRongIMClient().getDiscussion(key, new RongIMClient.ResultCallback<Discussion>() {
+                        public void onSuccess(Discussion discussion) {
+                            conversation.setConversationTitle(discussion.getName());
+                            countDownLatch.countDown();
+                        }
+
+
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            countDownLatch.countDown();
+                        }
+                    });
+                }
+
+                //wait api search name end
+                try {
+                    countDownLatch.await();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                // use   conversation which has lasted message
+                Conversation lasted = null;
+                for (Conversation conversation : conversations) {
+                    if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(), orderItem)) {
+                        if (lasted == null) {
+                            lasted = conversation;
+                        } else {
+                            lasted = conversation.getSentTime() > lasted.getSentTime() ? conversation : lasted;
+                        }
+                    }
+                }
+                if (lasted != null) {
+                    if (!isFinishing()) {
+                        final String targetId = lasted.getTargetId();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                canConversationTargetId = new ConversationDependy(targetId);
+                                mAdapter.notifyDataSetChanged();
+                                mViewPagerIndicator.notifyDataSetChanged();
+                            }
+                        });
+                    }
+                }
+                //todo  actiivty关闭情况 eventbus
+                if (!isFinishing()) {
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            buildConversation(orderItem);
+                        }
+                    });
+                }
+            }
+        }).start();
+        LogHelper.e("omg", "validateHasConversation none ");
     }
 
     public class ConversationDependy {
@@ -336,7 +330,9 @@ public class OrderFormActivity extends BaseActivity {
         if (orderItem != null) {
             showTabs = orderItem.getStatus() != orderItem.STATUS_WAIT_END;
             mItsNameTv.setText(buildItsname(this.orderItem));
-            validateHasConversation(this.orderItem);
+            if (canConversationTargetId == null) {
+                validateHasConversation(this.orderItem);
+            }
         }
         if (orderItem != null && orderFormFragment != null) {
             orderFormFragment.refresh(orderItem);
@@ -356,6 +352,10 @@ public class OrderFormActivity extends BaseActivity {
         mViewPager.setAdapter(mAdapter = new OrderViewsAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(2);
         mViewPagerIndicator.setViewPager(mViewPager);
+        String targetId = getIntent().getStringExtra(TARGET_ID);
+        if (!TextUtils.isEmpty(targetId)) {
+            canConversationTargetId = new ConversationDependy(targetId);
+        }
         requestOrderDetail();
 
     }

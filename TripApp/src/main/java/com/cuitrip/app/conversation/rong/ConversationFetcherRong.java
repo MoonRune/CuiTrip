@@ -35,6 +35,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
 
     @Override
     public void getConversations(final ListFetchCallback<ConversationItem> itemListFetchCallback) {
+        //npl
         RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
             @Override
             public void onSuccess(final List<Conversation> conversations) {
@@ -62,8 +63,8 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                         HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
                         for (Conversation conversation : conversations) {
                             ConversationItem item;
-
-                            if (TextUtils.isEmpty(conversation.getConversationTitle())) {
+                            if (TextUtils.isEmpty(conversation.getConversationTitle())||
+                            !RongTitleTagHelper.isValidated(conversation.getConversationTitle())) {
                                 noTitleConversations.put(conversation.getTargetId(), conversation);
                             }
                         }
@@ -72,13 +73,16 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                             final Conversation conversation = noTitleConversations.get(key);
                             RongIM.getInstance().getRongIMClient().getDiscussion(key, new RongIMClient.ResultCallback<Discussion>() {
                                 public void onSuccess(Discussion discussion) {
+                                    LogHelper.e("fetch conversations",TextUtils.join("|",new
+                                            String[]{key,discussion.getName()}));
                                     conversation.setConversationTitle(discussion.getName());
                                     countDownLatch.countDown();
                                 }
 
 
                                 public void onError(RongIMClient.ErrorCode errorCode) {
-                                    countDownLatch.countDown();
+                                    LogHelper.e("fetch conversations",key+"|error|"+errorCode);
+                                            countDownLatch.countDown();
                                 }
                             });
                         }
@@ -114,8 +118,10 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                 itsAva = isTravel ? RongTitleTagHelper.filterFinderAva(conversation.getConversationTitle()) :
                                         RongTitleTagHelper.filterTravellerAva(conversation.getConversationTitle());
                                 item = new ConversationItem(conversation.getTargetId(),
-                                        RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
+                                        RongTitleTagHelper.filterOrderId(conversation.getConversationTitle()),
                                         itsName,
+                                        conversation.getUnreadMessageCount(),
+                                        RongTitleTagHelper.filterServiceName(conversation.getConversationTitle()),
                                         String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime())),
                                         itsAva);
 

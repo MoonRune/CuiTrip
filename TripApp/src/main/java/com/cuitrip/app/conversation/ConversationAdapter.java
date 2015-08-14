@@ -25,7 +25,7 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationsViewH
 
     @Override
     public ConversationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(ConversationsViewHolder.RES,null);
+        View view=LayoutInflater.from(parent.getContext()).inflate(ConversationsViewHolder.RES,parent,false);
         ConversationsViewHolder viewHolder= new ConversationsViewHolder(view,present);
         return  viewHolder;
     }

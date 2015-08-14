@@ -146,7 +146,13 @@ public class RongTitleTagHelper {
                 orderItem.getInsiderId(), orderItem.getInsiderName(), orderItem.getInsiderName(),
                 orderItem.getServiceName()).buildJson();
     }
-
+    public static String filterOrderId(String title) {
+        TitleMessage msg = TitleMessage.getInstance(title);
+        if (msg != null) {
+            return msg.getOrderId();
+        }
+        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
+    }
     public static String filterTravellerName(String title) {
         TitleMessage msg = TitleMessage.getInstance(title);
         if (msg != null) {
@@ -196,6 +202,9 @@ public class RongTitleTagHelper {
     }
 
 
+    public static boolean isValidated(String title){
+        return TitleMessage.getInstance(title) != null;
+    }
     public static String filterFinderId(String title) {
         TitleMessage msg = TitleMessage.getInstance(title);
         if (msg != null) {

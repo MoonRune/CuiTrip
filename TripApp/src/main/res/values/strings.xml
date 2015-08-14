@@ -397,10 +397,10 @@
     <string name="ct_price_desc_message">脆饼支持3种计费方式，请选择适合您的方式：</string>
     <string name="price_include_input_hint">费用包含：</string>
     <string name="price_uninclude_input_hint">费用不包含：</string>
-    <string name="price_include_input_hint_et">请输入费用包含项目</string>
-    <string name="price_uninclude_input_hint_et">请输入需要明确的费用不包含项目</string>
+    <string name="price_include_input_hint_et">请描述费用包含项目</string>
+    <string name="price_uninclude_input_hint_et">请描述必要的的费用所不包括的项目</string>
     <string name="ct_price_desc_title">费用说明</string>
-    <string name="ct_order_price_uninclude_empty_msg">请描述必要的费用不包括的项目</string>
+    <string name="ct_order_price_uninclude_empty_msg">请描述必要的的费用所不包括的项目</string>
     <string name="ct_order_price_include_empty_msg">请描述费用包括的项目</string>
 
 

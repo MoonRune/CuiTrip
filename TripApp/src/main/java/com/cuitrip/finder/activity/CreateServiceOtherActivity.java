@@ -48,7 +48,7 @@ import butterknife.InjectViews;
  * Created on 7/26.
  */
 public class CreateServiceOtherActivity extends BaseActivity implements View.OnClickListener {
-    public static final int MAX_TAG_SIZE = 3;
+    public static final int MAX_TAG_SIZE = 4;
     String[] times = null;
     String[] addresses = null;
     String[] persons = null;

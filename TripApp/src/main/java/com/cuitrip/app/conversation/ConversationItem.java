@@ -6,18 +6,37 @@ package com.cuitrip.app.conversation;
 public class ConversationItem {
     private String id;
     private String name;
+    private int unreadCount;
     private String serviceName;
     private String lastWords;
     private String time;
     private String ava;
+    private String orderId;
 
-
-    public ConversationItem(String id, String name, String serviceName, String time, String ava) {
+    public ConversationItem(String id,String orderId, String name, int unreadCount, String serviceName, String time, String ava) {
         this.id = id;
         this.name = name;
+        this.unreadCount = unreadCount;
         this.serviceName = serviceName;
         this.time = time;
         this.ava = ava;
+        this.orderId=orderId;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public int getUnreadCount() {
+        return unreadCount;
+    }
+
+    public void setUnreadCount(int unreadCount) {
+        this.unreadCount = unreadCount;
     }
 
     public String getAva() {

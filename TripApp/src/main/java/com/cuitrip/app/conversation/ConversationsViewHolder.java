@@ -27,6 +27,8 @@ public class ConversationsViewHolder extends RecycleViewHolder<ConversationItem>
     ConversationItem item;
     @InjectView(R.id.ct_message_service)
     TextView ctMessageService;
+    @InjectView(R.id.ct_message_notification_count)
+    TextView ctMessageNotificationCount;
 
     public ConversationsViewHolder(View itemView, final ConversationsPresent present) {
         super(itemView);
@@ -46,6 +48,8 @@ public class ConversationsViewHolder extends RecycleViewHolder<ConversationItem>
         ctMessageContent.setText(item.getLastWords());
         ctMessageTime.setText(item.getTime());
         ctMessageService.setText(item.getServiceName());
+        ctMessageNotificationCount.setVisibility(item.getUnreadCount()>0?View.VISIBLE:View.INVISIBLE);
+        ctMessageNotificationCount.setText(String.valueOf(item.getUnreadCount()));
     }
 
 }

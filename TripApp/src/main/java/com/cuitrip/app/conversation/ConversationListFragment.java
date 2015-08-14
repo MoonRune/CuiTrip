@@ -10,10 +10,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
-import com.lab.utils.LogHelper;
 
 import java.util.List;
 
@@ -54,6 +54,14 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (LoginInstance.isLogin(MainApplication.getInstance())) {
+            mPresent.onCallRefresh();
+        }
+    }
+
+    @Override
     public void showRefreshLoading() {
         mSwipeRefreshLayout.setRefreshing(true);
     }
@@ -86,8 +94,9 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     @Override
     public void jumpConversation(ConversationItem item) {
-        LogHelper.e("jump", "" + item.getId() + "|" + "" + item.getName() + "|" + "" + item.getLastWords());
-        ConversationAcitivity.startActivity(getActivity(), item.getId(), item.getName());
+//        LogHelper.e("jump", "" + item.getId() + "|" + "" + item.getName() + "|" + "" + item.getLastWords());
+//        ConversationAcitivity.startActivity(getActivity(), item.getId(), item.getName());
+        OrderFormActivity.start(getActivity(),item.getOrderId(),item.getId());
     }
 
     @Override
