@@ -48,9 +48,6 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mPresent = new ConversationsPresent(this);
-        if (LoginInstance.isLogin(MainApplication.getInstance())) {
-            mPresent.onCallRefresh();
-        }
     }
 
     @Override

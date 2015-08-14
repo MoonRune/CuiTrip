@@ -1,81 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="88dp"
-    android:background="@drawable/select_white_gray"
-    android:orientation="horizontal"
-    android:paddingBottom="14dp"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:paddingTop="14dp">
-
-
-    <RelativeLayout
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginRight="10dp">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/ct_message_img"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:scaleType="centerCrop"
-            app:border_color="@color/ct_white"
-            app:border_width="@dimen/ct_logo_border"
-            tools:src="@drawable/ct_default_user" />
-
-        <TextView
-            android:id="@+id/ct_message_notification_count"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentTop="true"
-            android:background="@drawable/shape_red_circle"
-            android:gravity="center"
-            android:textColor="@color/ct_white"
-            tools:text="3" />
-    </RelativeLayout>
+    android:layout_height="89dp"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:orientation="vertical">
+        android:layout_width="match_parent"
+        android:layout_height="88dp"
+        android:background="@drawable/select_white_gray"
+        android:orientation="horizontal"
+        android:paddingBottom="14dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="14dp">
 
-        <TextView
-            android:id="@+id/ct_message_name"
+
+        <RelativeLayout
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginRight="10dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ct_message_img"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:scaleType="centerCrop"
+                app:border_color="@color/ct_white"
+                app:border_width="@dimen/ct_logo_border"
+                tools:src="@drawable/ct_default_user" />
+
+            <TextView
+                android:id="@+id/ct_message_notification_count"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/shape_red_circle"
+                android:gravity="center"
+                android:textColor="@color/ct_white"
+                tools:text="3" />
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/ct_main_color"
-            android:textSize="17dp"
-            tools:text="name" />
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ct_message_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ct_main_color"
+                android:textSize="17dp"
+                tools:text="name" />
+
+            <TextView
+                android:id="@+id/ct_message_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ct_content"
+                android:textSize="15dp"
+                tools:text="content" />
+
+            <TextView
+                android:id="@+id/ct_message_service"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ct_a7"
+                android:textSize="13dp"
+                tools:text="service" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/ct_message_content"
+            android:id="@+id/ct_message_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/ct_content"
-            android:textSize="15dp"
-            tools:text="content" />
-
-        <TextView
-            android:id="@+id/ct_message_service"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/ct_a7"
-            android:textSize="13dp"
-            tools:text="service" />
+            android:layout_marginLeft="10dp"
+            android:textColor="@color/ct_d8"
+            android:textSize="11dp"
+            tools:text="time" />
     </LinearLayout>
 
-
-    <TextView
-        android:id="@+id/ct_message_time"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="10dp"
-        android:textColor="@color/ct_d8"
-        android:textSize="11dp"
-        tools:text="time" />
+    <View
+        android:layout_height="1dp"
+        style="@style/ctDivider" />
 </LinearLayout>

@@ -1,6 +1,7 @@
 package com.cuitrip.app.rong;
 
-import com.alibaba.fastjson.JSON;
+import android.text.TextUtils;
+
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
@@ -19,96 +20,51 @@ public class RongTitleTagHelper {
 
     public static HashMap<Integer, SoftReference<TitleMessage>> SCache = new HashMap<>();
 
+    public static final String SPLIT_ADD = "|";
+
+    public static final String SPLIT_BY="\\|";
     public static class TitleMessage {
+        public static final int SIZE = 3;
         String orderId;
         String travellerId;
-        String travellerAva;
-        String travellerName;
         String finderId;
-        String finderAva;
-        String finderName;
-        String serviceName;
-
-        public String getTravellerName() {
-            return travellerName;
-        }
-
-        public void setTravellerName(String travellerName) {
-            this.travellerName = travellerName;
-        }
-
-        public String getFinderName() {
-            return finderName;
-        }
-
-        public void setFinderName(String finderName) {
-            this.finderName = finderName;
-        }
 
         public String getOrderId() {
             return orderId;
-        }
-
-        public String getTravellerId() {
-            return travellerId;
-        }
-
-        public String getTravellerAva() {
-            return travellerAva;
-        }
-
-        public String getFinderId() {
-            return finderId;
-        }
-
-        public String getFinderAva() {
-            return finderAva;
-        }
-
-        public String getServiceName() {
-            return serviceName;
-        }
-
-        public TitleMessage() {
         }
 
         public void setOrderId(String orderId) {
             this.orderId = orderId;
         }
 
+        public String getTravellerId() {
+            return travellerId;
+        }
+
         public void setTravellerId(String travellerId) {
             this.travellerId = travellerId;
         }
 
-        public void setTravellerAva(String travellerAva) {
-            this.travellerAva = travellerAva;
+        public String getFinderId() {
+            return finderId;
         }
 
         public void setFinderId(String finderId) {
             this.finderId = finderId;
         }
 
-        public void setFinderAva(String finderAva) {
-            this.finderAva = finderAva;
+
+        public TitleMessage() {
         }
 
-        public void setServiceName(String serviceName) {
-            this.serviceName = serviceName;
-        }
-
-        public TitleMessage(String orderId, String travellerId, String travellerAva, String travellerName, String finderId, String finderAva, String finderName, String serviceName) {
+        public TitleMessage(String orderId, String travellerId, String finderId) {
             this.orderId = orderId;
             this.travellerId = travellerId;
-            this.travellerAva = travellerAva;
-            this.travellerName = travellerName;
             this.finderId = finderId;
-            this.finderAva = finderAva;
-            this.finderName = finderName;
-            this.serviceName = serviceName;
         }
 
-        public String buildJson() {
-            return JSON.toJSONString(this);
+        public String buildString() {
+            return TextUtils.join(SPLIT_ADD, new String[]{orderId, travellerId, finderId});
         }
 
         public static TitleMessage getInstance(String title) {
@@ -121,8 +77,11 @@ public class RongTitleTagHelper {
             }
             TitleMessage data = null;
             try {
-                data = JSON.parseObject(title, TitleMessage.class);
-                SCache.put(key, new SoftReference<>(data));
+                String[] values = TextUtils.split(title,SPLIT_BY);
+                data = new TitleMessage();
+                data.setOrderId(values[0]);
+                data.setTravellerId(values[1]);
+                data.setFinderId(values[2]);
             } catch (Exception e) {
                 LogHelper.e("omg", "pasererror:" + title + "|" + e.getMessage());
                 return null;
@@ -142,53 +101,14 @@ public class RongTitleTagHelper {
 
     public static String buildTitle(OrderItem orderItem) {
         return new TitleMessage(orderItem.getOid(),
-                orderItem.getTravellerId(), orderItem.getTravellerName(), orderItem.getTravellerName(),
-                orderItem.getInsiderId(), orderItem.getInsiderName(), orderItem.getInsiderName(),
-                orderItem.getServiceName()).buildJson();
+                orderItem.getTravellerId(),
+                orderItem.getInsiderId()).buildString();
     }
+
     public static String filterOrderId(String title) {
         TitleMessage msg = TitleMessage.getInstance(title);
         if (msg != null) {
             return msg.getOrderId();
-        }
-        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
-    }
-    public static String filterTravellerName(String title) {
-        TitleMessage msg = TitleMessage.getInstance(title);
-        if (msg != null) {
-            return msg.getTravellerName();
-        }
-        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
-    }
-
-    public static String filterFinderName(String title) {
-        TitleMessage msg = TitleMessage.getInstance(title);
-        if (msg != null) {
-            return msg.getFinderName();
-        }
-        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
-    }
-
-    public static String filterTravellerAva(String title) {
-        TitleMessage msg = TitleMessage.getInstance(title);
-        if (msg != null) {
-            return msg.getTravellerAva();
-        }
-        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
-    }
-
-    public static String filterFinderAva(String title) {
-        TitleMessage msg = TitleMessage.getInstance(title);
-        if (msg != null) {
-            return msg.getFinderAva();
-        }
-        return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
-    }
-
-    public static String filterServiceName(String title) {
-        TitleMessage msg = TitleMessage.getInstance(title);
-        if (msg != null) {
-            return msg.getServiceName();
         }
         return PlatformUtil.getInstance().getString(R.string.ct_discussion_unsupport);
     }
@@ -202,9 +122,10 @@ public class RongTitleTagHelper {
     }
 
 
-    public static boolean isValidated(String title){
+    public static boolean isValidated(String title) {
         return TitleMessage.getInstance(title) != null;
     }
+
     public static String filterFinderId(String title) {
         TitleMessage msg = TitleMessage.getInstance(title);
         if (msg != null) {
