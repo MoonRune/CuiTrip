@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class DateActivity extends BaseActivity implements View.OnClickListener {
 
@@ -35,6 +36,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
     private DateAdapter mAdapter;
     private AsyncHttpClient mClient = new AsyncHttpClient();
     private List<Long> mAvailableDate = new ArrayList<Long>();
+    private List<Long> mBookedDate = new ArrayList<Long>();
 
     private boolean mIsFinder;
     private String mSid;
@@ -74,6 +76,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.after_month).setOnClickListener(this);
         mMonth = (TextView) findViewById(R.id.month_title);
         mCalendar = Calendar.getInstance();
+        mCalendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         mMonth.setText(String.format(Locale.ENGLISH, getString(R.string.ct_service_date_title),
                 mCalendar.get(Calendar.YEAR), mCalendar.get(Calendar.MONTH) + 1));
 
@@ -86,27 +89,55 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
         findViewById(R.id.bottom_top).setOnClickListener(this);
 
         showLoading();
-        ServiceBusiness.getServiceAvailableDate(this, mClient, new LabAsyncHttpResponseHandler(AvailableDate.class) {
-            @Override
-            public void onSuccess(LabResponse response, Object data) {
-                hideLoading();
-                if (data != null) {
-                    mAvailableDate = ((AvailableDate) data).getAvailableDate();
-                    mAdapter.setCalendar(mCalendar);
-                    mAdapter.notifyDataSetChanged();
+        if (mIsFinder) {
+            ServiceBusiness.getServiceAvailableAndBookedDate(this, mClient, new LabAsyncHttpResponseHandler(AvailableDate.class) {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    hideLoading();
+                    if (data != null) {
+                        mAvailableDate = ((AvailableDate) data).getAvailableDate();
+                        mBookedDate = ((AvailableDate) data).getBookedDate();
+                        if (mAvailableDate!=null&&mBookedDate!=null) {
+                            mAvailableDate.removeAll(mBookedDate);
+                        }
+                        mAdapter.setCalendar(mCalendar);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
                 }
 
-            }
-
-            @Override
-            public void onFailure(LabResponse response, Object data) {
-                hideLoading();
-                if (response.code == 105 && mIsFinder) {//可约日期为空
-                    return;
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    hideLoading();
+                    if (response.code == 105 && mIsFinder) {//可约日期为空
+                        return;
+                    }
+                    MessageUtils.showToast(response.msg);
                 }
-                MessageUtils.showToast(response.msg);
-            }
-        }, mSid);
+            }, mSid);
+        } else {
+            ServiceBusiness.getServiceAvailableDate(this, mClient, new LabAsyncHttpResponseHandler(AvailableDate.class) {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    hideLoading();
+                    if (data != null) {
+                        mAvailableDate = ((AvailableDate) data).getAvailableDate();
+                        mAdapter.setCalendar(mCalendar);
+                        mAdapter.notifyDataSetChanged();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    hideLoading();
+                    if (response.code == 105 && mIsFinder) {//可约日期为空
+                        return;
+                    }
+                    MessageUtils.showToast(response.msg);
+                }
+            }, mSid);
+        }
     }
 
     protected void onDestroy() {
@@ -145,6 +176,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
     public class DateAdapter extends BaseAdapter {
 
         private Calendar calendar = Calendar.getInstance();
+
+        {
+
+            calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+        }
 
         public void setCalendar(Calendar cal) {
             this.calendar.setTimeInMillis(cal.getTimeInMillis());
@@ -192,19 +228,31 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 long end = calendar.getTimeInMillis();
 
                 tv.setText(String.valueOf(date));
-                boolean match = false;
+                boolean matchAvaliable = false;
                 if (mAvailableDate != null && !mAvailableDate.isEmpty()) {
                     for (long time : mAvailableDate) {
                         if (time >= start && time < end) {
                             tv.setEnabled(true);
                             tv.setChecked(true);
-                            match = true;
+                            matchAvaliable = true;
                             break;
                         }
                     }
                 }
-                if (!match) {
+                boolean matchBooked = false;
+                if (mBookedDate != null && !mBookedDate.isEmpty()) {
+                    for (long time : mBookedDate) {
+                        if (time >= start && time < end) {
+                            tv.setEnabled(false);
+                            tv.setChecked(true);
+                            matchBooked = true;
+                            break;
+                        }
+                    }
+                }
+                if (!matchAvaliable && !matchBooked) {
                     Calendar today = Calendar.getInstance();
+                    today.setTimeZone(TimeZone.getTimeZone("GMT+800"));
                     today.set(Calendar.HOUR_OF_DAY, 0);
                     today.set(Calendar.MINUTE, 0);
                     today.set(Calendar.SECOND, 0);

@@ -1,12 +1,9 @@
 package com.lab.network;
 
-import android.content.Intent;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.business.BusinessHelper;
-import com.cuitrip.login.LoginActivity;
 import com.cuitrip.service.R;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
@@ -38,7 +35,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
                     }
                 } else if (response != null) {
                     if (BusinessHelper.isTokenInvalided(response)) {
-                        MainApplication.getInstance().logOut();
+                        MainApplication.getInstance().logOutWithError();
                     }
                     onFailure(response, null);
                 } else {

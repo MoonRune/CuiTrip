@@ -4,17 +4,13 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.TextUtils;
-import android.text.method.HideReturnsTransformationMethod;
-import android.text.method.PasswordTransformationMethod;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cuitrip.app.IndexActivity;
@@ -55,7 +51,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        SMSSDK.getSupportedCountries();
         showActionBar(R.string.ct_login);
 
         setContentView(R.layout.ct_activity_login);
@@ -72,47 +67,71 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 return true;
             }
         });
+        findViewById(R.id.ct_account_clear).setOnClickListener(this);
+        findViewById(R.id.ct_passwd_clear).setOnClickListener(this);
+        findViewById(R.id.back_press).setOnClickListener(this);
+        findViewById(R.id.find_password).setOnClickListener(this);
         findViewById(R.id.ct_login).setOnClickListener(this);
         findViewById(R.id.ct_go_regist).setOnClickListener(this);
-        findViewById(R.id.counrty_selected).setOnClickListener(this);
-        ((CheckBox) findViewById(R.id.toggle_pw)).setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        findViewById(R.id.ct_contry).setOnClickListener(this);
+
+        mPhoneNumber.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if (checked) {
-                    mPassWd.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-                } else {
-                    mPassWd.setTransformationMethod(PasswordTransformationMethod.getInstance());
-                }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onAccountChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
+        mPassWd.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                onPasswordChanged();
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
         String[] country = getCurrentCountry();
         if (country != null) {
             currentCode = country[1];
-            mCountry.setText(country[0] + "  +" + currentCode);
+            mCountry.setText( "+" + currentCode);
         }
     }
 
 
+    public void onAccountChanged(){
+        findViewById(R.id.ct_account_clear).setVisibility(TextUtils.isEmpty(mPhoneNumber.getText().toString())?View.INVISIBLE:View.VISIBLE);
+    }
+
+    public void onPasswordChanged(){
+        findViewById(R.id.ct_passwd_clear).setVisibility(TextUtils.isEmpty(mPassWd.getText().toString())?View.INVISIBLE:View.VISIBLE);
+    }
     protected void onDestroy() {
         super.onDestroy();
         //mClient.cancelAllRequests(true);
     }
 
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ct_menu_login, menu);
-        return super.onCreateOptionsMenu(menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_find:
-                startActivityForResult(new Intent(this, RegisterActivity.class)
-                        .putExtra(RegisterActivity.FIND_PASSWD, true), GO_REGISTEER);
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
+    public void finPassword() {
+        startActivityForResult(new Intent(this, RegisterActivity.class)
+                .putExtra(RegisterActivity.FIND_PASSWD, true), GO_REGISTEER);
     }
 
     private String[] getCurrentCountry() {
@@ -162,7 +181,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     submit();
                 }
                 break;
-            case R.id.counrty_selected:
+            case R.id.find_password:
+                finPassword();
+                break;
+            case R.id.ct_account_clear:
+                mPhoneNumber.setText("");
+                break;
+            case R.id.ct_passwd_clear:
+                mPassWd.setText("");
+                break;
+            case R.id.back_press:
+                finish();
+                break;
+            case R.id.ct_contry:
                 // 国家列表
                 CountryPage countryPage = new CountryPage();
                 countryPage.setCountryId(currentId);
@@ -273,7 +304,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 String[] country = SMSSDK.getCountry(currentId);
                 if (country != null) {
                     currentCode = country[1];
-                    mCountry.setText(country[0] + "  +" + currentCode);
+                    mCountry.setText("+" + currentCode);
                 }
                 checkPhoneNum(mPhoneNumber.getText().toString().trim(), currentCode);
             }

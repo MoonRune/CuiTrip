@@ -43,6 +43,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogHelper.e("omg", "oncreate");
         ActionBar bar = getActionBar();
         if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(false);
@@ -51,6 +52,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     public void onResume() {
         super.onResume();
+        LogHelper.e("omg", "onresume");
         showActionBar(getString(R.string.ct_my));
         setHasOptionsMenu(true);
         if (LoginInstance.isLogin(MainApplication.sContext)) {
@@ -90,6 +92,7 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        LogHelper.e("omg", "onCreateView");
         if (mContentView == null) {
             mContentView = inflater.inflate(R.layout.ct_my, container, false);
             mContentView.findViewById(R.id.author_profile).setOnClickListener(this);
@@ -114,7 +117,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        requestForHomepageStatus();
+        if (LoginInstance.isLogin(MainApplication.sContext)) {
+            requestForHomepageStatus();
+        }
     }
 
     @Override

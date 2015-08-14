@@ -124,6 +124,13 @@ public class ServiceBusiness {
         return client.post(context, BusinessHelper.getApiUrl("getServiceAvailableDate"), params, handler);
     }
 
+    public static RequestHandle getServiceAvailableAndBookedDate(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                        String sid) {
+        LabRequestParams params = new LabRequestParams();
+        params.put("sid", sid);
+        return client.post(context, BusinessHelper.getApiUrl("getServiceBookedAndAvailableDate"), params, handler);
+    }
+
     public static RequestHandle deleteServiceInfo(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                                   String sid) {
         LabRequestParams params = new LabRequestParams();

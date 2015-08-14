@@ -84,6 +84,7 @@ public class Utils {
 
     public static String getDateFormat(long dateTime) {
         Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         int day = calendar.get(Calendar.DAY_OF_YEAR);
         int year = calendar.get(Calendar.YEAR);
         calendar.setTimeInMillis(dateTime);

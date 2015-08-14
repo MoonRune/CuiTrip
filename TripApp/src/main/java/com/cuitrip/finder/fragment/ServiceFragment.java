@@ -175,7 +175,8 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             });
             mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
-                public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int i, long l) {
+                public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int x, long l) {
+                    final int i = x-1;
                     AlertDialog.Builder builder = MessageUtils.createHoloBuilder(getActivity());
                     builder.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.ct_choice_item, R.id.checktext,
                             new String[]{getResources().getString(R.string.ct_delete), getResources().getString(R.string.ct_cancel)}), new Dialog.OnClickListener() {
@@ -190,7 +191,9 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                                     mAdapter.notifyDataSetChanged();
                                 } else {
                                     ServiceInfo serviceInfo = (ServiceInfo) info;
-                                    deleteService(serviceInfo.getSid());
+                                    if (serviceInfo!=null) {
+                                        deleteService(serviceInfo.getSid());
+                                    }
                                 }
                             } else {
                                 //do nothing

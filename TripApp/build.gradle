@@ -8,8 +8,8 @@ android {
         applicationId "com.cuitrip.service"
         minSdkVersion 14
         targetSdkVersion 22
-        versionCode 1
-        versionName "1.1.0"
+        versionCode 2
+        versionName "1.1.1"
     }
 
     android {
@@ -51,7 +51,7 @@ android {
     }
 
     productFlavors {
-        今日头条{}
+        develop{}
 
         productFlavors.all { flavor ->
             flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]
