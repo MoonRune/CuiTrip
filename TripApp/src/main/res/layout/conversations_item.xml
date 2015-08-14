@@ -7,6 +7,9 @@
     android:layout_height="89dp"
     android:orientation="vertical">
 
+    <View
+        android:layout_height="1dp"
+        style="@style/ctDivider" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="88dp"
@@ -86,7 +89,4 @@
             tools:text="time" />
     </LinearLayout>
 
-    <View
-        android:layout_height="1dp"
-        style="@style/ctDivider" />
 </LinearLayout>
