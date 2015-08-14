@@ -15,7 +15,7 @@ import butterknife.InjectView;
 /**
  * Created by baziii on 15/8/10.
  */
-public abstract class BaseVerticalListActivity<T> extends BaseActivity implements ILoadMoreView<T> {
+public abstract class BaseVerticalListActivity<T> extends BaseActivity implements ILoadMoreListView<T> {
     public static final String TAG = "BaseVerticalListActivity";
     @InjectView(R.id.ct_recycler_view)
     protected RecyclerView mRecyclerView;

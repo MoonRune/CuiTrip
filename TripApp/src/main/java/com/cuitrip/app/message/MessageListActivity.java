@@ -17,7 +17,7 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 /**
  * Created by baziii on 15/8/10.
  */
-public class MessageListActivity extends BaseVerticalListActivity<MessageMode> implements IMessageView {
+public class MessageListActivity extends BaseVerticalListActivity<MessageMode> implements IMessageListView {
     public static final String TAG = "MessageListActivity";
     MessagePresent mMessagePresent = new MessagePresent(this);
 

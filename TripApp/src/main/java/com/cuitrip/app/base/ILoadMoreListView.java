@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by baziii on 15/8/10.
  */
-public interface ILoadMoreView<T> extends IRefreshView<T> {
+public interface ILoadMoreListView<T> extends IRefreshListView<T> {
     void uiShowLoadMore();
     void uiHideLoadMore();
     void renderUIWithAppendData(List<T> items);

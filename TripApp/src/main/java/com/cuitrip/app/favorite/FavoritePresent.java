@@ -16,9 +16,9 @@ import java.util.List;
 public class FavoritePresent<T extends FavoriteMode> {
     public static final String TAG = "FavoritePresent";
     IFavoriteFetcher mFavoriteFetcher = new TestFavoriteFetcher();
-    IFavoriteView mFavoriteView;
+    IFavoriteListView mFavoriteView;
 
-    public FavoritePresent(IFavoriteView iFavoriteView) {
+    public FavoritePresent(IFavoriteListView iFavoriteView) {
         this.mFavoriteView = iFavoriteView;
     }
 

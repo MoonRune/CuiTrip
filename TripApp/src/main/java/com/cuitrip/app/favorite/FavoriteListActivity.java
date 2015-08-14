@@ -15,7 +15,7 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 /**
  * Created by baziii on 15/8/10.
  */
-public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode> implements IFavoriteView{
+public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode> implements IFavoriteListView {
     public static final String TAG = "FavoriteListActivity";
     FavoritePresent<FavoriteMode> mFavoritePresent = new FavoritePresent<>(this);
     public static void start(Context context) {

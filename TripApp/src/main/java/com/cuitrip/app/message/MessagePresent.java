@@ -15,11 +15,11 @@ public class MessagePresent {
     public static final String TAG = "MessagePresent";
 
 
-    IMessageView mMessageView;
+    IMessageListView mMessageView;
     IMessageFetcher mMessageFetcher = new TestMessageFetcher();
     String loadMorePattern;
 
-    public MessagePresent(IMessageView mMessageView) {
+    public MessagePresent(IMessageListView mMessageView) {
         this.mMessageView = mMessageView;
     }
 

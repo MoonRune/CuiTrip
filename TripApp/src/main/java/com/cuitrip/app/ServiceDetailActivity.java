@@ -1,5 +1,6 @@
 package com.cuitrip.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
@@ -43,6 +44,10 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     private ServiceDetail mServiceDetail;
     private String mServiceId;
     private boolean mIsFinder = false;
+
+    public static void start(Context context, String serviceId) {
+        context.startActivity(new Intent(context, ServiceDetail.class).putExtra(SERVICE_ID, serviceId));
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

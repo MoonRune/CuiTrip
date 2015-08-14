@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/select_white_gray">
+        <ImageView
+            android:id="@+id/ct_service_ava_img"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginBottom="18dp"
+            android:layout_marginRight="10dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ct_default"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/ct_service_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="2015/07/01"
+                android:textColor="@color/ct_main_color_light"
+                android:textSize="15sp"
+                tools:text="ct_service_name" />
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:id="@+id/ct_service_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:textColor="@color/ct_black"
+                android:textSize="17sp"
+                tools:text="service_address" />
+
+            <TextView
+                android:layout_marginTop="7dp"
+                android:id="@+id/ct_service_create"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="5dp"
+                android:singleLine="true"
+                android:text="123"
+                android:textColor="@color/ct_a7"
+                android:textSize="13sp"
+                tools:text="ct_service_create" />
+        </LinearLayout>
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/get_b_g"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <TextView
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:text="安排日程"/>
+</LinearLayout>

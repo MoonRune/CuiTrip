@@ -1,5 +1,6 @@
 package com.lab.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +11,6 @@ import android.widget.CheckedTextView;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.cuitrip.app.ServiceDetailActivity;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.AvailableDate;
 import com.cuitrip.model.UserInfo;
@@ -27,6 +27,8 @@ import java.util.Locale;
 
 public class DateActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String SERVICE_ID = "DateActivity.SERVICE_ID";
+    public static final String USER_TYPE = "DateActivity.USER_TYPE";
     private TextView mMonth;
     private GridView mDate;
     private Calendar mCalendar;
@@ -37,6 +39,10 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
     private boolean mIsFinder;
     private String mSid;
 
+    public static void startFinder(Context context,String sid){
+        context.startActivity(new Intent(context,DateActivity.class).putExtra(SERVICE_ID,sid)
+        .putExtra(USER_TYPE,UserInfo.USER_FINDER));
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,13 +53,13 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
             finish();
             return;
         }
-        mSid = intent.getStringExtra(ServiceDetailActivity.SERVICE_ID);
+        mSid = intent.getStringExtra(SERVICE_ID);
         if (TextUtils.isEmpty(mSid)) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();
             return;
         }
-        mIsFinder = intent.getIntExtra(ServiceDetailActivity.USER_TYPE, UserInfo.USER_TRAVEL)
+        mIsFinder = intent.getIntExtra(USER_TYPE, UserInfo.USER_TRAVEL)
                 == UserInfo.USER_FINDER;
 
         setContentView(R.layout.ct_activity_date);
