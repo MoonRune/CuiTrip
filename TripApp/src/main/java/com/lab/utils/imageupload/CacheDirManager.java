@@ -109,6 +109,9 @@ public class CacheDirManager {
     public String picDir() {
         return getFileDir("/pic");
     }
+    public String cameraDir() {
+        return getFileDir("/camera")+"/temp";
+    }
 
     private String getFileDir(String fileName) {
         String dir = getBaseDir() + fileName;

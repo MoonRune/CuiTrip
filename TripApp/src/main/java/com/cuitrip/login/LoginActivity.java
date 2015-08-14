@@ -55,6 +55,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SMSSDK.getSupportedCountries();
         showActionBar(R.string.ct_login);
 
         setContentView(R.layout.ct_activity_login);
@@ -102,9 +103,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         getMenuInflater().inflate(R.menu.ct_menu_login, menu);
         return super.onCreateOptionsMenu(menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.action_find:
                 startActivityForResult(new Intent(this, RegisterActivity.class)
                         .putExtra(RegisterActivity.FIND_PASSWD, true), GO_REGISTEER);
@@ -118,6 +120,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String[] country = null;
         if (!TextUtils.isEmpty(mcc)) {
             country = SMSSDK.getCountryByMCC(mcc);
+            if (country != null) {
+                LogHelper.e("omg", TextUtils.join("|", country));
+            }
         }
 
         if (country == null) {
@@ -130,13 +135,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String getMCC() {
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         // 返回当前手机注册的网络运营商所在国家的MCC+MNC. 如果没注册到网络就为空.
-        String networkOperator = tm.getNetworkOperator();
-        if (!TextUtils.isEmpty(networkOperator)) {
-            return networkOperator;
+        String temp = tm.getSimOperator();
+        if (!TextUtils.isEmpty(temp)) {
+            if (temp.length() > 3) {
+                return temp.substring(0, 3);
+            }
+            return temp;
         }
 
         // 返回SIM卡运营商所在国家的MCC+MNC. 5位或6位. 如果没有SIM卡返回空
-        return tm.getSimOperator();
+        temp = tm.getNetworkOperator();
+        if (!TextUtils.isEmpty(temp)) {
+            if (temp.length() > 3) {
+                return temp.substring(0, 3);
+            }
+            return temp;
+        }
+        return "";
     }
 
     @Override
@@ -163,8 +178,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(requestCode == GO_REGISTEER && resultCode == RESULT_OK
-                && LoginInstance.isLogin(this)){
+        if (requestCode == GO_REGISTEER && resultCode == RESULT_OK
+                && LoginInstance.isLogin(this)) {
             setResult(RESULT_OK);
             finish();
             return;
@@ -172,7 +187,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    private boolean valid(){
+    private boolean valid() {
         if (TextUtils.isEmpty(mCountry.getText())) {
             MessageUtils.showToast(R.string.ct_null_country);
             return false;
@@ -188,7 +203,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         return true;
     }
 
-    private void submit(){
+    private void submit() {
         showLoading();
         UserBusiness.login(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
             @Override
@@ -200,28 +215,28 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     String deviceId = UmengRegistrar.getRegistrationId(LoginActivity.this);
                     LogHelper.e("LoginActivity", "device_id: " + deviceId);
                     UserInfo info = (UserInfo) data;
-                    if(!TextUtils.isEmpty(deviceId)){
+                    if (!TextUtils.isEmpty(deviceId)) {
                         UserBusiness.upDevicetoken(LoginActivity.this, mClient, new LabAsyncHttpResponseHandler() {
                             @Override
                             public void onSuccess(LabResponse response, Object data) {
-                                LogHelper.e("LoginActivity", "device_id: suc" );
+                                LogHelper.e("LoginActivity", "device_id: suc");
                             }
 
                             @Override
                             public void onFailure(LabResponse response, Object data) {
-                                LogHelper.e("LoginActivity", "device_id: failed " );
+                                LogHelper.e("LoginActivity", "device_id: failed ");
                             }
-                        }, deviceId,((UserInfo) data).getUid(),((UserInfo) data).getToken());
+                        }, deviceId, ((UserInfo) data).getUid(), ((UserInfo) data).getToken());
                     }
                     //TODO 发现者模式下登录切换到旅行者？
                     info.setType(UserInfo.USER_TRAVEL);
                     UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
-                    if(oldInfo == null || (oldInfo != null && !oldInfo.isTravel())){
+                    if (oldInfo == null || (oldInfo != null && !oldInfo.isTravel())) {
                         LoginInstance.update(LoginActivity.this, info);
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
-                    }else {
+                    } else {
                         LoginInstance.update(LoginActivity.this, info);
                     }
 
@@ -229,7 +244,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
                     try {
                         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(),0);
+                        imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -264,6 +279,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             }
         }
     }
+
     /**
      * 检查电话号码
      */

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:background="@color/ct_white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/ct_price_desc_message"
+            android:textColor="@color/ct_content"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="@string/price_include_input_hint"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ct_price_include_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/ct_white"
+            android:gravity="top"
+            android:hint="@string/price_include_input_hint_et"
+            android:minLines="5"
+            android:textColor="@color/ct_content"
+            android:textSize="15sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:text="@string/price_uninclude_input_hint"
+            android:textColor="@color/ct_black"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/ct_price_uninclude_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@color/ct_white"
+            android:gravity="top"
+            android:hint="@string/price_uninclude_input_hint_et"
+            android:minLines="5"
+            android:textColor="@color/ct_content"
+            android:textSize="15sp" />
+    </LinearLayout>
+</ScrollView>

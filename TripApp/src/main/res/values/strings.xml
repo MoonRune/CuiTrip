@@ -258,8 +258,8 @@
     <string name="ct_service_unit">/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
     <string name="ct_go_service_list">返回发现列表</string>
-    <string name="ct_create_new_again">再新追加一个发现</string>
-    <string name="ct_create_suc_tip">您的发现已提交审核\n审核通过后您可以安排日程</string>
+    <string name="ct_create_new_again">继续添加发现</string>
+    <string name="ct_create_suc_tip">我们将尽快神恶化，您将收到邮件和消息提醒</string>
     <string name="ct_country_selected">地区</string>
     <string name="ct_country_selected_null">请选择地区</string>
     <string name="ct_selected_service_date">安排日程</string>
@@ -394,6 +394,15 @@
     <string name="ct_price_desc_hint">请输入费用说明</string>
     <string name="ct_tag_hint">请选择标签</string>
     <string name="max_tag_limit">最多%1$d个标签</string>
+    <string name="ct_price_desc_message">脆饼支持3种计费方式，请选择适合您的方式：</string>
+    <string name="price_include_input_hint">费用包含：</string>
+    <string name="price_uninclude_input_hint">费用不包含：</string>
+    <string name="price_include_input_hint_et">请输入费用包含项目</string>
+    <string name="price_uninclude_input_hint_et">请输入需要明确的费用不包含项目</string>
+    <string name="ct_price_desc_title">费用说明</string>
+    <string name="ct_order_price_uninclude_empty_msg">请描述必要的费用不包括的项目</string>
+    <string name="ct_order_price_include_empty_msg">请描述费用包括的项目</string>
+
 
     <string-array name="ct_gender_list">
         <item>男</item>
@@ -424,10 +433,28 @@
         <item>6人</item>
     </string-array>
 
-    <string-array name="ct_service_pay_list">
-        <item>一口价</item>
-        <item>按人计费</item>
-        <item>免费</item>
+    <string-array name="ct_service_address_list">
+        <item>a</item>
+        <item>b</item>
+        <item>c</item>
+        <item>d</item>
+        <item>e</item>
+        <item>f</item>
     </string-array>
 
+    <string-array name="ct_service_pay_list">
+        <item>@string/price_way_all</item>
+        <item>@string/price_way_per</item>
+        <item>@string/price_way_free</item>
+    </string-array>
+    <string name="price_way_all">一口价</string>
+    <string name="price_way_per">按人计费</string>
+    <string name="price_way_free">免费</string>
+    <string name="ct_price_payway_all_detail_msg">在您接收的人数范围内，无论旅行者有几人都只收取一个费用，您需要设定一个最终费用。</string>
+    <string name="ct_price_payway_per_detail_msg">在您可接待的人数范围内，按参加的人数收取费用，您需要设定单人费用。</string>
+    <string name="ct_price_payway_free_detail_msg">您将提供免费的旅程体验，不收取任何费用。</string>
+    <string name="ct_tags_select_message">添加一些标签，让旅行者更快明白您发现的内容</string>
+    <string name="ct_tags_select_limit_message">最多设置4个标签</string>
+    <string name="commit_service_title">提交发现</string>
+    <string name="commit_service_content">提交这个发现给脆饼审核</string>
 </resources>

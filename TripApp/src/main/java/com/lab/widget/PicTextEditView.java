@@ -7,6 +7,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -25,6 +27,7 @@ import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -213,6 +216,36 @@ public class PicTextEditView extends LinearLayout implements ImageSelectView.OnI
         Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
         mActivity.startActivityForResult(photoPickerIntent, requestCode);
+    }
+
+    public void addTakePhotoImage(int requestCode,File file) {
+        if (mActivity == null) {
+            return;
+        }
+        int childCount = getChildCount();
+        int picCount = 0;
+        for (int i = 0; i < childCount; i++) {
+            if (getChildAt(i) instanceof ImageSelectView) {
+                ++picCount;
+            }
+        }
+        if (picCount >= 9) {
+            MessageUtils.createHoloBuilder(mActivity).setMessage(R.string.ct_at_most_image_size_nine_limition)
+                    .setPositiveButton(R.string.ct_i_know, null).show();
+            return;
+        }
+
+        View foucs = findFocus();
+        if (foucs == null || !(foucs instanceof TextEditSplit)) {
+            MessageUtils.showToast(R.string.ct_select_pic_poition);
+            return;
+        }
+        mCurrentEdit = (TextEditSplit) foucs;
+        mPositionInParent = indexOfChild(mCurrentEdit);
+        mPositionInEdit = mCurrentEdit.getSelectionStart();
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        mActivity.startActivityForResult(intent, requestCode);
     }
 
     private void updateImage(final ImageSelectView view, String base64) {

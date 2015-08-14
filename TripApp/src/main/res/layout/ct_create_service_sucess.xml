@@ -46,17 +46,10 @@
     <Button
         android:id="@+id/new_service"
         style="@style/ctMainBackgroundRecButton"
+        android:background="@drawable/select_blue_corner"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
         android:text="@string/ct_create_new_again" />
 
-    <Button
-        android:id="@+id/go_service"
-        style="@style/ctMainBackgroundRecButton"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="20dp"
-        android:text="@string/ct_go_service_list" />
 </LinearLayout>

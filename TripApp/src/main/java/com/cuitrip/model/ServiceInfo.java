@@ -28,6 +28,9 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
         return STATUS_CHECK_FAILED == checkStatus;
     }
 
+    public static final int PAYWAY_ALL = 0;
+    public static final int PAYWAY_PER = 1;
+    public static final int PAYWAY_FREE = 2;
 //    public static final String[] PAY_TYPE = new String[]{"一口价", "按人计费", "免费"};
 
     //    "sid": 0,
