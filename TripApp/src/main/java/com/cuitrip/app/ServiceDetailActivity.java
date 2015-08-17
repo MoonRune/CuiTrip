@@ -11,6 +11,9 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.cuitrip.app.service.ServiceFinderInfoAllActivity;
+import com.cuitrip.app.service.ServicePriceDescActivity;
+import com.cuitrip.app.service.ServideDetailDescActivity;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.ReviewInfo;
@@ -24,7 +27,6 @@ import com.lab.app.BrowserActivity;
 import com.lab.app.DateActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
-import com.lab.utils.Constants;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.NumberUtils;
@@ -46,7 +48,13 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     private boolean mIsFinder = false;
 
     public static void start(Context context, String serviceId) {
-        context.startActivity(new Intent(context, ServiceDetail.class).putExtra(SERVICE_ID, serviceId));
+        context.startActivity(new Intent(context, ServiceDetailActivity.class).putExtra(SERVICE_ID, serviceId));
+    }
+
+
+    public static void startFinder(Context context, String serviceId) {
+        context.startActivity(new Intent(context, ServiceDetailActivity.class).putExtra(SERVICE_ID, serviceId).putExtra(USER_TYPE,
+                UserInfo.USER_FINDER));
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -156,6 +164,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
             findViewById(R.id.service_click).setOnClickListener(this);
             findViewById(R.id.service_bill_introduce_view).setOnClickListener(this);
+            findViewById(R.id.author_more).setOnClickListener(this);
 
         }
         UserInfo userInfo = data.getUserInfo();
@@ -244,31 +253,25 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                 share();
                 break;
             case R.id.service_click:
-                String desc = mServiceDetail.getServiceInfo().getDescpt();
-
-                if (desc != null) {
-                    desc = Constants.dealHtmlLine(desc);
-                }
-                StringBuilder sb = new StringBuilder(Constants.CT_HTML_HEAD);
-                sb.append(Constants.CT_HTML_TITLE)
-                        .append(mServiceDetail.getServiceInfo().getName())
-                        .append(Constants.CT_HTML_MID)
-                        .append(desc)
-                        .append(Constants.CT_HTML_END);
-                startActivity(new Intent(this, BrowserActivity.class)
-                        .putExtra(BrowserActivity.IS_DATA, true)
-                        .putExtra(BrowserActivity.DATA, sb.toString())
-                        .putExtra(BrowserActivity.TITLE, getString(R.string.ct_detail_desc)));
+                ServideDetailDescActivity.start(this,
+                        mServiceDetail.getServiceInfo());
                 break;
             case R.id.service_order_view:
                 startActivity(new Intent(this, DateActivity.class)
                         .putExtra(ServiceDetailActivity.SERVICE_ID,
                                 mServiceDetail.getServiceInfo().getSid()));
                 break;
+            case R.id.author_more:
+                ServiceFinderInfoAllActivity.start(this,mServiceDetail.getServiceInfo().getInsiderId());
+                break;
             case R.id.service_bill_introduce_view:
-                startActivity(new Intent(this, BrowserActivity.class)
-                        .putExtra(BrowserActivity.DATA, "file:///android_asset/html_bill.html")
-                        .putExtra(BrowserActivity.TITLE, getString(R.string.ct_service_bill)));
+                ServicePriceDescActivity.start(this,
+                        mServiceDetail.getServiceInfo().getPriceType(),
+                        mServiceDetail.getServiceInfo().getPriceInclude(),
+                        mServiceDetail.getServiceInfo().getPriceUninclude());
+//                startActivity(new Intent(this, BrowserActivity.class)
+//                        .putExtra(BrowserActivity.DATA, "file:///android_asset/html_bill.html")
+//                        .putExtra(BrowserActivity.TITLE, getString(R.string.ct_service_bill)));
                 break;
             case R.id.service_cuibin_introduce_view:
                 startActivity(new Intent(this, BrowserActivity.class)
@@ -308,7 +311,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     private void gotoDate() {
         startActivity(new Intent(this, DateActivity.class)
                 .putExtra(ServiceDetailActivity.SERVICE_ID, mServiceDetail.getServiceInfo().getSid())
-                .putExtra(USER_TYPE, UserInfo.USER_FINDER));
+                .putExtra(DateActivity.USER_TYPE, UserInfo.USER_FINDER));
     }
 
     private void share() {

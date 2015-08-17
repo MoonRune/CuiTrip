@@ -21,6 +21,8 @@
     <color name="ct_login_green">#b8e986</color>
     <color name="ct_login_green_click">#c8f976</color>
 
+    <color name="ct_back_light_yellow">#fffbf4</color>
+
     <color name="ct_regist_yellow">#ffcc00</color>
     <color name="ct_regist_yellow_click">#ffac11</color>
 

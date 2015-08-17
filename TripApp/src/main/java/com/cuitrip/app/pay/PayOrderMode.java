@@ -1,5 +1,8 @@
 package com.cuitrip.app.pay;
 
+import com.cuitrip.model.OrderItem;
+import com.lab.utils.Utils;
+
 /**
  * Created by baziii on 15/8/15.
  */
@@ -8,7 +11,7 @@ public class PayOrderMode {
     private String serviceName;
     private String orderDate;
     private String buyerSize;
-    private String servicePrice;//订单费用不优惠的总
+    private String serviceNormalPrice;//订单费用不优惠的总
     private String serviceCurrency;////订单费用货币单位
     private boolean discounted;
     private String discountDesc;//优惠的描述
@@ -47,15 +50,15 @@ public class PayOrderMode {
         this.buyerSize = buyerSize;
     }
 
-    public String getServicePrice() {
-        return servicePrice;
+    public String getServiceNormalPrice() {
+        return serviceNormalPrice;
     }
 
-    public void setServicePrice(String servicePrice) {
-        this.servicePrice = servicePrice;
+    public void setServiceNormalPrice(String servicePrice) {
+        this.serviceNormalPrice = servicePrice;
     }
 
-    public String getServiceCurrency() {
+    public String getOrderCurrency() {
         return serviceCurrency;
     }
 
@@ -95,16 +98,35 @@ public class PayOrderMode {
         this.finalPrice = finalPrice;
     }
 
+    public PayOrderMode() {
+    }
+
     public PayOrderMode(String serviceAva, String serviceName, String orderDate, String buyerSize, String servicePrice, String serviceCurrency, boolean discounted, String discountDesc, String discountedPrice, String finalPrice) {
         this.serviceAva = serviceAva;
         this.serviceName = serviceName;
         this.orderDate = orderDate;
         this.buyerSize = buyerSize;
-        this.servicePrice = servicePrice;
+        this.serviceNormalPrice = servicePrice;
         this.serviceCurrency = serviceCurrency;
         this.discounted = discounted;
         this.discountDesc = discountDesc;
         this.discountedPrice = discountedPrice;
         this.finalPrice = finalPrice;
+    }
+
+    public static PayOrderMode getInstance(OrderItem orderItem) {
+        PayOrderMode result = new PayOrderMode(
+                orderItem.getServicePIC(),
+                orderItem.getServiceName(),
+                Utils.getMsToD(orderItem.getServiceDate() ) ,
+                orderItem.getBuyerNum()+"人",
+                 "normal price ",
+                orderItem.getPayCurrency(),
+                orderItem.isDiscount(),
+               "discount discounted",
+                "discounted price",
+                "final price"
+        );
+        return result ;
     }
 }

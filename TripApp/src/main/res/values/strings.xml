@@ -201,7 +201,7 @@
     <string name="ct_login_out">退出登录</string>
 
     <string name="ct_setting">设置</string>
-    <string name="ct_profile">个人资料</string>
+    <string name="ct_profile">关于我</string>
     <string name="ct_homepage">我的主页</string>
     <string name="ct_homepage_eidt">介绍自己</string>
     <string name="ct_id">身份认证</string>
@@ -284,7 +284,7 @@
     <string name="ct_male_code">1</string>
     <string name="ct_female_code">2</string>
     <string name="ct_profile_title_name">头像</string>
-    <string name="ct_profile_title_realname">姓名</string>
+    <string name="ct_profile_title_realname">真实姓名</string>
     <string name="ct_profile_hint_realname">请填写真实姓名</string>
     <string name="ct_profile_title_nick">昵称</string>
     <string name="ct_profile_hint_nick">您的昵称</string>
@@ -442,15 +442,6 @@
         <item>6人</item>
     </string-array>
 
-    <string-array name="ct_service_address_list">
-        <item>a</item>
-        <item>b</item>
-        <item>c</item>
-        <item>d</item>
-        <item>e</item>
-        <item>f</item>
-    </string-array>
-
     <string-array name="ct_service_pay_list">
         <item>@string/price_way_all</item>
         <item>@string/price_way_per</item>
@@ -466,4 +457,26 @@
     <string name="ct_tags_select_limit_message">最多设置4个标签</string>
     <string name="commit_service_title">提交发现</string>
     <string name="commit_service_content">提交这个发现给脆饼审核</string>
+    <string name="ct_please_confirm_remove_discount">确定要取消优惠？</string>
+    <string name="ct_get_order_detail_failed">获取订单详情失败</string>
+    <string name="ct_discount_suc_message">优惠成功</string>
+    <string name="ct_cancel_discount_suc_msg">取消优惠成功</string>
+    <string name="ct_please_select_pay_way">请选择支付方式</string>
+    <string name="ct_pay_failed_back_repay">返回重新支付</string>
+    <string name="ct_pay_suc_back">返回我的旅程</string>
+    <string name="ct_pay_suc_title">您已经成功支付</string>
+    <string name="ct_pay_suc_email_title">确认信已经发送到您的邮箱</string>
+    <string name="ct_pay_suc_back_content">祝您旅行愉快\n希望您会喜欢我们的发现者！</string>
+    <string name="ct_payfailed">支付失败</string>
+    <string name="pay_suc">支付成功</string>
+    <string name="ct_fetch_service_detail_failed_error">获取服务详情失败</string>
+    <string name="ct_service_about_title_default">服务详情</string>
+    <string name="ct_pay_order_title_default">订单支付</string>
+    <string name="ct_modify">编辑</string>
+    <string name="data_error">数据错误</string>
+    <string name="service_detail_desc_title">费用说明</string>
+    <string name="fetching_data">正在获取数据</string>
+    <string name="ct_know_more_about_finder">更多了解发现者</string>
+    <string name="sys_notification">消息</string>
+    <string name="ct_not_validated">未验证</string>
 </resources>

@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.PriceDescActivity;
+import com.cuitrip.app.base.LanguageUtils;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.ServiceInfo;
 import com.cuitrip.service.R;
@@ -34,7 +35,6 @@ import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
-import com.lab.utils.imageupload.URLImageParser;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
@@ -50,7 +50,6 @@ import butterknife.InjectViews;
 public class CreateServiceOtherActivity extends BaseActivity implements View.OnClickListener {
     public static final int MAX_TAG_SIZE = 4;
     String[] times = null;
-    String[] addresses = null;
     String[] persons = null;
     String[] orderPriceType = null;
     //    final String[] countries = new String[]{"中国", "中国台湾"};
@@ -59,7 +58,10 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     private PricePaywayPop priceTypePop = new PricePaywayPop();
     private TagsPoop tagsPop = new TagsPoop();
     private ActvityPop[] actvityPops = {priceTypePop, tagsPop};
-    public String[] tags = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"};
+    public ArrayList tags;
+    boolean isFetchingTags = false;
+    ArrayList addresses = null;
+    boolean isFetchingAddress = false;
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
     private ServiceInfo mServiceInfo;
@@ -91,12 +93,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         return times;
     }
 
-    public String[] getAddresses() {
-        if (addresses == null) {
-            addresses = getResources().getStringArray(R.array.ct_service_address_list);
-        }
-        return addresses;
-    }
 
     public String[] getPersons() {
         if (persons == null) {
@@ -129,6 +125,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             return;
         }
         setContentView(R.layout.ct_create_service_other);
+        tryFetchTags();
+        tryFetchAddress();
         container = findViewById(R.id.create_order_v);
         mTag = (TextView) findViewById(R.id.ct_tag_tv);
         mMeet = (TextView) findViewById(R.id.service_meet);
@@ -151,7 +149,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         }
 
         refreshPrice();
-        mTag.setText(mServiceInfo.getTags());
+        revertTags();
+        mTag.setText(mServiceInfo.getTag());
         mMeet.setTag(mServiceInfo.getMeetLocation());
         refreshPriceDes();
 
@@ -217,7 +216,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         return super.onOptionsItemSelected(item);
     }
 
-    private void tryCommitService(){
+    private void tryCommitService() {
         MessageUtils.createHoloBuilder(this).setMessage(R.string.commit_service_content).setTitle(R.string.commit_service_title)
                 .setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
                     @Override
@@ -228,6 +227,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 .setNegativeButton(R.string.ct_cancel, null)
                 .show();
     }
+
     private void commitService() {
 //        if ((TextUtils.isEmpty(countryValue))) {
 //            MessageUtils.showToast(R.string.ct_country_selected_null);
@@ -259,7 +259,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
         showNoCancelDialog();
         String desc = mServiceInfo.getDescpt();
-        desc = URLImageParser.badReplae(desc);
         ServiceBusiness.commitServiceInfo(this, mClient, new LabAsyncHttpResponseHandler() {
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
@@ -279,7 +278,14 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 }, mServiceInfo.getSid(), mServiceInfo.getName(), mAddress.getText().toString().trim(), desc,
                 mServiceInfo.getPic(), mServiceInfo.getBackPic(), paywayValue == 2 ? "0" : mMoney.getText().toString().trim(),
                 countValue, timeValue, null, null, paywayValue, "TW", mPriceType.getText().toString().trim(),
-                LocationHelper.getLoation());
+                LocationHelper.getLoation(),
+                mMeet.getText().toString().trim(),
+                mTag.getText().toString().trim(),
+                mServiceInfo.getPriceInclude(),
+                mServiceInfo.getPriceUninclude(),
+                mServiceInfo.getLat(),
+                mServiceInfo.getLng()
+                );
         LocationHelper.closeLocation();
     }
 
@@ -292,13 +298,17 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 tagsPop.showTags();
                 break;
             case R.id.address_block: {
+                if (addresses == null) {
+                    MessageUtils.showToast(getString(R.string.fetching_data));
+                    return;
+                }
                 builder = MessageUtils.createHoloBuilder(this);
                 builder.setAdapter(new ArrayAdapter<String>(this, R.layout.ct_choice_item, R.id.checktext,
-                        getAddresses()), new Dialog.OnClickListener() {
+                        addresses), new Dialog.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
-                        if (i < getAddresses().length) {
+                        if (i < addresses.size()) {
                             mAddress.setText(String.valueOf(i + 1));
                             mServiceInfo.setAddress(String.valueOf(i + 1));
                         }
@@ -485,6 +495,75 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         boolean onClick();
     }
 
+    public void tryFetchTags() {
+        if (tags == null && !isFetchingTags) {
+            fetchTags();
+        }
+    }
+
+
+    public void revertTags() {
+        if (mServiceInfo != null && !TextUtils.isEmpty(mServiceInfo.getTag())) {
+            String[] tags = (mServiceInfo.getTag()).split("/");
+            if (tags != null) {
+                selectedTags = new ArrayList<>();
+                for (String tag : tags) {
+                    selectedTags.add(tag);
+                }
+            }
+        }
+    }
+    public void fetchTags() {
+        isFetchingTags = true;
+        ServiceBusiness.getServiceTags(this, mClient, new LabAsyncHttpResponseHandler(ArrayList.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+
+                if (data != null && data instanceof ArrayList) {
+                    tags = ((ArrayList) data);
+                }
+                if (tagsPop != null) {
+                    tagsPop.build();
+                }
+                isFetchingTags = false;
+
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                isFetchingTags = false;
+
+            }
+        }, LanguageUtils.getLanguage());
+    }
+
+    public void tryFetchAddress() {
+        if (addresses == null && !isFetchingAddress) {
+            fetchAddress();
+        }
+    }
+
+    public void fetchAddress() {
+        isFetchingTags = true;
+        ServiceBusiness.getCountryCity(this, mClient, new LabAsyncHttpResponseHandler(ArrayList.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+
+                if (data != null && data instanceof ArrayList) {
+                    addresses = ((ArrayList) data);
+                }
+                isFetchingAddress = false;
+
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                isFetchingAddress = false;
+
+            }
+        }, LanguageUtils.getLanguage(), LanguageUtils.getCreateServiceCountry());
+    }
+
     public class PricePaywayPop implements ActvityPop {
 
         PopupWindow mPriceTypeWindow;
@@ -590,17 +669,26 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
     public class TagsPoop implements ActvityPop {
         PopupWindow mTagsPopupWindow;
+        View view;
 
+
+        public void build() {
+            if (tags != null && tags.isEmpty()) {
+                view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
+                LinearLayout tagsLayout = (LinearLayout) view.findViewById(R.id.ct_tags_layout);
+                buildTagsView(tagsLayout);
+            }
+        }
 
         public void showTags() {
             tempTags = new ArrayList<>();
             tempTags.addAll(selectedTags);
             if (mTagsPopupWindow == null) {
-                View view = LayoutInflater.from(CreateServiceOtherActivity.this).inflate(R.layout.ct_service_tags, null);
-                LinearLayout tagsLayout = (LinearLayout) view.findViewById(R.id.ct_tags_layout);
-                buildTagsView(tagsLayout);
+                view = LayoutInflater.from(CreateServiceOtherActivity.this).inflate(R.layout.ct_service_tags, null);
+                build();
                 mTagsPopupWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, MainApplication.getInstance().getPageHeight() - Utils.dp2pixel(48 + 25));
                 mTagsPopupWindow.setOutsideTouchable(true);
+
                 view.findViewById(R.id.empty_view).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -614,8 +702,13 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     }
                 });
             } else {
-                for (TextView tv : tagTvs) {
-                    tv.setSelected(tempTags.contains(tv.getTag()));
+                if (tagTvs == null) {
+                    build();
+                }
+                if (tagTvs != null) {
+                    for (TextView tv : tagTvs) {
+                        tv.setSelected(tempTags.contains(tv.getTag()));
+                    }
                 }
             }
             mTagsPopupWindow.showAtLocation(container, Gravity.TOP, 0, Utils.dp2pixel(48 + 25));
@@ -632,8 +725,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         public void buildTagsView(LinearLayout tagsLayout) {
             tagsLayout.clearFocus();
             LinearLayout wrapper = null;
-            for (int i = 0; i < tags.length; i++) {
-                String tag = tags[i];
+            for (int i = 0; i < tags.size(); i++) {
+                String tag = String.valueOf(tags.get(i));
                 if (i % widthSize == 0) {
                     if (wrapper != null) {
                         tagsLayout.addView(wrapper);
@@ -641,10 +734,10 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     wrapper = initLineWrapper();
                 }
 
-                TextView categoryItem = initCategoryItem(tags[i], initInnerTagWidth());
+                TextView categoryItem = initCategoryItem(String.valueOf(tags.get(i)), initInnerTagWidth());
 
                 wrapper.addView(categoryItem);
-                if (i == tags.length - 1) {
+                if (i == tags.size() - 1) {
                     if (wrapper != null) {
                         tagsLayout.addView(wrapper);
                     }
@@ -693,8 +786,9 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         }
 
         protected void setTagsText() {
-            mTag.setText(TextUtils.join("|", selectedTags));
+            mTag.setText(TextUtils.join("/", selectedTags));
         }
+
 
         protected View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override

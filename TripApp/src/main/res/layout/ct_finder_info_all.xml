@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="250dp">
+        <ImageView
+            android:id="@+id/ct_user_ava_im"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:scaleType="centerCrop"
+            tools:src="@drawable/ct_default_user"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:background="@drawable/ct_black_gradient_to_top"
+                android:layout_alignParentBottom="true"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:gravity="center_vertical"
+                android:orientation="vertical">
+                <TextView
+                    android:id="@+id/ct_user_nick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/ct_white"
+                    android:textSize="19sp"
+                    tools:text="nick"/>
+                <TextView
+                    android:id="@+id/ct_user_register"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:textColor="@color/ct_content"
+                    android:textSize="13sp"
+                    tools:text="regist" />
+            </LinearLayout>
+        </RelativeLayout>
+        <include layout="@layout/ct_person_up"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:id="@+id/about_hint"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/ct_content"
+            tools:text="abount "/>
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="@color/ct_text_content"
+            android:id="@+id/about_value"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="blablabla" />
+        <include layout="@layout/ct_person_down"/>
+
+    </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/ct_black_gradient">
+            <ImageView
+                android:id="@+id/service_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginLeft="3dp"
+                android:src="@drawable/ct_trip_back" />
+
+            <ImageView
+                android:id="@+id/service_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="3dp"
+                android:src="@drawable/ct_share" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+</ScrollView>

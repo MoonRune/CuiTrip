@@ -11,10 +11,18 @@ import android.text.TextUtils;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
+import org.apache.http.conn.util.InetAddressUtils;
+
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Enumeration;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -147,6 +155,48 @@ public class Utils {
 
     public static float dp2pixelF(int i) {
         return (0.5F +  MainApplication.getInstance().getResources().getDisplayMetrics().density * (float) i);
+    }
+    public static String getLocalHostIp() {
+        String ipaddress = "127.0.0.1";
+        try {
+            Enumeration<NetworkInterface> en = NetworkInterface
+                    .getNetworkInterfaces();
+            // 遍历所用的网络接口
+            while (en.hasMoreElements()) {
+                NetworkInterface nif = en.nextElement();// 得到每一个网络接口绑定的所有ip
+                Enumeration<InetAddress> inet = nif.getInetAddresses();
+                // 遍历每一个接口绑定的所有ip
+                while (inet.hasMoreElements()) {
+                    InetAddress ip = inet.nextElement();
+                    if (!ip.isLoopbackAddress()
+                            && InetAddressUtils.isIPv4Address(ip
+                            .getHostAddress())) {
+                        return ipaddress = ip.getHostAddress();
+                    }
+                }
+
+            }
+        } catch (SocketException e) {
+            return ipaddress;
+        }
+        return ipaddress;
+
+    }
+    public static HashMap<String, String> sGenderHashMap = new HashMap<>();
+
+    public static  void initGenderMap() {
+        sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_male_code), PlatformUtil.getInstance().getString(R.string.ct_male));
+        sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_female_code), PlatformUtil.getInstance().getString(R.string.ct_female));
+    }
+
+    public static String getGender(String code) {
+        if (sGenderHashMap == null){
+            initGenderMap();
+        }
+        if (sGenderHashMap.containsKey(code)) {
+            return sGenderHashMap.get(code);
+        }
+        return code;
     }
 
 }

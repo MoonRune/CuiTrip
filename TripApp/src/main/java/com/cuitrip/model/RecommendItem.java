@@ -15,6 +15,24 @@ public class RecommendItem {
     private String headPic;
     private String userNick;
     private String servicePicUrl;
+    private String authorCarrer;//todo api
+    private boolean isLiked;
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+    }
+
+    public String getAuthorCarrer() {
+        return authorCarrer;
+    }
+
+    public void setAuthorCarrer(String authorCarrer) {
+        this.authorCarrer = authorCarrer;
+    }
 
     public String getSid() {
         return sid;

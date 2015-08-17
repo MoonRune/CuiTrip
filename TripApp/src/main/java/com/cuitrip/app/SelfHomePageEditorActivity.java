@@ -144,6 +144,10 @@ public class SelfHomePageEditorActivity extends BaseActivity {
                 if (TextUtils.isEmpty(content)) {
                     content = UserConfig.getInstance().getPersonalDesc();
                 }
+                if (TextUtils.isEmpty(content)) {
+                    content = URLImageParser.replae(content);
+                    content = URLImageParser.replaeWidth(content);
+                }
                 LogHelper.e(TAG, "content " + content);
                 loopSearchUnUploaded(content, localBitmaps);
                 loopSearchUploaded(content, remoteBitmaps);
@@ -502,7 +506,6 @@ public class SelfHomePageEditorActivity extends BaseActivity {
         UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
         String content= mContentEt.getText().toString();
         LogHelper.e("omg","before bad replace :"+content);
-        content = URLImageParser.badReplae(content);
         LogHelper.e("omg","after bad replace :"+content);
         LogHelper.e(TAG, "submit  : " + userInfo.getUid() + "|" + userInfo.getToken() + "|" + content);
         UserBusiness.updateIntroduce(this, mClient, new LabAsyncHttpResponseHandler() {

@@ -2,10 +2,12 @@ package com.example.service.app;
 
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
-import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.MainApplication;
 import com.lab.utils.LogHelper;
+
+import java.util.ArrayList;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -23,8 +25,17 @@ public class ApplicationTest extends ApplicationTestCase<MainApplication> {
 
     @SmallTest
     public void testSplit(){
-        String text ="9820150814163532180|180|179|谈为了超过41个字符而努";
-        LogHelper.e("splited", TextUtils.join("-",text.split("\\|")));
+
+        Object data = JSON.parseObject(" [\"美食\",\"历史\",\"文化\"]", ArrayList.class);
+        if (data instanceof  ArrayList){
+            for (Object object: ((ArrayList) data)){
+                LogHelper.e("omg",String.valueOf(object));
+            }
+        }
+        LogHelper.e("omg","over----------");
+
+//        String text ="9820150814163532180|180|179|谈为了超过41个字符而努";
+//        LogHelper.e("splited", TextUtils.join("-",text.split("\\|")));
     }
 //    public void testRong(){
 //        final CountDownLatch initCountDownLatch = new CountDownLatch(1);

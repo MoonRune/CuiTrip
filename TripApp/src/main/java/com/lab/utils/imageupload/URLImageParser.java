@@ -52,11 +52,6 @@ public class URLImageParser implements Html.ImageGetter {
         return oldContent.replaceAll(BAD_WIDTH,GOOD_WITDH);
     }
 
-
-    public static String badReplae(String oldContent){
-        return oldContent.replaceAll(GOOD_IMAGE,BAD_IMAGE);
-    }
-
     public Drawable getDrawable(String source) {
         if (urlMap.containsKey(source)) {
             return urlMap.get(source);

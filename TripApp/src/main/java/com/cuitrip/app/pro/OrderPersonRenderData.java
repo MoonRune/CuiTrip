@@ -1,5 +1,8 @@
 package com.cuitrip.app.pro;
 
+import com.cuitrip.model.UserInfo;
+import com.lab.utils.Utils;
+
 /**
  * Created by baziii on 15/8/10.
  */
@@ -178,15 +181,24 @@ public class OrderPersonRenderData {
         this.userIdentityValidated = userIdentityValidated;
     }
 
-//    public static OrderPersonRenderData getInstance(UserInfo userInfo) {
-//        return new OrderPersonRenderData(userInfo.getHeadPic(),userInfo.getNick(),userInfo.getGmtCreated(),
-//                userInfo.getRealName(),"none in userinfo",userInfo.getGender(), userInfo.getCountry()+" "+userInfo.getCity(),
-//                userInfo.getCareer(),userInfo.getInterests(),userInfo.getLanguage(),userInfo.getSign(),
-//                ) ;
-//    }
-
-    public static OrderPersonRenderData mock( ){
-        return new OrderPersonRenderData("header","nick","1991-2-3","real","birth","","country city","carrer"
-                ,"hobby","language","sign","",true,"",false,"identity",true);
+    public static OrderPersonRenderData getInstance(UserInfo userInfo) {
+        return new OrderPersonRenderData(userInfo.getHeadPic(),
+                userInfo.getNick(),
+                Utils.getMsToD( userInfo.getGmtCreated()),
+                userInfo.getRealName(),
+                userInfo.getBirthDay(),
+                Utils.getGender(userInfo.getGender()),
+                userInfo.getCountry()+" "+userInfo.getCity(),
+                userInfo.getCareer(),
+                userInfo.getInterests(),
+                userInfo.getLanguage(),userInfo.getSign(),
+                "",
+                userInfo.isPhoneValidated(),
+                "",
+                userInfo.isEmailValidated(),
+                "",
+                userInfo.isIdentityValidated()
+                ) ;
     }
+
 }

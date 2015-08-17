@@ -17,7 +17,7 @@ import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
-import com.cuitrip.app.PayActivity;
+import com.cuitrip.app.pay.PayOrderAcivity;
 import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.app.rong.RongTitleTagHelper;
 import com.cuitrip.business.OrderBusiness;
@@ -164,13 +164,9 @@ public class OrderFormActivity extends BaseActivity {
                         String target = canConversationTargetId.getTargetId();
                         LogHelper.e("conversation target ", target);
                         String title = orderItem.getServiceName();
-        /* 传入私聊会话 PRIVATE 的参数*/
-
                         Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
                                 .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
                                 .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
-
-//rong://com.cuitrip.service/conversation/discussion?targetId=21026d2b-7063-4d5b-bc3a-1d4600e3f935&title=ct_test_for_send_2_1
                         fragment.setUri(uri);
                     }
                     return fragment;
@@ -213,6 +209,9 @@ public class OrderFormActivity extends BaseActivity {
             @Override
             public void run() {
                 //getConversationList 无法获取到title  通过 getDiscussion 注射title
+                if (conversations == null){
+                    return;
+                }
                 HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
                 for (Conversation conversation : conversations) {
                     if (TextUtils.isEmpty(conversation.getConversationTitle())) {
@@ -366,7 +365,7 @@ public class OrderFormActivity extends BaseActivity {
         if (CancelOrderActivity.isCanceled(requestCode, resultCode, data)) {
             LogHelper.e("omg", "iscanceled");
             requestOrderDetail();
-        } else if (PayActivity.isPaySUc(requestCode, resultCode, data)) {
+        } else if (PayOrderAcivity.isPaySUc(requestCode, resultCode, data)) {
             LogHelper.e("omg", "isPaySUc");
             requestOrderDetail();
         } else if (ModifyOrderActivity.isModifyed(requestCode, resultCode, data)) {

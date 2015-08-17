@@ -147,7 +147,23 @@
             android:launchMode="singleTask">
         </activity>
         <activity
+            android:name="com.cuitrip.app.service.ServiceAboutActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
             android:name="com.cuitrip.app.ServiceDetailActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.cuitrip.app.service.ServideDetailDescActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.cuitrip.app.service.ServiceFinderInfoAllActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" />
+        <activity
+            android:name="com.cuitrip.app.service.ServicePriceDescActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" />
         <activity
@@ -265,7 +281,17 @@
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
         <activity
-            android:name="com.cuitrip.app.PayActivity"
+            android:name="com.cuitrip.app.pay.PayOrderAcivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+        <activity
+            android:name="com.cuitrip.app.pay.PaySucActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+        <activity
+            android:name="com.cuitrip.app.pay.PayFailedActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>

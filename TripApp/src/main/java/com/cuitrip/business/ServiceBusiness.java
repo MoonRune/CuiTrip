@@ -25,7 +25,13 @@ public class ServiceBusiness {
                                                   String desc, List<String> pic, String backPic, String price,
                                                   String maxbuyerNum, String serviceTime, String bestTime,
                                                   String meetingWay, int priceType, String country, String moneyType,
-                                                  CtLocation location) {
+                                                  CtLocation location,
+                                                  String meetingPlace,
+                                                  String serviceTags,
+                                                  String inlclude,
+                                                  String exclude,
+                                                  String lat,
+                                                  String lng) {
         //LabRequestParams params = new LabRequestParams();
         JSONObject object = new JSONObject();
         //params.setToken(context);
@@ -159,6 +165,7 @@ public class ServiceBusiness {
         return client.post(context, BusinessHelper.getApiUrl("getServiceDetail"), params, handler);
     }
 
+
     public static RequestHandle delPic(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                        String picUrl) {
         LabRequestParams params = new LabRequestParams();
@@ -173,5 +180,50 @@ public class ServiceBusiness {
         params.setToken(context);
         params.put("picBase64", picBase64);
         return client.post(context, BusinessHelper.getApiUrl("upPic"), params, handler);
+    }
+
+
+    public static RequestHandle getServiceTags(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                               String language) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("lang", language);
+        return client.post(context, BusinessHelper.getApiUrl("getServiceTags"), params, handler);
+    }
+
+    public static RequestHandle getCountryCity(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
+                                              ,String language, String contry) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("lang", language);
+        params.put("contry", contry);
+        return client.post(context, BusinessHelper.getApiUrl("getCountryCity"), params, handler);
+    }
+
+    public static RequestHandle getStatistic(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                             String sid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("sid", sid);
+        return client.post(context, BusinessHelper.getApiUrl("getStatistic"), params, handler);
+    }
+
+    public static RequestHandle revertLikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                  String sid) {
+        LabRequestParams params = new LabRequestParams();
+        params.put("sid", sid);
+        return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
+    }
+
+    public static RequestHandle getLikes(Context context, AsyncHttpClient clinet, LabAsyncHttpResponseHandler handler,
+                                                  int start, int size) {
+        LabRequestParams params = new LabRequestParams();
+        if (LoginInstance.getInstance(context).getUserInfo() != null
+                && !TextUtils.isEmpty(LoginInstance.getInstance(context).getUserInfo().getUid())) {
+            params.put("uid", LoginInstance.getInstance(context).getUserInfo().getUid());
+        }
+        params.put("start", start);
+        params.put("size", size);
+        return clinet.post(context, BusinessHelper.getApiUrl("getLikes"), params, handler);
     }
 }

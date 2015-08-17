@@ -2,11 +2,17 @@ package com.cuitrip.model;
 
 import java.io.Serializable;
 
-public class UserInfo implements Serializable{
+public class UserInfo implements Serializable {
     private static final long serialVersionUID = 4899849840118146981L;
 
     public static final int USER_TRAVEL = 0;
     public static final int USER_FINDER = 1;
+
+
+    public static final int VALIDATE_MASK_PHONE = 1;
+    public static final int VALIDATE_MASK_EMAIL = 2;
+    public static final int VALIDATE_MASK_IDCARD = 4;
+    public static final int VALIDATE_MASK_INTERNATION_CARD = 8;
 //    "uid": "3", 12345678912 123456
 //            "nick": "Rosa",
 //            "status": "0",
@@ -46,10 +52,41 @@ public class UserInfo implements Serializable{
     private String gmtModified; //: "2015-07-08 10:36:31",
     private String gmtCreated; //: "2015-06-21 04:39:09",
     private String token; //: "d687f2911096a74316f521491c928ec0"
+    private String birthDay;
+    private int validType; // 验证方式：1 手机 2 邮箱 4 身份证 8 护照； 3表示通过手机和邮箱认证
+
+    public boolean isPhoneValidated() {
+        return (validType & VALIDATE_MASK_PHONE) == VALIDATE_MASK_PHONE;
+    }
+
+    public boolean isEmailValidated() {
+        return (validType & VALIDATE_MASK_EMAIL) == VALIDATE_MASK_PHONE;
+    }
+
+    public boolean isIdentityValidated() {
+        return ((validType & VALIDATE_MASK_IDCARD) == VALIDATE_MASK_IDCARD )
+                ||((validType & VALIDATE_MASK_INTERNATION_CARD) == VALIDATE_MASK_INTERNATION_CARD );
+    }
+
+    public String getBirthDay() {
+        return birthDay;
+    }
+
+    public void setBirthDay(String birthDay) {
+        this.birthDay = birthDay;
+    }
+
+    public int getValidType() {
+        return validType;
+    }
+
+    public void setValidType(int validType) {
+        this.validType = validType;
+    }
 
     private int type; //用户身份 0：旅行者 1：发现者
 
-    public boolean isTravel(){
+    public boolean isTravel() {
         return type == USER_TRAVEL;
     }
 

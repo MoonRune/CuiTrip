@@ -110,10 +110,10 @@ public class ServicePartRenderData {
 
 
     public static String getOrderPriceWithCurrencyText(OrderItem orderItem) {
-        return orderItem.getPayCurrency() +" "+ orderItem.getOrderPrice();
+        return orderItem.getPayCurrency() + " " + orderItem.getOrderPrice();
     }
 
-        public static String getStatusText(OrderItem orderItem){
+    public static String getStatusText(OrderItem orderItem) {
         switch (orderItem.getStatus()) {
             case OrderItem.STATUS_WAIT_COFIRM:
                 return PlatformUtil.getInstance().getString(R.string.order_status_wait_confirm);
@@ -133,24 +133,26 @@ public class ServicePartRenderData {
                 return orderItem.getStatusContent();
         }
     }
-    public static String getOrderLocation(OrderItem orderItem) {
-        return "  waitting api add location to orderitem!!";
+
+    public static String getOrderMeet(OrderItem orderItem) {
+        return orderItem.getMeetingPlace();
     }
 
     public static String getOrderPriceInclude(OrderItem orderItem) {
-        return "  waitting api add include to orderitem!!";
+        return orderItem.getFeeInclude();
     }
 
     public static String getOrderPriceUninclude(OrderItem orderItem) {
-        return "  waitting api add uninclude to orderitem!!";
+        return orderItem.getFeeExclude();
     }
 
 
     public static ServicePartRenderData getInstance(OrderItem orderItem) {
 
         ServicePartRenderData result = new ServicePartRenderData(orderItem.getServiceName(),
-                getOrderDateText(orderItem),
-                getOrderPeopleSizeText(orderItem), getOrderLocation(orderItem), getOrderDurationText(orderItem),
+                getOrderDateText(orderItem)
+                , getOrderMeet(orderItem),
+                getOrderPeopleSizeText(orderItem), getOrderDurationText(orderItem),
                 getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem));
         return result;
     }

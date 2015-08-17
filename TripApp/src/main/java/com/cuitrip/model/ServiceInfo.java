@@ -96,19 +96,11 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
 
     private String descptWithNoPic;
 
-    private String tags;
     private String meetLocation;
     private String priceInclude;
     private String priceUninclude;
 
     // tag &&tags??
-    public String getTags() {
-        return tags;
-    }
-
-    public void setTags(String tags) {
-        this.tags = tags;
-    }
 
     public String getMeetLocation() {
         return meetLocation;

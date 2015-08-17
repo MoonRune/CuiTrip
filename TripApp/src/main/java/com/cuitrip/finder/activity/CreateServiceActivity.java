@@ -2,6 +2,7 @@ package com.cuitrip.finder.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -56,6 +57,11 @@ public class CreateServiceActivity extends BaseActivity {
     File tempPhotoFile;
     private AsyncHttpClient mClient = new AsyncHttpClient();
 
+    public static void startModifyRemote(Context context,ServiceInfo serviceInfo){
+        context.startActivity(new Intent(context, CreateServiceActivity.class)
+                .putExtra(CreateServiceActivity.SERVICE_INFO, serviceInfo)
+                .putExtra(CreateServiceActivity.EDIT_MODE, true));
+    }
     protected View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

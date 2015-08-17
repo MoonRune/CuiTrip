@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
-import android.view.View;
 import android.view.Window;
 import android.webkit.CookieSyncManager;
 import android.webkit.JavascriptInterface;
@@ -40,7 +39,7 @@ public class BrowserActivity extends BaseActivity {
     /*
      * The WebView that is placed in this Activity
      */
-    private WebView mWebView;
+    protected WebView mWebView;
     private String mTitle;
 
     /*
@@ -65,6 +64,11 @@ public class BrowserActivity extends BaseActivity {
         }
 
     }
+    public void buildWebView(){
+
+        mWebView = new WebView(this);
+        setContentView(mWebView);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         requestWindowFeature(Window.FEATURE_PROGRESS);
@@ -76,15 +80,12 @@ public class BrowserActivity extends BaseActivity {
         // happen after onResume() is called. To use getInstance() in onResume,
         // createInstance() needs to be called first.
         CookieSyncManager.createInstance(this);
-
-        mWebView = new WebView(this);
-        setContentView(mWebView);
+        buildWebView();
 
         // Setup callback support for title and progress bar
         mWebView.setWebChromeClient(new WebChrome());
         mWebView.setWebViewClient(mWebViewClient);
         mWebView.addJavascriptInterface(new JumpConcat(),"jumper");
-        mWebView.setScrollBarStyle(View.SCROLL_AXIS_VERTICAL);
         mWebView.requestFocus();
         // Configure the webview
         WebSettings s = mWebView.getSettings();

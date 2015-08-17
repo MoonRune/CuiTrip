@@ -74,8 +74,44 @@ public class OrderItem implements Serializable {
     private String gmtCreated; //": "2015-06-26 22:11:50.0",
     private String gmtModified; //": "2015-06-26 22:38:56.0"
     private String comment;
-    private String commentScore;
+    private String score;
     private String priceType;
+    private String feeInclude;
+    private String feeExclude;
+    private String meetingPlace;
+    private String invalidReason;
+
+    public String getFeeInclude() {
+        return feeInclude;
+    }
+
+    public void setFeeInclude(String feeInclude) {
+        this.feeInclude = feeInclude;
+    }
+
+    public String getFeeExclude() {
+        return feeExclude;
+    }
+
+    public void setFeeExclude(String feeExclude) {
+        this.feeExclude = feeExclude;
+    }
+
+    public String getMeetingPlace() {
+        return meetingPlace;
+    }
+
+    public void setMeetingPlace(String meetingPlace) {
+        this.meetingPlace = meetingPlace;
+    }
+
+    public String getInvalidReason() {
+        return invalidReason;
+    }
+
+    public void setInvalidReason(String invalidReason) {
+        this.invalidReason = invalidReason;
+    }
 
     public String getPriceType() {
         return priceType;
@@ -107,14 +143,14 @@ public class OrderItem implements Serializable {
 
     public float getCommentScore() {
         try {
-            return Float.valueOf(commentScore);
+            return Float.valueOf(score);
         } catch (Exception e) {
             return -1;
         }
     }
 
     public void setCommentScore(String commentScore) {
-        this.commentScore = commentScore;
+        this.score = commentScore;
     }
 
     public boolean isClosed() {

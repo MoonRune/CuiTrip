@@ -1,6 +1,7 @@
 package com.cuitrip.app;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -51,6 +52,12 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
 
+    public static void start(Context context, ServiceInfo serviceInfo) {
+
+        context.startActivity(new Intent(context, CreateOrderActivity.class)
+                .putExtra(SERVICE_INFO, serviceInfo));
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -73,9 +80,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         mMoneyDesc = (TextView) findViewById(R.id.money_desc);
         mMoneyDesc.setText(mService.getMoneyType());
         mMoney = (TextView) findViewById(R.id.bill_count);
-        if(mService.getPriceType() == 1){
+        if (mService.getPriceType() == 1) {
             mMoney.setText(mService.getPrice() + getString(R.string.ct_service_unit));
-        }else{
+        } else {
             mMoney.setText(mService.getPrice());
         }
 
@@ -118,7 +125,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     if (availableDate != null) {
                         mAvailableDate = new ArrayList<String>();
                         for (long time : availableDate) {
-                            LogHelper.e("omg","fetched date :"+String.valueOf(time));
+                            LogHelper.e("omg", "fetched date :" + String.valueOf(time));
                             mAvailableDate.add(Utils.parseLongTimeToString(time, Utils.DATE_FORMAT_DAY));
                         }
                     }
@@ -128,13 +135,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                    hideLoading();
-                    MessageUtils.showToast(response.msg);
+                hideLoading();
+                MessageUtils.showToast(response.msg);
             }
         }, mService.getSid());
     }
 
-    protected void onLoginSuccess(){
+    protected void onLoginSuccess() {
         createOrder();
     }
 
@@ -194,9 +201,9 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             return;
         }
         showNoCancelDialog();
-        LogHelper.e("omg", "create order"+ mService.getInsiderId()+"|"+ mService.getSid()+"|"+ mService.getName()+"|"+
-                Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY)+"|"+
-                mCount.getText().toString()+"|"+ mService.getPrice()+"|"+ mService.getMoneyType());
+        LogHelper.e("omg", "create order" + mService.getInsiderId() + "|" + mService.getSid() + "|" + mService.getName() + "|" +
+                Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY) + "|" +
+                mCount.getText().toString() + "|" + mService.getPrice() + "|" + mService.getMoneyType());
         OrderBusiness.createOrder(this, mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
                     @Override
                     public void onSuccess(LabResponse response, Object data) {

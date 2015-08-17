@@ -24,6 +24,7 @@ import com.lab.network.LabResponse;
 import com.lab.utils.GetImageHelper;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 import com.lab.utils.imageupload.IImageUploader;
 import com.lab.utils.imageupload.ImageUploadCallback;
 import com.lab.utils.imageupload.imp.ServiceImageUploader;
@@ -50,8 +51,15 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
 
+    @InjectView(R.id.ava_user_nick_tv)
+    TextView mPersonalAvaNickTv;
+    @InjectView(R.id.ava_user_regist_tv)
+    TextView mPersonalAvaRegistTv;
     @InjectView(R.id.ct_personal_ava_iv)
     CircleImageView mPersonalAvaIv;
+
+    @InjectView(R.id.ct_personal_birth_et)
+    EditText mPersonalBirthEt;
     @InjectView(R.id.ct_personal_name_et)
     EditText mPersonalNameEt;
     @InjectView(R.id.ct_personal_nick_et)
@@ -75,6 +83,16 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     LinearLayout mPersonalGenderLl;
     @InjectView(R.id.ct_personal_ava_ll)
     LinearLayout mPersonalAvaLl;
+
+
+    @InjectView(R.id.ct_personal_phone_et)
+    EditText mPersonalPhoneEt;
+    @InjectView(R.id.ct_personal_email_et)
+    EditText mPersonalEmailEt;
+    @InjectView(R.id.ct_personal_identity_tv)
+    View mPersonalIdentityV;
+    @InjectView(R.id.ct_personal_identity_tv)
+    TextView mPersonaIdentityTv;
 
 
     String mUploadedAvaUrl;
@@ -150,6 +168,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             mPersonalNameEt.setText(userInfo.getRealName());
         }
         mPersonalNickEt.setText(userInfo.getNick());
+        mPersonalAvaNickTv.setText(userInfo.getNick());
+        mPersonalAvaRegistTv.setText(Utils.getMsToD(userInfo.getGmtCreated()));
+        mPersonalBirthEt.setText(userInfo.getBirthDay());
 
         mPersonalGenderTv.setText(getGender(userInfo.getGender()));
 

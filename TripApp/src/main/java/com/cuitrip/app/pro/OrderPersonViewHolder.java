@@ -2,6 +2,7 @@ package com.cuitrip.app.pro;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cuitrip.app.base.PartViewHolder;
@@ -40,12 +41,12 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
     TextView ctUserLanguageTv;
     @InjectView(R.id.ct_user_sign_tv)
     TextView ctUserSignTv;
-    @InjectView(R.id.ct_user_phone_tv)
-    TextView ctUserPhoneTv;
-    @InjectView(R.id.ct_user_email_tv)
-    TextView ctUserEmailTv;
-    @InjectView(R.id.ct_user_identity_tv)
-    TextView ctUserIdentityTv;
+    @InjectView(R.id.ct_user_phone_validate_im)
+    ImageView ctUserPhoneValidateIm;
+    @InjectView(R.id.ct_user_email_validate_im)
+    ImageView ctUserEmailValidateIm;
+    @InjectView(R.id.ct_user_identity_validate_im)
+    ImageView ctUserIdentityValidateIm;
 
     public void build(View view) {
         ButterKnife.inject(this, view);
@@ -57,6 +58,11 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
         }
         textView.setText(text);
     }
+
+    public void setValidated(View view, boolean isValidated) {
+        view.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
+    }
+
 
 
     public void render(OrderPersonRenderData data) {
@@ -74,11 +80,9 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
         setWithDefault(ctUserLanguageTv, data.getUserLangeage());
         setWithDefault(ctUserSignTv, data.getUserSign());
 
-        ctUserPhoneTv.setText(data.getUserPhone());
-
-        setWithDefault(ctUserEmailTv, data.getUserEmail());
-
-        setWithDefault(ctUserIdentityTv, data.getUserIdentity());
+        setValidated(ctUserPhoneValidateIm,data.isUserPhoneValidated());
+        setValidated(ctUserEmailValidateIm, data.isUserEmailValidated());
+        setValidated(ctUserIdentityValidateIm, data.isUserIdentityValidated());
 
     }
 

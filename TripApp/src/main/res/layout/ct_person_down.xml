@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="20dp"
+        android:textColor="@color/ct_black"
+        android:textSize="19sp"
+        android:text="@string/order_person_validated" />
+
+    <View
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_phone" />
+
+        <TextView
+            style="@style/order_info_value"
+            tools:text="ct_user_sign_tv" />
+
+        <ImageView
+            android:id="@+id/ct_user_phone_validate_im"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/phone_b" />
+    </LinearLayout>
+
+    <View
+        style="@style/order_form_divide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_email" />
+
+        <TextView
+            style="@style/order_info_value"
+            tools:text="ct_user_sign_tv" />
+
+        <ImageView
+            android:id="@+id/ct_user_email_validate_im"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mail_b" />
+    </LinearLayout>
+
+    <View
+        style="@style/order_form_divide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_identity" />
+
+        <TextView
+            style="@style/order_info_value"
+            tools:text="ct_user_sign_tv" />
+
+        <ImageView
+            android:id="@+id/ct_user_identity_validate_im"
+            android:layout_gravity="center_vertical"
+            android:layout_marginRight="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/idcard_b" />
+    </LinearLayout>
+    <View
+        style="@style/order_form_divide" />
+</LinearLayout>

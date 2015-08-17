@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/ct_book">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -107,21 +107,200 @@
 
                 <Button
                     android:id="@+id/service_click"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
                     android:layout_below="@+id/service_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
-                    android:textSize="@dimen/ct_ts_3"
-                    android:background="@drawable/ct_blue_bg_stroke"
                     android:text="@string/ct_watch_detail"
-                    android:textColor="@color/ct_main_color" />
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/ct_ts_3"
+                    android:background="@drawable/selector_blue_stoken_empty_corner"
+                    android:textColor="@color/ct_blue_green" />
+                </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/comment_block"
+                android:paddingTop="40dp"
+                android:background="@color/ct_white"
+                android:padding="@dimen/ct_width_padding">
+
+                <TextView
+                    android:id="@+id/service_introduce"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginBottom="10dp"
+                    android:textSize="@dimen/ct_ts_3"
+                    android:textColor="@color/ct_black"
+                    android:text="@string/ct_service_introduce" />
+
+                <TextView
+                    android:id="@+id/service_order_date"
+                    style="@style/ctDetailLeft"
+                    android:layout_below="@+id/service_introduce"
+                    android:text="@string/ct_service_order_date" />
+
+                <TextView
+                    android:id="@+id/service_order_view"
+                    style="@style/ctDetailRight"
+                    android:textColor="@color/ct_main_color"
+                    android:layout_below="@+id/service_introduce"
+                    android:text="@string/ct_service_date_click" />
+
+                <View
+                    android:id="@+id/divider5"
+                    style="@style/ctDivider"
+                    android:layout_below="@+id/service_order_date" />
+
+                <TextView
+                    android:id="@+id/service_duration"
+                    style="@style/ctDetailLeft"
+                    android:layout_below="@+id/divider5"
+                    android:text="@string/ct_service_duration" />
+
+                <TextView
+                    android:id="@+id/service_duration_value"
+                    style="@style/ctDetailRight"
+                    android:layout_below="@+id/divider5" />
+
+                <!--<View-->
+                <!--android:id="@+id/divider6"-->
+                <!--style="@style/ctDivider"-->
+                <!--android:layout_below="@+id/service_duration" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/service_best_time"-->
+                <!--style="@style/ctDetailLeft"-->
+                <!--android:layout_below="@+id/divider6"-->
+                <!--android:text="@string/ct_service_best_time" />-->
+
+                <!--<TextView-->
+                <!--android:id="@+id/service_best_time_value"-->
+                <!--style="@style/ctDetailRight"-->
+                <!--android:layout_below="@+id/divider6" />-->
+
+                <View
+                    android:id="@+id/divider7"
+                    style="@style/ctDivider"
+                    android:layout_below="@+id/service_duration" />
+
+                <TextView
+                    android:id="@+id/service_max_person"
+                    style="@style/ctDetailLeft"
+                    android:layout_below="@+id/divider7"
+                    android:text="@string/ct_service_max_person" />
+
+                <TextView
+                    android:id="@+id/service_max_person_value"
+                    style="@style/ctDetailRight"
+                    android:layout_below="@+id/divider7" />
+
+                <View
+                    android:id="@+id/divider8"
+                    style="@style/ctDivider"
+                    android:layout_below="@+id/service_max_person" />
+
+                <TextView
+                    android:id="@+id/service_bill_introduce"
+                    style="@style/ctDetailLeft"
+                    android:layout_below="@+id/divider8"
+                    android:text="@string/ct_service_bill" />
+
+                <TextView
+                    android:id="@+id/service_bill_introduce_view"
+                    style="@style/ctDetailRight"
+                    android:textColor="@color/ct_main_color"
+                    android:layout_below="@+id/divider8"
+                    android:text="@string/ct_watch_detail" />
+
+                <View
+                    android:id="@+id/divider9"
+                    style="@style/ctDivider"
+                    android:layout_below="@+id/service_bill_introduce" />
+
+                <TextView
+                    android:id="@+id/service_cuibin_introduce"
+                    style="@style/ctDetailLeft"
+                    android:layout_below="@+id/divider9"
+                    android:text="@string/ct_cuitrip_gongyue" />
+
+                <TextView
+                    android:id="@+id/service_cuibin_introduce_view"
+                    style="@style/ctDetailRight"
+                    android:textColor="@color/ct_main_color"
+                    android:layout_below="@+id/divider9"
+                    android:text="@string/ct_watch_detail" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_below="@+id/service_cuibin_introduce" />
+            </RelativeLayout>
+            <LinearLayout
+                android:id="@+id/comment_block"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/service_desc_block"
+                android:background="@color/ct_common_bg"
+                android:orientation="vertical"
+                android:paddingBottom="20dp"
+                android:paddingLeft="@dimen/ct_width_padding"
+                android:paddingRight="@dimen/ct_width_padding"
+                android:paddingTop="20dp">
+
+                <TextView
+                    android:id="@+id/comment_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="@dimen/ct_ts_3"
+                    android:textColor="@color/ct_title"/>
+
+                <TextView
+                    android:id="@+id/comment_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/service_name"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="15dp"
+                    android:textSize="14dp"
+                    android:lineSpacingExtra="5dp"
+                    android:maxLines="3"
+                    android:ellipsize="end"
+                    android:textColor="@color/ct_a8"/>
+
+                <Button
+                    android:id="@+id/comment_click"
+                    android:layout_width="wrap_content"
+                    android:layout_below="@+id/service_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/ct_cuitrip_view_all"
+                    android:layout_height="40dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/ct_ts_3"
+                    android:background="@drawable/selector_blue_stoken_empty_corner"
+                    android:textColor="@color/ct_blue_green" />
+            </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:background="@color/ct_white"
+                android:paddingLeft="@dimen/ct_width_padding"
+                android:paddingRight="@dimen/ct_width_padding"
+                android:layout_below="@+id/comment_block"
+                android:layout_height="wrap_content">
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/author_img"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:layout_below="@+id/service_click"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="40dp"
                     android:scaleType="centerCrop"
@@ -149,17 +328,32 @@
                     android:layout_below="@+id/author_name" />
 
                 <TextView
+                    android:id="@+id/author_more"
+                    android:layout_width="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:textSize="@dimen/ct_ts_3"
+                    android:text="@string/ct_know_more_about_finder"
+                    android:background="@drawable/selector_blue_stoken_empty_corner"
+                    android:textColor="@color/ct_blue_green"
+                    android:layout_below="@+id/author_sign" />
+
+                <TextView
                     android:layout_marginTop="16dp"
                     android:id="@+id/author_register_time_title"
                     style="@style/ctDetailLeft"
-                    android:layout_below="@+id/author_sign"
+                    android:layout_below="@+id/author_more"
                     android:text="@string/ct_author_register_time" />
 
                 <TextView
                     android:layout_marginTop="16dp"
                     android:id="@+id/author_register_time_value"
                     style="@style/ctDetailRight"
-                    android:layout_below="@+id/author_sign" />
+                    android:layout_below="@+id/author_more" />
 
                 <View
                     android:id="@+id/divider1"
@@ -227,174 +421,7 @@
                     style="@style/ctDetailRight"
                     android:layout_below="@+id/divider4" />
             </RelativeLayout>
-
-            <LinearLayout
-                android:id="@+id/comment_block"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/service_desc_block"
-                android:background="@color/ct_common_bg"
-                android:orientation="vertical"
-                android:paddingBottom="20dp"
-                android:paddingLeft="@dimen/ct_width_padding"
-                android:paddingRight="@dimen/ct_width_padding"
-                android:paddingTop="20dp">
-
-                <TextView
-                    android:id="@+id/comment_count"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/ct_ts_3"
-                    android:textColor="@color/ct_title"/>
-
-                <TextView
-                    android:id="@+id/comment_content"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/service_name"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="15dp"
-                    android:textSize="14dp"
-                    android:lineSpacingExtra="5dp"
-                    android:maxLines="3"
-                    android:ellipsize="end"
-                    android:textColor="@color/ct_a8"/>
-
-                <Button
-                    android:id="@+id/comment_click"
-                    android:layout_width="wrap_content"
-                    android:layout_height="40dp"
-                    android:layout_below="@+id/service_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="10dp"
-                    android:textSize="@dimen/ct_ts_3"
-                    android:background="@drawable/ct_blue_bg_stroke"
-                    android:text="@string/ct_cuitrip_view_all"
-                    android:textColor="@color/ct_main_color" />
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/comment_block"
-                android:paddingTop="40dp"
-                android:background="@color/ct_white"
-                android:padding="@dimen/ct_width_padding">
-
-                <TextView
-                    android:id="@+id/service_introduce"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_marginBottom="10dp"
-                    android:textSize="@dimen/ct_ts_3"
-                    android:textColor="@color/ct_black"
-                    android:text="@string/ct_service_introduce" />
-
-                <TextView
-                    android:id="@+id/service_order_date"
-                    style="@style/ctDetailLeft"
-                    android:layout_below="@+id/service_introduce"
-                    android:text="@string/ct_service_order_date" />
-
-                <TextView
-                    android:id="@+id/service_order_view"
-                    style="@style/ctDetailRight"
-                    android:textColor="@color/ct_main_color"
-                    android:layout_below="@+id/service_introduce"
-                    android:text="@string/ct_service_date_click" />
-
-                <View
-                    android:id="@+id/divider5"
-                    style="@style/ctDivider"
-                    android:layout_below="@+id/service_order_date" />
-
-                <TextView
-                    android:id="@+id/service_duration"
-                    style="@style/ctDetailLeft"
-                    android:layout_below="@+id/divider5"
-                    android:text="@string/ct_service_duration" />
-
-                <TextView
-                    android:id="@+id/service_duration_value"
-                    style="@style/ctDetailRight"
-                    android:layout_below="@+id/divider5" />
-
-                <!--<View-->
-                    <!--android:id="@+id/divider6"-->
-                    <!--style="@style/ctDivider"-->
-                    <!--android:layout_below="@+id/service_duration" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/service_best_time"-->
-                    <!--style="@style/ctDetailLeft"-->
-                    <!--android:layout_below="@+id/divider6"-->
-                    <!--android:text="@string/ct_service_best_time" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/service_best_time_value"-->
-                    <!--style="@style/ctDetailRight"-->
-                    <!--android:layout_below="@+id/divider6" />-->
-
-                <View
-                    android:id="@+id/divider7"
-                    style="@style/ctDivider"
-                    android:layout_below="@+id/service_duration" />
-
-                <TextView
-                    android:id="@+id/service_max_person"
-                    style="@style/ctDetailLeft"
-                    android:layout_below="@+id/divider7"
-                    android:text="@string/ct_service_max_person" />
-
-                <TextView
-                    android:id="@+id/service_max_person_value"
-                    style="@style/ctDetailRight"
-                    android:layout_below="@+id/divider7" />
-
-                <View
-                    android:id="@+id/divider8"
-                    style="@style/ctDivider"
-                    android:layout_below="@+id/service_max_person" />
-
-                <TextView
-                    android:id="@+id/service_bill_introduce"
-                    style="@style/ctDetailLeft"
-                    android:layout_below="@+id/divider8"
-                    android:text="@string/ct_service_bill" />
-
-                <TextView
-                    android:id="@+id/service_bill_introduce_view"
-                    style="@style/ctDetailRight"
-                    android:textColor="@color/ct_main_color"
-                    android:layout_below="@+id/divider8"
-                    android:text="@string/ct_watch_detail" />
-
-                <View
-                    android:id="@+id/divider9"
-                    style="@style/ctDivider"
-                    android:layout_below="@+id/service_bill_introduce" />
-
-                <TextView
-                    android:id="@+id/service_cuibin_introduce"
-                    style="@style/ctDetailLeft"
-                    android:layout_below="@+id/divider9"
-                    android:text="@string/ct_cuitrip_gongyue" />
-
-                <TextView
-                    android:id="@+id/service_cuibin_introduce_view"
-                    style="@style/ctDetailRight"
-                    android:textColor="@color/ct_main_color"
-                    android:layout_below="@+id/divider9"
-                    android:text="@string/ct_watch_detail" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_below="@+id/service_cuibin_introduce" />
-            </RelativeLayout>
-        </RelativeLayout>
+        </LinearLayout>
 
     </ScrollView>
 

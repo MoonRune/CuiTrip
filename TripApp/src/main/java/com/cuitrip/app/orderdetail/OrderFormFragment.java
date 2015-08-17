@@ -19,7 +19,6 @@ import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.ModifyOrderActivity;
 import com.cuitrip.app.OrderFragment;
-import com.cuitrip.app.PayActivity;
 import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.PartViewHolder;
@@ -40,6 +39,7 @@ import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitConfirmPre
 import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitEndPresent;
 import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitPayPresent;
 import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitStartPresent;
+import com.cuitrip.app.pay.PayOrderAcivity;
 import com.cuitrip.app.pro.CommentPartRenderData;
 import com.cuitrip.app.pro.CommentPartViewHolder;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
@@ -622,7 +622,7 @@ public class OrderFormFragment extends BaseFragment {
 
         @Override
         public void jumpPayOrder(OrderItem orderItem) {
-            PayActivity.startActivity(getActivity(), orderItem.getOid());
+            PayOrderAcivity.startActivity(getActivity(), orderItem.getOid());
             LogHelper.e("omg", "jumpPayOrder");
 
         }

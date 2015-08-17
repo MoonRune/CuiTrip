@@ -1,9 +1,19 @@
 package com.cuitrip.app.service;
 
-import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.CtFetchCallback;
+import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.model.ServiceDetail;
+import com.cuitrip.model.ServiceStatistic;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
+import com.loopj.android.http.AsyncHttpClient;
+
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * Created by baziii on 15/8/14.
@@ -17,33 +27,76 @@ public class ServiceAboutPresent {
         this.serviceId = serviceId;
     }
 
+    public ServiceDetail detail;
+    public ServiceStatistic statistic;
     IServiceAboutFetcher serviceAboutFetcher = new IServiceAboutFetcher() {
+        AsyncHttpClient mClinet = new AsyncHttpClient();
+
         @Override
         public void fetchServiceAbout(String serviceId, final CtFetchCallback<ServiceAboutMode> callback) {
-            new AsyncTask() {
-                ServiceAboutMode serviceMode;
-                @Override
-                protected Object doInBackground(Object[] params) {
-                    try {
-                        serviceMode = new ServiceAboutMode("ava","name","create","todyvisit","wholevisit","todyvisitPeople",
-                                "wholevisitp","likes","whoeorder","payorder","overorder","cancelorder");
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                }
+            final AtomicInteger atomicInteger = new AtomicInteger(2);
+            ServiceBusiness.getServiceDetail(((ServiceAboutActivity) iServiceAboutView),
+                    mClinet, new LabAsyncHttpResponseHandler(ServiceDetail.class) {
+                        @Override
+                        public void onSuccess(LabResponse response, Object data) {
+                            detail = ((ServiceDetail) data);
+                            atomicInteger.decrementAndGet();
+                            notifySuc(atomicInteger,callback);
+                        }
 
-                @Override
-                protected void onPostExecute(Object o) {
-                    super.onPostExecute(o);
-                    callback.onSuc(serviceMode);
+                        @Override
+                        public void onFailure(LabResponse response, Object data) {
+                            String msg;
+                            atomicInteger.decrementAndGet();
+                            if (response != null && !TextUtils.isEmpty(response.msg)) {
+                                msg = response.msg;
+                            } else {
+                                msg = PlatformUtil.getInstance().getString(R.string.ct_fetch_service_detail_failed_error);
+                            }
+                            notifyOnfailed(msg, atomicInteger, callback);
+                        }
+                    }, serviceId);
+            ServiceBusiness.getStatistic(((ServiceAboutActivity) iServiceAboutView),
+                    mClinet, new LabAsyncHttpResponseHandler(ServiceStatistic.class) {
+                        @Override
+                        public void onSuccess(LabResponse response, Object data) {
+                            statistic = ((ServiceStatistic) data);
+                            atomicInteger.decrementAndGet();
+                            notifySuc(atomicInteger,callback);
+                        }
+
+                        @Override
+                        public void onFailure(LabResponse response, Object data) {
+                            String msg;
+                            if (response != null && !TextUtils.isEmpty(response.msg)) {
+                                msg = response.msg;
+                            } else {
+                                msg = PlatformUtil.getInstance().getString(R.string.ct_fetch_service_detail_failed_error);
+                            }
+                            atomicInteger.decrementAndGet();
+                            notifyOnfailed(msg,atomicInteger,callback);
+                        }
+                    }, serviceId);
+        }
+
+        public void notifySuc(AtomicInteger atomicInteger, final CtFetchCallback<ServiceAboutMode> callback) {
+            if (atomicInteger.get() == 0) {
+                if (detail != null && statistic != null) {
+                    callback.onSuc(ServiceAboutMode.getInstance(detail, statistic));
+                } else {
+                    callback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.ct_fetch_service_detail_failed_error)));
                 }
-            }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            }
+        }
+
+        public void notifyOnfailed(String msg, AtomicInteger atomicInteger, final CtFetchCallback<ServiceAboutMode> callback) {
+            if (atomicInteger.get() == 0) {
+                callback.onFailed(new CtException(msg));
+            }
         }
     };
 
-    public void requestServiceAboutData(){
+    public void requestServiceAboutData() {
         iServiceAboutView.uiShowRefreshLoading();
         serviceAboutFetcher.fetchServiceAbout(serviceId, new CtFetchCallback<ServiceAboutMode>() {
             @Override
@@ -55,16 +108,21 @@ public class ServiceAboutPresent {
 
             @Override
             public void onFailed(CtException throwable) {
+                iServiceAboutView.showError(throwable.getMessage());
                 iServiceAboutView.uiHideRefreshLoading();
             }
         });
     }
 
-    public void clickService(){
+    public void clickModify() {
+        iServiceAboutView.jumpModifyService(detail.getServiceInfo());
+    }
+
+    public void clickService() {
         iServiceAboutView.jumpService(serviceId);
     }
 
-    public void clickSetDate(){
+    public void clickSetDate() {
         iServiceAboutView.jumpFinderSetDate(serviceId);
     }
 }

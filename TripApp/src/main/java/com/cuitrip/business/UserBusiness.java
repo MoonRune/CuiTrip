@@ -142,4 +142,19 @@ public class UserBusiness {
         params.put("headPic", headPic);
         return client.post(context, BusinessHelper.getApiUrl("modifyUserInfo"), params, handler);
     }
+
+    public static RequestHandle getUserInfo(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                            String uid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("uid", uid);
+        return client.post(context, BusinessHelper.getApiUrl("getUserInfo"), params, handler);
+    }
+
+    public static RequestHandle getRongToken(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        return client.post(context, BusinessHelper.getApiUrl("getRongyunToken"), params, handler);
+    }
+
 }

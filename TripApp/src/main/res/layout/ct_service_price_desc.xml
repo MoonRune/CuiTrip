@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/ct_white"
+    android:paddingLeft="15dp"
+    android:paddingRight="15dp">
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:textSize="17sp"
+        android:textColor="@color/ct_main_color"
+        android:id="@+id/ct_price_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="计费方式：两口价" />
+
+    <TextView
+        android:id="@+id/ct_price_type_desc_tv"
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/ct_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="@string/ct_price_payway_free_detail_msg" />
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:textSize="17sp"
+        android:textColor="@color/ct_main_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/price_include_input_hint" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:textSize="15sp"
+        android:textColor="@color/ct_content"
+        android:id="@+id/ct_price_include_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="吃饭吃菜喝汤"  />
+
+    <TextView
+        android:layout_marginTop="40dp"
+        android:textSize="17sp"
+        android:textColor="@color/ct_main_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/price_uninclude_input_hint" />
+
+    <TextView
+        android:layout_marginTop="10dp"
+        android:id="@+id/ct_price_uninclude_tv"
+        android:textSize="15sp"
+        android:textColor="@color/ct_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="跑步打车飞机"  />
+</LinearLayout>

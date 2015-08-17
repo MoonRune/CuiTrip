@@ -1,36 +1,25 @@
 package com.cuitrip.app.service;
 
+import com.cuitrip.model.ServiceDetail;
+import com.cuitrip.model.ServiceStatistic;
+import com.lab.utils.Utils;
+
 /**
  * Created by baziii on 15/8/14.
  */
 public class ServiceAboutMode {
     private CharSequence serviceAva;
     private CharSequence serviceName;
+    private CharSequence serviceAddress;
     private CharSequence serviceCreateDate;
-    private CharSequence todayVisitAmount;
-    private CharSequence wholeVisitAmount;
-    private CharSequence todayVisitPeople;
-    private CharSequence wholeVisitPeople;
-    private CharSequence likedPeople;
-    private CharSequence wholeOrderAmount;
-    private CharSequence payedOrderAmount;
-    private CharSequence overOrderAmount;
-    private CharSequence cancelOrderAmount;
 
-    public ServiceAboutMode(CharSequence serviceAva, CharSequence serviceName, CharSequence serviceCreateDate, CharSequence todayVisitAmount, CharSequence wholeVisitAmount, CharSequence todayVisitPeople, CharSequence wholeVisitPeople, CharSequence likedPeople, CharSequence wholeOrderAmount, CharSequence payedOrderAmount, CharSequence overOrderAmount, CharSequence cancelOrderAmount) {
-        this.serviceAva = serviceAva;
-        this.serviceName = serviceName;
-        this.serviceCreateDate = serviceCreateDate;
-        this.todayVisitAmount = todayVisitAmount;
-        this.wholeVisitAmount = wholeVisitAmount;
-        this.todayVisitPeople = todayVisitPeople;
-        this.wholeVisitPeople = wholeVisitPeople;
-        this.likedPeople = likedPeople;
-        this.wholeOrderAmount = wholeOrderAmount;
-        this.payedOrderAmount = payedOrderAmount;
-        this.overOrderAmount = overOrderAmount;
-        this.cancelOrderAmount = cancelOrderAmount;
-    }
+    private CharSequence wholeVisitAmount;
+    private CharSequence todayVisitAmout;
+    private CharSequence likedPeople;
+
+    private CharSequence wholeVisitPeopleSize;
+    private CharSequence wholeOrderAmount;
+    private CharSequence moneyInCome;
 
     public CharSequence getServiceAva() {
         return serviceAva;
@@ -48,20 +37,20 @@ public class ServiceAboutMode {
         this.serviceName = serviceName;
     }
 
+    public CharSequence getServiceAddress() {
+        return serviceAddress;
+    }
+
+    public void setServiceAddress(CharSequence serviceAddress) {
+        this.serviceAddress = serviceAddress;
+    }
+
     public CharSequence getServiceCreateDate() {
         return serviceCreateDate;
     }
 
     public void setServiceCreateDate(CharSequence serviceCreateDate) {
         this.serviceCreateDate = serviceCreateDate;
-    }
-
-    public CharSequence getTodayVisitAmount() {
-        return todayVisitAmount;
-    }
-
-    public void setTodayVisitAmount(CharSequence todayVisitAmount) {
-        this.todayVisitAmount = todayVisitAmount;
     }
 
     public CharSequence getWholeVisitAmount() {
@@ -72,20 +61,12 @@ public class ServiceAboutMode {
         this.wholeVisitAmount = wholeVisitAmount;
     }
 
-    public CharSequence getTodayVisitPeople() {
-        return todayVisitPeople;
+    public CharSequence getTodayVisitAmout() {
+        return todayVisitAmout;
     }
 
-    public void setTodayVisitPeople(CharSequence todayVisitPeople) {
-        this.todayVisitPeople = todayVisitPeople;
-    }
-
-    public CharSequence getWholeVisitPeople() {
-        return wholeVisitPeople;
-    }
-
-    public void setWholeVisitPeople(CharSequence wholeVisitPeople) {
-        this.wholeVisitPeople = wholeVisitPeople;
+    public void setTodayVisitAmout(CharSequence todayVisitAmout) {
+        this.todayVisitAmout = todayVisitAmout;
     }
 
     public CharSequence getLikedPeople() {
@@ -96,6 +77,14 @@ public class ServiceAboutMode {
         this.likedPeople = likedPeople;
     }
 
+    public CharSequence getWholeVisitPeopleSize() {
+        return wholeVisitPeopleSize;
+    }
+
+    public void setWholeVisitPeopleSize(CharSequence wholeVisitPeopleSize) {
+        this.wholeVisitPeopleSize = wholeVisitPeopleSize;
+    }
+
     public CharSequence getWholeOrderAmount() {
         return wholeOrderAmount;
     }
@@ -104,27 +93,40 @@ public class ServiceAboutMode {
         this.wholeOrderAmount = wholeOrderAmount;
     }
 
-    public CharSequence getPayedOrderAmount() {
-        return payedOrderAmount;
+    public CharSequence getMoneyInCome() {
+        return moneyInCome;
     }
 
-    public void setPayedOrderAmount(CharSequence payedOrderAmount) {
-        this.payedOrderAmount = payedOrderAmount;
+    public void setMoneyInCome(CharSequence moneyInCome) {
+        this.moneyInCome = moneyInCome;
     }
 
-    public CharSequence getOverOrderAmount() {
-        return overOrderAmount;
+    public ServiceAboutMode(CharSequence serviceAva, CharSequence serviceName, CharSequence serviceAddress, CharSequence serviceCreateDate, CharSequence wholeVisitAmount, CharSequence todayVisitAmout, CharSequence likedPeople, CharSequence wholeVisitPeopleSize, CharSequence wholeOrderAmount, CharSequence moneyInCome) {
+        this.serviceAva = serviceAva;
+        this.serviceName = serviceName;
+        this.serviceAddress = serviceAddress;
+        this.serviceCreateDate = serviceCreateDate;
+        this.wholeVisitAmount = wholeVisitAmount;
+        this.todayVisitAmout = todayVisitAmout;
+        this.likedPeople = likedPeople;
+        this.wholeVisitPeopleSize = wholeVisitPeopleSize;
+        this.wholeOrderAmount = wholeOrderAmount;
+        this.moneyInCome = moneyInCome;
     }
 
-    public void setOverOrderAmount(CharSequence overOrderAmount) {
-        this.overOrderAmount = overOrderAmount;
-    }
-
-    public CharSequence getCancelOrderAmount() {
-        return cancelOrderAmount;
-    }
-
-    public void setCancelOrderAmount(CharSequence cancelOrderAmount) {
-        this.cancelOrderAmount = cancelOrderAmount;
+    public static ServiceAboutMode getInstance(ServiceDetail orderItem,ServiceStatistic serviceStatistic) {
+        ServiceAboutMode  result = new ServiceAboutMode(
+                orderItem.getServiceInfo().getBackPic(),
+                orderItem.getServiceInfo().getName(),
+                orderItem.getServiceInfo().getAddress(),
+                Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated()),
+                "wholevisit",
+                "todayvisit",
+                "liked",
+                "whoevisitpeople",
+                "ordernum",
+                "money"
+        );
+        return result;
     }
 }

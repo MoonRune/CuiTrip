@@ -26,7 +26,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
-import com.cuitrip.app.ServiceDetailActivity;
+import com.cuitrip.app.service.ServiceAboutActivity;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.finder.activity.CreateServiceActivity;
 import com.cuitrip.login.LoginInstance;
@@ -34,7 +34,6 @@ import com.cuitrip.model.RecommendOutData;
 import com.cuitrip.model.SavedLocalService;
 import com.cuitrip.model.ServiceInfo;
 import com.cuitrip.model.ServiceListInterface;
-import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.adapter.ViewHolder;
@@ -161,9 +160,10 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                         if (info.getCheckStatus() == 0) {
                             //do nothing
                         } else if (info.getCheckStatus() == 1) {
-                            startActivity(new Intent(getActivity(), ServiceDetailActivity.class)
-                                    .putExtra(ServiceDetailActivity.SERVICE_ID, info.getSid())
-                                    .putExtra(ServiceDetailActivity.USER_TYPE, UserInfo.USER_FINDER));
+                            ServiceAboutActivity.start(getActivity(),info.getSid());
+//                            startActivity(new Intent(getActivity(), ServiceDetailActivity.class)
+//                                    .putExtra(ServiceDetailActivity.SERVICE_ID, info.getSid())
+//                                    .putExtra(ServiceDetailActivity.USER_TYPE, UserInfo.USER_FINDER));
                         } else if (info.getCheckStatus() == 2) {
                             startActivity(new Intent(getActivity(), CreateServiceActivity.class)
                                     .putExtra(CreateServiceActivity.SERVICE_INFO, info)
