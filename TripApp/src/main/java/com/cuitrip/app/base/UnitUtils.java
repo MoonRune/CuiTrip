@@ -12,6 +12,9 @@ import java.util.HashMap;
  */
 public class UnitUtils {
 
+    public static String getDefaultCity(){
+    return "";
+    }
     public static String getMoenyType(){
         return "cny";
     }

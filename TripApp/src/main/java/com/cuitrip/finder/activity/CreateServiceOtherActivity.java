@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.PriceDescActivity;
 import com.cuitrip.app.base.UnitUtils;
+import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.ServiceInfo;
 import com.cuitrip.service.R;
@@ -285,7 +286,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 mServiceInfo.getPriceUninclude(),
                 mServiceInfo.getLat(),
                 mServiceInfo.getLng()
-                );
+        );
         LocationHelper.closeLocation();
     }
 
@@ -322,6 +323,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             }
             break;
             case R.id.meet_block:
+                GaoDeMapActivity.startSearch(this);
                 break;
             case R.id.price_desc_block:
                 String include = mServiceInfo == null ? "" : mServiceInfo.getPriceInclude();
@@ -413,6 +415,12 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             mServiceInfo.setPriceUninclude(PriceDescActivity.getUninclude(data));
             refreshPriceDes();
             return;
+        }
+        if (GaoDeMapActivity.isSelected(requestCode, resultCode, data)) {
+            mServiceInfo.setMeetLocation(GaoDeMapActivity.getName(data));
+            mServiceInfo.setLat(String.valueOf(GaoDeMapActivity.getLat(data)));
+            mServiceInfo.setLng(String.valueOf(GaoDeMapActivity.getLng(data)));
+            mMeet.setText(GaoDeMapActivity.getName(data));
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -513,6 +521,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             }
         }
     }
+
     public void fetchTags() {
         isFetchingTags = true;
         ServiceBusiness.getServiceTags(this, mClient, new LabAsyncHttpResponseHandler(ArrayList.class) {

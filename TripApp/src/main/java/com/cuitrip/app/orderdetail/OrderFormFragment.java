@@ -630,6 +630,8 @@ public class OrderFormFragment extends BaseFragment {
         @Override
         public void jumpMapOrder(OrderItem orderItem) {
             LogHelper.e("omg", "jumpMapOrder");
+            //todo
+//            GaoDeMapActivity.startShow(getActivity(),orderItem.getMeetingPlace());
 
         }
 

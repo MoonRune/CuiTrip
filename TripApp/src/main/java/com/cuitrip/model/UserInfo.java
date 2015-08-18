@@ -53,6 +53,7 @@ public class UserInfo implements Serializable {
     private String gmtCreated; //: "2015-06-21 04:39:09",
     private String token; //: "d687f2911096a74316f521491c928ec0"
     private String birthDay;
+    private String rongyunToken;
     private int validType; // 验证方式：1 手机 2 邮箱 4 身份证 8 护照； 3表示通过手机和邮箱认证
 
     private String idArea;
@@ -61,6 +62,14 @@ public class UserInfo implements Serializable {
     private String idCheckStatus;
     private String idPictures;
     private String idRefuseReason;
+
+    public String getRongyunToken() {
+        return rongyunToken;
+    }
+
+    public void setRongyunToken(String rongyunToken) {
+        this.rongyunToken = rongyunToken;
+    }
 
     public boolean isPhoneValidated() {
         return (validType & VALIDATE_MASK_PHONE) == VALIDATE_MASK_PHONE;
