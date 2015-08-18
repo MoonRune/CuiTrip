@@ -479,4 +479,19 @@
     <string name="ct_know_more_about_finder">更多了解发现者</string>
     <string name="sys_notification">消息</string>
     <string name="ct_not_validated">未验证</string>
+
+
+    <string-array name="ct_identity_types">
+        <item>@string/ct_identity_type_idcard</item>
+        <item>@string/ct_identity_type_internation</item>
+    </string-array>
+    <string name="ct_identity_type_idcard">身份证</string>
+    <string name="ct_identity_type_internation">护照</string>
+    <string name="ct_upload_image_failed">上传图片失败</string>
+    <string name="ct_upload_indeitiy_suc">上传证件成功，等待审核</string>
+    <string name="favorite_title">我的喜欢</string>
+    <string name="message_title">消息</string>
+    <string name="get_cash_suc">提现申请成功</string>
+    <string name="bill_title">账单</string>
+    <string name="get_cash_title">提现</string>
 </resources>

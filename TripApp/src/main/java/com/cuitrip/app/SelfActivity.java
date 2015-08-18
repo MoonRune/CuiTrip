@@ -14,10 +14,12 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cuitrip.app.identity.SelfIdentificationActivity;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
@@ -82,14 +84,14 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     @InjectView(R.id.ct_personal_gender_ll)
     LinearLayout mPersonalGenderLl;
     @InjectView(R.id.ct_personal_ava_ll)
-    LinearLayout mPersonalAvaLl;
+    View mPersonalAvaLl;
 
 
     @InjectView(R.id.ct_personal_phone_et)
     EditText mPersonalPhoneEt;
     @InjectView(R.id.ct_personal_email_et)
     EditText mPersonalEmailEt;
-    @InjectView(R.id.ct_personal_identity_tv)
+    @InjectView(R.id.ct_personal_identity_ll)
     View mPersonalIdentityV;
     @InjectView(R.id.ct_personal_identity_tv)
     TextView mPersonaIdentityTv;
@@ -127,9 +129,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         setContentView(R.layout.ct_my_profile);
         initGenderMap();
         ButterKnife.inject(this);
-        userInfo = LoginInstance.getInstance(this).getUserInfo();
-        setLocalValue();
-        setOnClicks();
+        requestUserInfo();
 
     }
 
@@ -159,7 +159,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void setLocalValue() {
-        userInfo = LoginInstance.getInstance(this).getUserInfo();
         ImageHelper.displayPersonImage(userInfo.getHeadPic(), mPersonalAvaIv, null);
         if (TextUtils.isEmpty(userInfo.getRealName())) {
             mPersonalNameEt.setEnabled(true);
@@ -176,9 +175,27 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
         mPersonalAreaEt.setText(userInfo.getCity());
         mPersonalJobEt.setText(userInfo.getCareer());
+
         mPersonalHobbyEt.setText(userInfo.getInterests());
         mPersonalLanguageEt.setText(userInfo.getLanguage());
         mPersonalSignEt.setText(userInfo.getSign());
+
+        mPersonalPhoneEt.setEnabled(!TextUtils.isEmpty(userInfo.getMobile()));
+        mPersonalPhoneEt.setText(userInfo.getMobile());
+
+
+        mPersonalEmailEt.setEnabled (!TextUtils.isEmpty(userInfo.getEmail()));
+        mPersonalEmailEt.setText(userInfo.getEmail());
+
+        mPersonaIdentityTv.setText(getIndeneityString());
+        setOnClicks();
+    }
+
+    public String getIndeneityString(){
+        return "";
+    }
+    public boolean getIndentityClickable(){
+        return true;
     }
 
     public void setOnClicks() {
@@ -196,6 +213,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             mPersonalNameEt.setOnFocusChangeListener(this);
         }
         mPersonalNickEt.setOnFocusChangeListener(this);
+        if (getIndentityClickable()) {
+            mPersonalIdentityV.setOnClickListener(this);
+        }
     }
 
     public void showGenderSelect() {
@@ -380,6 +400,10 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.ct_personal_ava_ll:
                 showAvaSelect();
                 break;
+            case R.id.ct_personal_identity_ll:
+                SelfIdentificationActivity.start(this,"failed reason",
+                        "country","1","date","pic1","pic2");
+                break;
             default:
                 break;
         }
@@ -429,5 +453,34 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
+
+    public void requestUserInfo() {
+        showLoading();
+        UserBusiness.getUserInfo(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                if (data != null && data instanceof UserInfo) {
+                    userInfo = ((UserInfo) data);
+                    setLocalValue();
+                    hideLoading();
+                }
+
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                String msg;
+                if (response != null && !TextUtils.isEmpty(response.msg)) {
+                    msg = response.msg;
+                } else {
+                    msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                }
+                MessageUtils.showToast(msg);
+                hideLoading();
+            }
+        }, "");
+    }
+
+
 }
 

@@ -17,6 +17,19 @@ public class RecommendItem {
     private String servicePicUrl;
     private String authorCarrer;//todo api
     private boolean isLiked;
+    private String isShown;// 1 可进到详情 0 不可进
+
+    public String isShown() {
+        return isShown;
+    }
+
+    public void setIsShown(String isShown) {
+        this.isShown = isShown;
+    }
+
+    public boolean isAvaliable() {
+        return "1".equals(isShown);
+    }
 
     public boolean isLiked() {
         return isLiked;

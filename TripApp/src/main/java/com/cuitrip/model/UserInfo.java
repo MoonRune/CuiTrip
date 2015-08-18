@@ -55,6 +55,13 @@ public class UserInfo implements Serializable {
     private String birthDay;
     private int validType; // 验证方式：1 手机 2 邮箱 4 身份证 8 护照； 3表示通过手机和邮箱认证
 
+    private String idArea;
+    private String idType;
+    private String idValidTime;
+    private String idCheckStatus;
+    private String idPictures;
+    private String idRefuseReason;
+
     public boolean isPhoneValidated() {
         return (validType & VALIDATE_MASK_PHONE) == VALIDATE_MASK_PHONE;
     }

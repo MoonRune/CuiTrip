@@ -54,6 +54,7 @@ public class MessageListActivity extends BaseVerticalListActivity<MessageMode> i
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showActionBar(getString(R.string.message_title));
         mRecyclerView.setAdapter(mAdapter);
         SlideInLeftAnimator animator =  new SlideInLeftAnimator();
         mRecyclerView.setItemAnimator(animator);
@@ -76,6 +77,11 @@ public class MessageListActivity extends BaseVerticalListActivity<MessageMode> i
     public void deleteMessage(MessageMode messageMode) {
             mAdapter.removeMessageMode(messageMode);
 //        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public int getSize() {
+        return mAdapter.getItemCount();
     }
 
     @Override

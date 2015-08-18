@@ -145,7 +145,7 @@ public class OrderBusiness {
     }
 
     public static RequestHandle payOrder(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                              String orderId, String inviteCode) {
+                                         String orderId, String inviteCode) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", orderId);
@@ -170,7 +170,7 @@ public class OrderBusiness {
     }
 
     public static RequestHandle getCharge(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                             String oid,String channel,String clientIp,String payCurrency) {
+                                          String oid, String channel, String clientIp, String payCurrency) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", oid);
@@ -181,11 +181,22 @@ public class OrderBusiness {
     }
 
     public static RequestHandle notifyPayStatus(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                          String orderId, boolean isSuccess) {
+                                                String orderId, boolean isSuccess) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", orderId);
         params.put("isSuccess", isSuccess ? "true" : "false");
         return client.post(context, BusinessHelper.getApiUrl("notifyPayStatus"), params, handler);
+    }
+
+
+    public static RequestHandle getBills(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                         String moneyType, int start, int size) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("moneyType", moneyType);
+        params.put("size", size);
+        params.put("start", start);
+        return client.post(context, BusinessHelper.getApiUrl("getBills"), params, handler);
     }
 }

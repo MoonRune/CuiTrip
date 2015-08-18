@@ -8,4 +8,5 @@ import com.cuitrip.app.base.ILoadMoreListView;
 public interface IMessageListView extends ILoadMoreListView<MessageMode> {
     void jumpMessage(MessageMode messageMode);
     void deleteMessage(MessageMode messageMode);
+    int getSize();
 }

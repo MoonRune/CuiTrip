@@ -23,7 +23,7 @@ import android.widget.TextView;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.PriceDescActivity;
-import com.cuitrip.app.base.LanguageUtils;
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.ServiceInfo;
 import com.cuitrip.service.R;
@@ -534,7 +534,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 isFetchingTags = false;
 
             }
-        }, LanguageUtils.getLanguage());
+        }, UnitUtils.getLanguage());
     }
 
     public void tryFetchAddress() {
@@ -561,7 +561,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 isFetchingAddress = false;
 
             }
-        }, LanguageUtils.getLanguage(), LanguageUtils.getCreateServiceCountry());
+        }, UnitUtils.getLanguage(), UnitUtils.getCreateServiceCountry());
     }
 
     public class PricePaywayPop implements ActvityPop {

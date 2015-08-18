@@ -60,6 +60,9 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                     protected Object doInBackground(Object[] params) {
                         LogHelper.e("fetch conversations", "start");
                         HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
+                        if (conversations == null){
+                            return null;
+                        }
                         for (Conversation conversation : conversations) {
                             if (TextUtils.isEmpty(conversation.getConversationTitle()) ||
                                     !RongTitleTagHelper.isValidated(conversation.getConversationTitle())) {
@@ -111,7 +114,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                 } else if (!isTravel &&
                                         !uid.equals(RongTitleTagHelper.filterFinderId(conversation.getConversationTitle()))) {
                                     LogHelper.e("omg", "not finder|" + RongTitleTagHelper.filterFinderId(conversation.getConversationTitle())
-                                            + "  " + TextUtils.join("--", conversation.getConversationTitle().split("|")));
+                                            + "  " + TextUtils.join("--", conversation.getConversationTitle().split("\\|")));
                                     continue;
                                 }
                                 if (displayConversations.containsKey(conversation.getConversationTitle())) {
@@ -128,7 +131,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                             uids.put(RongTitleTagHelper.filterTravellerId(conversation.getConversationTitle()), null);
                             orders.put(RongTitleTagHelper.filterOrderId(conversation.getConversationTitle()), null);
                         }
-                        LogHelper.e("fetch conversations", "uname " + uids.size());
+                        LogHelper.e("fetch conversations", "uname order" + uids.size());
                         countDownLatch = new CountDownLatch(uids.size() + orders.size());
                         for (final String id : uids.keySet()) {
                             userNameAvaFetcher.fetchUseNameAva(id, new CtFetchCallback<UserInfo>() {
@@ -136,11 +139,13 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                 public void onSuc(UserInfo userInfo) {
                                     uids.put(id, userInfo);
                                     countDownLatch.countDown();
+                                    LogHelper.e("fetch conversations", "uname order " + id+"suc");
                                 }
 
                                 @Override
                                 public void onFailed(CtException throwable) {
                                     countDownLatch.countDown();
+                                    LogHelper.e("fetch conversations", "uname order" + id+"failed");
                                 }
                             });
                         }
@@ -151,11 +156,13 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                 public void onSuc(OrderItem orderItem) {
                                     orders.put(id, orderItem);
                                     countDownLatch.countDown();
+                                    LogHelper.e("fetch conversations", " order" + id+"suc");
                                 }
 
                                 @Override
                                 public void onFailed(CtException throwable) {
                                     countDownLatch.countDown();
+                                    LogHelper.e("fetch conversations", " order" + id+"failed");
                                 }
                             });
                         }

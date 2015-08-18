@@ -15,6 +15,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.cuitrip.app.bill.BillActivity;
+import com.cuitrip.app.favorite.FavoriteListActivity;
 import com.cuitrip.app.message.MessageListActivity;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
@@ -85,8 +87,9 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         if (mContentView == null) {
             mContentView = inflater.inflate(R.layout.ct_my, container, false);
             mContentView.findViewById(R.id.author_profile).setOnClickListener(this);
-            mContentView.findViewById(R.id.author_identification).setOnClickListener(this);
             mContentView.findViewById(R.id.author_call_friends).setOnClickListener(this);
+            mContentView.findViewById(R.id.like_v).setOnClickListener(this);
+            mContentView.findViewById(R.id.bill_v).setOnClickListener(this);
             mContentView.findViewById(R.id.ct_help).setOnClickListener(this);
             mSwitch = (Button) mContentView.findViewById(R.id.ct_switch);
             mSwitch.setOnClickListener(this);
@@ -107,14 +110,18 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+
+            case R.id.bill_v:
+                BillActivity.start(getActivity());
+                break;
+            case R.id.like_v:
+                FavoriteListActivity.start(getActivity());
+                break;
             case R.id.author_profile:
                 startActivity(new Intent(getActivity(), SelfActivity.class));
                 break;
 //            case R.id.author_homepage:
 //                break;
-            case R.id.author_identification:
-                startActivity(new Intent(getActivity(), SelfIdentificationActivity.class));
-                break;
             case R.id.author_call_friends:
                 InvitationActivity.startActivity(getActivity());
                 break;

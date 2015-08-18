@@ -208,10 +208,19 @@ public class ServiceBusiness {
         return client.post(context, BusinessHelper.getApiUrl("getStatistic"), params, handler);
     }
 
-    public static RequestHandle revertLikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+    public static RequestHandle likeikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                                   String sid) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
+        params.put("type", "1");
+        return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
+    }
+
+    public static RequestHandle unikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                  String sid) {
+        LabRequestParams params = new LabRequestParams();
+        params.put("sid", sid);
+        params.put("type", "2");
         return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
     }
 

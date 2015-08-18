@@ -11,6 +11,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:focusable="true"
+            android:paddingBottom="20dp"
             android:background="@color/ct_white"
             android:focusableInTouchMode="true">
 

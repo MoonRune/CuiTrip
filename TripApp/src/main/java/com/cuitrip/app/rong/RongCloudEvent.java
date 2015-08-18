@@ -4,11 +4,18 @@ import android.net.Uri;
 import android.text.TextUtils;
 
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.loopj.android.http.AsyncHttpClient;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
@@ -70,11 +77,38 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         });
     }
 
+    AsyncHttpClient mClient = new AsyncHttpClient();
+
     @Override
-    public UserInfo getUserInfo(String userId) {
+    public UserInfo getUserInfo(final String userId) {
         LogHelper.e("UserInfoProvider", "search uid :" + userId);
         Uri uri = Uri.parse("http://cdn.aixifan.com/dotnet/artemis/u/cms/www/201508/07094633g8p80txx.jpg");
-        return new UserInfo(userId, "name" + userId, uri);
+        final CountDownLatch countDownLatch = new CountDownLatch(1);
+        final List<UserInfo> result = new ArrayList<>();
+        UserBusiness.getUserInfo(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler(com.cuitrip.model.UserInfo.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                if (data != null && data instanceof com.cuitrip.model.UserInfo) {
+                    com.cuitrip.model.UserInfo temp = ((com.cuitrip.model.UserInfo) data);
+                    result.add(new UserInfo(userId, temp.getNick(), Uri.parse(temp.getHeadPic())));
+                }
+                countDownLatch.countDown();
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                countDownLatch.countDown();
+            }
+        }, userId);
+        try {
+            countDownLatch.await();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        if (result.size() > 0) {
+            return result.get(0);
+        }
+        return new UserInfo(userId, "unknown" + userId, uri);
     }
 
     @Override

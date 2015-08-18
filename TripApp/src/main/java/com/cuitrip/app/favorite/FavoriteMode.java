@@ -1,6 +1,7 @@
 package com.cuitrip.app.favorite;
 
 import com.cuitrip.app.pro.RecommendRenderData;
+import com.cuitrip.model.RecommendItem;
 
 /**
  * Created by baziii on 15/8/10.
@@ -18,16 +19,6 @@ public class FavoriteMode {
     protected String authorCarrer;
     protected boolean avaliable;
 
-    public FavoriteMode(String id, String name, String headPic, String address, String authorName, String authorAva, String authorCarrer, boolean avaliable) {
-        this.id = id;
-        this.name = name;
-        this.headPic = headPic;
-        this.address = address;
-        this.authorName = authorName;
-        this.authorAva = authorAva;
-        this.authorCarrer = authorCarrer;
-        this.avaliable = avaliable;
-    }
 
     public String getId() {
         return id;
@@ -87,5 +78,21 @@ public class FavoriteMode {
     
     public RecommendRenderData buildRecommendRenderData(){
         return  new RecommendRenderData( id,  name,  headPic, address, authorName,  authorAva,  authorCarrer);
+    }
+
+    public FavoriteMode(String id, String name, String headPic, String address, String authorName, String authorAva, String authorCarrer, boolean avaliable) {
+        this.id = id;
+        this.name = name;
+        this.headPic = headPic;
+        this.address = address;
+        this.authorName = authorName;
+        this.authorAva = authorAva;
+        this.authorCarrer = authorCarrer;
+        this.avaliable = avaliable;
+    }
+    public static FavoriteMode getInstance(RecommendItem item) {
+        return new FavoriteMode(item.getSid(),
+                item.getServiceName(),item.getServicePicUrl(),item.getServiceAddress(),
+                item.getUserNick(),item.getHeadPic(),item.getAuthorCarrer(),item.isAvaliable());
     }
 }

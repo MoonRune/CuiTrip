@@ -212,6 +212,18 @@
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>
+
+        <activity
+            android:name="com.cuitrip.app.bill.BillCashActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
+
+        <activity
+            android:name="com.cuitrip.app.bill.BillActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="keyboardHidden|orientation|screenSize" >
+        </activity>
         <activity
             android:name="com.cuitrip.app.SelfHomePageActivity"
             android:screenOrientation="portrait"
@@ -225,7 +237,7 @@
         </activity>
 
         <activity
-            android:name="com.cuitrip.app.SelfIdentificationActivity"
+            android:name="com.cuitrip.app.identity.SelfIdentificationActivity"
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize" >
         </activity>

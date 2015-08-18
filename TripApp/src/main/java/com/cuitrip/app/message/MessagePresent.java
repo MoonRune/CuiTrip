@@ -1,9 +1,21 @@
 package com.cuitrip.app.message;
 
-import android.os.AsyncTask;
+import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
+import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.ListFetchCallback;
+import com.cuitrip.business.MessageBusiness;
+import com.cuitrip.login.LoginInstance;
+import com.cuitrip.model.MessageServerItem;
+import com.cuitrip.model.UserInfo;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
+import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,71 +28,89 @@ public class MessagePresent {
 
 
     IMessageListView mMessageView;
-    IMessageFetcher mMessageFetcher = new TestMessageFetcher();
-    String loadMorePattern;
+    IMessageFetcher mMessageFetcher = new MessageFetcher();
+    int userType;
 
     public MessagePresent(IMessageListView mMessageView) {
         this.mMessageView = mMessageView;
+        userType = LoginInstance.isLogin(MainApplication.getInstance()) ?
+                0 : (LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().isTravel() ? UserInfo.USER_TRAVEL :
+                UserInfo.USER_FINDER);
     }
 
-    public class TestMessageFetcher implements IMessageFetcher {
-        int i;
+    public class MessageFetcher implements IMessageFetcher {
+
+        AsyncHttpClient mClient = new AsyncHttpClient();
+        int defaultsize = 10;
+
         @Override
         public void getMessageList(final ListFetchCallback<MessageMode> itemListFetchCallback) {
-            new AsyncTask() {
+            MessageBusiness.getMessageList(((MessageListActivity) mMessageView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
-                protected Object doInBackground(Object[] params) {
+                public void onSuccess(LabResponse response, Object data) {
+
+                    List<MessageMode> result = new ArrayList<>();
                     try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        List<MessageServerItem> datas = JSON.parseArray(data.toString(), MessageServerItem.class);
+                        for (MessageServerItem item : datas) {
+                            result.add(MessageMode.getInstance(item));
+                        }
+                    } catch (Exception e) {
                     }
-                    return null;
+                    itemListFetchCallback.onSuc(result);
                 }
 
                 @Override
-                protected void onPostExecute(Object o) {
-                    List<MessageMode> result = new ArrayList<>();
-                    for ( i = 0; i < 10; i++) {
-                        result.add(new MessageMode("name" + i, String.valueOf(i), "1991-3-" + i, "data " + i));
+                public void onFailure(LabResponse response, Object data) {
+
+                    String msg ;
+                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                        msg = response.msg;
+                    }else {
+                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
                     }
-                    itemListFetchCallback.onSuc(result);
-                    super.onPostExecute(o);
+                    itemListFetchCallback.onFailed(new CtException(msg));
                 }
-            }.execute();
+            }, userType, 0, defaultsize);
+
         }
 
         @Override
-        public void getMessageListWithMore(String pattern,final ListFetchCallback<MessageMode> itemListFetchCallback) {
-            new AsyncTask() {
+        public void getMessageListWithMore(int pattern, final ListFetchCallback<MessageMode> itemListFetchCallback) {
+            MessageBusiness.getMessageList(((MessageListActivity) mMessageView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
-                protected Object doInBackground(Object[] params) {
+                public void onSuccess(LabResponse response, Object data) {
+
+                    List<MessageMode> result = new ArrayList<>();
                     try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        List<MessageServerItem> datas = JSON.parseArray(data.toString(), MessageServerItem.class);
+                        for (MessageServerItem item : datas) {
+                            result.add(MessageMode.getInstance(item));
+                        }
+                    } catch (Exception e) {
                     }
-                    return null;
+                    itemListFetchCallback.onSuc(result);
                 }
 
                 @Override
-                protected void onPostExecute(Object o) {
-                    List<MessageMode> result = new ArrayList<>();
-                    int max=i+10;
-                    for ( ; i < max; i++) {
-                        result.add(new MessageMode("name" + i, String.valueOf(i), "1991-3-" + i, "data " + i));
+                public void onFailure(LabResponse response, Object data) {
+
+                    String msg;
+                    if (response != null && !TextUtils.isEmpty(response.msg)) {
+                        msg = response.msg;
+                    } else {
+                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
                     }
-                    itemListFetchCallback.onSuc(result);
-                    super.onPostExecute(o);
+                    itemListFetchCallback.onFailed(new CtException(msg));
                 }
-            }.execute();
+            }, userType, pattern, pattern+defaultsize);
         }
     }
 
     public void requestLoadMore() {
         LogHelper.e(TAG, "requestLoadMore");
         mMessageView.uiShowLoadMore();
-        mMessageFetcher.getMessageListWithMore(loadMorePattern, new ListFetchCallback<MessageMode>() {
+        mMessageFetcher.getMessageListWithMore(mMessageView.getSize(), new ListFetchCallback<MessageMode>() {
             @Override
             public void onSuc(List<MessageMode> t) {
                 LogHelper.e(TAG, "requestLoadMore onscu" + t.size());
@@ -97,11 +127,11 @@ public class MessagePresent {
         });
     }
 
-    public void onClickMessage(MessageMode messageMode){
+    public void onClickMessage(MessageMode messageMode) {
         mMessageView.jumpMessage(messageMode);
     }
 
-    public void onMove(MessageMode messageMode){
+    public void onMove(MessageMode messageMode) {
         mMessageView.deleteMessage(messageMode);
     }
 

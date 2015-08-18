@@ -7,4 +7,5 @@ import com.cuitrip.app.base.IRefreshLoadMoreJumpDeleteListView;
  */
 public interface IFavoriteListView extends IRefreshLoadMoreJumpDeleteListView<FavoriteMode> {
     void jumpUnvaliable(FavoriteMode mode);
+    int getSize();
 }

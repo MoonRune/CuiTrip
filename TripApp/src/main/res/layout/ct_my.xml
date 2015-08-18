@@ -67,7 +67,15 @@
                     android:layout_height="@dimen/ct_single_px"
                     android:background="@color/ct_divider" />
                 <TextView
-                    android:id="@+id/bill_"
+                    android:id="@+id/like_v"
+                    style="@style/ctMyProfile"
+                    android:text="喜欢" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/ct_single_px"
+                    android:background="@color/ct_divider" />
+                <TextView
+                    android:id="@+id/bill_v"
                     style="@style/ctMyProfile"
                     android:text="账单" />
 
@@ -75,13 +83,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/ct_single_px"
                     android:background="@color/ct_divider" />
-
-
-                <TextView
-                    android:id="@+id/author_identification"
-                    style="@style/ctMyProfile"
-                    android:visibility="gone"
-                    android:text="@string/ct_id" />
 
                 <View
                     android:layout_width="match_parent"

@@ -17,6 +17,7 @@ import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.RecommendItem;
 import com.cuitrip.model.RecommendOutData;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseFragment;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
@@ -140,18 +141,52 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
             switch (v.getId()) {
                 case R.id.like_img:
                     if (v.getTag() != null && v.getTag() instanceof RecommendItem) {
-                        ServiceBusiness.revertLikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
-                            @Override
-                            public void onSuccess(LabResponse response, Object data) {
-                                adapter.notifyDataSetChanged();
-                            }
+                        final RecommendItem item = ((RecommendItem) v.getTag());
+                        if (item.isLiked()) {
+                            ServiceBusiness.unikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(LabResponse response, Object data) {
+                                    item.setIsLiked(false);
+                                    adapter.notifyDataSetChanged();
+                                }
 
-                            @Override
-                            public void onFailure(LabResponse response, Object data) {
-                                adapter.notifyDataSetChanged();
+                                @Override
+                                public void onFailure(LabResponse response, Object data) {
+                                    adapter.notifyDataSetChanged();
+                                    String msg ;
+                                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                                        msg = response.msg;
+                                    }else {
+                                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                                    }
+                                    MessageUtils.showToast(msg);
 
-                            }
-                        }, ((RecommendItem) v.getTag()).getSid());
+                                }
+                            }, ((RecommendItem) v.getTag()).getSid());
+                        } else {
+                            ServiceBusiness.likeikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(LabResponse response, Object data) {
+                                    item.setIsLiked(true);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onFailure(LabResponse response, Object data) {
+                                    adapter.notifyDataSetChanged();
+
+                                    String msg ;
+                                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                                        msg = response.msg;
+                                    }else {
+                                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                                    }
+                                    MessageUtils.showToast(msg);
+
+                                }
+                            }, ((RecommendItem) v.getTag()).getSid());
+
+                        }
                     }
                     break;
             }

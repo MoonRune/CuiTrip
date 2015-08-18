@@ -7,5 +7,5 @@ import com.cuitrip.app.base.ListFetchCallback;
  */
 public interface IMessageFetcher {
     void getMessageList(ListFetchCallback<MessageMode> itemListFetchCallback);
-    void getMessageListWithMore(String pattern,ListFetchCallback<MessageMode> itemListFetchCallback);
+    void getMessageListWithMore(int pattern,ListFetchCallback<MessageMode> itemListFetchCallback);
 }

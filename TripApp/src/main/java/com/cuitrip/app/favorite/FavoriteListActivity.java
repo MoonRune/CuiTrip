@@ -50,6 +50,7 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showActionBar(getString(R.string.favorite_title));
         mRecyclerView.setAdapter(mAdapter);
         SlideInLeftAnimator animator =  new SlideInLeftAnimator();
         mRecyclerView.setItemAnimator(animator);
@@ -93,5 +94,10 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
     public void jumpUnvaliable(FavoriteMode mode) {
         FavorityUnvaliableActivity.start(FavoriteListActivity.this);
 
+    }
+
+    @Override
+    public int getSize() {
+        return mAdapter.getItemCount();
     }
 }

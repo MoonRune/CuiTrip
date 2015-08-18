@@ -103,13 +103,15 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     @Override
     public void refreshMessage(List<ConversationItem> items) {
-        if (mAdapter == null || mRecyclerView.getAdapter() == null) {
-            mAdapter = new ConversationAdapter(mPresent);
-            mAdapter.setDatas(items);
-            mRecyclerView.setAdapter(mAdapter);
-        } else {
-            mAdapter.setDatas(items);
-            mAdapter.notifyDataSetChanged();
+        if (!isDetached()) {
+            if (mAdapter == null || mRecyclerView.getAdapter() == null) {
+                mAdapter = new ConversationAdapter(mPresent);
+                mAdapter.setDatas(items);
+                mRecyclerView.setAdapter(mAdapter);
+            } else {
+                mAdapter.setDatas(items);
+                mAdapter.notifyDataSetChanged();
+            }
         }
     }
 }

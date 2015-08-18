@@ -147,14 +147,40 @@ public class UserBusiness {
                                             String uid) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
-        params.put("uid", uid);
+        if (!TextUtils.isEmpty(uid)) {
+            params.put("uid", uid);
+        }
         return client.post(context, BusinessHelper.getApiUrl("getUserInfo"), params, handler);
     }
+
 
     public static RequestHandle getRongToken(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         return client.post(context, BusinessHelper.getApiUrl("getRongyunToken"), params, handler);
     }
+
+    public static RequestHandle updateIndentity(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                              String idPic,
+                                              String idType, String idCountry, String idValidTime) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("idPic", idPic);
+        params.put("idType", idType);
+        params.put("idCountry", idCountry);
+        params.put("idValidTime", idValidTime);
+        return client.post(context, BusinessHelper.getApiUrl("uploadCreditInfo"), params, handler);
+    }
+
+    public static RequestHandle getCash(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
+            ,String payPalAccount ,String cashAmount ,String moneyType ) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("payPalAccount", payPalAccount);
+        params.put("cashAmount", cashAmount);
+        params.put("moneyType", moneyType);
+        return client.post(context, BusinessHelper.getApiUrl("getCash"), params, handler);
+    }
+
 
 }

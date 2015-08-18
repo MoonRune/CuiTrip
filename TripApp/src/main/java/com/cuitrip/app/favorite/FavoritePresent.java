@@ -1,11 +1,19 @@
 package com.cuitrip.app.favorite;
 
-import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.ListFetchCallback;
+import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.model.RecommendItem;
+import com.cuitrip.model.RecommendOutData;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
+import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,97 +23,101 @@ import java.util.List;
  */
 public class FavoritePresent<T extends FavoriteMode> {
     public static final String TAG = "FavoritePresent";
-    IFavoriteFetcher mFavoriteFetcher = new TestFavoriteFetcher();
+    IFavoriteFetcher mFavoriteFetcher = new FavoriteFetcher();
     IFavoriteListView mFavoriteView;
 
     public FavoritePresent(IFavoriteListView iFavoriteView) {
         this.mFavoriteView = iFavoriteView;
     }
 
-    protected class TestFavoriteFetcher implements IFavoriteFetcher {
-        int i;
-
+    protected class FavoriteFetcher implements IFavoriteFetcher {
+        int defaultSize = 10;
+        AsyncHttpClient mClient = new AsyncHttpClient();
         @Override
         public void getFavoriteList(final ListFetchCallback<FavoriteMode> itemListFetchCallback) {
-            new AsyncTask() {
+            ServiceBusiness.getLikes(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler(RecommendOutData.class) {
                 @Override
-                protected Object doInBackground(Object[] params) {
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
+                public void onSuccess(LabResponse response, Object data) {
+                        if ( data !=null){
+                            RecommendOutData recommendOutData=  ((RecommendOutData) data);
+                            ArrayList<FavoriteMode > result = new ArrayList<>();
+                           for(RecommendItem item: recommendOutData.getLists()){
+                               result.add(FavoriteMode.getInstance(item));
+                            }
+                            itemListFetchCallback.onSuc(result);
+                        }
                 }
 
                 @Override
-                protected void onPostExecute(Object o) {
-                    List<FavoriteMode> result = new ArrayList<>();
-                    for (i = 0; i < 10; i++) {
-                        result.add(new FavoriteMode("id" + i, "name" + i, "headPic" + i, "address" + i,
-                                "author name", "aurhot ava", "author career", false));
+                public void onFailure(LabResponse response, Object data) {
+                    String msg ;
+                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                        msg = response.msg;
+                    }else {
+                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
                     }
-                    itemListFetchCallback.onSuc(result);
-                    super.onPostExecute(o);
+                    itemListFetchCallback.onFailed(new CtException(msg));
+
                 }
-            }.execute();
+            },0,defaultSize);
         }
 
         @Override
-        public void getFavoriteListWithMore(String pattern, final ListFetchCallback<FavoriteMode> itemListFetchCallback) {
-            new AsyncTask() {
+        public void getFavoriteListWithMore(int pattern,final ListFetchCallback<FavoriteMode> itemListFetchCallback) {
+            ServiceBusiness.getLikes(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler(RecommendOutData.class) {
                 @Override
-                protected Object doInBackground(Object[] params) {
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
+                public void onSuccess(LabResponse response, Object data) {
+                    if ( data !=null){
+                        RecommendOutData recommendOutData=  ((RecommendOutData) data);
+                        ArrayList<FavoriteMode > result = new ArrayList<>();
+                        for(RecommendItem item: recommendOutData.getLists()){
+                            result.add(FavoriteMode.getInstance(item));
+                        }
+                        itemListFetchCallback.onSuc(result);
                     }
-                    return null;
                 }
 
                 @Override
-                protected void onPostExecute(Object o) {
-                    List<FavoriteMode> result = new ArrayList<>();
-                    int max = i + 10;
-                    for (; i < max; i++) {
-                        result.add(new FavoriteMode("id" + i, "name" + i, "headPic" + i, "address" + i,
-                                "author name", "aurhot ava", "author career", true));
+                public void onFailure(LabResponse response, Object data) {
+                    String msg ;
+                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                        msg = response.msg;
+                    }else {
+                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
                     }
-                    itemListFetchCallback.onSuc(result);
-                    super.onPostExecute(o);
+                    itemListFetchCallback.onFailed(new CtException(msg));
+
                 }
-            }.execute();
+            },pattern,pattern+defaultSize);
         }
 
         @Override
         public void deleteFavorite(FavoriteMode favoriteMode, final CtApiCallback callback) {
-            new AsyncTask() {
+            ServiceBusiness.unikeService(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
-                protected Object doInBackground(Object[] params) {
-                    try {
-                        Thread.sleep(3000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    return null;
-                }
-
-                @Override
-                protected void onPostExecute(Object o) {
+                public void onSuccess(LabResponse response, Object data) {
                     callback.onSuc();
-                    super.onPostExecute(o);
                 }
-            }.execute();
 
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    String msg ;
+                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                        msg = response.msg;
+                    }else {
+                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                    }
+                    callback.onFailed(new CtException(msg));
+
+                }
+            },favoriteMode.getId());
         }
     }
 
-    ;
 
     public void requestLoadMore() {
         mFavoriteView.uiShowLoadMore();
-        mFavoriteFetcher.getFavoriteListWithMore("", new ListFetchCallback<FavoriteMode>() {
+        mFavoriteFetcher.getFavoriteListWithMore( mFavoriteView.getSize(), new ListFetchCallback<FavoriteMode>() {
             @Override
             public void onSuc(List<FavoriteMode> t) {
                 LogHelper.e(TAG, "requestLoadMore onscu" + t.size());

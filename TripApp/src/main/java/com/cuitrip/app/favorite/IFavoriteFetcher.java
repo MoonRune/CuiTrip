@@ -8,6 +8,6 @@ import com.cuitrip.app.base.ListFetchCallback;
  */
 public interface IFavoriteFetcher {
     void getFavoriteList(ListFetchCallback<FavoriteMode> itemListFetchCallback);
-    void getFavoriteListWithMore(String pattern,ListFetchCallback<FavoriteMode> itemListFetchCallback);
+    void getFavoriteListWithMore(int pattern,ListFetchCallback<FavoriteMode> itemListFetchCallback);
     void deleteFavorite(FavoriteMode favoriteMode,CtApiCallback callback);
 }
