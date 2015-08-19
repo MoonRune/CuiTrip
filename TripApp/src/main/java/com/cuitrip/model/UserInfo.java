@@ -13,6 +13,10 @@ public class UserInfo implements Serializable {
     public static final int VALIDATE_MASK_EMAIL = 2;
     public static final int VALIDATE_MASK_IDCARD = 4;
     public static final int VALIDATE_MASK_INTERNATION_CARD = 8;
+
+    public static final String ID_CHECK_ING="0";//ing
+    public static final String ID_CHECK_SUC="1";//ing
+    public static final String ID_CHECK_FAILED="2";//ing
 //    "uid": "3", 12345678912 123456
 //            "nick": "Rosa",
 //            "status": "0",
@@ -62,6 +66,54 @@ public class UserInfo implements Serializable {
     private String idCheckStatus;
     private String idPictures;
     private String idRefuseReason;
+
+    public String getIdArea() {
+        return idArea;
+    }
+
+    public void setIdArea(String idArea) {
+        this.idArea = idArea;
+    }
+
+    public String getIdType() {
+        return idType;
+    }
+
+    public void setIdType(String idType) {
+        this.idType = idType;
+    }
+
+    public String getIdValidTime() {
+        return idValidTime;
+    }
+
+    public void setIdValidTime(String idValidTime) {
+        this.idValidTime = idValidTime;
+    }
+
+    public String getIdCheckStatus() {
+        return idCheckStatus;
+    }
+
+    public void setIdCheckStatus(String idCheckStatus) {
+        this.idCheckStatus = idCheckStatus;
+    }
+
+    public String getIdPictures() {
+        return idPictures;
+    }
+
+    public void setIdPictures(String idPictures) {
+        this.idPictures = idPictures;
+    }
+
+    public String getIdRefuseReason() {
+        return idRefuseReason;
+    }
+
+    public void setIdRefuseReason(String idRefuseReason) {
+        this.idRefuseReason = idRefuseReason;
+    }
 
     public String getRongyunToken() {
         return rongyunToken;

@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.orderdetail.OrderFormActivity;
@@ -19,6 +20,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by baziii on 15/8/6.
@@ -28,6 +30,11 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     RecyclerView mRecyclerView;
     @InjectView(R.id.ct_swipe_refresh_layout)
     SwipeRefreshLayout mSwipeRefreshLayout;
+    @InjectView(R.id.ct_login)
+    TextView ctLoginTv;
+    @InjectView(R.id.no_login)
+    View ctLogin;
+
     LinearLayoutManager mLayoutManager;
     ConversationAdapter mAdapter;
     ConversationsPresent mPresent;
@@ -37,6 +44,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.conversationlist, null);
+        ButterKnife.inject(this, view);
         return view;
     }
 
@@ -70,6 +78,11 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     }
 
     @Override
+    public void uiShowNoLogin() {
+        ctLogin.setVisibility(View.VISIBLE);
+    }
+
+    @Override
     public void disableEvent() {
 
     }
@@ -89,11 +102,15 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     }
 
+    @OnClick(R.id.ct_login)
+    public void clickLogin(){
+      reLogin();
+    }
     @Override
     public void jumpConversation(ConversationItem item) {
 //        LogHelper.e("jump", "" + item.getId() + "|" + "" + item.getName() + "|" + "" + item.getLastWords());
 //        ConversationAcitivity.startActivity(getActivity(), item.getId(), item.getName());
-        OrderFormActivity.start(getActivity(),item.getOrderId(),item.getId());
+        OrderFormActivity.start(getActivity(), item.getOrderId(), item.getId());
     }
 
     @Override
@@ -104,6 +121,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     @Override
     public void refreshMessage(List<ConversationItem> items) {
         if (!isDetached()) {
+            ctLogin.setVisibility(View.GONE);
             if (mAdapter == null || mRecyclerView.getAdapter() == null) {
                 mAdapter = new ConversationAdapter(mPresent);
                 mAdapter.setDatas(items);
@@ -113,5 +131,11 @@ public class ConversationListFragment extends BaseFragment implements IConversat
                 mAdapter.notifyDataSetChanged();
             }
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        ButterKnife.reset(this);
     }
 }

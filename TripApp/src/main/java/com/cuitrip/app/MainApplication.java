@@ -39,6 +39,7 @@ public class MainApplication extends BaseAppLication {
         RongCloudEvent rongCloudEvent = new RongCloudEvent();
         RongIM.setUserInfoProvider(rongCloudEvent, false);
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(rongCloudEvent);
+        RongCloudEvent.ConnectRong(false);
     }
     public void onCreate() {
         super.onCreate();
@@ -105,6 +106,11 @@ public class MainApplication extends BaseAppLication {
             public String getString(int id) {
                 return MainApplication.getInstance().getString(id);
             }
+
+            @Override
+            public int getColor(int id) {
+                return MainApplication.getInstance().getResources().getColor(id);
+            }
         });
     }
     public int dp2pixel(int i) {
@@ -125,6 +131,7 @@ public class MainApplication extends BaseAppLication {
     }
 
     public void logOut(){
+        RongCloudEvent.DisConnectRong();
         LoginInstance.logout(this);
         Intent intent = new Intent(this, LogoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

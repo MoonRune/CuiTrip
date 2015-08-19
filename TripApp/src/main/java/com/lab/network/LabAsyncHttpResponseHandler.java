@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.business.BusinessHelper;
 import com.cuitrip.service.R;
+import com.lab.utils.LogHelper;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -35,6 +36,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
                     }
                 } else if (response != null) {
                     if (BusinessHelper.isTokenInvalided(response)) {
+                        LogHelper.e("LoginActivity", "token isTokenInvalided");
                         MainApplication.getInstance().logOutWithError();
                     }
                     onFailure(response, null);

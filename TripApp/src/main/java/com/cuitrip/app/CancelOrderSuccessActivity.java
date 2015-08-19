@@ -15,6 +15,7 @@ import com.lab.utils.MessageUtils;
  * Created on 7/22.
  */
 public class CancelOrderSuccessActivity extends BaseActivity  {
+    public static final String ORDER_INFO = "ORDER_INFO";
     private OrderItem mOrderInfo;
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,7 +26,7 @@ public class CancelOrderSuccessActivity extends BaseActivity  {
             finish();
             return;
         }
-        mOrderInfo = (OrderItem) intent.getSerializableExtra(OrderDetailActivity.ORDER_INFO);
+        mOrderInfo = (OrderItem) intent.getSerializableExtra(CancelOrderSuccessActivity.ORDER_INFO);
         if (mOrderInfo == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();

@@ -1,33 +1,36 @@
 package com.cuitrip.app.pay;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.ComponentName;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.LocalBroadcastManager;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
-import android.widget.EditText;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
-import android.widget.Switch;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.OrderFragment;
+import com.cuitrip.login.LoginInstance;
+import com.cuitrip.model.DiscountItem;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.pingplusplus.android.PaymentActivity;
+
+import java.text.DecimalFormat;
+import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -54,8 +57,10 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
     TextView ctOrderDateBuyerSizeTv;
     @InjectView(R.id.ct_order_price_whith_currency_tv)
     TextView ctOrderPriceWhithCurrencyTv;
-    @InjectView(R.id.ct_order_discount_sw)
-    Switch ctOrderDiscountSw;
+    @InjectView(R.id.ct_order_discounts_tv)
+    TextView ctOrderDiscountsTv;
+    @InjectView(R.id.ct_order_discounts_ll)
+    View ctOrderDiscountsll;
     @InjectView(R.id.ct_order_discount_content_tv)
     TextView ctOrderDiscountContentTv;
     @InjectView(R.id.ct_order_normal_price_with_currency_tv)
@@ -67,7 +72,7 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
     @InjectView(R.id.container)
     LinearLayout container;
     PayMethodPop payMethodPop = new PayMethodPop();
-
+    DiscountSelectPop discountSelectPop = new DiscountSelectPop();
     public static void startActivity(Activity context, String orderid) {
         Intent intent = new Intent(context, PayOrderAcivity.class);
         intent.putExtra(ORDER_ID_KEY, orderid);
@@ -106,24 +111,26 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         ctServiceNameTv.setText(item.getServiceName());
         ctOrderDateBuyerSizeTv.setText(item.getOrderDate() + " - " + item.getBuyerSize());
         ctOrderPriceWhithCurrencyTv.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
-        if (item.isDiscounted()) {
-            ctOrderDiscountSw.setChecked(true);
+        if (item.getDiscount() != null) {
             ctOrderDiscountContentTv.setVisibility(View.VISIBLE);
-            ctOrderDiscountContentTv.setText(item.getDiscountDesc());
-        } else {
-            ctOrderDiscountSw.setChecked(false);
-            ctOrderDiscountContentTv.setVisibility(View.GONE);
-        }
-        ctOrderDiscountSw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                clickDiscount();
-                ctOrderDiscountSw.setChecked(!isChecked);
+            ctOrderDiscountContentTv.setText("目前使用的优惠码 优惠" + item.getDiscount().getMoneyType() + item.getDiscount().getMoney());
+            ctOrderDiscount.setText("-  " + item.getDiscount().getMoney());
+            try {
+                double value = Double.valueOf(item.getServiceNormalPrice())
+                        - Double.valueOf(item.getDiscount().getMoney());
+                DecimalFormat df = new DecimalFormat("#.00");
+                ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + df.format(value));
+            } catch (NumberFormatException e) {
             }
-        });
+            ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice(
+
+            ));
+        } else {
+            ctOrderDiscountContentTv.setVisibility(View.GONE);
+            ctOrderDiscount.setText("-  0");
+            ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
+        }
         ctOrderNormalPriceWithCurrencyTv.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
-        ctOrderDiscount.setText("-  " + item.getDiscountedPrice());
-        ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
     }
 
     @Override
@@ -152,32 +159,10 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
     }
 
     @Override
-    public void uiShowDiscountCodeInput() {
-        AlertDialog.Builder builder = MessageUtils.createHoloBuilder(this).setTitle(R.string.ct_please_input_freecode);
-        final EditText editText = (EditText) LayoutInflater.from(this).inflate(R.layout.single_line_edittext, null);
-        builder.setView(
-                editText).setPositiveButton(getString(R.string.ct_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                String freeCode = editText.getText().toString();
-                if (!TextUtils.isEmpty(freeCode)) {
-                    payOrderPresent.inputDiscountCode(freeCode);
-                } else {
-                    MessageUtils.showToast(getString(R.string.ct_freecode_validate_msg));
-                }
-            }
-        }).setCancelable(true).show();
+    public void uiShowDiscountCodeInput(PayOrderMode mode) {
+        discountSelectPop.showDiscounts(mode);
     }
 
-    @Override
-    public void uiShowRemoveDiscountDialog() {
-        MessageUtils.createHoloBuilder(this).setTitle(R.string.ct_please_confirm_remove_discount).setPositiveButton(getString(R.string.ct_confirm), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                payOrderPresent.removeDiscount();
-            }
-        }).setNegativeButton(R.string.ct_cancel, null).setCancelable(true).show();
-    }
 
     public void showMessage(String msg) {
         MessageUtils.showToast(msg);
@@ -192,7 +177,6 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, payParams);
         startActivityForResult(intent, REQUEST_CODE_PAYMENT);
     }
-
 
     public class PayMethodPop implements View.OnClickListener {
 
@@ -246,10 +230,135 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         }
     }
 
+    public class DiscountAdapter extends BaseAdapter {
+        List<DiscountItem> itemList;
+        View.OnClickListener onClickListener;
+
+        public DiscountAdapter(List<DiscountItem> itemList, View.OnClickListener onClickListener) {
+            this.itemList = itemList;
+            this.onClickListener = onClickListener;
+        }
+
+        public void setItemList(List<DiscountItem> itemList) {
+            this.itemList = itemList;
+            notifyDataSetChanged();
+        }
+
+        @Override
+        public int getCount() {
+            return 1 + (itemList == null ? 0 : itemList.size());
+        }
+
+        @Override
+        public Object getItem(int position) {
+            if (position == 0) {
+                return null;
+            }
+            return itemList.get(position - 1);
+        }
+
+        @Override
+        public long getItemId(int position) {
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.discount_select_item, null);
+            DiscountItem item = (DiscountItem) getItem(position);
+            if (item != null) {
+                ((TextView) view.findViewById(R.id.content)).setText(
+                        item.getMoneyType() + item.getMoney()
+                );
+                ((TextView) view.findViewById(R.id.time)).setText(
+                        "有效期至" + Utils.getMsToD(item.getValidDate())
+                );
+            } else {
+                ((TextView) view.findViewById(R.id.content)).setText(
+                        "不使用"
+                );
+                ((TextView) view.findViewById(R.id.time)).setText(
+                        ""
+                );
+            }
+            view.findViewById(R.id.item).setTag(item);
+            view.findViewById(R.id.item).setOnClickListener(onClickListener);
+            return view;
+        }
+
+    }
+
+    public void selectDiscount(DiscountItem discountItem) {
+            payOrderPresent.selectDiscount(discountItem);
+    }
+
+    public class DiscountSelectPop implements View.OnClickListener {
+
+        PopupWindow mPriceTypeWindow;
+
+        @InjectView(R.id.empty_view)
+        View emptyView;
+        @InjectView(R.id.progress_bar)
+        ProgressBar progressBar;
+        @InjectView(R.id.listView)
+        ListView listView;
+        DiscountAdapter adapter;
+
+        public void showDiscounts(PayOrderMode payOrderMode) {
+            if (mPriceTypeWindow == null) {
+                View view = LayoutInflater.from(PayOrderAcivity.this).inflate(R.layout.discount_select_list, null);
+                ButterKnife.inject(this, view);
+                mPriceTypeWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, MainApplication.getInstance().getPageHeight() - Utils.dp2pixel(48 + 25));
+                mPriceTypeWindow.setOutsideTouchable(true);
+                emptyView.setOnClickListener(this);
+            }
+            if (payOrderMode.getDiscountItems() == null || payOrderMode.getDiscountItems().isEmpty()) {
+                progressBar.setVisibility(View.VISIBLE);
+                listView.setVisibility(View.GONE);
+            } else {
+                progressBar.setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
+                if (adapter == null || listView.getAdapter() == null) {
+                    listView.setAdapter(adapter = new DiscountAdapter(payOrderMode.getDiscountItems(),this));
+                } else {
+                    adapter.setItemList(payOrderMode.getDiscountItems());
+                }
+
+            }
+            mPriceTypeWindow.showAtLocation(container, Gravity.TOP, 0, Utils.dp2pixel(48 + 25));
+            supportInvalidateOptionsMenu();
+        }
+
+        public boolean dismiss() {
+            if (mPriceTypeWindow != null && mPriceTypeWindow.isShowing()) {
+                mPriceTypeWindow.dismiss();
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.item:
+                    selectDiscount((DiscountItem) v.getTag());
+                    break;
+                default:
+                    break;
+            }
+            dismiss();
+        }
+    }
+
     @Override
     protected void onPaySuccess() {
         setResult(RESULT_PAY_SUC);
-        PaySucActivity.start(this, "  unknown email");
+        String email = "";
+        UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
+        if (userInfo != null) {
+            email = userInfo.getEmail();
+        }
+        PaySucActivity.start(this, email);
         finish();
         LocalBroadcastManager.getInstance(this).sendBroadcast(
                 new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));

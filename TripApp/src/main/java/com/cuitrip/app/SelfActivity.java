@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.identity.SelfIdentificationActivity;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
@@ -95,6 +96,10 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     View mPersonalIdentityV;
     @InjectView(R.id.ct_personal_identity_tv)
     TextView mPersonaIdentityTv;
+    @InjectView(R.id.ct_selft_desc_v)
+    View mPersonalDescV;
+    @InjectView(R.id.ct_selft_desc_tv)
+    TextView mPersonalDescTv;
 
 
     String mUploadedAvaUrl;
@@ -184,17 +189,35 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         mPersonalPhoneEt.setText(userInfo.getMobile());
 
 
-        mPersonalEmailEt.setEnabled (!TextUtils.isEmpty(userInfo.getEmail()));
+        mPersonalEmailEt.setEnabled(!TextUtils.isEmpty(userInfo.getEmail()));
         mPersonalEmailEt.setText(userInfo.getEmail());
 
         mPersonaIdentityTv.setText(getIndeneityString());
         setOnClicks();
     }
 
-    public String getIndeneityString(){
+
+    public String getIndeneityString() {
+        switch (userInfo.getIdCheckStatus()) {
+            case UserInfo.ID_CHECK_ING:
+                return getString(R.string.id_check_ing_msg);
+            case UserInfo.ID_CHECK_SUC:
+                return getString(R.string.id_check_suc_msg);
+            case UserInfo.ID_CHECK_FAILED:
+                return getString(R.string.id_check_failed_msg);
+        }
         return "";
     }
-    public boolean getIndentityClickable(){
+
+    public boolean getIndentityClickable() {
+        switch (userInfo.getIdCheckStatus()) {
+            case UserInfo.ID_CHECK_ING:
+                return false;
+            case UserInfo.ID_CHECK_SUC:
+                return false;
+            case UserInfo.ID_CHECK_FAILED:
+                return true;
+        }
         return true;
     }
 
@@ -216,6 +239,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         if (getIndentityClickable()) {
             mPersonalIdentityV.setOnClickListener(this);
         }
+        mPersonalDescV.setOnClickListener(this);
     }
 
     public void showGenderSelect() {
@@ -250,6 +274,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (SelfHomePageActivity.isModifidy(requestCode, resultCode, data)) {
+            requestUserInfo();
+        }
         switch (requestCode) {
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK && data != null) {
@@ -345,6 +372,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         if (mIsUpLoading) {
             return;
         }
+        final String email = mPersonalEmailEt.getText().toString();
+        final String phone = mPersonalPhoneEt.getText().toString();
+        final String birth = mPersonalBirthEt.getText().toString();
         final String ava = mUploadedAvaUrl;
         final String name = TextUtils.isEmpty(userInfo.getRealName()) ? mPersonalNameEt.getText().toString() : userInfo.getRealName();
         final String nick = mPersonalNickEt.getText().toString();
@@ -366,6 +396,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                         userInfo.setCareer(job);
                         userInfo.setInterests(hobby);
                         userInfo.setSign(sign);
+                        userInfo.setMobile(phone);
+                        userInfo.setBirthDay(birth);
+                        userInfo.setEmail(email);
                         LoginInstance.update(SelfActivity.this, userInfo);
                     }
 
@@ -387,13 +420,17 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                     }
 
                 }, ava, name, nick, gender, area,
-                language, job, hobby, sign
+                language, job, hobby, sign,
+                phone, email, birth
         );
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ct_selft_desc_v:
+                SelfHomePageActivity.startForResult(this);
+                break;
             case R.id.ct_personal_gender_ll:
                 showGenderSelect();
                 break;
@@ -401,13 +438,24 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 showAvaSelect();
                 break;
             case R.id.ct_personal_identity_ll:
-                SelfIdentificationActivity.start(this,"failed reason",
-                        "country","1","date","pic1","pic2");
+                String[] pics = null;
+                String pic1 = "";
+                String pic2 = "";
+                if (!TextUtils.isEmpty(userInfo.getIdPictures())) {
+                    pics = userInfo.getIdPictures().split(",");
+                    if (pics != null && pics.length > 2) {
+                        pic1 = pics[0];
+                        pic2 = pics[1];
+                    }
+                }
+                SelfIdentificationActivity.start(this, userInfo.getIdRefuseReason(),
+                        userInfo.getIdArea(), userInfo.getIdType(), userInfo.getGmtCreated(), pic1, pic2);
                 break;
             default:
                 break;
         }
     }
+
 
     public void showRealNameEditAlert() {
         SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
@@ -456,6 +504,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
     public void requestUserInfo() {
         showLoading();
+        UserInfo info = LoginInstance.getInstance(this).getUserInfo();
         UserBusiness.getUserInfo(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
@@ -478,7 +527,69 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 MessageUtils.showToast(msg);
                 hideLoading();
             }
-        }, "");
+        }, info.getUid());
+        requestIntroduce();
+    }
+
+    public void requestIntroduce() {
+        UserBusiness.getIntroduce(this, mClient, new LabAsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                try {
+                    JSONObject json = JSONObject.parseObject(data.toString());
+
+                    Integer status = json.getInteger("introduceAuditStatus");
+                    String reason = json.getString("introduceFailedReason");
+                    final String desc = json.getString("introduce");
+                    if (status == null) {
+                        mPersonalDescV.setOnClickListener(SelfActivity.this);
+                        return;
+                    }
+                    switch (status) {
+                        case 0:
+                            mPersonalDescTv.setText(getString(R.string.ct_homepage_status_ing));
+                            mPersonalDescV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+                            break;
+                        case 1:
+                            mPersonalDescTv.setText(getString(R.string.ct_homepage_status_suc));
+                            mPersonalDescV.setOnClickListener(SelfActivity.this);
+                            break;
+                        case 2:
+                            mPersonalDescTv.setText(getString(R.string.ct_homepage_status_failed));
+                            if (TextUtils.isEmpty(reason)) {
+                                reason = getString(R.string.ct_homepage_status_failed);
+                            }
+                            mPersonalDescV.setOnClickListener(SelfActivity.this);
+                            break;
+                        default:
+                            onUnExceptedError();
+                            break;
+                    }
+                } catch (Exception e) {
+                    onUnExceptedError();
+                }
+            }
+
+            public void onUnExceptedError() {
+                mPersonalDescTv.setText(getString(R.string.ct_fetch_failed));
+                mPersonalDescV.setOnClickListener(SelfActivity.this);
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                String msg = response.msg;
+                if (TextUtils.isEmpty(msg)) {
+                    msg = getString(R.string.ct_fetch_failed);
+                }
+                mPersonalDescTv.setText(msg);
+                mPersonalDescV.setOnClickListener(SelfActivity.this);
+            }
+        });
     }
 
 

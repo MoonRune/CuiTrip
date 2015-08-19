@@ -264,6 +264,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
                     if (oldInfo == null || (oldInfo != null && !oldInfo.isTravel())) {
                         LoginInstance.update(LoginActivity.this, info);
+                        LogHelper.e("LoginActivity", "jump index");
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -271,7 +272,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         LoginInstance.update(LoginActivity.this, info);
                     }
 
-                    LoginInstance.update(LoginActivity.this, info);
 
                     try {
                         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

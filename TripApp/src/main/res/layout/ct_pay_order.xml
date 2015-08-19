@@ -87,10 +87,11 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ct_order_discounts_ll"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@color/ct_white"
+            android:background="@drawable/select_white_gray"
             android:orientation="horizontal"
             android:paddingBottom="10dp"
             android:paddingLeft="15dp"
@@ -105,10 +106,13 @@
                 android:textColor="@color/ct_title"
                 android:textSize="15sp" />
 
-            <Switch
-                android:id="@+id/ct_order_discount_sw"
+            <TextView
+                android:id="@+id/ct_order_discounts_tv"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="请选择"
+                android:drawablePadding="10dp"
+                android:drawableRight="@drawable/ct_narrow_right"/>
         </LinearLayout>
 
         <TextView

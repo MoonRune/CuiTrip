@@ -80,6 +80,32 @@ public class OrderItem implements Serializable {
     private String feeExclude;
     private String meetingPlace;
     private String invalidReason;
+    private String lat;
+    private String lng;
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
 
     public String getFeeInclude() {
         return feeInclude;

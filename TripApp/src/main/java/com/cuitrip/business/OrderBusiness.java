@@ -170,13 +170,15 @@ public class OrderBusiness {
     }
 
     public static RequestHandle getCharge(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                          String oid, String channel, String clientIp, String payCurrency) {
+                                          String oid, String channel, String clientIp, String payCurrency,
+                                          String couponId) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", oid);
         params.put("channel", channel);
         params.put("clientIp", clientIp);
         params.put("payCurrency", payCurrency);
+        params.put("couponId", couponId);
         return client.post(context, BusinessHelper.getApiUrl("getCharge"), params, handler);
     }
 
@@ -199,4 +201,13 @@ public class OrderBusiness {
         params.put("start", start);
         return client.post(context, BusinessHelper.getApiUrl("getBills"), params, handler);
     }
+
+    public static RequestHandle getValidCoupon(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                String payCurrency) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("payCurrency", payCurrency);
+        return client.post(context, BusinessHelper.getApiUrl("getValidCoupon"), params, handler);
+    }
+
 }

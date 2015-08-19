@@ -126,6 +126,10 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
+            android:name="com.cuitrip.app.message.MessageDetailActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.cuitrip.app.conversation.ConversationAcitivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -265,15 +269,6 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
             android:theme="@style/cuiTranslucentTheme"></activity>
-        <activity
-            android:name="com.cuitrip.app.MessageDetailActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden"></activity>
-        <activity
-            android:name="com.cuitrip.app.OrderDetailActivity"
-            android:configChanges="keyboardHidden|orientation|screenSize"
-            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.cuitrip.app.pay.PayOrderAcivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

@@ -7,7 +7,9 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.model.UserInfo;
+import com.lab.utils.LogHelper;
 
 public class LoginInstance {
     static final String KEY_USERINFO_ID = "_user_info";
@@ -38,6 +40,7 @@ public class LoginInstance {
     public static void update(Context context, UserInfo userInfo) {
         LoginInstance info = getInstance(context);
         info.sUserInfo = userInfo;
+        LogHelper.e("omg","set userinfo rong token"+userInfo.getRongyunToken());
         SharedPreferences sp = context.getSharedPreferences(KEY_USERINFO_ID, Context.MODE_PRIVATE);
         if (userInfo != null) {
             sp.edit().putString(KEY_USERINFO_ID, JSONObject.toJSON(userInfo).toString())
@@ -45,6 +48,7 @@ public class LoginInstance {
         } else {
             sp.edit().remove(KEY_USERINFO_ID).commit();
         }
+        RongCloudEvent.ConnectRongForce();
     }
 
     public static void logout(Context context) {

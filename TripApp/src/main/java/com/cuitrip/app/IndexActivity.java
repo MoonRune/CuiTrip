@@ -19,6 +19,7 @@ import com.cuitrip.push.MessagePrefs;
 import com.cuitrip.push.PushService;
 import com.cuitrip.service.R;
 import com.lab.app.BaseTabHostActivity;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.umeng.update.UmengUpdateAgent;
 
@@ -43,6 +44,8 @@ public class IndexActivity extends BaseTabHostActivity {
         super.onCreate(savedInstanceState);
         UmengUpdateAgent.update(this);
         Intent intent = getIntent();
+
+        LogHelper.e("LoginActivity", "index oncreate");
         if (intent != null) {
             String tabTag = intent.getStringExtra(GO_TO_TAB);
             if (!TextUtils.isEmpty(tabTag)) {

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
-import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
@@ -25,7 +24,6 @@ public class LogoActivity extends BaseActivity implements Handler.Callback {
         Handler handler = new Handler(this);
         handler.sendMessage(handler.obtainMessage(INIT));
         handler.sendMessageDelayed(handler.obtainMessage(GO_MAIN), DURATION);
-        RongCloudEvent.ConnectRong();
     }
 
     @Override

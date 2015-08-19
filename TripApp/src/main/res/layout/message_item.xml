@@ -18,31 +18,42 @@
             android:background="@drawable/selector_red_more"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="Yes,Delete"
+            android:textSize="19sp"
+            android:text="@string/ct_delete"
             android:textColor="@color/ct_white" />
     </RelativeLayout>
 
 
     <LinearLayout
-        tools:visibility="gone"
+        tools:visibility="visible"
         android:id="@+id/ct_message_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@drawable/select_white_gray"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/ct_message_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="44dp"
             android:layout_weight="1"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical"
+            android:textSize="15sp"
+            android:textColor="@color/ct_black"
             tools:text="name" />
 
         <TextView
+            android:textSize="11sp"
+            android:textColor="@color/ct_a7"
             android:id="@+id/ct_message_time"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_height="44dp"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
             tools:text="content" />
     </LinearLayout>
 </com.lab.widget.CanClickSwipeLayout>

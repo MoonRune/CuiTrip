@@ -18,24 +18,26 @@ import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
 public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode> implements IFavoriteListView {
     public static final String TAG = "FavoriteListActivity";
     FavoritePresent<FavoriteMode> mFavoritePresent = new FavoritePresent<>(this);
+
     public static void start(Context context) {
         if (context != null) {
             context.startActivity(new Intent(context, FavoriteListActivity.class));
         }
     }
-    protected View.OnClickListener mOnClickListener = new View.OnClickListener(){
+
+    protected View.OnClickListener mOnClickListener = new View.OnClickListener() {
 
         @Override
         public void onClick(View v) {
-            switch (v.getId()){
+            switch (v.getId()) {
                 case R.id.ct_service:
-                    if (v.getTag()!=null &&v.getTag() instanceof FavoriteMode) {
+                    if (v.getTag() != null && v.getTag() instanceof FavoriteMode) {
                         FavoriteMode messageMode = (FavoriteMode) v.getTag();
                         mFavoritePresent.onClick(messageMode);
                     }
                     break;
                 case R.id.ct_delete:
-                    if (v.getTag()!=null &&v.getTag() instanceof FavoriteMode) {
+                    if (v.getTag() != null && v.getTag() instanceof FavoriteMode) {
                         FavoriteMode messageMode = (FavoriteMode) v.getTag();
                         mFavoritePresent.onMove(messageMode);
                     }
@@ -47,15 +49,17 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
     };
 
     FavoriteAdapter mAdapter = new FavoriteAdapter(mOnClickListener);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         showActionBar(getString(R.string.favorite_title));
         mRecyclerView.setAdapter(mAdapter);
-        SlideInLeftAnimator animator =  new SlideInLeftAnimator();
+        SlideInLeftAnimator animator = new SlideInLeftAnimator();
         mRecyclerView.setItemAnimator(animator);
         requestPresentRefresh();
     }
+
     @Override
     public void requestPresentLoadMore() {
         uiShowLoadMore();
@@ -92,7 +96,7 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
 
     @Override
     public void jumpUnvaliable(FavoriteMode mode) {
-        FavorityUnvaliableActivity.start(FavoriteListActivity.this);
+        FavorityUnvaliableActivity.start(FavoriteListActivity.this, mode.getHeadPic());
 
     }
 

@@ -33,16 +33,19 @@ import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
 import butterknife.OnLongClick;
+import cn.smssdk.SMSSDK;
+import cn.smssdk.gui.CountryPage;
 
 /**
  * Created on 7/16.
  */
-public class SelfIdentificationActivity extends BaseActivity {
+public class SelfIdentificationActivity extends BaseActivity implements  CountryPage.OnResult {
     public static final String MODE_KEY = "MODE_KEY";
     @InjectView(R.id.ct_not_pass_tv)
     TextView ctNotPassTv;
@@ -178,6 +181,13 @@ public class SelfIdentificationActivity extends BaseActivity {
         return true;
     }
 
+    @OnClick(R.id.ct_user_country_v)
+    public void showCountry(){
+
+        CountryPage countryPage = new CountryPage();
+        countryPage.setOnResultListener(this);
+        countryPage.showForResult(this, null);
+    }
     @OnLongClick(R.id.ct_identity_two)
     public boolean removeBitmapTwo() {
         MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片啊").setPositiveButton(R.string.ct_confirm,
@@ -325,6 +335,20 @@ public class SelfIdentificationActivity extends BaseActivity {
                 ctIdentityAd.setVisibility(View.GONE);
                 reUpload.setVisibility(View.VISIBLE);
                 break;
+        }
+    }
+
+    @Override
+    public void onResult(HashMap<String, Object> data) {
+        if (data != null) {
+            int page = (Integer) data.get("page");
+            if (page == 1) {
+                // 国家列表返回
+              String  currentId = (String) data.get("id");
+//                HashMap<String, String>  countryRules = (HashMap<String, String>) data.get("rules");
+                String[] country = SMSSDK.getCountry(currentId);
+                ctUserCountryTv.setText(country[0]);
+            }
         }
     }
 }

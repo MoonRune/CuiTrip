@@ -83,7 +83,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
                 hideNoCancelDialog();
                 MessageUtils.showToast(R.string.ct_order_comment_suc);
                 Intent intent = new Intent(CommentActivity.this, CommentSuccessActivity.class)
-                        .putExtra(OrderDetailActivity.ORDER_INFO, mOrderInfo);
+                        .putExtra(CommentSuccessActivity.ORDER_INFO, mOrderInfo);
                 if(mRatingBar.getRating() > 3){
                     intent.putExtra(CommentSuccessActivity.ENABLE_SHARE, true);
                 }

@@ -1,7 +1,9 @@
 package com.cuitrip.app.conversation;
 
+import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.base.ListFetchCallback;
 import com.cuitrip.app.conversation.rong.ConversationFetcherRong;
+import com.cuitrip.login.LoginInstance;
 
 import java.util.List;
 
@@ -36,20 +38,24 @@ public class ConversationsPresent {
 
     }
     public void onCallRefresh(){
-        iConversationView.showRefreshLoading();
-        iConversationsFetcher.getConversations(new ListFetchCallback<ConversationItem>() {
-            @Override
-            public void onSuc(List<ConversationItem> t) {
-                iConversationView.refreshMessage(t);
-                iConversationView.hideRefreshLoading();
-            }
+        if (LoginInstance.isLogin(MainApplication.getInstance())) {
+            iConversationView.showRefreshLoading();
+            iConversationsFetcher.getConversations(new ListFetchCallback<ConversationItem>() {
+                @Override
+                public void onSuc(List<ConversationItem> t) {
+                    iConversationView.refreshMessage(t);
+                    iConversationView.hideRefreshLoading();
+                }
 
-            @Override
-            public void onFailed(Throwable throwable) {
-                iConversationView.hideRefreshLoading();
+                @Override
+                public void onFailed(Throwable throwable) {
+                    iConversationView.hideRefreshLoading();
 
-            }
-        });
+                }
+            });
+        }else {
+            iConversationView.uiShowNoLogin();
+        }
 
     }
 }

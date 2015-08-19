@@ -10,8 +10,8 @@ public interface IPayOrderView extends IRefreshView<PayOrderMode> {
     void clickPayOrder();
 
     void uiPayMethod();
-    void uiShowDiscountCodeInput();
-    void uiShowRemoveDiscountDialog();
+     void uiShowDiscountCodeInput(PayOrderMode mode) ;
+
     void showMessage(String msg);
     void requestPay(String payParams);
 }

@@ -7,7 +7,6 @@ import android.view.View;
 
 import com.cuitrip.app.base.BaseVerticalListActivity;
 import com.cuitrip.service.R;
-import com.lab.app.BrowserActivity;
 import com.lab.utils.LogHelper;
 
 import java.util.List;
@@ -70,7 +69,8 @@ public class MessageListActivity extends BaseVerticalListActivity<MessageMode> i
     @Override
     public void jumpMessage(MessageMode messageMode) {
         LogHelper.e(TAG,"jumpMessage :"+messageMode.toString());
-        BrowserActivity.startWithData(this,messageMode.content);
+//        BrowserActivity.startWithData(this,messageMode.content);
+        MessageDetailActivity.start(this,messageMode);
     }
 
     @Override

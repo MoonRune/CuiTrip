@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:singleLine="true"
                 android:text="2015/07/01"
-                android:textColor="@color/ct_main_color_light"
+                android:textColor="@color/ct_title"
                 android:textSize="15sp"
                 tools:text="order_time" />
 
@@ -47,8 +47,8 @@
                 android:layout_marginTop="7dp"
                 android:ellipsize="end"
                 android:singleLine="true"
-                android:textColor="@color/ct_black"
-                android:textSize="17sp"
+                android:textColor="@color/ct_content"
+                android:textSize="13sp"
                 tools:text="service_name" />
 
 
@@ -66,7 +66,7 @@
             android:layout_toRightOf="@+id/author_img"
             android:singleLine="true"
             android:textColor="@color/ct_a7"
-            android:textSize="13sp"
+            android:textSize="15sp"
             tools:text="progressing" />
     </LinearLayout>
 

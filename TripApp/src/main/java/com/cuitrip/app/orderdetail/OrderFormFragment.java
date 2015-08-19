@@ -22,6 +22,7 @@ import com.cuitrip.app.OrderFragment;
 import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.PartViewHolder;
+import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFetcher;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFormPresent;
@@ -126,7 +127,7 @@ public class OrderFormFragment extends BaseFragment {
                     partViewHolder.render(o);
                 }
                 show();
-            }else {
+            } else {
                 hide();
             }
         }
@@ -631,7 +632,13 @@ public class OrderFormFragment extends BaseFragment {
         public void jumpMapOrder(OrderItem orderItem) {
             LogHelper.e("omg", "jumpMapOrder");
             //todo
-//            GaoDeMapActivity.startShow(getActivity(),orderItem.getMeetingPlace());
+            try {
+                double lat = Double.valueOf(orderItem.getLat());
+                double lng = Double.valueOf(orderItem.getLng());
+                GaoDeMapActivity.startShow(getActivity(), lat, lng, orderItem.getMeetingPlace());
+            } catch (Exception e) {
+                MessageUtils.showToast(R.string.data_error);
+            }
 
         }
 

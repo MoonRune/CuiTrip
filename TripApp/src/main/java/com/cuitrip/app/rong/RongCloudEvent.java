@@ -13,7 +13,6 @@ import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
@@ -35,14 +34,15 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         RongIMClient.ConnectionStatusListener {
     public static final String TAG = "RongCloudEvent";
     //query for userinfo  from api && local  ??
-    static HashMap<String, String> tempUidToken = new HashMap<>();
 
-    static {
-        tempUidToken.put("180", "iOYYGEULMn9cEFHJvU2KclUJjq/G011LMurM5xSobnWdFPeJcpSCKXQDIt1DpCe4kC4zt6Ilvdl1WC8KOcAiRg==");
-        tempUidToken.put("179", "anTVf0l/BWsxuHHSVIS9QVUJjq/G011LMurM5xSobnWdFPeJcpSCKaeojIan8MAUglmpfkJTWhp1WC8KOcAiRg==");
+    public static void DisConnectRong(){
+        RongIM.getInstance().disconnect();
     }
 
-    public static void ConnectRong() {
+    public static void ConnectRongForce(){
+        ConnectRong(true);
+    }
+    public static void ConnectRong(boolean force) {
         if (!LoginInstance.isLogin(MainApplication.getInstance())) {
             return;
         }
@@ -50,10 +50,14 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         if (userInfo == null || TextUtils.isEmpty(userInfo.getUid())) {
             return;
         }
-        String token = tempUidToken.get(userInfo.getUid());
-        if (TextUtils.isEmpty(token)) {
+        if (TextUtils.isEmpty(userInfo.getRongyunToken())){
+            LogHelper.e(TAG,"rongyun roken null");
+            if (force) {
+                MainApplication.getInstance().logOutWithError();
+            }
             return;
         }
+        String token = userInfo.getRongyunToken();
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
             @Override
@@ -158,7 +162,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         switch (connectionStatus) {
             case DISCONNECTED:
                 MessageUtils.showToast("失去连接");
-                ConnectRong();
                 break;
             case CONNECTED:
                 MessageUtils.showToast("已连接");
@@ -168,7 +171,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 break;
             case NETWORK_UNAVAILABLE:
                 MessageUtils.showToast("网络差");
-                ConnectRong();
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT:
                 MessageUtils.showToast("在其他设别上登录");

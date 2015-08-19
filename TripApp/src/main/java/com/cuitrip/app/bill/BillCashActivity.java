@@ -64,8 +64,8 @@ public class BillCashActivity extends BaseActivity {
     }
 
     public void render() {
-        desc.setText(rate);
         amount.setText(avaliableMoney + avaliableMoneyType);
+        desc.setText(getString(R.string.rate_desc) + rate + avaliableMoneyType);
     }
 
     @OnClick(R.id.submit)

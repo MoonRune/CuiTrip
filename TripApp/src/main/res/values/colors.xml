@@ -58,5 +58,6 @@
 
     <color name="ct_green_circle_solid">#b8e986</color>
     <color name="ct_green_circle_stoken">#7ed321</color>
+    <color name="ct_only_6">#666666</color>
 
 </resources>

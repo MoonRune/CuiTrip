@@ -1,5 +1,6 @@
 package com.cuitrip.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -35,6 +36,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = "SelfHomePageActivity";
+    public static final int REQUEST = 4;
     @InjectView(R.id.ct_swipe_refresh_layout)
     public SwipeRefreshLayout mSwipRl;
     @InjectView(R.id.ct_content_tv)
@@ -50,10 +52,18 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
 
     String introduce;
 
-    public static void startForResult(Fragment fragment,int request) {
+    public static void startForResult(Fragment fragment) {
         Intent intent = new Intent(fragment.getActivity(),SelfHomePageActivity.class);
-        fragment.startActivityForResult(intent,request);
+        fragment.startActivityForResult(intent,REQUEST);
 
+    }
+
+    public static void startForResult(Activity activity) {
+        Intent intent = new Intent(activity,SelfHomePageActivity.class);
+        activity.startActivityForResult(intent,REQUEST);
+    }
+    public static boolean isModifidy(int req,int res,Intent data){
+        return req == REQUEST&&res ==SelfHomePageEditorActivity.HOME_PAGE_UPDATED;
     }
     protected Drawable buildDrawable(Bitmap bitmap) {
         Drawable drawable =
@@ -105,7 +115,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SelfHomePageEditorActivity.REQUEST_HOME_PAGE_UPDATE && resultCode == SelfHomePageEditorActivity.HOME_PAGE_UPDATED) {
-            setResult( SelfHomePageEditorActivity.HOME_PAGE_UPDATED);
+            setResult(SelfHomePageEditorActivity.HOME_PAGE_UPDATED);
             finish();
         }
         super.onActivityResult(requestCode, resultCode, data);

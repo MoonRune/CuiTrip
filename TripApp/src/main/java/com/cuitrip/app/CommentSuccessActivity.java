@@ -18,6 +18,7 @@ import java.util.Locale;
  * Created on 7/26.
  */
 public class CommentSuccessActivity extends BaseActivity implements View.OnClickListener {
+    public static final String ORDER_INFO = "CommentSuccessActivity.ORDER_INFO";
     public static final String ENABLE_SHARE = "enable_share";
 
     private OrderItem mOrderInfo;
@@ -30,7 +31,7 @@ public class CommentSuccessActivity extends BaseActivity implements View.OnClick
             finish();
             return;
         }
-        mOrderInfo = (OrderItem) intent.getSerializableExtra(OrderDetailActivity.ORDER_INFO);
+        mOrderInfo = (OrderItem) intent.getSerializableExtra(CommentSuccessActivity.ORDER_INFO);
         if (mOrderInfo == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();

@@ -8,6 +8,7 @@ import java.util.List;
 public interface IConversationsView {
     void showRefreshLoading();
     void hideRefreshLoading();
+    void uiShowNoLogin();
     void disableEvent();
     void enableEvent();
     void showLoadMore();

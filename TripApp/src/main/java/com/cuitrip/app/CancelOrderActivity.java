@@ -142,7 +142,7 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
             public void onSuccess(LabResponse response, Object data) {
                 hideNoCancelDialog();
                 startActivity(new Intent(CancelOrderActivity.this, CancelOrderSuccessActivity.class)
-                        .putExtra(OrderDetailActivity.ORDER_INFO, mOrderInfo));
+                        .putExtra(CancelOrderSuccessActivity.ORDER_INFO, mOrderInfo));
                 LocalBroadcastManager.getInstance(CancelOrderActivity.this).sendBroadcast(
                         new Intent(OrderFragment.ORDER_STATUS_CHANGED_ACTION));
                 setResult(RESULT_OK);

@@ -6,7 +6,7 @@ import com.lab.utils.Utils;
 /**
  * Created by baziii on 15/8/10.
  */
-public class MessageMode {
+public class MessageMode implements java.io.Serializable {
     protected String name;
     protected String id;
     protected String date;

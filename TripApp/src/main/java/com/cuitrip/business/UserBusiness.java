@@ -124,7 +124,8 @@ public class UserBusiness {
     public static RequestHandle updateProfile(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                               String headPic,
                                               String realName, String nick, String gender, String city,
-                                              String language, String career, String interests, String sign) {
+                                              String language, String career, String interests, String sign,
+                                              String mobile, String email, String birth) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         if (!TextUtils.isEmpty(realName)) {
@@ -140,6 +141,9 @@ public class UserBusiness {
         params.put("interests", interests);
         params.put("sign", sign);
         params.put("headPic", headPic);
+        params.put("mobile", mobile);
+        params.put("email", email);
+        params.put("birth", birth);
         return client.post(context, BusinessHelper.getApiUrl("modifyUserInfo"), params, handler);
     }
 
@@ -147,9 +151,7 @@ public class UserBusiness {
                                             String uid) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
-        if (!TextUtils.isEmpty(uid)) {
-            params.put("uid", uid);
-        }
+        params.put("otherId", uid);
         return client.post(context, BusinessHelper.getApiUrl("getUserInfo"), params, handler);
     }
 
@@ -161,8 +163,8 @@ public class UserBusiness {
     }
 
     public static RequestHandle updateIndentity(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                              String idPic,
-                                              String idType, String idCountry, String idValidTime) {
+                                                String idPic,
+                                                String idType, String idCountry, String idValidTime) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("idPic", idPic);
@@ -173,7 +175,7 @@ public class UserBusiness {
     }
 
     public static RequestHandle getCash(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
-            ,String payPalAccount ,String cashAmount ,String moneyType ) {
+            , String payPalAccount, String cashAmount, String moneyType) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("payPalAccount", payPalAccount);

@@ -287,6 +287,29 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/ct_profile_hint_sign"/>
+            </LinearLayout>  <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+            <LinearLayout
+                android:id="@+id/ct_selft_desc_v"
+                style="@style/profileLayout"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/ct_profile_height"
+                android:orientation="horizontal">
+
+                <TextView
+                    style="@style/profileTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/self_desc_hint" />
+
+                <TextView
+                    android:id="@+id/ct_selft_desc_tv"
+                    style="@style/profileEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="设置"/>
             </LinearLayout>
 
 

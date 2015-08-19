@@ -26,4 +26,9 @@ public class PlatformUtil implements IResourceFetcher{
     public String getString(int id) {
         return mResourceFetcher.getString(id);
     }
+
+    public int getColor(int res){
+        return mResourceFetcher.getColor(res);
+
+    }
 }

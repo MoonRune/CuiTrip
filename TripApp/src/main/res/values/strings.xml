@@ -494,4 +494,13 @@
     <string name="get_cash_suc">提现申请成功</string>
     <string name="bill_title">账单</string>
     <string name="get_cash_title">提现</string>
+    <string name="id_check_failed_msg">审核失败</string>
+    <string name="id_check_suc_msg">审核通过</string>
+    <string name="id_check_ing_msg">审核中</string>
+    <string name="self_desc_hint">介绍自己</string>
+    <string name="ct_favorite_unavliable">看看其他推荐</string>
+    <string name="ct_favorite_unavaliable">发现者已不再提供此旅程，再看看其他推荐吧</string>
+    <string name="ct_mount_left">余额</string>
+    <string name="rate_desc">今日汇率:100USD=</string>
+    <string name="un_setted">未设置</string>
 </resources>

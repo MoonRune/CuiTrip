@@ -29,6 +29,7 @@ import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,11 +59,15 @@ public class BillActivity extends BaseActivity {
     BillAdapter adapter = new BillAdapter();
     AsyncHttpClient mClient = new AsyncHttpClient();
 
+    String money ;
+    String moneyType ;
+    String rate ;
     public static void start(Context context) {
         if (context != null) {
             context.startActivity(new Intent(context, BillActivity.class));
         }
     }
+
     protected RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
 
         @Override
@@ -83,14 +88,15 @@ public class BillActivity extends BaseActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ct_bill,menu);
+        getMenuInflater().inflate(R.menu.ct_bill, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_OK:
+                BillCashActivity.start(this,money,moneyType,rate);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -153,8 +159,11 @@ public class BillActivity extends BaseActivity {
         OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
+                money = response.balance;
+                moneyType=response.moneyType;
+                rate=response.rate;
                 amount.setText(response.moneyType + response.balance);
-                desc.setText(response.rate);
+                desc.setText(getString(R.string.rate_desc) + response.rate + response.moneyType);
                 List<BillData> bills = JSONObject.parseArray(data.toString(), BillData.class);
                 adapter.setBillDatas(bills);
                 hideLoading();
@@ -230,7 +239,21 @@ public class BillActivity extends BaseActivity {
             ImageHelper.displayPersonImage(data.getHeadPic(), image, null);
             name.setText(data.getTitle());
             time.setText(Utils.getMsToD(data.getGmtModified()));
-            amount.setText(data.getMoney() + data.getMoneyType());
+
+            try {
+                double value = Double.valueOf(data.getMoney());
+                DecimalFormat df = new DecimalFormat("#.00");
+                if (value > 0) {
+                    amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_black));
+                    amount.setText(data.getMoneyType() + data.getMoney());
+                } else {
+                    amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_blue_pressed));
+                    amount.setText("-  " + data.getMoneyType() + data.getMoney());
+                }
+            } catch (NumberFormatException e) {
+                amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_black));
+                amount.setText(data.getMoney() + data.getMoneyType());
+            }
         }
     }
 

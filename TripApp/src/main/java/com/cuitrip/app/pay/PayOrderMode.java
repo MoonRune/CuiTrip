@@ -1,7 +1,10 @@
 package com.cuitrip.app.pay;
 
+import com.cuitrip.model.DiscountItem;
 import com.cuitrip.model.OrderItem;
 import com.lab.utils.Utils;
+
+import java.util.List;
 
 /**
  * Created by baziii on 15/8/15.
@@ -13,10 +16,13 @@ public class PayOrderMode {
     private String buyerSize;
     private String serviceNormalPrice;//订单费用不优惠的总
     private String serviceCurrency;////订单费用货币单位
-    private boolean discounted;
-    private String discountDesc;//优惠的描述
-    private String discountedPrice;//优惠的金额
-    private String finalPrice;//最终费用金额
+//    private String discountDesc;//优惠的描述
+//    private String discountedPrice;//优惠的金额
+//    private String finalPrice;//最终费用金额
+
+    private DiscountItem discount;
+
+    private List<DiscountItem> discountItems;
 
     public String getServiceAva() {
         return serviceAva;
@@ -66,66 +72,48 @@ public class PayOrderMode {
         this.serviceCurrency = serviceCurrency;
     }
 
-    public boolean isDiscounted() {
-        return discounted;
+    public String getServiceCurrency() {
+        return serviceCurrency;
     }
 
-    public void setDiscounted(boolean discounted) {
-        this.discounted = discounted;
+    public DiscountItem getDiscount() {
+        return discount;
     }
 
-    public String getDiscountDesc() {
-        return discountDesc;
+    public void setDiscount(DiscountItem discount) {
+        this.discount = discount;
     }
 
-    public void setDiscountDesc(String discountDesc) {
-        this.discountDesc = discountDesc;
+    public List<DiscountItem> getDiscountItems() {
+        return discountItems;
     }
 
-    public String getDiscountedPrice() {
-        return discountedPrice;
-    }
-
-    public void setDiscountedPrice(String discountedPrice) {
-        this.discountedPrice = discountedPrice;
-    }
-
-    public String getFinalPrice() {
-        return finalPrice;
-    }
-
-    public void setFinalPrice(String finalPrice) {
-        this.finalPrice = finalPrice;
+    public void setDiscountItems(List<DiscountItem> discountItems) {
+        this.discountItems = discountItems;
     }
 
     public PayOrderMode() {
     }
 
-    public PayOrderMode(String serviceAva, String serviceName, String orderDate, String buyerSize, String servicePrice, String serviceCurrency, boolean discounted, String discountDesc, String discountedPrice, String finalPrice) {
+    public PayOrderMode(String serviceAva, String serviceName, String orderDate, String buyerSize, String servicePrice, String serviceCurrency ,List<DiscountItem>  discountItems) {
         this.serviceAva = serviceAva;
         this.serviceName = serviceName;
         this.orderDate = orderDate;
         this.buyerSize = buyerSize;
         this.serviceNormalPrice = servicePrice;
         this.serviceCurrency = serviceCurrency;
-        this.discounted = discounted;
-        this.discountDesc = discountDesc;
-        this.discountedPrice = discountedPrice;
-        this.finalPrice = finalPrice;
+        this.discountItems = discountItems;
     }
 
-    public static PayOrderMode getInstance(OrderItem orderItem) {
+    public static PayOrderMode getInstance(OrderItem orderItem,List<DiscountItem> discountItems) {
         PayOrderMode result = new PayOrderMode(
                 orderItem.getServicePIC(),
                 orderItem.getServiceName(),
                 Utils.getMsToD(orderItem.getServiceDate() ) ,
                 orderItem.getBuyerNum()+"人",
-                 "normal price ",
+                orderItem.getOrderPrice(),
                 orderItem.getPayCurrency(),
-                orderItem.isDiscount(),
-               "discount discounted",
-                "discounted price",
-                "final price"
+                discountItems
         );
         return result ;
     }
