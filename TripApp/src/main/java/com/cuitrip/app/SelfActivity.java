@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cuitrip.app.country.CountrySelectActivity;
 import com.cuitrip.app.identity.SelfIdentificationActivity;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
@@ -100,6 +101,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     View mPersonalDescV;
     @InjectView(R.id.ct_selft_desc_tv)
     TextView mPersonalDescTv;
+    @InjectView(R.id.ct_personal_area_ll)
+    View mPersonalAreaTv;
 
 
     String mUploadedAvaUrl;
@@ -187,11 +190,11 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         mPersonalLanguageEt.setText(userInfo.getLanguage());
         mPersonalSignEt.setText(userInfo.getSign());
 
-        mPersonalPhoneEt.setEnabled(!TextUtils.isEmpty(userInfo.getMobile()));
+        mPersonalPhoneEt.setEnabled(TextUtils.isEmpty(userInfo.getMobile()));
         mPersonalPhoneEt.setText(userInfo.getMobile());
 
 
-        mPersonalEmailEt.setEnabled(!TextUtils.isEmpty(userInfo.getEmail()));
+        mPersonalEmailEt.setEnabled(TextUtils.isEmpty(userInfo.getEmail()));
         mPersonalEmailEt.setText(userInfo.getEmail());
 
         setOnClicks();
@@ -205,6 +208,14 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         if (getIndentityClickable()) {
             mPersonalIdentityV.setOnClickListener(this);
         }
+//        else {
+//            mPersonalIdentityV.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//
+//                }
+//            });
+//        }
     }
 
 
@@ -248,6 +259,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         mPersonalNickEt.setOnFocusChangeListener(this);
         mPersonalDescV.setOnClickListener(this);
+        mPersonalAreaTv.setOnClickListener(this);
         findViewById(R.id.ct_personal_identity_ll).setOnClickListener(this);
     }
 
@@ -285,6 +297,11 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (SelfHomePageActivity.isModifidy(requestCode, resultCode, data)) {
             requestUserInfo();
+        }
+        if (CountrySelectActivity.isWrited(requestCode, resultCode, data)){
+            String country = CountrySelectActivity.getValue(data);
+            userInfo.setCountry(country);
+            mPersonalAreaEt.setText(country);
         }
         switch (requestCode) {
             case REQUEST_IMAGE:
@@ -437,6 +454,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ct_personal_area_ll:
+                CountrySelectActivity.start(this);
+                break;
             case R.id.ct_selft_desc_v:
                 SelfHomePageActivity.startForResult(this);
                 break;
@@ -458,7 +478,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                     }
                 }
                 SelfIdentificationActivity.start(this, userInfo.getIdRefuseReason(),
-                        userInfo.getIdArea(), userInfo.getIdType(), userInfo.getGmtCreated(), pic1, pic2);
+                        userInfo.getIdArea(), userInfo.getIdType(), userInfo.getIdValidTime(), pic1, pic2);
                 break;
             default:
                 break;

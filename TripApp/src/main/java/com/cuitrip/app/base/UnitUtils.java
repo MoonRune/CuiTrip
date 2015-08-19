@@ -1,6 +1,7 @@
 package com.cuitrip.app.base;
 
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
@@ -30,7 +31,10 @@ public class UnitUtils {
     }
 
     //1 身份证 2 护照
-    public static String getIndentityName(@NonNull String code) {
+    public static String getIndentityName(String code) {
+        if (TextUtils.isEmpty(code)){
+            return "";
+        }
         switch (code.trim()) {
             case "1":
                 return PlatformUtil.getInstance().getString(R.string.ct_identity_type_idcard);

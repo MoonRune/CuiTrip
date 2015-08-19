@@ -93,6 +93,10 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
         return request == REQUEST_IDENTITY && response == RESULT_OK;
     }
 
+    @OnClick(R.id.ct_not_pass_tv)
+    public void hideReson(){
+        ctNotPassTv.setVisibility(View.GONE);
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.ct_confirm, menu);
@@ -171,7 +175,7 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
 
     @OnLongClick(R.id.ct_identity_one)
     public boolean removeBitmapOne() {
-        MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片啊").setPositiveButton(R.string.ct_confirm,
+        MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片吗").setPositiveButton(R.string.ct_confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -190,7 +194,7 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
     }
     @OnLongClick(R.id.ct_identity_two)
     public boolean removeBitmapTwo() {
-        MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片啊").setPositiveButton(R.string.ct_confirm,
+        MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片吗").setPositiveButton(R.string.ct_confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -348,6 +352,7 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
 //                HashMap<String, String>  countryRules = (HashMap<String, String>) data.get("rules");
                 String[] country = SMSSDK.getCountry(currentId);
                 ctUserCountryTv.setText(country[0]);
+                identityMode.setCountry(country[0]);
             }
         }
     }

@@ -24,6 +24,7 @@ import android.widget.TextView;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.PriceDescActivity;
 import com.cuitrip.app.base.UnitUtils;
+import com.cuitrip.app.country.CountrySelectActivity;
 import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.ServiceInfo;
@@ -61,7 +62,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     private ActvityPop[] actvityPops = {priceTypePop, tagsPop};
     public ArrayList tags;
     boolean isFetchingTags = false;
-    ArrayList addresses = null;
     boolean isFetchingAddress = false;
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
@@ -127,7 +127,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         }
         setContentView(R.layout.ct_create_service_other);
         tryFetchTags();
-        tryFetchAddress();
         container = findViewById(R.id.create_order_v);
         mTag = (TextView) findViewById(R.id.ct_tag_tv);
         mMeet = (TextView) findViewById(R.id.service_meet);
@@ -218,23 +217,14 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     }
 
     private void tryCommitService() {
-        MessageUtils.createHoloBuilder(this).setMessage(R.string.commit_service_content).setTitle(R.string.commit_service_title)
-                .setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        commitService();
-                    }
-                })
-                .setNegativeButton(R.string.ct_cancel, null)
-                .show();
-    }
-
-    private void commitService() {
-//        if ((TextUtils.isEmpty(countryValue))) {
-//            MessageUtils.showToast(R.string.ct_country_selected_null);
-//            return;
-//        }
-
+        if (TextUtils.isEmpty(mTag.getText().toString().trim())) {
+            MessageUtils.showToast("请设置标签");
+            return;
+        }
+        if (TextUtils.isEmpty(mMeet.getText().toString().trim())) {
+            MessageUtils.showToast("见面地点");
+            return;
+        }
         if (TextUtils.isEmpty(mAddress.getText().toString().trim())) {
             MessageUtils.showToast(R.string.ct_service_address_null);
             return;
@@ -257,6 +247,23 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             MessageUtils.showToast(R.string.ct_service_money_set);
             return;
         }
+
+        MessageUtils.createHoloBuilder(this).setMessage(R.string.commit_service_content).setTitle(R.string.commit_service_title)
+                .setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        commitService();
+                    }
+                })
+                .setNegativeButton(R.string.ct_cancel, null)
+                .show();
+    }
+
+    private void commitService() {
+//        if ((TextUtils.isEmpty(countryValue))) {
+//            MessageUtils.showToast(R.string.ct_country_selected_null);
+//            return;
+//        }
 
         showNoCancelDialog();
         String desc = mServiceInfo.getDescpt();
@@ -298,29 +305,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             case R.id.ct_tag_block:
                 tagsPop.showTags();
                 break;
-            case R.id.address_block: {
-                if (addresses == null) {
-                    MessageUtils.showToast(getString(R.string.fetching_data));
-                    return;
-                }
-                builder = MessageUtils.createHoloBuilder(this);
-                builder.setAdapter(new ArrayAdapter<String>(this, R.layout.ct_choice_item, R.id.checktext,
-                        addresses), new Dialog.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (i < addresses.size()) {
-                            mAddress.setText(String.valueOf(i + 1));
-                            mServiceInfo.setAddress(String.valueOf(i + 1));
-                        }
-                    }
-                });
-                AlertDialog dialog = builder.show();
-                Window window = dialog.getWindow();
-                WindowManager.LayoutParams lp = window.getAttributes();
-                lp.height = getResources().getDimensionPixelOffset(R.dimen.ct_dp_240); // 高度
-                window.setAttributes(lp);
-            }
+            case R.id.address_block:
+                CountrySelectActivity.start(this);
             break;
             case R.id.meet_block:
                 GaoDeMapActivity.startSearch(this);
@@ -421,6 +407,10 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             mServiceInfo.setLat(String.valueOf(GaoDeMapActivity.getLat(data)));
             mServiceInfo.setLng(String.valueOf(GaoDeMapActivity.getLng(data)));
             mMeet.setText(GaoDeMapActivity.getName(data));
+        }
+        if (CountrySelectActivity.isWrited(requestCode, resultCode, data)){
+            String country = CountrySelectActivity.getValue(data);
+            mAddress.setText(country);
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
@@ -546,32 +536,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         }, UnitUtils.getLanguage());
     }
 
-    public void tryFetchAddress() {
-        if (addresses == null && !isFetchingAddress) {
-            fetchAddress();
-        }
-    }
 
-    public void fetchAddress() {
-        isFetchingTags = true;
-        ServiceBusiness.getCountryCity(this, mClient, new LabAsyncHttpResponseHandler(ArrayList.class) {
-            @Override
-            public void onSuccess(LabResponse response, Object data) {
-
-                if (data != null && data instanceof ArrayList) {
-                    addresses = ((ArrayList) data);
-                }
-                isFetchingAddress = false;
-
-            }
-
-            @Override
-            public void onFailure(LabResponse response, Object data) {
-                isFetchingAddress = false;
-
-            }
-        }, UnitUtils.getLanguage(), UnitUtils.getCreateServiceCountry());
-    }
 
     public class PricePaywayPop implements ActvityPop {
 

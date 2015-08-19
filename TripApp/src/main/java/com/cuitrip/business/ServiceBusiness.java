@@ -196,7 +196,7 @@ public class ServiceBusiness {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("lang", language);
-        params.put("contry", contry);
+        params.put("country", contry);
         return client.post(context, BusinessHelper.getApiUrl("getCountryCity"), params, handler);
     }
 

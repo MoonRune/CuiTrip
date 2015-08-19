@@ -98,6 +98,10 @@
         </activity>
 
         <activity
+            android:name="com.cuitrip.app.country.CountrySelectActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:screenOrientation="portrait"></activity>
+        <activity
             android:name="com.cuitrip.app.map.GaoDeMapActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"></activity>

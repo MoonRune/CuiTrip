@@ -104,6 +104,7 @@
                     style="@style/profileEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:digits="1234567890/- "
                     android:hint="请填写出生年月" />
             </LinearLayout>
 
@@ -175,6 +176,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="1dp" />
             <LinearLayout
+                android:id="@+id/ct_personal_area_ll"
                 style="@style/profileLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ct_profile_height"
@@ -186,7 +188,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/ct_profile_title_area" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ct_personal_area_et"
                     style="@style/profileEditText"
                     android:layout_width="match_parent"

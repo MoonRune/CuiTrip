@@ -7,10 +7,14 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
         <TextView
+            android:padding="15dp"
+            android:background="@color/ct_back_light_yellow"
             android:id="@+id/ct_not_pass_tv"
+            android:drawableRight="@drawable/clear_r"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center_vertical"
@@ -69,9 +73,11 @@
                     style="@style/order_info_hint"
                     android:text="有效期至" />
 
-                <TextView
+                <EditText
                     android:id="@+id/ct_user_validate_date_tv"
                     style="@style/order_info_value"
+                    android:background="@null"
+                    android:digits="1234567890/- "
                     tools:text="ct_user_validate_date_tv" />
             </LinearLayout>
 
@@ -81,12 +87,15 @@
             android:layout_marginTop="20dp"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
-            android:padding="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/ct_white"
             android:orientation="vertical">
             <ImageView
+
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/ct_identity_one"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -94,32 +103,45 @@
                 tools:src="@drawable/ct_default_user"
                 android:layout_marginBottom="10dp"/>
             <ImageView
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
                 android:id="@+id/ct_identity_two"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                tools:src="@drawable/ct_default_user"
-                android:layout_marginBottom="10dp"/>
-            <RelativeLayout
-                android:id="@+id/ct_identity_ad"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/add_s_g"
-                    android:drawablePadding="10dp"
-                    android:text="上传证件照片"
-                    android:gravity="center"/>
-            </RelativeLayout>
+                tools:src="@drawable/ct_default_user"/>
         </LinearLayout>
 
+        <RelativeLayout
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:padding="10dp"
+            android:id="@+id/ct_identity_ad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/select_white_gray"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/add_s_g"
+                android:drawablePadding="10dp"
+                android:text="上传证件照片"
+                android:gravity="center"/>
+        </RelativeLayout>
         <TextView
             android:id="@+id/re_upload"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/ct_blue_white"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/selector_blue_stoken_empty_corner"
             android:text="重新上传"/>
     </LinearLayout>
