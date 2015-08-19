@@ -40,9 +40,9 @@ public class LoginInstance {
     public static void update(Context context, UserInfo userInfo) {
         LoginInstance info = getInstance(context);
         info.sUserInfo = userInfo;
-        LogHelper.e("omg","set userinfo rong token"+userInfo.getRongyunToken());
         SharedPreferences sp = context.getSharedPreferences(KEY_USERINFO_ID, Context.MODE_PRIVATE);
         if (userInfo != null) {
+            LogHelper.e("omg","save user info  :"+JSONObject.toJSON(userInfo).toString());
             sp.edit().putString(KEY_USERINFO_ID, JSONObject.toJSON(userInfo).toString())
                     .commit();
         } else {

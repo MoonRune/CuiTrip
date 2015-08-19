@@ -20,6 +20,7 @@
                 style="@style/profileLayout"
                 android:layout_width="match_parent"
                 android:layout_height="74dp"
+                android:paddingLeft="15dp"
                 android:orientation="horizontal">
 
                 <de.hdodenhof.circleimageview.CircleImageView

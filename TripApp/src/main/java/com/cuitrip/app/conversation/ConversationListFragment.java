@@ -40,6 +40,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     ConversationsPresent mPresent;
 
 
+    boolean isResumeRefresh = false;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,6 +65,18 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         if (LoginInstance.isLogin(MainApplication.getInstance())) {
             mPresent.onCallRefresh();
         }
+        if (mSwipeRefreshLayout.isRefreshing()) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            isResumeRefresh = true;
+            mSwipeRefreshLayout.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if (isResumeRefresh) {
+                        mSwipeRefreshLayout.setRefreshing(true);
+                    }
+                }
+            }, 300);
+        }
     }
 
     @Override
@@ -73,13 +86,21 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     @Override
     public void hideRefreshLoading() {
-        mSwipeRefreshLayout.setRefreshing(false);
+        if (mSwipeRefreshLayout !=null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            isResumeRefresh = false;
+        }
 
     }
 
     @Override
     public void uiShowNoLogin() {
         ctLogin.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void uiHidenNoLogin() {
+        ctLogin.setVisibility(View.GONE);
     }
 
     @Override
@@ -121,14 +142,15 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     @Override
     public void refreshMessage(List<ConversationItem> items) {
         if (!isDetached()) {
-            ctLogin.setVisibility(View.GONE);
-            if (mAdapter == null || mRecyclerView.getAdapter() == null) {
-                mAdapter = new ConversationAdapter(mPresent);
-                mAdapter.setDatas(items);
-                mRecyclerView.setAdapter(mAdapter);
-            } else {
-                mAdapter.setDatas(items);
-                mAdapter.notifyDataSetChanged();
+            if (mRecyclerView != null) {
+                if (mAdapter == null || mRecyclerView.getAdapter() == null) {
+                    mAdapter = new ConversationAdapter(mPresent);
+                    mAdapter.setDatas(items);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    mAdapter.setDatas(items);
+                    mAdapter.notifyDataSetChanged();
+                }
             }
         }
     }

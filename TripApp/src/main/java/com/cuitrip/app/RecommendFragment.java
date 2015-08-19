@@ -153,38 +153,39 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
                                 @Override
                                 public void onFailure(LabResponse response, Object data) {
                                     adapter.notifyDataSetChanged();
-                                    String msg ;
-                                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                                    String msg;
+                                    if (response != null && !TextUtils.isEmpty(response.msg)) {
                                         msg = response.msg;
-                                    }else {
-                                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                                    } else {
+                                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
                                     }
                                     MessageUtils.showToast(msg);
 
                                 }
-                            }, ((RecommendItem) v.getTag()).getSid());
+                            }, item.getSid());
                         } else {
                             ServiceBusiness.likeikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
-                                @Override
-                                public void onSuccess(LabResponse response, Object data) {
-                                    item.setIsLiked(true);
-                                    adapter.notifyDataSetChanged();
-                                }
+                                        @Override
+                                        public void onSuccess(LabResponse response, Object data) {
+                                            item.setIsLiked(true);
+                                            adapter.notifyDataSetChanged();
+                                        }
 
-                                @Override
-                                public void onFailure(LabResponse response, Object data) {
-                                    adapter.notifyDataSetChanged();
+                                        @Override
+                                        public void onFailure(LabResponse response, Object data) {
+                                            adapter.notifyDataSetChanged();
 
-                                    String msg ;
-                                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
-                                        msg = response.msg;
-                                    }else {
-                                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
-                                    }
-                                    MessageUtils.showToast(msg);
+                                            String msg;
+                                            if (response != null && !TextUtils.isEmpty(response.msg)) {
+                                                msg = response.msg;
+                                            } else {
+                                                msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                                            }
+                                            MessageUtils.showToast(msg);
 
-                                }
-                            }, ((RecommendItem) v.getTag()).getSid());
+                                        }
+                                    }, item.getSid(), item.getServiceName(), item.getServiceAddress(), item.getServicePicUrl(),
+                                    item.getUid(), item.getUserNick(), item.getHeadPic(), item.getCarrer());
 
                         }
                     }

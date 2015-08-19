@@ -3,11 +3,11 @@ package com.example.service.app;
 import android.test.ApplicationTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
-import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.rong.RongTitleTagHelper;
 import com.lab.utils.LogHelper;
 
-import java.util.ArrayList;
+import java.nio.charset.Charset;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -16,23 +16,35 @@ public class ApplicationTest extends ApplicationTestCase<MainApplication> {
     public ApplicationTest() {
         super(MainApplication.class);
     }
+
     MainApplication app;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        app=getApplication();
+        app = getApplication();
     }
 
     @SmallTest
-    public void testSplit(){
+    public void testSplit() {
 
-        Object data = JSON.parseObject(" [\"美食\",\"历史\",\"文化\"]", ArrayList.class);
-        if (data instanceof  ArrayList){
-            for (Object object: ((ArrayList) data)){
-                LogHelper.e("omg",String.valueOf(object));
-            }
-        }
-        LogHelper.e("omg","over----------");
+        String tag = new String("1234567890987654321".getBytes(), Charset.forName("utf-8"));
+        LogHelper.e("omg", tag);
+        RongTitleTagHelper.TitleMessage titleMessage = new RongTitleTagHelper.TitleMessage(tag, "321", "123");
+        String temp = titleMessage.buildString();
+        LogHelper.e("omg", temp);
+        RongTitleTagHelper.TitleMessage converted = RongTitleTagHelper.TitleMessage.getInstance(temp);
+        LogHelper.e("omg", converted.getOrderId());
+
+        assertEquals(tag, converted.getOrderId());
+
+//        Object data = JSON.parseObject(" [\"美食\",\"历史\",\"文化\"]", ArrayList.class);
+//        if (data instanceof  ArrayList){
+//            for (Object object: ((ArrayList) data)){
+//                LogHelper.e("omg",String.valueOf(object));
+//            }
+//        }
+//        LogHelper.e("omg","over----------");
 
 //        String text ="9820150814163532180|180|179|谈为了超过41个字符而努";
 //        LogHelper.e("splited", TextUtils.join("-",text.split("\\|")));

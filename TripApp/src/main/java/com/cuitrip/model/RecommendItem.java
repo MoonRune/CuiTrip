@@ -15,10 +15,13 @@ public class RecommendItem {
     private String headPic;
     private String userNick;
     private String servicePicUrl;
-    private String authorCarrer;//todo api
+    private String carrer;//todo api
     private boolean isLiked;
     private String isShown;// 1 可进到详情 0 不可进
 
+    public String getUid(){
+        return "";
+    }
     public String isShown() {
         return isShown;
     }
@@ -39,12 +42,12 @@ public class RecommendItem {
         this.isLiked = isLiked;
     }
 
-    public String getAuthorCarrer() {
-        return authorCarrer;
+    public String getCarrer() {
+        return carrer;
     }
 
-    public void setAuthorCarrer(String authorCarrer) {
-        this.authorCarrer = authorCarrer;
+    public void setCarrer(String carrer) {
+        this.carrer = carrer;
     }
 
     public String getSid() {

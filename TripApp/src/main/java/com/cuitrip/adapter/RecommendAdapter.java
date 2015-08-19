@@ -93,10 +93,10 @@ public class RecommendAdapter extends PagedEndlessAdapter<RecommendItem> {
             ImageHelper.displayPersonImage(item.getHeadPic(), viewHolder.authorPic, null);
             ImageHelper.displayCtImage(item.getServicePicUrl(), viewHolder.servicePic, null);
             viewHolder.serviceName.setText(item.getServiceName());
-            if (TextUtils.isEmpty(item.getAuthorCarrer())){
+            if (TextUtils.isEmpty(item.getCarrer())){
                 viewHolder.carrerTv.setText("");
             }else {
-                viewHolder.carrerTv.setText("- " + item.getAuthorCarrer());
+                viewHolder.carrerTv.setText("- " + item.getCarrer());
             }
             viewHolder.likeImg.setImageResource(item.isLiked() ? R.drawable.selector_now_like :
                     R.drawable.selector_now_unlike);

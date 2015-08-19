@@ -13,15 +13,17 @@ public class ConversationItem {
     private String ava;
     private String orderId;
 
-    public ConversationItem(String id,String orderId, String name, int unreadCount, String serviceName, String time, String ava) {
+    public ConversationItem(String id, String name, int unreadCount, String serviceName, String lastWords, String time, String ava, String orderId) {
         this.id = id;
         this.name = name;
         this.unreadCount = unreadCount;
         this.serviceName = serviceName;
+        this.lastWords = lastWords;
         this.time = time;
         this.ava = ava;
-        this.orderId=orderId;
+        this.orderId = orderId;
     }
+
 
     public String getOrderId() {
         return orderId;

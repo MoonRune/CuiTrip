@@ -93,6 +93,6 @@ public class FavoriteMode {
     public static FavoriteMode getInstance(RecommendItem item) {
         return new FavoriteMode(item.getSid(),
                 item.getServiceName(),item.getServicePicUrl(),item.getServiceAddress(),
-                item.getUserNick(),item.getHeadPic(),item.getAuthorCarrer(),item.isAvaliable());
+                item.getUserNick(),item.getHeadPic(),item.getCarrer(),item.isAvaliable());
     }
 }

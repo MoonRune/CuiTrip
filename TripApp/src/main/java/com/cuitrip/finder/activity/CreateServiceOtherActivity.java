@@ -616,12 +616,12 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         }
 
         public void refreshCheck() {
-            ctPriceTypeFreeRb.setChecked(false);
-            ctPriceTypeAllRb.setChecked(false);
-            ctPriceTypePerRb.setChecked(false);
+            ctPriceTypeFreeRb.setSelected(false);
+            ctPriceTypeAllRb.setSelected(false);
+            ctPriceTypePerRb.setSelected(false);
             if (mServiceInfo.getPriceType() != null) {
-                if (mServiceInfo.getPriceType() < checks.length && mServiceInfo.getPriceType() > 0) {
-                    checks[mServiceInfo.getPriceType()].setChecked(true);
+                if (mServiceInfo.getPriceType() < checks.length && mServiceInfo.getPriceType() >= 0) {
+                    checks[mServiceInfo.getPriceType()].setSelected(true);
                 }
             }
         }

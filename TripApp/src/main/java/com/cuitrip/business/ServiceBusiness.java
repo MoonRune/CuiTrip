@@ -40,7 +40,7 @@ public class ServiceBusiness {
             object.put("uid", info.getUid());
             object.put("token", info.getToken());
         }
-        if(!TextUtils.isEmpty(sid)){
+        if (!TextUtils.isEmpty(sid)) {
             object.put("sid", sid);
         }
         object.put("name", name);
@@ -76,7 +76,7 @@ public class ServiceBusiness {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LogHelper.e("omg","send commitServiceInfo"+object.toJSONString());
+        LogHelper.e("omg", "send commitServiceInfo" + object.toJSONString());
         return client.post(context, BusinessHelper.getApiUrl("commitServiceInfo"), entity, "application/json", handler);
     }
 
@@ -131,7 +131,7 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle getServiceAvailableAndBookedDate(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                        String sid) {
+                                                                 String sid) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
         return client.post(context, BusinessHelper.getApiUrl("getServiceBookedAndAvailableDate"), params, handler);
@@ -192,7 +192,7 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle getCountryCity(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
-                                              ,String language, String contry) {
+            , String language, String contry) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("lang", language);
@@ -209,15 +209,23 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle likeikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                  String sid) {
+                                               String sid, String serviceName, String serviceAddress, String servicePic
+            , String insiderId, String insiderNick, String insiderPic, String insiderCarrer) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
         params.put("type", "1");
+        params.put("serviceName", serviceName);
+        params.put("serviceAddress", serviceAddress);
+        params.put("servicePic", servicePic);
+        params.put("insiderId", insiderId);
+        params.put("insiderNick", insiderNick);
+        params.put("insiderPic", insiderPic);
+        params.put("insiderCarrer", insiderCarrer);
         return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
     }
 
     public static RequestHandle unikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                  String sid) {
+                                             String sid) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
         params.put("type", "2");
@@ -225,7 +233,7 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle getLikes(Context context, AsyncHttpClient clinet, LabAsyncHttpResponseHandler handler,
-                                                  int start, int size) {
+                                         int start, int size) {
         LabRequestParams params = new LabRequestParams();
         if (LoginInstance.getInstance(context).getUserInfo() != null
                 && !TextUtils.isEmpty(LoginInstance.getInstance(context).getUserInfo().getUid())) {

@@ -19,7 +19,6 @@ import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
 import com.cuitrip.app.pay.PayOrderAcivity;
 import com.cuitrip.app.pro.ServicePartRenderData;
-import com.cuitrip.app.rong.RongTitleTagHelper;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
@@ -28,14 +27,13 @@ import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
+import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -43,7 +41,6 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.imlib.model.Discussion;
 
 /**
  * Created by baziii on 15/8/11.
@@ -66,7 +63,6 @@ public class OrderFormActivity extends BaseActivity {
 
     AsyncHttpClient mClient = new AsyncHttpClient();
     boolean showTabs = false;
-    protected static final String[] CONTENT = new String[]{"This", "Is", "A",};
 
     public static void start(Context context, String orderId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
@@ -133,7 +129,7 @@ public class OrderFormActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            int count = orderItem == null ? 0 : (showTabs ? ((null == canConversationTargetId) ? 2 : 3) : 1);
+            int count = orderItem == null ? 0 : (showTabs ? ((orderItem == null || TextUtils.isEmpty(orderItem.getTargetId())) ? 2 : 3) : 1);
             return count;
         }
 
@@ -154,21 +150,13 @@ public class OrderFormActivity extends BaseActivity {
                 default:
 
                     ConversationFragment fragment = new ConversationFragment();
-                    if (canConversationTargetId.needBuild()) {
-                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation").
-                                appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase()).
-                                appendQueryParameter("targetIds", TextUtils.join(",", canConversationTargetId.getUserIds())).
-                                appendQueryParameter("delimiter", ",").appendQueryParameter("title", canConversationTargetId.getTitle()).build();
-                        fragment.setUri(uri);
-                    } else {
-                        String target = canConversationTargetId.getTargetId();
-                        LogHelper.e("conversation target ", target);
-                        String title = orderItem.getServiceName();
-                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
-                                .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
-                                .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
-                        fragment.setUri(uri);
-                    }
+                    String target = orderItem.getTargetId();
+                    LogHelper.e(TAG,"build fragment   target id"+target);
+                    String title = orderItem.getServiceName();
+                    Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                            .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
+                            .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
+                    fragment.setUri(uri);
                     return fragment;
             }
         }
@@ -183,141 +171,49 @@ public class OrderFormActivity extends BaseActivity {
     }
 
     OrderFormFragment orderFormFragment;
-    ConversationDependy canConversationTargetId;
 
     public String buildOrderConversationTitle(OrderItem orderItem) {
-        return RongTitleTagHelper.buildTitle(orderItem);
+        return orderItem.getOid();
     }
 
-    public void validateHasConversation(final OrderItem orderItem) {
-        LogHelper.e("omg", "has validateHasConversation  ");
-        RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-            @Override
-            public void onSuccess(final List<Conversation> conversations) {
-                queryForConversationList(orderItem, conversations);
-            }
-
-            @Override
-            public void onError(RongIMClient.ErrorCode errorCode) {
-                LogHelper.e("omg", "validateHasConversation error " + errorCode.getMessage());
-            }
-        });
-    }
-
-    public void queryForConversationList(final OrderItem orderItem, final List<Conversation> conversations) {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                //getConversationList 无法获取到title  通过 getDiscussion 注射title
-                if (conversations == null){
-                    return;
-                }
-                HashMap<String, Conversation> noTitleConversations = new HashMap<String, Conversation>();
-                for (Conversation conversation : conversations) {
-                    if (TextUtils.isEmpty(conversation.getConversationTitle())) {
-                        noTitleConversations.put(conversation.getTargetId(), conversation);
-                    }
-                }
-                final CountDownLatch countDownLatch = new CountDownLatch(noTitleConversations.size());
-                for (final String key : noTitleConversations.keySet()) {
-                    final Conversation conversation = noTitleConversations.get(key);
-                    RongIM.getInstance().getRongIMClient().getDiscussion(key, new RongIMClient.ResultCallback<Discussion>() {
-                        public void onSuccess(Discussion discussion) {
-                            conversation.setConversationTitle(discussion.getName());
-                            countDownLatch.countDown();
-                        }
-
-
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-                            countDownLatch.countDown();
-                        }
-                    });
-                }
-
-                //wait api search name end
-                try {
-                    countDownLatch.await();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                // use   conversation which has lasted message
-                Conversation lasted = null;
-                for (Conversation conversation : conversations) {
-                    if (RongTitleTagHelper.isBelongToOrder(conversation.getConversationTitle(), orderItem)) {
-                        if (lasted == null) {
-                            lasted = conversation;
-                        } else {
-                            lasted = conversation.getSentTime() > lasted.getSentTime() ? conversation : lasted;
-                        }
-                    }
-                }
-                if (lasted != null) {
-                    if (!isFinishing()) {
-                        final String targetId = lasted.getTargetId();
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                canConversationTargetId = new ConversationDependy(targetId);
-                                mAdapter.notifyDataSetChanged();
-                                mViewPagerIndicator.notifyDataSetChanged();
-                            }
-                        });
-                    }
-                }
-                //todo  actiivty关闭情况 eventbus
-                if (!isFinishing()) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            buildConversation(orderItem);
-                        }
-                    });
-                }
-            }
-        }).start();
-        LogHelper.e("omg", "validateHasConversation none ");
-    }
-
-    public class ConversationDependy {
-        String targetId;
-
-        List<String> userIds;
-        String title;
-
-        public ConversationDependy(String targetId) {
-            this.targetId = targetId;
-        }
-
-        public ConversationDependy(List<String> userIds, String title) {
-            this.userIds = userIds;
-            this.title = title;
-        }
-
-        public String getTargetId() {
-            return targetId;
-        }
-
-        public List<String> getUserIds() {
-            return userIds;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public boolean needBuild() {
-            return TextUtils.isEmpty(targetId);
-        }
-    }
-
-    public void buildConversation(OrderItem orderItem) {
+    public void buildConversation(final OrderItem orderItem) {
         List<String> userIds = new ArrayList<>();
         userIds.add(orderItem.getInsiderId());
         userIds.add(orderItem.getTravellerId());
         String title = buildOrderConversationTitle(orderItem);
-        canConversationTargetId = new ConversationDependy(userIds, title);
-        mAdapter.notifyDataSetChanged();
-        mViewPagerIndicator.notifyDataSetChanged();
+        try {
+            RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
+                @Override
+                public void onSuccess(final String s) {
+                    LogHelper.e(TAG,"suc build  target id"+s);
+                    OrderBusiness.updateOrderConversation(OrderFormActivity.this, mClient, new LabAsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(LabResponse response, Object data) {
+                            LogHelper.e(TAG,"update suc   target id"+s);
+                            orderItem.setTargetId(s);
+                            mAdapter.notifyDataSetChanged();
+                            mViewPagerIndicator.notifyDataSetChanged();
+                        }
+
+                        @Override
+                        public void onFailure(LabResponse response, Object data) {
+                            LogHelper.e(TAG,"update failed   target id"+s);
+                            MessageUtils.showToast("创建聊天失败");
+
+                        }
+                    }, orderItem.getOid(), s);
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    LogHelper.e(TAG,"build failed   target id");
+                    hideNoCancelDialog();
+                    MessageUtils.showToast("创建聊天失败");
+                }
+            });
+        } catch (Exception e) {
+            MessageUtils.showToast("创建聊天失败");
+        }
     }
 
     public String buildItsname(OrderItem orderItem) {
@@ -329,8 +225,9 @@ public class OrderFormActivity extends BaseActivity {
         if (orderItem != null) {
             showTabs = orderItem.getStatus() != orderItem.STATUS_WAIT_END;
             mItsNameTv.setText(buildItsname(this.orderItem));
-            if (canConversationTargetId == null) {
-                validateHasConversation(this.orderItem);
+            LogHelper.e(TAG, "order target id" + orderItem);
+            if (TextUtils.isEmpty(orderItem.getTargetId())) {
+                buildConversation(this.orderItem);
             }
         }
         if (orderItem != null && orderFormFragment != null) {
@@ -352,9 +249,6 @@ public class OrderFormActivity extends BaseActivity {
         mViewPager.setOffscreenPageLimit(2);
         mViewPagerIndicator.setViewPager(mViewPager);
         String targetId = getIntent().getStringExtra(TARGET_ID);
-        if (!TextUtils.isEmpty(targetId)) {
-            canConversationTargetId = new ConversationDependy(targetId);
-        }
         requestOrderDetail();
 
     }

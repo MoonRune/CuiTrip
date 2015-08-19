@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:id="@+id/service_block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_marginTop="10dp"
+        android:background="@drawable/select_white_gray"
+        android:orientation="horizontal"
+        android:paddingBottom="10dp"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:background="@drawable/select_white_gray">
+        android:paddingTop="10dp">
+
         <ImageView
             android:id="@+id/ct_service_ava_img"
             android:layout_width="64dp"
@@ -23,7 +24,7 @@
             android:layout_marginBottom="18dp"
             android:layout_marginRight="10dp"
             android:scaleType="centerCrop"
-            tools:src="@drawable/ct_default"/>
+            tools:src="@drawable/ct_default" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -42,10 +43,10 @@
                 tools:text="ct_service_name" />
 
             <TextView
-                android:layout_marginTop="7dp"
                 android:id="@+id/ct_service_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:textColor="@color/ct_black"
@@ -53,10 +54,10 @@
                 tools:text="service_address" />
 
             <TextView
-                android:layout_marginTop="7dp"
                 android:id="@+id/ct_service_create"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="7dp"
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:singleLine="true"
@@ -65,136 +66,210 @@
                 android:textSize="13sp"
                 tools:text="ct_service_create" />
         </LinearLayout>
+
         <ImageView
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/get_b_g"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/get_b_g" />
     </LinearLayout>
+
     <LinearLayout
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:layout_weight="1"
-        android:orientation="vertical"
-        android:background="@color/ct_white">
+        android:background="@color/ct_white"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/build_service_time_v"
-            android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
+            android:layout_marginTop="20dp"
             android:background="@drawable/selector_blue_stoken_empty_corner"
+            android:drawableLeft="@drawable/selector_calender"
+            android:drawablePadding="10dp"
             android:gravity="center"
             android:paddingBottom="10dp"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:paddingTop="10dp"
-            android:drawableLeft="@drawable/selector_calender"
-            android:drawablePadding="10dp"
-            android:textColor="@color/ct_blue_green"
-            android:layout_height="wrap_content"
-            android:text="安排日程"/>
+            android:text="安排日程"
+            android:textColor="@color/ct_blue_green" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/ct_common_bg" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="支付"/>
-                <TextView
-                    android:id="@+id/total_visit_amount_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="完成"/>
-                <TextView
-                    android:id="@+id/daily_visit_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""/>
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
-                <TextView
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="取消"/>
-                <TextView
-                    android:id="@+id/total_like_tv"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/static_hint"
+                        android:text="支付" />
+
+                    <TextView
+                        android:id="@+id/total_visit_amount_tv"
+                        style="@style/static_value"
+                        tools:text="123" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginLeft="15dp"
+                    android:background="@color/ct_common_bg" />
+
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=""/>
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/static_hint"
+                        android:text="预约" />
+
+                    <TextView
+                        android:id="@+id/total_visitor_num_tv"
+                        style="@style/static_value"
+                        tools:text="123"  />
+                </LinearLayout>
+
             </LinearLayout>
 
-        </LinearLayout> <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/ct_common_bg" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="预约"/>
-            <TextView
-                android:id="@+id/total_visitor_num_tv"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/static_hint"
+                        android:text="完成" />
+
+                    <TextView
+                        android:id="@+id/daily_visit_tv"
+                        style="@style/static_value"
+                        tools:text="123" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/ct_common_bg" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/static_hint"
+                        android:text="喜欢" />
+
+                    <TextView
+                        android:id="@+id/order_size_tv"
+                        style="@style/static_value"
+                        tools:text="123" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/ct_common_bg" />
+
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text=""/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="喜欢"/>
-            <TextView
-                android:id="@+id/order_size_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""/>
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        style="@style/static_hint"
+                        android:text="取消" />
+
+                    <TextView
+                        android:id="@+id/total_like_tv"
+                        style="@style/static_value"
+                        tools:text="123" />
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginRight="15dp"
+                    android:background="@color/ct_common_bg" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/static_hint"
+                        android:text="营业"
+                        android:visibility="invisible" />
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
-            <TextView
-                android:visibility="invisible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="营业"/>
-        </LinearLayout>
-
-    </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:background="@color/ct_common_bg" />
     </LinearLayout>
 
 </LinearLayout>

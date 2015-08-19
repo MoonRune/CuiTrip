@@ -203,11 +203,20 @@ public class OrderBusiness {
     }
 
     public static RequestHandle getValidCoupon(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                String payCurrency) {
+                                               String payCurrency) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("payCurrency", payCurrency);
         return client.post(context, BusinessHelper.getApiUrl("getValidCoupon"), params, handler);
+    }
+
+    public static RequestHandle updateOrderConversation(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                               String orderId,String targetId) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("orderId", orderId);
+        params.put("targetId", targetId);
+        return client.post(context, BusinessHelper.getApiUrl("updateTargetId"), params, handler);
     }
 
 }

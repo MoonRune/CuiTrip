@@ -9,6 +9,7 @@ public interface IConversationsView {
     void showRefreshLoading();
     void hideRefreshLoading();
     void uiShowNoLogin();
+    void uiHidenNoLogin();
     void disableEvent();
     void enableEvent();
     void showLoadMore();

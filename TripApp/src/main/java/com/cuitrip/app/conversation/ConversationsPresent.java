@@ -39,6 +39,7 @@ public class ConversationsPresent {
     }
     public void onCallRefresh(){
         if (LoginInstance.isLogin(MainApplication.getInstance())) {
+            iConversationView.uiHidenNoLogin();
             iConversationView.showRefreshLoading();
             iConversationsFetcher.getConversations(new ListFetchCallback<ConversationItem>() {
                 @Override

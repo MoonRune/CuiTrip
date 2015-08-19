@@ -83,11 +83,11 @@ public abstract class BaseVerticalListActivity<T> extends BaseActivity implement
         }
     }
 
-    public void onLoadStarted(){
+    public void onLoadStarted() {
         loading = true;
     }
 
-    public void onLoadFinished(){
+    public void onLoadFinished() {
         loading = false;
     }
 
@@ -107,9 +107,11 @@ public abstract class BaseVerticalListActivity<T> extends BaseActivity implement
 
     public void uiHideRefreshLoading() {
         LogHelper.e(TAG, "uiHideRefreshLoading");
-        mSwipeRefreshLayout.setRefreshing(false);
-        isResumeRefresh = false;
-        onLoadFinished();
+        if (mSwipeRefreshLayout != null) {
+            mSwipeRefreshLayout.setRefreshing(false);
+            isResumeRefresh = false;
+            onLoadFinished();
+        }
     }
 
     @Override

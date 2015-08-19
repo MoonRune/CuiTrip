@@ -8,6 +8,7 @@ import com.cuitrip.util.PlatformUtil;
 import com.lab.utils.LogHelper;
 
 import java.lang.ref.SoftReference;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -64,9 +65,19 @@ public class RongTitleTagHelper {
         }
 
         public String buildString() {
-            return TextUtils.join(SPLIT_ADD, new String[]{orderId, travellerId, finderId});
+            String id = "";
+            try {
+                BigInteger bigInteger=new BigInteger(orderId);
+               id = bigInteger.toString(RADIX);
+
+                LogHelper.e("omg  128 string ",id);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return TextUtils.join(SPLIT_ADD, new String[]{id, travellerId, finderId});
         }
 
+        public static final int RADIX= 35;
         public static TitleMessage getInstance(String title) {
             if (title == null) {
                 return null;
@@ -79,7 +90,12 @@ public class RongTitleTagHelper {
             try {
                 String[] values = TextUtils.split(title,SPLIT_BY);
                 data = new TitleMessage();
-                data.setOrderId(values[0]);
+
+                BigInteger bigInteger=new BigInteger(values[0],RADIX);
+
+                LogHelper.e("omg", " revert"+ bigInteger);
+
+                data.setOrderId(String.valueOf(bigInteger));
                 data.setTravellerId(values[1]);
                 data.setFinderId(values[2]);
             } catch (Exception e) {

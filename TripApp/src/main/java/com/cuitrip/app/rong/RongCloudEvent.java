@@ -112,7 +112,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         if (result.size() > 0) {
             return result.get(0);
         }
-        return new UserInfo(userId, "unknown" + userId, uri);
+        return null;
     }
 
     @Override

@@ -135,6 +135,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         initGenderMap();
         ButterKnife.inject(this);
         requestUserInfo();
+        userInfo = LoginInstance.getInstance(this).getUserInfo();
+        setLocalValue();
 
     }
 
@@ -192,8 +194,17 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         mPersonalEmailEt.setEnabled(!TextUtils.isEmpty(userInfo.getEmail()));
         mPersonalEmailEt.setText(userInfo.getEmail());
 
-        mPersonaIdentityTv.setText(getIndeneityString());
         setOnClicks();
+    }
+
+    public void setRemotealue() {
+
+        mPersonaIdentityTv.setText(getIndeneityString());
+
+
+        if (getIndentityClickable()) {
+            mPersonalIdentityV.setOnClickListener(this);
+        }
     }
 
 
@@ -236,10 +247,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             mPersonalNameEt.setOnFocusChangeListener(this);
         }
         mPersonalNickEt.setOnFocusChangeListener(this);
-        if (getIndentityClickable()) {
-            mPersonalIdentityV.setOnClickListener(this);
-        }
         mPersonalDescV.setOnClickListener(this);
+        findViewById(R.id.ct_personal_identity_ll).setOnClickListener(this);
     }
 
     public void showGenderSelect() {
@@ -509,8 +518,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 if (data != null && data instanceof UserInfo) {
-                    userInfo = ((UserInfo) data);
-                    setLocalValue();
+                    setRemotealue();
                     hideLoading();
                 }
 

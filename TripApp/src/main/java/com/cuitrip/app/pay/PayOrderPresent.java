@@ -14,6 +14,7 @@ import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -105,7 +106,6 @@ public class PayOrderPresent {
                 if (orderItem != null) {
                     callback.onSuc(PayOrderMode.getInstance(orderItem,discountItems));
                 }else {
-
                     callback.onFailed(new CtException( PlatformUtil.getInstance().getString(R.string.ct_get_order_detail_failed)));
                 }
             }
@@ -209,6 +209,7 @@ public class PayOrderPresent {
 
             @Override
             public void onFailed(CtException throwable) {
+                MessageUtils.showToast(throwable.getMessage());
                 iPayOrderView.uiHideRefreshLoading();
 
             }

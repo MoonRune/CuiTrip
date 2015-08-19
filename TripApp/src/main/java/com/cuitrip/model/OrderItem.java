@@ -82,6 +82,15 @@ public class OrderItem implements Serializable {
     private String invalidReason;
     private String lat;
     private String lng;
+    private String targetId;
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
+    }
 
     public String getScore() {
         return score;
