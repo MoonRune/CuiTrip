@@ -308,9 +308,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
                                     @Override
                                     public void onError(RongIMClient.ErrorCode errorCode) {
-                                        LogHelper.e(TAG, "build failed   target id");
-                                        hideNoCancelDialog();
-                                        MessageUtils.showToast("创建聊天失败");
                                     }
                                 });
                             }
