@@ -164,7 +164,7 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
                                 }
                             }, item.getSid());
                         } else {
-                            ServiceBusiness.likeikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
+                            ServiceBusiness.likeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
                                         @Override
                                         public void onSuccess(LabResponse response, Object data) {
                                             item.setIsLiked(true);
@@ -185,7 +185,7 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
 
                                         }
                                     }, item.getSid(), item.getServiceName(), item.getServiceAddress(), item.getServicePicUrl(),
-                                    item.getUid(), item.getUserNick(), item.getHeadPic(), item.getCarrer());
+                                    item.getInsiderId(), item.getUserNick(), item.getHeadPic(), item.getCarrer());
 
                         }
                     }

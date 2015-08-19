@@ -18,10 +18,16 @@ public class RecommendItem {
     private String carrer;//todo api
     private boolean isLiked;
     private String isShown;// 1 可进到详情 0 不可进
+    private String insiderId;
 
-    public String getUid(){
-        return "";
+    public String getInsiderId() {
+        return insiderId;
     }
+
+    public void setInsiderId(String insiderId) {
+        this.insiderId = insiderId;
+    }
+
     public String isShown() {
         return isShown;
     }

@@ -208,10 +208,11 @@ public class ServiceBusiness {
         return client.post(context, BusinessHelper.getApiUrl("getStatistic"), params, handler);
     }
 
-    public static RequestHandle likeikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+    public static RequestHandle likeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                                String sid, String serviceName, String serviceAddress, String servicePic
             , String insiderId, String insiderNick, String insiderPic, String insiderCarrer) {
         LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
         params.put("sid", sid);
         params.put("type", "1");
         params.put("serviceName", serviceName);
@@ -227,6 +228,7 @@ public class ServiceBusiness {
     public static RequestHandle unikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                              String sid) {
         LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
         params.put("sid", sid);
         params.put("type", "2");
         return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
