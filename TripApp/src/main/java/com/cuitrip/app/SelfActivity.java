@@ -179,7 +179,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         mPersonalNickEt.setText(userInfo.getNick());
         mPersonalAvaNickTv.setText(userInfo.getNick());
-        mPersonalAvaRegistTv.setText(Utils.getMsToD(userInfo.getGmtCreated()));
+        mPersonalAvaRegistTv.setText("注册时间:"+Utils.getMsToD(userInfo.getGmtCreated()));
         mPersonalBirthEt.setText(userInfo.getBirthDay());
 
         mPersonalGenderTv.setText(getGender(userInfo.getGender()));
