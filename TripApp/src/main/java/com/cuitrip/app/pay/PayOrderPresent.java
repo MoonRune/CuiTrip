@@ -200,7 +200,7 @@ public class PayOrderPresent {
         if (payOrderMode != null && payOrderMode.getDiscount() != null) {
             coupId = payOrderMode.getDiscount().getCode();
         }
-        payOrderFetcher.getChar(oid, method, DEFAULT_CURRENCY, Utils.getLocalHostIp(), coupId, new CtFetchCallback<String>() {
+        payOrderFetcher.getChar(oid, method, Utils.getLocalHostIp(), UnitUtils.getMoenyType(), coupId, new CtFetchCallback<String>() {
             @Override
             public void onSuc(String s) {
                 iPayOrderView.uiHideRefreshLoading();

@@ -40,6 +40,17 @@ public class OrderBusiness {
         params.setToken(context);
         params.put("oid", oid);
         params.put("reason", reason);
+        params.put("type", "1");
+        return client.post(context, BusinessHelper.getApiUrl("cancelOrder"), params, handler);
+    }
+
+
+    public static RequestHandle refuseOrder(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                            String oid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("oid", oid);
+        params.put("type", "2");
         return client.post(context, BusinessHelper.getApiUrl("cancelOrder"), params, handler);
     }
 

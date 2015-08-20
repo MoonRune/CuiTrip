@@ -8,8 +8,8 @@ public class ServiceStatistic {
 //            "sid": "40"
     private String likeNum;
     private String orderNum;
-    private String paidNum;
-    private String orderDoneNum;
+    private String paidNum;//支付
+    private String orderDoneNum;//完成
     private String cancelNum;
 
     public String getLikeNum() {

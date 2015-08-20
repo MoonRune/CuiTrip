@@ -2,6 +2,7 @@ package com.cuitrip.app.service;
 
 import com.cuitrip.model.ServiceDetail;
 import com.cuitrip.model.ServiceStatistic;
+import com.lab.utils.LogHelper;
 import com.lab.utils.Utils;
 
 /**
@@ -114,19 +115,38 @@ public class ServiceAboutMode {
         this.moneyInCome = moneyInCome;
     }
 
-    public static ServiceAboutMode getInstance(ServiceDetail orderItem,ServiceStatistic serviceStatistic) {
-        ServiceAboutMode  result = new ServiceAboutMode(
-                orderItem.getServiceInfo().getBackPic(),
-                orderItem.getServiceInfo().getName(),
-                orderItem.getServiceInfo().getAddress(),
-                Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated()),
-                "wholevisit",
-                "todayvisit",
-                "liked",
-                "whoevisitpeople",
-                "ordernum",
-                "money"
+
+    @Override
+    public String toString() {
+        return "ServiceAboutMode{" +
+                "serviceAva=" + serviceAva +
+                ", serviceName=" + serviceName +
+                ", serviceAddress=" + serviceAddress +
+                ", serviceCreateDate=" + serviceCreateDate +
+                ", wholeVisitAmount=" + wholeVisitAmount +
+                ", todayVisitAmout=" + todayVisitAmout +
+                ", likedPeople=" + likedPeople +
+                ", wholeVisitPeopleSize=" + wholeVisitPeopleSize +
+                ", wholeOrderAmount=" + wholeOrderAmount +
+                ", moneyInCome=" + moneyInCome +
+                '}';
+    }
+
+    public static ServiceAboutMode getInstance(ServiceDetail orderItem, ServiceStatistic serviceStatistic) {
+
+        ServiceAboutMode result = new ServiceAboutMode(
+                orderItem == null ? "" : orderItem.getServiceInfo().getBackPic(),
+                orderItem == null ? "" : orderItem.getServiceInfo().getName(),
+                orderItem == null ? "" : orderItem.getServiceInfo().getAddress(),
+                orderItem == null ? "" : Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated()),
+                serviceStatistic == null ? "" : serviceStatistic.getPaidNum(),
+                serviceStatistic == null ? "" : serviceStatistic.getOrderDoneNum(),
+                serviceStatistic == null ? "" : serviceStatistic.getCancelNum(),
+                serviceStatistic == null ? "" : serviceStatistic.getOrderNum(),
+                serviceStatistic == null ? "" : serviceStatistic.getLikeNum(),
+                ""
         );
+        LogHelper.e("get instance", result.toString());
         return result;
     }
 }

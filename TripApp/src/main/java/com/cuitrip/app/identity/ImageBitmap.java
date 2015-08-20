@@ -5,7 +5,7 @@ import android.graphics.Bitmap;
 /**
  * Created by baziii on 15/8/18.
  */
-public class ImageBitmap {
+public class ImageBitmap  implements java.io.Serializable{
     private Bitmap bitmap;
     private String url;
 

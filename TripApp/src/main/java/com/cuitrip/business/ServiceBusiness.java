@@ -54,10 +54,14 @@ public class ServiceBusiness {
 //        object.put("meetingWay", "0");
         object.put("priceType", priceType); //计费方式：0 一口价;1 按人计费;2 免费
         object.put("city", address);
-        object.put("lat", location.latitude);
-        object.put("lng", location.longitude);
+        object.put("lat", lat);
+        object.put("lng", lng);
         object.put("country", country);
         object.put("moneyType", moneyType);
+        object.put("meetingPlace", meetingPlace);
+        object.put("serviceTags", serviceTags);
+        object.put("feeInclude", inlclude);
+        object.put("feeExclude", exclude);
 
         StringBuilder sb1 = new StringBuilder(object.toJSONString());
         sb1.delete(sb1.lastIndexOf("}"), sb1.length());
@@ -76,7 +80,7 @@ public class ServiceBusiness {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LogHelper.e("omg", "send commitServiceInfo" + object.toJSONString());
+        LogHelper.e("omg", "send commitServiceInfo" + sb1.toString());
         return client.post(context, BusinessHelper.getApiUrl("commitServiceInfo"), entity, "application/json", handler);
     }
 

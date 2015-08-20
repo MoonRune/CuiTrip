@@ -32,23 +32,31 @@ public class LoginInstance {
     private void read(Context context) {
         SharedPreferences sp = context.getSharedPreferences(KEY_USERINFO_ID, Context.MODE_PRIVATE);
         String userInfo = sp.getString(KEY_USERINFO_ID, null);
-        if(userInfo != null){
+        if (userInfo != null) {
             sUserInfo = JSON.parseObject(userInfo, UserInfo.class);
         }
     }
 
     public static void update(Context context, UserInfo userInfo) {
         LoginInstance info = getInstance(context);
+        if (info.sUserInfo!=null&&!TextUtils.isEmpty(info.sUserInfo.getUid())&&userInfo != null && !TextUtils.isEmpty(userInfo.getUid()) && info.sUserInfo.getUid().equals(userInfo.getUid())) {
+            if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
+                userInfo.setRongyunToken(info.sUserInfo.getRongyunToken());
+            }
+        }
         info.sUserInfo = userInfo;
         SharedPreferences sp = context.getSharedPreferences(KEY_USERINFO_ID, Context.MODE_PRIVATE);
         if (userInfo != null) {
-            LogHelper.e("omg","save user info  :"+JSONObject.toJSON(userInfo).toString());
+            LogHelper.e("omg", "save user info  :" + JSONObject.toJSON(userInfo).toString());
+
             sp.edit().putString(KEY_USERINFO_ID, JSONObject.toJSON(userInfo).toString())
                     .commit();
         } else {
             sp.edit().remove(KEY_USERINFO_ID).commit();
         }
-        RongCloudEvent.ConnectRongForce();
+        LogHelper.e("omg", "update ed ");
+                    RongCloudEvent.ConnectRongForce();
+        LogHelper.e("omg", "ConnectRongForce ");
     }
 
     public static void logout(Context context) {
@@ -60,7 +68,7 @@ public class LoginInstance {
 
     public static boolean isLogin(Context context) {
         UserInfo info = getInstance(context).sUserInfo;
-        if(info == null){
+        if (info == null) {
             return false;
         }
         return !TextUtils.isEmpty(info.getToken());

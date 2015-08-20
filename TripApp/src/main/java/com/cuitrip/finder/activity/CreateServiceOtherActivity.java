@@ -21,6 +21,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.PriceDescActivity;
 import com.cuitrip.app.base.UnitUtils;
@@ -66,7 +67,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     private PricePaywayPop priceTypePop = new PricePaywayPop();
     private TagsPoop tagsPop = new TagsPoop();
     private ActvityPop[] actvityPops = {priceTypePop, tagsPop};
-    public ArrayList tags;
+    public List tags;
     boolean isFetchingTags = false;
     boolean isFetchingAddress = false;
 
@@ -249,7 +250,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             return;
         }
         if ((paywayValue == 0 || paywayValue == 1)
-                && TextUtils.isEmpty(mMoney.getText().toString().trim())) {
+                && TextUtils.isEmpty(mMoney.getText().toString())) {
             MessageUtils.showToast(R.string.ct_service_money_set);
             return;
         }
@@ -447,6 +448,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             mServiceInfo.setMeetLocation(GaoDeMapActivity.getName(data));
             mServiceInfo.setLat(String.valueOf(GaoDeMapActivity.getLat(data)));
             mServiceInfo.setLng(String.valueOf(GaoDeMapActivity.getLng(data)));
+            LogHelper.e("get map ",""+mServiceInfo.getMeetLocation()+"|"+mServiceInfo.getLat()+"|"+mServiceInfo.getLng());
             mMeet.setText(GaoDeMapActivity.getName(data));
         }
         if (CountrySelectActivity.isWrited(requestCode, resultCode, data)) {
@@ -555,12 +557,15 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
     public void fetchTags() {
         isFetchingTags = true;
-        ServiceBusiness.getServiceTags(this, mClient, new LabAsyncHttpResponseHandler(ArrayList.class) {
+        ServiceBusiness.getServiceTags(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
+                try {
+                    List<String> datas = JSON.parseArray(data.toString(), String.class);
+                    tags = datas;
 
-                if (data != null && data instanceof ArrayList) {
-                    tags = ((ArrayList) data);
+                } catch (Exception e) {
+                    LogHelper.e("get tags","error"+e.getMessage());
                 }
                 if (tagsPop != null) {
                     tagsPop.build();
@@ -687,9 +692,11 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
 
         public void build() {
-            if (tags != null && tags.isEmpty()) {
+            if (tags != null && !tags.isEmpty()) {
+                LogHelper.e("get tags",TextUtils.join("|",tags));
                 view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
                 LinearLayout tagsLayout = (LinearLayout) view.findViewById(R.id.ct_tags_layout);
+                tagsLayout.setVisibility(View.VISIBLE);
                 buildTagsView(tagsLayout);
             }
         }

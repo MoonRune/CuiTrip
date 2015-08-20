@@ -113,9 +113,17 @@ public class Utils {
     }
 
     //
-    public static String getMsToD(String dateTime){
-        return Y_M_D.format(parseStringToLongTime(dateTime,DATE_FORMAT_SECOND));
+    public static String getMsToD(String dateTime) {
+
+        long value = 0;
+        try {
+            value = Long.parseLong(dateTime);
+        } catch (NumberFormatException e) {
+            value = parseStringToLongTime(dateTime, DATE_FORMAT_SECOND);
+        }
+        return Y_M_D.format(value);
     }
+
     public static String getDateFormat(String dateTime, String format) {
         return getDateFormat(parseStringToLongTime(dateTime, format));
     }
@@ -149,13 +157,15 @@ public class Utils {
         }
         return false;
     }
+
     public static int dp2pixel(int i) {
         return (int) (0.5F + MainApplication.getInstance().getResources().getDisplayMetrics().density * (float) i);
     }
 
     public static float dp2pixelF(int i) {
-        return (0.5F +  MainApplication.getInstance().getResources().getDisplayMetrics().density * (float) i);
+        return (0.5F + MainApplication.getInstance().getResources().getDisplayMetrics().density * (float) i);
     }
+
     public static String getLocalHostIp() {
         String ipaddress = "127.0.0.1";
         try {
@@ -182,15 +192,16 @@ public class Utils {
         return ipaddress;
 
     }
+
     public static HashMap<String, String> sGenderHashMap = new HashMap<>();
 
-    public static  void initGenderMap() {
+    public static void initGenderMap() {
         sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_male_code), PlatformUtil.getInstance().getString(R.string.ct_male));
         sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_female_code), PlatformUtil.getInstance().getString(R.string.ct_female));
     }
 
     public static String getGender(String code) {
-        if (sGenderHashMap == null){
+        if (sGenderHashMap == null) {
             initGenderMap();
         }
         if (sGenderHashMap.containsKey(code)) {

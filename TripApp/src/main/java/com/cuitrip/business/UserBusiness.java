@@ -169,7 +169,7 @@ public class UserBusiness {
         params.setToken(context);
         params.put("idPic", idPic);
         params.put("idType", idType);
-        params.put("idCountry", idCountry);
+        params.put("idArea", idCountry);
         params.put("idValidTime", idValidTime);
         return client.post(context, BusinessHelper.getApiUrl("uploadCreditInfo"), params, handler);
     }

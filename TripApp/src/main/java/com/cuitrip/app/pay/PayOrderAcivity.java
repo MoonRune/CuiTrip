@@ -34,6 +34,7 @@ import java.util.List;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
+import butterknife.OnClick;
 
 /**
  * Created by baziii on 15/8/15.
@@ -143,11 +144,13 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
 
     }
 
+    @OnClick(R.id.ct_order_discounts_ll)
     @Override
     public void clickDiscount() {
         payOrderPresent.clickDiscount();
     }
 
+    @OnClick(R.id.pay_tv)
     @Override
     public void clickPayOrder() {
         payOrderPresent.clickPay();
@@ -312,7 +315,7 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                 mPriceTypeWindow.setOutsideTouchable(true);
                 emptyView.setOnClickListener(this);
             }
-            if (payOrderMode.getDiscountItems() == null || payOrderMode.getDiscountItems().isEmpty()) {
+            if (payOrderMode.getDiscountItems() == null ) {
                 progressBar.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
             } else {

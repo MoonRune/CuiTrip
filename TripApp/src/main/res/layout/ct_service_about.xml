@@ -37,7 +37,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:singleLine="true"
-                android:text="2015/07/01"
                 android:textColor="@color/ct_main_color_light"
                 android:textSize="15sp"
                 tools:text="ct_service_name" />
@@ -61,7 +60,6 @@
                 android:layout_weight="1"
                 android:drawablePadding="5dp"
                 android:singleLine="true"
-                android:text="123"
                 android:textColor="@color/ct_a7"
                 android:textSize="13sp"
                 tools:text="ct_service_create" />

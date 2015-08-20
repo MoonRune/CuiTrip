@@ -84,6 +84,7 @@ public class ServiceAboutPresent {
                 if (detail != null && statistic != null) {
                     callback.onSuc(ServiceAboutMode.getInstance(detail, statistic));
                 } else {
+                    callback.onSuc(ServiceAboutMode.getInstance(detail, statistic));
                     callback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.ct_fetch_service_detail_failed_error)));
                 }
             }

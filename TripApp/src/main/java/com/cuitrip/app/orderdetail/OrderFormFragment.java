@@ -244,9 +244,9 @@ public class OrderFormFragment extends BaseFragment {
     IOrderFetcher orderFetcher = new IOrderFetcher() {
 
         @Override
-        public void refuseOrder(OrderItem orderItem, String reason, final CtApiCallback callback) {
+        public void refuseOrder(OrderItem orderItem, final CtApiCallback callback) {
 
-            OrderBusiness.cancelOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
+            OrderBusiness.refuseOrder(getActivity(), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
                     callback.onSuc();
@@ -257,7 +257,7 @@ public class OrderFormFragment extends BaseFragment {
                     callback.onFailed(new CtException(response.msg));
 
                 }
-            }, orderItem.getOid(), reason);
+            }, orderItem.getOid());
         }
 
         @Override
@@ -496,7 +496,7 @@ public class OrderFormFragment extends BaseFragment {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {
                             showNoCancelDialog();
-                            orderFetcher.refuseOrder(orderItem, "", new CtApiCallback() {
+                            orderFetcher.refuseOrder(orderItem,  new CtApiCallback() {
                                 @Override
                                 public void onSuc() {
                                     hideNoCancelDialog();

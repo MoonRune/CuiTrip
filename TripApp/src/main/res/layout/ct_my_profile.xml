@@ -362,6 +362,7 @@
                     android:id="@+id/ct_personal_email_et"
                     style="@style/profileEditText"
                     android:layout_width="match_parent"
+                    android:inputType="textEmailAddress"
                     android:layout_height="match_parent"
                     android:hint="@string/ct_not_validated"/>
             </LinearLayout>

@@ -1,16 +1,23 @@
 package com.cuitrip.app.rong;
 
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
+import com.cuitrip.service.R;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
-import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.SyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,13 +42,14 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     public static final String TAG = "RongCloudEvent";
     //query for userinfo  from api && local  ??
 
-    public static void DisConnectRong(){
+    public static void DisConnectRong() {
         RongIM.getInstance().disconnect();
     }
 
-    public static void ConnectRongForce(){
+    public static void ConnectRongForce() {
         ConnectRong(true);
     }
+
     public static void ConnectRong(boolean force) {
         if (!LoginInstance.isLogin(MainApplication.getInstance())) {
             return;
@@ -50,8 +58,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         if (userInfo == null || TextUtils.isEmpty(userInfo.getUid())) {
             return;
         }
-        if (TextUtils.isEmpty(userInfo.getRongyunToken())){
-            LogHelper.e(TAG,"rongyun roken null");
+        if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
+            LogHelper.e(TAG, "rongyun roken null");
             if (force) {
                 MainApplication.getInstance().logOutWithError();
             }
@@ -81,7 +89,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         });
     }
 
-    AsyncHttpClient mClient = new AsyncHttpClient();
+    SyncHttpClient mClient = new SyncHttpClient();
 
     @Override
     public UserInfo getUserInfo(final String userId) {
@@ -89,6 +97,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         Uri uri = Uri.parse("http://cdn.aixifan.com/dotnet/artemis/u/cms/www/201508/07094633g8p80txx.jpg");
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         final List<UserInfo> result = new ArrayList<>();
+        try {
         UserBusiness.getUserInfo(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler(com.cuitrip.model.UserInfo.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
@@ -104,14 +113,16 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 countDownLatch.countDown();
             }
         }, userId);
-        try {
             countDownLatch.await();
-        } catch (InterruptedException e) {
+        } catch (Exception e) {
+            LogHelper.e("UserInfoProvider", "search error "+e.getMessage() );
             e.printStackTrace();
         }
         if (result.size() > 0) {
+            LogHelper.e("UserInfoProvider", "search name : "+result.get(0).getName() );
             return result.get(0);
         }
+        LogHelper.e("UserInfoProvider", "search name : null" );
         return null;
     }
 
@@ -119,42 +130,54 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     public boolean onReceived(Message message, int left) {
         MessageContent messageContent = message.getContent();
 
+        String content = "";
+        String title = messageContent.getUserInfo().getName();
+        String contentLittle =messageContent.getUserInfo().getName()+"发来消息";
         if (messageContent instanceof TextMessage) {//文本消息
             TextMessage textMessage = (TextMessage) messageContent;
-            LogHelper.e(TAG, "onReceived-TextMessage:" + textMessage.getContent());
+            content = textMessage.getContent();
         } else if (messageContent instanceof ImageMessage) {//图片消息
             ImageMessage imageMessage = (ImageMessage) messageContent;
-            LogHelper.e(TAG, "onReceived-ImageMessage:" + imageMessage.getRemoteUri());
+            content = "[图片]";
         } else if (messageContent instanceof VoiceMessage) {//语音消息
             VoiceMessage voiceMessage = (VoiceMessage) messageContent;
-            LogHelper.e(TAG, "onReceived-voiceMessage:" + voiceMessage.getUri().toString());
+            content = "[声音]";
         } else if (messageContent instanceof RichContentMessage) {//图文消息
             RichContentMessage richContentMessage = (RichContentMessage) messageContent;
-            LogHelper.e(TAG, "onReceived-RichContentMessage:" + richContentMessage.getContent());
+            content = "[图文]";
         } else if (messageContent instanceof InformationNotificationMessage) {//小灰条消息
             InformationNotificationMessage informationNotificationMessage = (InformationNotificationMessage) messageContent;
             LogHelper.e(TAG, "onReceived-informationNotificationMessage:" + informationNotificationMessage.getMessage());
-//            if (DemoContext.getInstance() != null)
-//                getFriendByUserIdHttpRequest = DemoContext.getInstance().getDemoApi().getUserInfoByUserId(message.getSenderUserId(), (ApiCallback<User>) this);
-//        } else if (messageContent instanceof DeAgreedFriendRequestMessage) {//好友添加成功消息
-//            DeAgreedFriendRequestMessage deAgreedFriendRequestMessage = (DeAgreedFriendRequestMessage) messageContent;
-//            LogHelper.e(TAG, "onReceived-deAgreedFriendRequestMessage:" + deAgreedFriendRequestMessage.getMessage());
-//            receiveAgreeSuccess(deAgreedFriendRequestMessage);
-//        } else if (messageContent instanceof ContactNotificationMessage) {//好友添加消息
-//            ContactNotificationMessage contactContentMessage = (ContactNotificationMessage) messageContent;
-//            LogHelper.e(TAG, "onReceived-ContactNotificationMessage:getExtra;" + contactContentMessage.getExtra());
-//            LogHelper.e(TAG, "onReceived-ContactNotificationMessage:+getmessage:" + contactContentMessage.getMessage().toString());
-//            Intent in = new Intent();
-//            in.setAction(MainActivity.ACTION_DMEO_RECEIVE_MESSAGE);
-//            in.putExtra("rongCloud", contactContentMessage);
-//            in.putExtra("has_message", true);
-//            mContext.sendBroadcast(in);
+            content = "[提醒]";
         } else {
-            LogHelper.e(TAG, "onReceived-其他消息，自己来判断处理");
+            content = "[通知]";
         }
+        buildNotification(message.getTargetId().hashCode(),title,content,contentLittle);
 
         return false;
 
+    }
+
+    public void buildNotification(int id, String content, String title, String contentLittle) {
+        //定义NotificationManager
+        String ns = Context.NOTIFICATION_SERVICE;
+        NotificationManager mNotificationManager = (NotificationManager) MainApplication.getInstance().getSystemService(ns);
+        //定义通知栏展现的内容信息
+        int icon = R.drawable.logo;
+        long when = System.currentTimeMillis();
+        Notification notification = new Notification(icon, contentLittle, when);
+
+        //定义下拉通知栏时要展现的内容信息
+        CharSequence contentTitle = title;
+        CharSequence contentText = content;
+        Intent notificationIntent = new Intent(MainApplication.getInstance(), IndexActivity.class);
+        PendingIntent contentIntent = PendingIntent.getActivity(MainApplication.getInstance(), 0,
+                notificationIntent, 0);
+        notification.setLatestEventInfo(MainApplication.getInstance(), contentTitle, contentText,
+                contentIntent);
+
+        //用mNotificationManager的notify方法通知用户生成标题栏消息通知
+        mNotificationManager.notify(id, notification);
     }
 
     @Override

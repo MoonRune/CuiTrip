@@ -7,7 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,6 +23,7 @@ import android.widget.TextView;
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
@@ -45,7 +48,7 @@ import cn.smssdk.gui.CountryPage;
 /**
  * Created on 7/16.
  */
-public class SelfIdentificationActivity extends BaseActivity implements  CountryPage.OnResult {
+public class SelfIdentificationActivity extends BaseActivity implements CountryPage.OnResult {
     public static final String MODE_KEY = "MODE_KEY";
     @InjectView(R.id.ct_not_pass_tv)
     TextView ctNotPassTv;
@@ -89,14 +92,15 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
                 .putExtra(MODE_KEY, indentityMode), REQUEST_IDENTITY);
     }
 
-    public boolean isModifyed(int request, int response, Intent date) {
+    public static boolean isModifyed(int request, int response, Intent date) {
         return request == REQUEST_IDENTITY && response == RESULT_OK;
     }
 
     @OnClick(R.id.ct_not_pass_tv)
-    public void hideReson(){
+    public void hideReson() {
         ctNotPassTv.setVisibility(View.GONE);
     }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.ct_confirm, menu);
@@ -107,7 +111,7 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_OK:
-
+                trySubmit();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -136,13 +140,13 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
     }
 
     public void submit() {
+        showNoCancelDialog();
         isSubmit = true;
-        showLoading();
         if (identityMode.isImageUploaded()) {
             UserBusiness.updateIndentity(this, mClient, new LabAsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(LabResponse response, Object data) {
-                            hideLoading();
+                            hideNoCancelDialog();
                             setResult(RESULT_OK);
                             MessageUtils.showToast(getString(R.string.ct_upload_indeitiy_suc));
                             finish();
@@ -152,7 +156,14 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
                         @Override
                         public void onFailure(LabResponse response, Object data) {
                             isSubmit = false;
-                            hideLoading();
+                            hideNoCancelDialog();
+                            String msg ;
+                            if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                                msg = response.msg;
+                            }else {
+                                msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                            }
+                            MessageUtils.showToast(msg);
 
                         }
                     }, identityMode.getImagesString(),
@@ -171,6 +182,23 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
         ButterKnife.inject(this);
         identityMode = (IdentityMode) getIntent().getSerializableExtra(MODE_KEY);
         render(identityMode);
+        ctUserValidateDateTv.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                identityMode.setIdentityDate(ctUserValidateDateTv.getText().toString());
+            }
+
+        });
     }
 
     @OnLongClick(R.id.ct_identity_one)
@@ -186,12 +214,13 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
     }
 
     @OnClick(R.id.ct_user_country_v)
-    public void showCountry(){
+    public void showCountry() {
 
         CountryPage countryPage = new CountryPage();
         countryPage.setOnResultListener(this);
         countryPage.showForResult(this, null);
     }
+
     @OnLongClick(R.id.ct_identity_two)
     public boolean removeBitmapTwo() {
         MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片吗").setPositiveButton(R.string.ct_confirm,
@@ -258,10 +287,10 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
             @Override
             public void onFailed(Throwable throwable) {
                 MessageUtils.showToast(getString(R.string.ct_upload_image_failed));
+                identityMode.getImages().remove(imageBitmap);
+                render(identityMode);
                 if (isSubmit) {
-                    hideLoading();
-                    identityMode.getImages().remove(imageBitmap);
-                    render(identityMode);
+                    hideNoCancelDialog();
                     isSubmit = false;
                 }
             }
@@ -282,7 +311,6 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
 
     @OnClick(R.id.ct_user_identity_type_ll)
     public void showIdentityType() {
-
         AlertDialog.Builder builder = MessageUtils.createHoloBuilder(this);
         builder.setAdapter(new ArrayAdapter<String>(this, R.layout.ct_choice_item, R.id.checktext,
                 getResources().getStringArray(R.array.ct_identity_types)), new Dialog.OnClickListener() {
@@ -292,7 +320,7 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
                 if (i < getResources().getStringArray(R.array.ct_identity_types).length) {
                     identityMode.setIdentity(
                             UnitUtils.getIndentityCode(
-                                    getResources().getStringArray(R.array.ct_identity_types)[i - 1])
+                                    getResources().getStringArray(R.array.ct_identity_types)[i])
                     );
                     render(identityMode);
                 }
@@ -348,11 +376,15 @@ public class SelfIdentificationActivity extends BaseActivity implements  Country
             int page = (Integer) data.get("page");
             if (page == 1) {
                 // 国家列表返回
-              String  currentId = (String) data.get("id");
+                String currentId = (String) data.get("id");
+                if (!TextUtils.isEmpty(currentId)) {
 //                HashMap<String, String>  countryRules = (HashMap<String, String>) data.get("rules");
-                String[] country = SMSSDK.getCountry(currentId);
-                ctUserCountryTv.setText(country[0]);
-                identityMode.setCountry(country[0]);
+                    String[] country = SMSSDK.getCountry(currentId);
+                    if (country != null) {
+                        ctUserCountryTv.setText(country[0]);
+                        identityMode.setCountry(country[0]);
+                    }
+                }
             }
         }
     }

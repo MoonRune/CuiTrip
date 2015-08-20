@@ -27,6 +27,7 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.GetImageHelper;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.lab.utils.imageupload.IImageUploader;
@@ -201,21 +202,21 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void setRemotealue() {
-
+        setLocalValue();
         mPersonaIdentityTv.setText(getIndeneityString());
 
 
         if (getIndentityClickable()) {
             mPersonalIdentityV.setOnClickListener(this);
         }
-//        else {
-//            mPersonalIdentityV.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//
-//                }
-//            });
-//        }
+        else {
+            mPersonalIdentityV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
     }
 
 
@@ -298,7 +299,10 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         if (SelfHomePageActivity.isModifidy(requestCode, resultCode, data)) {
             requestUserInfo();
         }
-        if (CountrySelectActivity.isWrited(requestCode, resultCode, data)){
+        if (SelfIdentificationActivity.isModifyed(requestCode, resultCode, data)) {
+            requestUserInfo();
+        }
+        if (CountrySelectActivity.isWrited(requestCode, resultCode, data)) {
             String country = CountrySelectActivity.getValue(data);
             userInfo.setCountry(country);
             mPersonalAreaEt.setText(country);
@@ -413,6 +417,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         UserBusiness.updateProfile(this, mClient, new LabAsyncHttpResponseHandler() {
                     // file write async?
                     public void save() {
+                        UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
                         userInfo.setHeadPic(ava);
                         userInfo.setRealName(name);
                         userInfo.setNick(nick);
@@ -426,12 +431,15 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                         userInfo.setBirthDay(birth);
                         userInfo.setEmail(email);
                         LoginInstance.update(SelfActivity.this, userInfo);
+                        LogHelper.e("omg","update suc");
                     }
 
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
                         save();
+                        LogHelper.e("omg","selft save suc");
                         enableEdit(true, "");
+                        finish();
                     }
 
 
@@ -470,13 +478,16 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 String[] pics = null;
                 String pic1 = "";
                 String pic2 = "";
+                LogHelper.e("pics",""+userInfo.getIdPictures());
                 if (!TextUtils.isEmpty(userInfo.getIdPictures())) {
                     pics = userInfo.getIdPictures().split(",");
-                    if (pics != null && pics.length > 2) {
+                    LogHelper.e("pics",TextUtils.join("-",pics));
+                    if (pics != null && pics.length >= 2) {
                         pic1 = pics[0];
                         pic2 = pics[1];
                     }
                 }
+                LogHelper.e("pics",pic1+"   "+pic2);
                 SelfIdentificationActivity.start(this, userInfo.getIdRefuseReason(),
                         userInfo.getIdArea(), userInfo.getIdType(), userInfo.getIdValidTime(), pic1, pic2);
                 break;
@@ -538,6 +549,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 if (data != null && data instanceof UserInfo) {
+                    userInfo = ((UserInfo) data);
                     setRemotealue();
                     hideLoading();
                 }

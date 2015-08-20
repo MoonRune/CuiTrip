@@ -261,7 +261,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                     //TODO 发现者模式下登录切换到旅行者？
                     info.setType(UserInfo.USER_TRAVEL);
-                    UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
+
+                            UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
                     if (oldInfo == null || (oldInfo != null && !oldInfo.isTravel())) {
                         LoginInstance.update(LoginActivity.this, info);
                         LogHelper.e("LoginActivity", "jump index");

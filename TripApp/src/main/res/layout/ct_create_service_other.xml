@@ -176,6 +176,7 @@
                 android:orientation="horizontal">
 
                 <EditText
+                    android:id="@+id/service_price"
                     style="@style/order_info_value"
                     android:layout_weight="1"
                     android:background="@null"

@@ -177,6 +177,8 @@ public class GaoDeMapActivity extends BaseActivity {
                         intent.putExtra(VALUE_LAT, lat);
                         intent.putExtra(VALUE_LNG, lng);
                         intent.putExtra(VALUE_NAME, addressName);
+
+                        LogHelper.e("set map ",""+lat+"|"+lng+"|"+addressName);
                         setResult(RESULT_OK, intent);
                         finish();
                     } else {
