@@ -58,6 +58,7 @@ public class UserInfo implements Serializable {
     private String token; //: "d687f2911096a74316f521491c928ec0"
     private String birthDay;
     private String rongyunToken;
+    private String introduce;
     private int validType; // 验证方式：1 手机 2 邮箱 4 身份证 8 护照； 3表示通过手机和邮箱认证
 
     private String idArea;
@@ -66,6 +67,14 @@ public class UserInfo implements Serializable {
     private String idCheckStatus;
     private String idPictures;
     private String idRefuseReason;
+
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
 
     public String getIdArea() {
         return idArea;

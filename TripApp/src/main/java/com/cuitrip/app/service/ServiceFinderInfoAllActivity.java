@@ -3,6 +3,7 @@ package com.cuitrip.app.service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -18,6 +19,7 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.imageupload.URLImageParser;
 import com.loopj.android.http.AsyncHttpClient;
 
 import butterknife.ButterKnife;
@@ -165,8 +167,16 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
         setValidated(ctUserEmailValidateIm,data.isUserEmailValidated());
         setValidated(ctUserIdentityValidateIm,data.isUserIdentityValidated());
 
-        aboutHint.setText("关于"+data.getUserName());
-        aboutValue.setText(data.getUserSign());
+        if (TextUtils.isEmpty(data.getIntroduce())){
+            aboutHint.setVisibility(View.GONE);
+            aboutValue.setVisibility(View.GONE);
+        }else {
+            aboutHint.setVisibility(View.VISIBLE);
+            aboutValue.setVisibility(View.VISIBLE);
+            aboutHint.setText("关于" + data.getUserName());
+            URLImageParser urlImageParser = new URLImageParser(aboutValue,this,data.getIntroduce());
+            aboutValue.setText(Html.fromHtml(data.getIntroduce(),urlImageParser,null));
+        }
 //        ctUserPhoneTv.setText(data.getUserPhone());
 //
 //        setWithDefault(ctUserEmailTv, data.getUserEmail());

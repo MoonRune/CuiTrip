@@ -652,7 +652,7 @@ public class OrderFormFragment extends BaseFragment {
 
         @Override
         public void jumpHelp(OrderItem orderItem) {
-
+            RelationActivity.start(getActivity());
         }
 
 

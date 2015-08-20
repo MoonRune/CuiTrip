@@ -19,13 +19,22 @@ public class OrderPersonRenderData {
     protected String userLangeage;
     protected String userSign;
     protected String userPhone;
+    protected String introduce;
     protected boolean userPhoneValidated;
     protected String userEmail;
     protected boolean userEmailValidated;
     protected String userIdentity;
     protected boolean userIdentityValidated;
 
-    public OrderPersonRenderData(String userAva, String userName, String userRegisterTime, String userRealName, String userBirth, String userGender, String userCity, String userCarrer, String userHobby, String userLangeage, String userSign, String userPhone, boolean userPhoneValidated, String userEmail, boolean userEmailValidated, String userIdentity, boolean userIdentityValidated) {
+    public String getIntroduce() {
+        return introduce;
+    }
+
+    public void setIntroduce(String introduce) {
+        this.introduce = introduce;
+    }
+
+    public OrderPersonRenderData(String userAva, String userName, String userRegisterTime, String userRealName, String userBirth, String userGender, String userCity, String userCarrer, String userHobby, String userLangeage, String userSign, String userPhone, boolean userPhoneValidated, String userEmail, boolean userEmailValidated, String userIdentity, boolean userIdentityValidated,String introduce) {
         this.userAva = userAva;
         this.userName = userName;
         this.userRegisterTime = userRegisterTime;
@@ -43,6 +52,7 @@ public class OrderPersonRenderData {
         this.userEmailValidated = userEmailValidated;
         this.userIdentity = userIdentity;
         this.userIdentityValidated = userIdentityValidated;
+        this.introduce = introduce;
     }
 
     public String getUserAva() {
@@ -197,7 +207,8 @@ public class OrderPersonRenderData {
                 "",
                 userInfo.isEmailValidated(),
                 "",
-                userInfo.isIdentityValidated()
+                userInfo.isIdentityValidated(),
+                userInfo.getIntroduce()
                 ) ;
     }
 

@@ -37,6 +37,6 @@ public class MessageDetailActivity extends BaseActivity {
         showActionBar(mode.getName());
         title.setText(mode.getName());
         time.setText(Utils.getMsToD(mode.getDate()));
-        content.setText(Utils.getMsToD(mode.getContent()));
+        content.setText(mode.getContent());
     }
 }

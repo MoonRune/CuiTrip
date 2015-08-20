@@ -54,6 +54,12 @@
             android:layout_height="44dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
+            android:drawablePadding="10dp"
             tools:text="content" />
+        <ImageView
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ct_narrow_right"
+            android:layout_width="8dp"
+            android:layout_height="8dp" />
     </LinearLayout>
 </com.lab.widget.CanClickSwipeLayout>
