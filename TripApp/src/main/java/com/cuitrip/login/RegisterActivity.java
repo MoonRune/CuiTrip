@@ -316,7 +316,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
             MessageUtils.showToast(R.string.ct_null_passwd);
             return false;
         }
-        if (TextUtils.isEmpty(mNick.getText())) {
+        if (mNick.isShown() && TextUtils.isEmpty(mNick.getText())) {
             if (mFindPasswd) {
                 MessageUtils.showToast(R.string.ct_login_input_pw_again);
             } else {
