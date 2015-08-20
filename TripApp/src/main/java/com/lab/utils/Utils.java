@@ -124,6 +124,17 @@ public class Utils {
         return Y_M_D.format(value);
     }
 
+    public static String getMsToSeconds(String dateTime) {
+
+        long value = 0;
+        try {
+            value = Long.parseLong(dateTime);
+        } catch (NumberFormatException e) {
+            value = parseStringToLongTime(dateTime, DATE_FORMAT_SECOND);
+        }
+        return Y_M_D_H_M.format(value);
+    }
+
     public static String getDateFormat(String dateTime, String format) {
         return getDateFormat(parseStringToLongTime(dateTime, format));
     }
