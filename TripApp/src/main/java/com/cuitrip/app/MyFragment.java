@@ -66,6 +66,13 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             mDesc.setText(TextUtils.isEmpty(info.getSign()) ? getString(R.string.ct_no_sign) : info.getSign());
             mSwitch.setText(LoginInstance.getInstance(getActivity()).getUserInfo().isTravel()
                     ? getString(R.string.ct_to_finder) : getString(R.string.ct_to_travel));
+            if (LoginInstance.getInstance(getActivity()).getUserInfo().isTravel()) {
+                mContentView.findViewById(R.id.like_v).setVisibility(View.VISIBLE);
+                mContentView.findViewById(R.id.bill_v).setVisibility(View.GONE);
+            } else {
+                mContentView.findViewById(R.id.like_v).setVisibility(View.GONE);
+                mContentView.findViewById(R.id.bill_v).setVisibility(View.VISIBLE);
+            }
         } else {
             mLogin.setVisibility(View.VISIBLE);
             mContentView.findViewById(R.id.my_content).setVisibility(View.GONE);
