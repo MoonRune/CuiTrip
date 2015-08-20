@@ -33,7 +33,7 @@ import com.lab.utils.LogHelper;
 public class GaoDeMapActivity extends BaseActivity {
     public static final String VALUE_LAT = "VALUE_LAT";
     public static final String VALUE_LNG = "VALUE_LNG";
-    public static final String VALUE_NAME = "VALUE_LNG";
+    public static final String VALUE_NAME = "VALUE_NAME";
     public static final int REQUEST = 13;
     MapView mapView;
     AMap aMap;
@@ -46,15 +46,17 @@ public class GaoDeMapActivity extends BaseActivity {
         context.startActivity(new Intent(context, GaoDeMapActivity.class)
                 .putExtra(VALUE_LAT, lat).putExtra(VALUE_LNG, lng).putExtra(VALUE_NAME, name));
     }
-    public static boolean isSelected(int request,int response,Intent date){
-        return request == REQUEST &&response == RESULT_OK;
+
+    public static boolean isSelected(int request, int response, Intent date) {
+        return request == REQUEST && response == RESULT_OK;
     }
+
     public static double getLat(Intent intent) {
-        return intent.getDoubleExtra(VALUE_LAT,0);
+        return intent.getDoubleExtra(VALUE_LAT, 0);
     }
 
     public static double getLng(Intent intent) {
-        return intent.getDoubleExtra(VALUE_LNG,0);
+        return intent.getDoubleExtra(VALUE_LNG, 0);
     }
 
     public static String getName(Intent intent) {
@@ -109,9 +111,10 @@ public class GaoDeMapActivity extends BaseActivity {
                 }
             });
         } else {
-            moveAndMark(lat,lng,name);
+            moveAndMark(lat, lng, name);
         }
         getSupportActionBar().show();
+        move(25.044061, 121.510841);
     }
 
     public void save() {
@@ -178,7 +181,7 @@ public class GaoDeMapActivity extends BaseActivity {
                         intent.putExtra(VALUE_LNG, lng);
                         intent.putExtra(VALUE_NAME, addressName);
 
-                        LogHelper.e("set map ",""+lat+"|"+lng+"|"+addressName);
+                        LogHelper.e("set map ", "" + lat + "|" + lng + "|" + addressName);
                         setResult(RESULT_OK, intent);
                         finish();
                     } else {
