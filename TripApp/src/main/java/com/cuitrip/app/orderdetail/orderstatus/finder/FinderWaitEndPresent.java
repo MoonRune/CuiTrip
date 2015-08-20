@@ -3,7 +3,6 @@ package com.cuitrip.app.orderdetail.orderstatus.finder;
 import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
-import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.model.OrderItem;
 
 /**
@@ -34,10 +33,6 @@ public class FinderWaitEndPresent extends BaseOrderFormPresent<IFinderOrderDetai
         return OrderProgressingRenderData.getInstance(orderItem);
     }
 
-    public ServicePartRenderData builServiceData(OrderItem orderItem) {
-        return null;
-    }
-
     @Override
     public String getBottomText(OrderItem orderItem) {
         return "结束旅程";
@@ -45,7 +40,7 @@ public class FinderWaitEndPresent extends BaseOrderFormPresent<IFinderOrderDetai
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "寻求帮助";
+        return "联系脆饼";
     }
 
     @Override

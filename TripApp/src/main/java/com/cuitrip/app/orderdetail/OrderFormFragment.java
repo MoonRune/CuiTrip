@@ -19,6 +19,7 @@ import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.ModifyOrderActivity;
 import com.cuitrip.app.OrderFragment;
+import com.cuitrip.app.RelationActivity;
 import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.PartViewHolder;
@@ -544,7 +545,7 @@ public class OrderFormFragment extends BaseFragment {
 
         @Override
         public void jumpHelp(OrderItem orderItem) {
-
+            RelationActivity.start(getActivity());
         }
 
         @Override

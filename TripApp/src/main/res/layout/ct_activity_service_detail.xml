@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -15,6 +16,7 @@
             android:orientation="vertical">
 
             <RelativeLayout
+                tools:visibility="gone"
                 android:id="@+id/service_pic_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -51,6 +53,7 @@
             </RelativeLayout>
 
             <RelativeLayout
+                tools:visibility="visible"
                 android:id="@+id/service_desc_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -121,6 +124,7 @@
                 </RelativeLayout>
 
             <RelativeLayout
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/comment_block"
@@ -241,6 +245,7 @@
                     android:layout_below="@+id/service_cuibin_introduce" />
             </RelativeLayout>
             <LinearLayout
+                tools:visibility="gone"
                 android:id="@+id/comment_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -361,21 +366,45 @@
                     android:layout_below="@+id/author_register_time_title"
                     android:background="@color/ct_divider" />
 
-                <TextView
-                    android:id="@+id/author_identification_title"
-                    style="@style/ctDetailLeft"
+                <LinearLayout
+                    android:id="@+id/author_identification_title_block"
+                    android:layout_width="match_parent"
                     android:layout_below="@+id/divider1"
-                    android:text="@string/ct_author_identification" />
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/author_identification_value"
-                    style="@style/ctDetailRight"
-                    android:textColor="@color/ct_red"
-                    android:layout_below="@+id/divider1" />
+                    <TextView
+                        style="@style/ctDetailLeft"
+                        android:layout_width="wrap_content"
+                        android:text="@string/ct_author_identification" />
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"/>
+                    <ImageView
+                        android:id="@+id/phone_validate"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/phone_b"/>
+                    <ImageView
+                        android:id="@+id/email_validate"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/mail_b"/>
+                    <ImageView
+                        android:id="@+id/idcard_validate"
+                        android:layout_marginRight="10dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/idcard_b"/>
+                </LinearLayout>
 
                 <View
                     android:id="@+id/divider2"
-                    android:layout_below="@+id/author_identification_title"
+                    android:layout_below="@+id/author_identification_title_block"
                     style="@style/ctDivider" />
 
                 <TextView

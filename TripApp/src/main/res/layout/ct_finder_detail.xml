@@ -78,7 +78,7 @@
                 android:background="@color/ct_divider" />
 
             <TextView
-                android:id="@+id/author_identification_title"
+                android:id="@+id/author_identification_title_block"
                 style="@style/ctDetailLeft"
                 android:layout_below="@+id/divider1"
                 android:text="@string/ct_author_identification" />
@@ -92,7 +92,7 @@
             <View
                 android:id="@+id/divider2"
                 style="@style/ctDivider"
-                android:layout_below="@+id/author_identification_title" />
+                android:layout_below="@+id/author_identification_title_block" />
 
             <TextView
                 android:id="@+id/author_career_title"

@@ -164,6 +164,9 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
         setValidated(ctUserPhoneValidateIm,data.isUserPhoneValidated());
         setValidated(ctUserEmailValidateIm,data.isUserEmailValidated());
         setValidated(ctUserIdentityValidateIm,data.isUserIdentityValidated());
+
+        aboutHint.setText("关于"+data.getUserName());
+        aboutValue.setText(data.getUserSign());
 //        ctUserPhoneTv.setText(data.getUserPhone());
 //
 //        setWithDefault(ctUserEmailTv, data.getUserEmail());

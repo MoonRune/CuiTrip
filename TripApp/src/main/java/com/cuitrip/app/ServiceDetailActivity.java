@@ -175,11 +175,9 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             setViewText(R.id.author_sign, userInfo.getSign());
             setViewText(R.id.author_register_time_value, userInfo.getGmtModified());
             //TODO:
-            if ("0".equals(userInfo.getStatus())) {
-                setViewText(R.id.author_identification_value, getString(R.string.ct_cuitrip_renzheng));
-            } else {
-                setViewText(R.id.author_identification_value, getString(R.string.ct_cuitrip_renzheng_no));
-            }
+            findViewById(R.id.phone_validate).setVisibility(userInfo.isPhoneValidated() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.email_validate).setVisibility(userInfo.isEmailValidated() ? View.VISIBLE : View.GONE);
+            findViewById(R.id.idcard_validate).setVisibility(userInfo.isIdentityValidated() ? View.VISIBLE : View.GONE);
 
             setViewText(R.id.author_career_value, userInfo.getCareer());
             setViewText(R.id.author_interest_value, userInfo.getInterests());
@@ -212,6 +210,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                 findViewById(R.id.comment_block).setVisibility(View.GONE);
 
             }
+
+            ((TextView) findViewById(R.id.comment_block)).setText("查看其他" + commentCount+"条评论");
         } else {
             findViewById(R.id.comment_block).setVisibility(View.GONE);
             setViewText(R.id.comment_count, 0 + getString(R.string.ct_cuitrip_comment_count));
@@ -262,7 +262,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                                 mServiceDetail.getServiceInfo().getSid()));
                 break;
             case R.id.author_more:
-                ServiceFinderInfoAllActivity.start(this,mServiceDetail.getServiceInfo().getInsiderId());
+                ServiceFinderInfoAllActivity.start(this, mServiceDetail.getServiceInfo().getInsiderId());
                 break;
             case R.id.service_bill_introduce_view:
                 ServicePriceDescActivity.start(this,

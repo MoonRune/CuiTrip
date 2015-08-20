@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/ct_white"
+    android:background="@color/ct_back_light_yellow"
     android:gravity="center_horizontal"
     android:orientation="vertical">
 
@@ -73,6 +73,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/ct_green_circle_solid"
                     android:textSize="15sp"
                     tools:text="ct_travel_name_tv" />
@@ -109,6 +110,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:singleLine="true"
                     android:textColor="@color/ct_blue_circle_solid"
                     android:textSize="15sp"
                     tools:text="ct_finder_name_tv" />

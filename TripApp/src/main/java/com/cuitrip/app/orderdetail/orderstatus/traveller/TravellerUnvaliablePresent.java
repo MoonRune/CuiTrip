@@ -29,7 +29,7 @@ public class TravellerUnvaliablePresent extends BaseOrderFormPresent<ITravelerOr
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "已失效";
+        return "";
     }
 
     @Override

@@ -34,9 +34,9 @@
     <string name="ct_no_finish">开发中，敬请期待...</string>
 
     <string name="ct_hot_recommend">热门推荐</string>
-    <string name="ct_watch_detail">查看详情</string>
+    <string name="ct_watch_detail">更多了解这个服务</string>
     <string name="ct_author_register_time">注册时间</string>
-    <string name="ct_author_identification">身份认证</string>
+    <string name="ct_author_identification">验证</string>
     <string name="ct_author_career">职业</string>
     <string name="ct_author_interest">兴趣爱好</string>
     <string name="ct_author_language">语言能力</string>

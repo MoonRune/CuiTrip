@@ -17,6 +17,12 @@
             android:orientation="vertical">
 
             <ViewStub
+                android:id="@+id/ct_progressing_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/ct_order_progressing"
+                android:layout_marginBottom="20dp"/>
+            <ViewStub
                 android:id="@+id/ct_service_info_v"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -28,11 +34,6 @@
                 android:layout_height="wrap_content"
                 android:layout="@layout/ct_comment_part" />
 
-            <ViewStub
-                android:id="@+id/ct_progressing_v"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout="@layout/ct_order_progressing" />
 
         </LinearLayout>
     </ScrollView>

@@ -28,8 +28,8 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.widget.IconPageIndicator;
 import com.loopj.android.http.AsyncHttpClient;
-import com.viewpagerindicator.IconPageIndicator;
 import com.viewpagerindicator.IconPagerAdapter;
 
 import java.util.ArrayList;
@@ -62,7 +62,7 @@ public class OrderFormActivity extends BaseActivity {
     OrderItem orderItem = null;
 
     AsyncHttpClient mClient = new AsyncHttpClient();
-    boolean showTabs = false;
+    boolean showTabs = true;
 
     public static void start(Context context, String orderId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
@@ -223,7 +223,6 @@ public class OrderFormActivity extends BaseActivity {
     public void renderUi(OrderItem orderItem) {
         this.orderItem = orderItem;
         if (orderItem != null) {
-            showTabs = orderItem.getStatus() != orderItem.STATUS_WAIT_END;
             mItsNameTv.setText(buildItsname(this.orderItem));
             LogHelper.e(TAG, "order target id" + orderItem);
             if (TextUtils.isEmpty(orderItem.getTargetId())) {
