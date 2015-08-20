@@ -75,7 +75,7 @@ public abstract class BaseVerticalListActivity<T> extends BaseActivity implement
             mSwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (isResumeRefresh) {
+                    if (mSwipeRefreshLayout != null && isResumeRefresh) {
                         mSwipeRefreshLayout.setRefreshing(true);
                     }
                 }

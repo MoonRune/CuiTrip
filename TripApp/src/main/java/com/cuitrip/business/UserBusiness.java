@@ -5,6 +5,7 @@ import android.text.TextUtils;
 
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
+import com.lab.utils.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
 
@@ -144,6 +145,7 @@ public class UserBusiness {
         params.put("mobile", mobile);
         params.put("email", email);
         params.put("birth", birth);
+        LogHelper.e("send update profile",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("modifyUserInfo"), params, handler);
     }
 

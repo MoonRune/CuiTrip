@@ -41,6 +41,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
 
     boolean isResumeRefresh = false;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -71,7 +72,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
             mSwipeRefreshLayout.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    if (isResumeRefresh) {
+                    if (mSwipeRefreshLayout != null && isResumeRefresh) {
                         mSwipeRefreshLayout.setRefreshing(true);
                     }
                 }
@@ -86,7 +87,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     @Override
     public void hideRefreshLoading() {
-        if (mSwipeRefreshLayout !=null) {
+        if (mSwipeRefreshLayout != null) {
             mSwipeRefreshLayout.setRefreshing(false);
             isResumeRefresh = false;
         }
@@ -124,9 +125,10 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     }
 
     @OnClick(R.id.ct_login)
-    public void clickLogin(){
-      reLogin();
+    public void clickLogin() {
+        reLogin();
     }
+
     @Override
     public void jumpConversation(ConversationItem item) {
 //        LogHelper.e("jump", "" + item.getId() + "|" + "" + item.getName() + "|" + "" + item.getLastWords());
