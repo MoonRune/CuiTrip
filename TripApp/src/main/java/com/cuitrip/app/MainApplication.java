@@ -36,16 +36,14 @@ public class MainApplication extends BaseAppLication {
         RongIM.init(this);
         RongIMClient.init(this);
         RongContext.init(this);
-        RongCloudEvent rongCloudEvent = new RongCloudEvent();
-        RongIM.setUserInfoProvider(rongCloudEvent, true);
-        RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(rongCloudEvent);
-        RongCloudEvent.ConnectRong(false);
+        RongIM.setUserInfoProvider(RongCloudEvent.getInstance(), true);
+        RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(RongCloudEvent.getInstance());
     }
     public void onCreate() {
         super.onCreate();
+        initRongIM();
         sContext = this;
         ImageHelper.initImageLoader(getApplicationContext());
-        initRongIM();
         SmsSdkHelper.initSmsSDK(getApplicationContext());
         if("io.rong.app".equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {

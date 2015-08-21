@@ -2,6 +2,7 @@ package com.lab.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.EditText;
 
@@ -29,11 +30,14 @@ public class TextEditSplit extends EditText {
     private void init(){
         int dp_10 = getResources().getDimensionPixelOffset(R.dimen.ct_dp_10);
         int dp_3 = getResources().getDimensionPixelOffset(R.dimen.ct_dp_3);
-        setBackgroundColor(getResources().getColor(android.R.color.transparent));
+        setBackgroundColor(getResources().getColor(
+                android.R.color.transparent
+        ));
+        setGravity(Gravity.TOP);
         setTextSize(15);
         setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-        setPadding(0, dp_10, 0, dp_10);
+        setPadding(0, 0, 0, dp_10);
         setLineSpacing(dp_3, 1.2f);
         setTextColor(getResources().getColor(R.color.ct_text_title));
     }

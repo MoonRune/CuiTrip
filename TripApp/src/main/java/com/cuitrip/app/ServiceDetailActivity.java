@@ -206,12 +206,12 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                     }
                 }
                 findViewById(R.id.comment_click).setOnClickListener(this);
+                ((TextView) findViewById(R.id.comment_click)).setText("查看其他" + commentCount+"条评论");
             } else {
                 findViewById(R.id.comment_block).setVisibility(View.GONE);
 
             }
 
-            ((TextView) findViewById(R.id.comment_block)).setText("查看其他" + commentCount+"条评论");
         } else {
             findViewById(R.id.comment_block).setVisibility(View.GONE);
             setViewText(R.id.comment_count, 0 + getString(R.string.ct_cuitrip_comment_count));
@@ -257,9 +257,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                         mServiceDetail.getServiceInfo());
                 break;
             case R.id.service_order_view:
-                startActivity(new Intent(this, DateActivity.class)
-                        .putExtra(ServiceDetailActivity.SERVICE_ID,
-                                mServiceDetail.getServiceInfo().getSid()));
+                DateActivity.startTraveller(this, mServiceDetail.getServiceInfo().getSid());
                 break;
             case R.id.author_more:
                 ServiceFinderInfoAllActivity.start(this, mServiceDetail.getServiceInfo().getInsiderId());
@@ -309,9 +307,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void gotoDate() {
-        startActivity(new Intent(this, DateActivity.class)
-                .putExtra(ServiceDetailActivity.SERVICE_ID, mServiceDetail.getServiceInfo().getSid())
-                .putExtra(DateActivity.USER_TYPE, UserInfo.USER_FINDER));
+        DateActivity.startFinder(this,mServiceDetail.getServiceInfo().getSid());
     }
 
     private void share() {

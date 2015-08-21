@@ -82,7 +82,7 @@ public class MessageMode implements java.io.Serializable {
 
     public static MessageMode getInstance(MessageServerItem item) {
         return new MessageMode(item.getTitle(), item.getMessageId(),
-                Utils.getMsToD(item.getGmtCreated()), item.getContent(),
+                Utils.getMsToSeconds(item.getGmtCreated()), item.getContent(),
                 item.isNotSystem());
     }
 }

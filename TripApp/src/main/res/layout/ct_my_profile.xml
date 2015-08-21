@@ -104,7 +104,8 @@
                     style="@style/profileEditText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:digits="1234567890/- "
+                    android:digits="1234567890-"
+                    android:inputType="date"
                     android:hint="请填写出生年月" />
             </LinearLayout>
 

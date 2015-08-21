@@ -144,6 +144,9 @@ public class CountrySelectActivity extends BaseActivity {
                 LogHelper.e("omg", "request" + response.result);
                 if (data != null && data instanceof LocationMode) {
                     for (int x = listViews.size() - 1; x >= 0; x--) {
+                        if (((LocationMode) data).getContent() == null ||((LocationMode) data).getContent().isEmpty()){
+                            MessageUtils.showToast("没有下级区域");
+                        }
                         if (x > code) {
                             listViews.get(x).setVisibility(View.GONE);
                             ((LocationAdapter) listViews.get(x).getAdapter()).clear();

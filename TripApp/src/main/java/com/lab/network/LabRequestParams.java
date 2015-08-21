@@ -3,6 +3,7 @@ package com.lab.network;
 import android.content.Context;
 
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.lab.utils.LogHelper;
@@ -23,6 +24,8 @@ public class LabRequestParams extends RequestParams {
         } else {
 
         }
+        put("lang", UnitUtils.getLanguage());
+        put("moneyType", UnitUtils.getMoenyType());
     }
 
 

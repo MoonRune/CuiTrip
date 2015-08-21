@@ -174,8 +174,10 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
             aboutHint.setVisibility(View.VISIBLE);
             aboutValue.setVisibility(View.VISIBLE);
             aboutHint.setText("关于" + data.getUserName());
-            URLImageParser urlImageParser = new URLImageParser(aboutValue,this,data.getIntroduce());
-            aboutValue.setText(Html.fromHtml(data.getIntroduce(),urlImageParser,null));
+            String introduce = URLImageParser.replae(data.getIntroduce());
+             introduce = URLImageParser.replaeWidth(data.getIntroduce());
+            URLImageParser urlImageParser = new URLImageParser(aboutValue,this,introduce);
+            aboutValue.setText(Html.fromHtml(introduce,urlImageParser,null));
         }
 //        ctUserPhoneTv.setText(data.getUserPhone());
 //

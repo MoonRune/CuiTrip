@@ -241,6 +241,7 @@ public class ServiceBusiness {
     public static RequestHandle getLikes(Context context, AsyncHttpClient clinet, LabAsyncHttpResponseHandler handler,
                                          int start, int size) {
         LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
         if (LoginInstance.getInstance(context).getUserInfo() != null
                 && !TextUtils.isEmpty(LoginInstance.getInstance(context).getUserInfo().getUid())) {
             params.put("uid", LoginInstance.getInstance(context).getUserInfo().getUid());

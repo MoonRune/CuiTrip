@@ -39,6 +39,25 @@ import io.rong.message.VoiceMessage;
  */
 public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnReceiveMessageListener,
         RongIMClient.ConnectionStatusListener {
+
+
+    private RongCloudEvent() {
+
+    }
+
+    private static RongCloudEvent sRongCloudEvent;
+
+    public static RongCloudEvent getInstance() {
+        if (sRongCloudEvent == null) {
+            synchronized (RongCloudEvent.class) {
+                if (sRongCloudEvent == null) {
+                    sRongCloudEvent = new RongCloudEvent();
+                }
+            }
+        }
+        return sRongCloudEvent;
+    }
+
     public static final String TAG = "RongCloudEvent";
     //query for userinfo  from api && local  ??
 
@@ -66,6 +85,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             return;
         }
         String token = userInfo.getRongyunToken();
+        LogHelper.e(TAG, "rongyun roken is : " + token);
         RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
             @Override
@@ -94,36 +114,37 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     @Override
     public UserInfo getUserInfo(final String userId) {
         LogHelper.e("UserInfoProvider", "search uid :" + userId);
-        Uri uri = Uri.parse("http://cdn.aixifan.com/dotnet/artemis/u/cms/www/201508/07094633g8p80txx.jpg");
+        Uri uri = Uri.parse("http://mmbiz.qpic.cn/mmbiz/CCOz0VqjicmxJpUWy6iaibsJ0FcIGaHDLo0TqBHVzyEJOmeaia8mW6jmBnsUrfSJNyd7vAf4sgc9U7ZJ4ydEicNpvZA/0?wx_fmt=gif&wxfrom=5&wx_lazy=1");
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         final List<UserInfo> result = new ArrayList<>();
         try {
-        UserBusiness.getUserInfo(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler(com.cuitrip.model.UserInfo.class) {
-            @Override
-            public void onSuccess(LabResponse response, Object data) {
-                if (data != null && data instanceof com.cuitrip.model.UserInfo) {
-                    com.cuitrip.model.UserInfo temp = ((com.cuitrip.model.UserInfo) data);
-                    result.add(new UserInfo(userId, temp.getNick(), Uri.parse(temp.getHeadPic())));
+            UserBusiness.getUserInfo(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler(com.cuitrip.model.UserInfo.class) {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    if (data != null && data instanceof com.cuitrip.model.UserInfo) {
+                        com.cuitrip.model.UserInfo temp = ((com.cuitrip.model.UserInfo) data);
+                        result.add(new UserInfo(userId, temp.getNick(), Uri.parse(temp.getHeadPic())));
+                    }
+                    countDownLatch.countDown();
                 }
-                countDownLatch.countDown();
-            }
 
-            @Override
-            public void onFailure(LabResponse response, Object data) {
-                countDownLatch.countDown();
-            }
-        }, userId);
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    countDownLatch.countDown();
+                }
+            }, userId);
             countDownLatch.await();
         } catch (Exception e) {
-            LogHelper.e("UserInfoProvider", "search error "+e.getMessage() );
+            LogHelper.e("UserInfoProvider", "search error " + e.getMessage());
             e.printStackTrace();
         }
         if (result.size() > 0) {
-            LogHelper.e("UserInfoProvider", "search name : "+result.get(0).getName() );
+            LogHelper.e("UserInfoProvider", "search name : " + result.get(0).getName());
             return result.get(0);
         }
-        LogHelper.e("UserInfoProvider", "search name : null" );
-        return null;
+        LogHelper.e("UserInfoProvider", "search name : null");
+        UserInfo empty = new UserInfo(userId, "载入中", uri);
+        return empty;
     }
 
     @Override
@@ -132,7 +153,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
         String content = "";
         String title = messageContent.getUserInfo().getName();
-        String contentLittle =messageContent.getUserInfo().getName()+"发来消息";
+        String contentLittle = messageContent.getUserInfo().getName() + "发来消息";
         if (messageContent instanceof TextMessage) {//文本消息
             TextMessage textMessage = (TextMessage) messageContent;
             content = textMessage.getContent();
@@ -152,7 +173,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         } else {
             content = "[通知]";
         }
-        buildNotification(message.getTargetId().hashCode(),title,content,contentLittle);
+        buildNotification(message.getTargetId().hashCode(), title, content, contentLittle);
 
         return false;
 

@@ -204,14 +204,13 @@ public class OrderFormActivity extends BaseActivity {
                         public void onFailure(LabResponse response, Object data) {
                             LogHelper.e(TAG, "update failed   target id" + s);
                             MessageUtils.showToast("创建聊天失败");
-
                         }
                     }, orderItem.getOid(), s);
                 }
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    LogHelper.e(TAG, "build failed   target id");
+                    LogHelper.e(TAG, "build failed   target "+errorCode);
                     hideNoCancelDialog();
                     MessageUtils.showToast("创建聊天失败");
                 }

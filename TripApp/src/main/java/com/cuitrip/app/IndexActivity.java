@@ -12,6 +12,7 @@ import android.widget.TabHost;
 import android.widget.TextView;
 
 import com.cuitrip.app.conversation.ConversationListFragment;
+import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.finder.fragment.ServiceFragment;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
@@ -54,6 +55,7 @@ public class IndexActivity extends BaseTabHostActivity {
         }
         IntentFilter filter = new IntentFilter(PushService.NEW_MESSAGE_BROADCAT);
         registerReceiver(mNewMessageComing, filter);
+        RongCloudEvent.ConnectRong(false);
     }
 
     @Override
@@ -75,10 +77,6 @@ public class IndexActivity extends BaseTabHostActivity {
         } else {
             mNewMessageDot.setVisibility(View.GONE);
         }
-    }
-
-    public void testClickMy() {
-        tab.performClick();
     }
 
     View tab;

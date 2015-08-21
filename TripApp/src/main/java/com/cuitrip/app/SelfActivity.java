@@ -391,7 +391,13 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             } else {
                 mSubmitDialog.setTitleText(msg)
                         .setConfirmText(getString(R.string.ct_i_know))
-                        .setConfirmClickListener(null)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                mSubmitDialog.dismissWithAnimation();
+                                mSubmitDialog = null;
+                            }
+                        })
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
             }
         }

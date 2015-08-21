@@ -144,7 +144,7 @@ public class UserBusiness {
         params.put("headPic", headPic);
         params.put("mobile", mobile);
         params.put("email", email);
-        params.put("birth", birth);
+        params.put("birthDay", birth);
         LogHelper.e("send update profile",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("modifyUserInfo"), params, handler);
     }

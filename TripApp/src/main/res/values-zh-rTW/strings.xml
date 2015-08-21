@@ -45,7 +45,7 @@
     <string name="ct_cuitrip_gongyue">脆餅公約</string>
     <string name="ct_cuitrip_view_all">查看所有</string>
     <string name="ct_cuitrip_book">聯絡預定</string>
-    <string name="ct_cuitrip_comment_count">則留言”</string>
+    <string name="ct_cuitrip_comment_count">則留言</string>
     <string name="ct_cuitrip_comment_no">暫無留言</string>
     <string name="ct_cuitrip_renzheng">已由脆餅旅行認證身份</string>
     <string name="ct_cuitrip_renzheng_no">未認證</string>
@@ -162,7 +162,7 @@
     <string name="ct_relation_call">緊急情況請來電</string>
     <string name="ct_mail">service@cuitrip.com</string>
     <string name="ct_copyright">Copyright © 2015 Cuitrip All Rights Reserved</string>
-    <string name="ct_finder">發現</string>
+    <string name="ct_finder">行程</string>
     <string name="ct_your_find">你的發現</string>
     <string name="ct_your_find_tip">你有什麼有趣的發現要告訴旅行者嗎？</string>
     <string name="ct_create_my_find">發布我的精彩行程</string>

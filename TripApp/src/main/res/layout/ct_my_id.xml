@@ -77,8 +77,8 @@
                     android:id="@+id/ct_user_validate_date_tv"
                     style="@style/order_info_value"
                     android:background="@null"
-                    android:digits="1234567890/- "
-                    tools:text="ct_user_validate_date_tv" />
+                    android:digits="1234567890-"
+                    android:hint="例:2000-10-1" />
             </LinearLayout>
 
         </LinearLayout>

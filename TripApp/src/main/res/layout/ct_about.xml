@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         android:layout_marginTop="80dp"
-        android:src="@drawable/ct_about"
+        android:src="@drawable/trip_logo"
         android:layout_gravity="center_horizontal"/>
 
     <TextView

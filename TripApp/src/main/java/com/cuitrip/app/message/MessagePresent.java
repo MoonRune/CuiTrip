@@ -15,6 +15,7 @@ import com.cuitrip.util.PlatformUtil;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
+import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
@@ -49,13 +50,16 @@ public class MessagePresent {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
 
+                    LogHelper.e("omg","res "+response.result);
                     List<MessageMode> result = new ArrayList<>();
                     try {
                         List<MessageServerItem> datas = JSON.parseArray(data.toString(), MessageServerItem.class);
+                        LogHelper.e("omg","datas  "+datas.size());
                         for (MessageServerItem item : datas) {
                             result.add(MessageMode.getInstance(item));
                         }
                     } catch (Exception e) {
+                        LogHelper.e("omg","eerror "+e.getMessage());
                     }
                     itemListFetchCallback.onSuc(result);
                 }
@@ -122,6 +126,7 @@ public class MessagePresent {
             public void onFailed(Throwable throwable) {
 
                 LogHelper.e(TAG, "requestLoadMore onfailed");
+                MessageUtils.showToast(throwable.getMessage());
                 mMessageView.uiHideLoadMore();
             }
         });
@@ -149,6 +154,7 @@ public class MessagePresent {
             @Override
             public void onFailed(Throwable throwable) {
                 LogHelper.e(TAG, "requestRefresh onfailed");
+                MessageUtils.showToast(throwable.getMessage());
                 mMessageView.uiHideRefreshLoading();
             }
         });

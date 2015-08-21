@@ -219,7 +219,7 @@
                     style="@style/ctDetailRight"
                     android:textColor="@color/ct_main_color"
                     android:layout_below="@+id/divider8"
-                    android:text="@string/ct_watch_detail" />
+                    android:text="查看详情" />
 
                 <View
                     android:id="@+id/divider9"
@@ -237,7 +237,7 @@
                     style="@style/ctDetailRight"
                     android:textColor="@color/ct_main_color"
                     android:layout_below="@+id/divider9"
-                    android:text="@string/ct_watch_detail" />
+                    android:text="查看详情" />
 
                 <View
                     android:layout_width="match_parent"

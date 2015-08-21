@@ -13,6 +13,7 @@ import com.cuitrip.util.PlatformUtil;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
+import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
@@ -33,44 +34,48 @@ public class FavoritePresent<T extends FavoriteMode> {
     protected class FavoriteFetcher implements IFavoriteFetcher {
         int defaultSize = 10;
         AsyncHttpClient mClient = new AsyncHttpClient();
+
         @Override
         public void getFavoriteList(final ListFetchCallback<FavoriteMode> itemListFetchCallback) {
             ServiceBusiness.getLikes(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler(RecommendOutData.class) {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
-                        if ( data !=null){
-                            RecommendOutData recommendOutData=  ((RecommendOutData) data);
-                            ArrayList<FavoriteMode > result = new ArrayList<>();
-                           for(RecommendItem item: recommendOutData.getLists()){
-                               result.add(FavoriteMode.getInstance(item));
-                            }
-                            itemListFetchCallback.onSuc(result);
+                    ArrayList<FavoriteMode> result = new ArrayList<>();
+                    if (data != null) {
+                        RecommendOutData recommendOutData = ((RecommendOutData) data);
+                        for (RecommendItem item : recommendOutData.getLists()) {
+                            result.add(FavoriteMode.getInstance(item));
                         }
+
+                    }
+                    itemListFetchCallback.onSuc(result);
                 }
 
                 @Override
                 public void onFailure(LabResponse response, Object data) {
-                    String msg ;
-                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                    String msg;
+                    if (response != null && !TextUtils.isEmpty(response.msg)) {
                         msg = response.msg;
-                    }else {
-                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                    } else {
+                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
                     }
                     itemListFetchCallback.onFailed(new CtException(msg));
 
                 }
-            },0,defaultSize);
+            }, 0, defaultSize);
         }
 
         @Override
-        public void getFavoriteListWithMore(int pattern,final ListFetchCallback<FavoriteMode> itemListFetchCallback) {
+        public void getFavoriteListWithMore(int pattern, final ListFetchCallback<FavoriteMode> itemListFetchCallback) {
             ServiceBusiness.getLikes(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler(RecommendOutData.class) {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
-                    if ( data !=null){
-                        RecommendOutData recommendOutData=  ((RecommendOutData) data);
-                        ArrayList<FavoriteMode > result = new ArrayList<>();
-                        for(RecommendItem item: recommendOutData.getLists()){
+                    LogHelper.e("omg", "result " + response.result);
+                    if (data != null) {
+                        RecommendOutData recommendOutData = ((RecommendOutData) data);
+                        LogHelper.e("omg", "size " + recommendOutData.getLists().size());
+                        ArrayList<FavoriteMode> result = new ArrayList<>();
+                        for (RecommendItem item : recommendOutData.getLists()) {
                             result.add(FavoriteMode.getInstance(item));
                         }
                         itemListFetchCallback.onSuc(result);
@@ -79,16 +84,16 @@ public class FavoritePresent<T extends FavoriteMode> {
 
                 @Override
                 public void onFailure(LabResponse response, Object data) {
-                    String msg ;
-                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                    String msg;
+                    if (response != null && !TextUtils.isEmpty(response.msg)) {
                         msg = response.msg;
-                    }else {
-                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                    } else {
+                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
                     }
                     itemListFetchCallback.onFailed(new CtException(msg));
 
                 }
-            },pattern,pattern+defaultSize);
+            }, pattern, pattern + defaultSize);
         }
 
         @Override
@@ -96,28 +101,30 @@ public class FavoritePresent<T extends FavoriteMode> {
             ServiceBusiness.unikeService(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
+                    LogHelper.e("omg", " suc " + String.valueOf(response.result));
                     callback.onSuc();
                 }
 
                 @Override
                 public void onFailure(LabResponse response, Object data) {
-                    String msg ;
-                    if (response !=null &&!TextUtils.isEmpty(response.msg)){
+                    String msg;
+                    LogHelper.e("omg", "failed ");
+                    if (response != null && !TextUtils.isEmpty(response.msg)) {
                         msg = response.msg;
-                    }else {
-                        msg= PlatformUtil.getInstance().getString(R.string.data_error);
+                    } else {
+                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
                     }
                     callback.onFailed(new CtException(msg));
 
                 }
-            },favoriteMode.getId());
+            }, favoriteMode.getId());
         }
     }
 
 
     public void requestLoadMore() {
         mFavoriteView.uiShowLoadMore();
-        mFavoriteFetcher.getFavoriteListWithMore( mFavoriteView.getSize(), new ListFetchCallback<FavoriteMode>() {
+        mFavoriteFetcher.getFavoriteListWithMore(mFavoriteView.getSize(), new ListFetchCallback<FavoriteMode>() {
             @Override
             public void onSuc(List<FavoriteMode> t) {
                 LogHelper.e(TAG, "requestLoadMore onscu" + t.size());
@@ -128,6 +135,7 @@ public class FavoritePresent<T extends FavoriteMode> {
             @Override
             public void onFailed(Throwable throwable) {
 
+                MessageUtils.showToast(throwable.getMessage());
                 LogHelper.e(TAG, "requestLoadMore onfailed");
                 mFavoriteView.uiHideLoadMore();
             }
@@ -152,7 +160,7 @@ public class FavoritePresent<T extends FavoriteMode> {
 
             @Override
             public void onFailed(CtException throwable) {
-
+                MessageUtils.showToast(throwable.getMessage());
             }
         });
     }
@@ -170,6 +178,7 @@ public class FavoritePresent<T extends FavoriteMode> {
             @Override
             public void onFailed(Throwable throwable) {
                 LogHelper.e(TAG, "requestRefresh onfailed");
+                MessageUtils.showToast(throwable.getMessage());
                 mFavoriteView.uiHideRefreshLoading();
             }
         });

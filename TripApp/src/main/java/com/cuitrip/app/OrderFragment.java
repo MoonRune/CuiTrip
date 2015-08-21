@@ -236,14 +236,8 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
                 OrderHolder.mTime.setText(item.getGmtCreated());
             }
 
-            if (mType == TYPE_TRAVEL) {
-                OrderHolder.mService.setText(item.getUserNick());
-                OrderHolder.mAddress.setText(item.getServiceAddress());
-            } else {
-                OrderHolder.mService.setText(item.getServiceName());
-                OrderHolder.mAddress.setText(getString(R.string.ct_order_people_num, item.getBuyerNum() ));
-                OrderHolder.mAddress.setCompoundDrawables(null, null, null, null);
-            }
+            OrderHolder.mService.setText(item.getServiceName());
+            OrderHolder.mAddress.setText(item.getServiceAddress());
             ImageHelper.displayCtImage(item.getServicePIC(), OrderHolder.mImage, null);
         }
     }
