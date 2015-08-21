@@ -17,7 +17,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="10dp"
-            android:background="@color/ct_common_bg"/>
+            android:background="@color/ct_common_bg" />
+
         <LinearLayout
             android:id="@+id/ct_tag_block"
             android:layout_width="match_parent"
@@ -32,8 +33,8 @@
             <TextView
                 android:id="@+id/ct_tag_tv"
                 style="@style/order_info_value"
-                android:drawableRight="@drawable/ct_narrow_right"
                 android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
                 android:hint="@string/ct_tag_hint" />
         </LinearLayout>
 
@@ -52,11 +53,11 @@
                 android:text="@string/ct_service_address" />
 
             <TextView
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
                 android:id="@+id/service_address"
                 style="@style/order_info_value"
                 android:background="@null"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
                 android:hint="@string/ct_service_address_hint" />
         </LinearLayout>
 
@@ -74,10 +75,10 @@
                 android:text="@string/ct_service_enjoy_time" />
 
             <TextView
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
                 android:id="@+id/service_duration"
                 style="@style/order_info_value"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
                 android:hint="@string/ct_service_time_selected" />
         </LinearLayout>
 
@@ -94,19 +95,26 @@
                 style="@style/order_info_hint"
                 android:text="@string/ct_meet_location" />
 
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="1dp"
+                android:layout_weight="1" />
+
             <TextView
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
                 android:id="@+id/service_meet"
                 style="@style/order_info_value"
-                android:hint="@string/ct_service_meet_selected" />
+                android:layout_weight="0"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
+                android:hint="@string/ct_service_meet_selected"
+                android:singleLine="false" />
         </LinearLayout>
 
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="10dp" 
-            android:background="@color/ct_common_bg"/>
+            android:layout_height="10dp"
+            android:background="@color/ct_common_bg" />
 
         <LinearLayout
             android:id="@+id/pay_block"
@@ -120,10 +128,10 @@
                 android:text="@string/ct_service_pay_way" />
 
             <TextView
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
                 android:id="@+id/service_pay_way"
                 style="@style/order_info_value"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
                 android:hint="@string/ct_service_pay_way_selecte_hint" />
         </LinearLayout>
 
@@ -141,10 +149,10 @@
                 android:text="@string/ct_service_persons" />
 
             <TextView
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
                 android:id="@+id/service_persons"
                 style="@style/order_info_value"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
                 android:hint="@string/ct_service_max_count" />
         </LinearLayout>
 
@@ -178,9 +186,9 @@
                 <EditText
                     android:id="@+id/service_price"
                     style="@style/order_info_value"
+                    android:layout_marginRight="0dp"
                     android:layout_weight="1"
                     android:background="@null"
-                    android:layout_marginRight="0dp"
                     android:gravity="right|center_vertical"
                     android:hint="@string/ct_service_money_set"
                     android:inputType="numberDecimal"
@@ -227,10 +235,10 @@
                 android:text="@string/ct_price_desc" />
 
             <TextView
-                android:drawableRight="@drawable/ct_narrow_right"
-                android:drawablePadding="5dp"
                 android:id="@+id/price_desc_tv"
                 style="@style/order_info_value"
+                android:drawablePadding="5dp"
+                android:drawableRight="@drawable/ct_narrow_right"
                 android:hint="@string/ct_price_desc_hint" />
         </LinearLayout>
 
@@ -238,7 +246,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/ct_common_bg"/>
+            android:background="@color/ct_common_bg" />
 
     </LinearLayout>
 </ScrollView>

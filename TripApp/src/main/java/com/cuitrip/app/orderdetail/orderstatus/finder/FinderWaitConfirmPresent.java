@@ -1,7 +1,5 @@
 package com.cuitrip.app.orderdetail.orderstatus.finder;
 
-import android.os.AsyncTask;
-
 import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
@@ -23,47 +21,11 @@ public class FinderWaitConfirmPresent extends BaseOrderFormPresent<IFinderOrderD
     @Override
     public void clickBottom() {
         mOrderDetailView.jumpConfirmOrder(mOrderItem);
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] params) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                mOrderItem.setStatus(OrderItem.STATUS_WAIT_PAY);
-                mOrderDetailView.requestPresentRender(mOrderItem);
-            }
-        }.execute();
     }
 
     @Override
     public void clickMenu() {
         mOrderDetailView.jumpRefuseOrder(mOrderItem);
-        new AsyncTask() {
-            @Override
-            protected Object doInBackground(Object[] params) {
-                try {
-                    Thread.sleep(3000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(Object o) {
-                super.onPostExecute(o);
-                mOrderItem.setStatus(OrderItem.STATUS_UNVALIABLE);
-                mOrderDetailView.requestPresentRender(mOrderItem);
-            }
-        }.execute();
     }
 
     @Override

@@ -229,7 +229,7 @@
     <string name="ct_service_no_pass">审核未通过</string>
     <string name="ct_service_date_edit">安排日程与编辑</string>
     <string name="ct_next">下一步</string>
-    <string name="ct_add_service">添加发现</string>
+    <string name="ct_add_service">添加行程</string>
     <string name="ct_create_service_title_hint">请输入标题</string>
     <string name="ct_set_main_pic">设为主图</string>
     <string name="ct_mainpic_setted">已设为主图</string>
@@ -259,8 +259,8 @@
     <string name="ct_service_unit">/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
     <string name="ct_go_service_list">返回发现列表</string>
-    <string name="ct_create_new_again">继续添加发现</string>
-    <string name="ct_create_suc_tip">我们将尽快神恶化，您将收到邮件和消息提醒</string>
+    <string name="ct_create_new_again">继续添加行程</string>
+    <string name="ct_create_suc_tip">我们将尽快完成审核，您将收到邮件和消息提醒</string>
     <string name="ct_country_selected">地区</string>
     <string name="ct_country_selected_null">请选择地区</string>
     <string name="ct_selected_service_date">安排日程</string>

@@ -57,11 +57,12 @@ public class CreateServiceActivity extends BaseActivity {
     File tempPhotoFile;
     private AsyncHttpClient mClient = new AsyncHttpClient();
 
-    public static void startModifyRemote(Context context,ServiceInfo serviceInfo){
+    public static void startModifyRemote(Context context, ServiceInfo serviceInfo) {
         context.startActivity(new Intent(context, CreateServiceActivity.class)
                 .putExtra(CreateServiceActivity.SERVICE_INFO, serviceInfo)
                 .putExtra(CreateServiceActivity.EDIT_MODE, true));
     }
+
     protected View.OnClickListener onClickListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -74,12 +75,11 @@ public class CreateServiceActivity extends BaseActivity {
                         @Override
                         protected Object doInBackground(Object[] params) {
                             tempPhotoFile =
-                             new File(CacheDirManager.getInstance().cameraDir());
+                                    new File(CacheDirManager.getInstance().cameraDir());
                             try {
-                                if(!tempPhotoFile.exists())
-                                {
+                                if (!tempPhotoFile.exists()) {
 
-                                    LogHelper.e("omg","tempPhotoFile not exists");
+                                    LogHelper.e("omg", "tempPhotoFile not exists");
                                     File vDirPath = tempPhotoFile.getParentFile(); //new File(vFile.getParent());
                                     vDirPath.mkdirs();
                                     tempPhotoFile.createNewFile();
@@ -217,6 +217,14 @@ public class CreateServiceActivity extends BaseActivity {
                         SavedDescSharedPreferences.deleteServiceDesc(this);
                     }
                     finish();
+                } else if (resultCode == RESULT_CANCELED) {
+                    LogHelper.e("save","saveToPreModify");
+                    if (data != null && data.hasExtra(SERVICE_INFO)) {
+                        mServiceInfo = (ServiceInfo) data.getSerializableExtra(SERVICE_INFO);
+                        getIntent().putExtra(SERVICE_INFO, mServiceInfo);
+                        LogHelper.e("save","set memory "+mServiceInfo.getAddress());
+                    }
+
                 }
         }
     }
@@ -245,8 +253,7 @@ public class CreateServiceActivity extends BaseActivity {
                     if (mServiceInfo != null && mServiceInfo.getSid() != null) {
                         //do nothig
                     } else {
-                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,
-                                mTitle.getText().toString(), desc, mPicEditTextView.getMainPicture());
+                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,mServiceInfo);
                         mPicEditTextView.deletePictures();
                         finish();
                     }

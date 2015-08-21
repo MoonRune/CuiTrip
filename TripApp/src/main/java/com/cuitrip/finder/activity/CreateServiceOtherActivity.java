@@ -154,6 +154,12 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         if (!TextUtils.isEmpty(mServiceInfo.getAddress())) {
             mAddress.setText(mServiceInfo.getAddress());
         }
+        if (!TextUtils.isEmpty(mServiceInfo.getTag())) {
+            mTag.setText(mServiceInfo.getTag());
+        }
+        if (!TextUtils.isEmpty(mServiceInfo.getMeetLocation())) {
+            mMeet.setText(mServiceInfo.getMeetLocation());
+        }
 
         refreshPrice();
         revertTags();
@@ -432,9 +438,22 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 //                builder.create().show();
 //                break;
         }
-
-
     }
+
+
+    public void saveToPreModify(){
+        LogHelper.e("save","saveToPreModify");
+        mServiceInfo.setAddress(  mAddress.getText().toString());
+        try {
+            mServiceInfo.setMaxbuyerNum(Integer.valueOf(countValue));
+        } catch (NumberFormatException e) {
+        }
+        mServiceInfo.setServiceTime(timeValue);
+        mServiceInfo.setMeetLocation(mMeet.getText().toString());
+        mServiceInfo.setTag(mTag.getText().toString());
+        setResult(RESULT_CANCELED,new Intent().putExtra(CreateServiceActivity.SERVICE_INFO,mServiceInfo));
+    }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -525,6 +544,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 return;
             }
         }
+        saveToPreModify();
         super.onBackPressed();
     }
 

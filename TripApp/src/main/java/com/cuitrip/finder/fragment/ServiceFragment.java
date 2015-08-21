@@ -144,12 +144,8 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                     position--;
                     ServiceListInterface serviceInfo = mAdapter.getItem(position);
                     if (serviceInfo instanceof SavedLocalService) {
-                        ServiceInfo serviceInfo1 = new ServiceInfo();
-                        serviceInfo1.setName(serviceInfo.getName());
-                        serviceInfo1.setBackPic(serviceInfo.getBackPic());
-                        serviceInfo1.setDescpt(serviceInfo.getDescpt());
                         startActivity(new Intent(getActivity(), CreateServiceActivity.class)
-                                .putExtra(CreateServiceActivity.SERVICE_INFO, serviceInfo1)
+                                .putExtra(CreateServiceActivity.SERVICE_INFO, ((SavedLocalService) serviceInfo))
                                 .putExtra(CreateServiceActivity.EDIT_MODE, true)
                                 .putExtra(CreateServiceActivity.LOCAL_SERVICE, true));
                     } else {

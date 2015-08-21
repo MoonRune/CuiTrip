@@ -50,6 +50,7 @@ public class OrderFormActivity extends BaseActivity {
     public static final String TAG = "OrderFormActivity";
     public static final String ORDER_ID = "OrderFormActivity.ORDER_ID";
     public static final String TARGET_ID = "OrderFormActivity.TARGET_ID";
+    public static final String MOVE_TO_CONVERSATION = "OrderFormActivity.MOVE_TO_CONVERSATION";
     @InjectView(R.id.ct_view_pager_indicator)
     IconPageIndicator mViewPagerIndicator;
     @InjectView(R.id.ct_view_pager)
@@ -74,6 +75,7 @@ public class OrderFormActivity extends BaseActivity {
         Intent intent = new Intent(context, OrderFormActivity.class);
         intent.putExtra(ORDER_ID, orderId);
         intent.putExtra(TARGET_ID, targetId);
+        intent.putExtra(MOVE_TO_CONVERSATION, true);
         context.startActivity(intent);
     }
 
@@ -148,10 +150,13 @@ public class OrderFormActivity extends BaseActivity {
                     }
                     return PersonInfoFragment.newInstance(id);
                 default:
-
+                    if (moveToConversation && mViewPager != null) {
+                        mViewPager.setCurrentItem(2);
+                        moveToConversation = false;
+                    }
                     ConversationFragment fragment = new ConversationFragment();
                     String target = orderItem.getTargetId();
-                    LogHelper.e(TAG,"build fragment   target id"+target);
+                    LogHelper.e(TAG, "build fragment   target id" + target);
                     String title = orderItem.getServiceName();
                     Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
                             .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
@@ -185,11 +190,11 @@ public class OrderFormActivity extends BaseActivity {
             RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
                 @Override
                 public void onSuccess(final String s) {
-                    LogHelper.e(TAG,"suc build  target id"+s);
+                    LogHelper.e(TAG, "suc build  target id" + s);
                     OrderBusiness.updateOrderConversation(OrderFormActivity.this, mClient, new LabAsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(LabResponse response, Object data) {
-                            LogHelper.e(TAG,"update suc   target id"+s);
+                            LogHelper.e(TAG, "update suc   target id" + s);
                             orderItem.setTargetId(s);
                             mAdapter.notifyDataSetChanged();
                             mViewPagerIndicator.notifyDataSetChanged();
@@ -197,7 +202,7 @@ public class OrderFormActivity extends BaseActivity {
 
                         @Override
                         public void onFailure(LabResponse response, Object data) {
-                            LogHelper.e(TAG,"update failed   target id"+s);
+                            LogHelper.e(TAG, "update failed   target id" + s);
                             MessageUtils.showToast("创建聊天失败");
 
                         }
@@ -206,7 +211,7 @@ public class OrderFormActivity extends BaseActivity {
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    LogHelper.e(TAG,"build failed   target id");
+                    LogHelper.e(TAG, "build failed   target id");
                     hideNoCancelDialog();
                     MessageUtils.showToast("创建聊天失败");
                 }
@@ -248,8 +253,17 @@ public class OrderFormActivity extends BaseActivity {
         mViewPager.setOffscreenPageLimit(2);
         mViewPagerIndicator.setViewPager(mViewPager);
         String targetId = getIntent().getStringExtra(TARGET_ID);
+        if (getIntent().getBooleanExtra(MOVE_TO_CONVERSATION, false)) {
+            notifyedMoveConversation();
+        }
         requestOrderDetail();
 
+    }
+
+    boolean moveToConversation = false;
+
+    public void notifyedMoveConversation() {
+//        moveToConversation = true;
     }
 
     @Override
