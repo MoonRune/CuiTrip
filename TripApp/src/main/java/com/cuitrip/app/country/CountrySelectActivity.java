@@ -109,8 +109,10 @@ public class CountrySelectActivity extends BaseActivity {
         preList.setAdapter(new LocationAdapter(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                request(2, ((AreaMode) v.getTag()).getAbbr());
-                selectArea(1, ((AreaMode) v.getTag()));
+                if (((LocationAdapter) preList.getAdapter()).hasLowerArea()) {
+                    request(2, ((AreaMode) v.getTag()).getAbbr());
+                    selectArea(1, ((AreaMode) v.getTag()));
+                }
 
             }
         }));
@@ -177,6 +179,19 @@ public class CountrySelectActivity extends BaseActivity {
     public static class LocationAdapter extends BaseAdapter {
         LocationMode mode;
         View.OnClickListener onClickListener;
+
+        public boolean hasLowerArea() {
+            if (mode != null) {
+                int type = 0;
+                try {
+                    type = Integer.valueOf(mode.getLocationType());
+                } catch (NumberFormatException e) {
+                    return false;
+                }
+                return type < 2;
+            }
+            return false;
+        }
 
         public LocationAdapter(View.OnClickListener onClickListener) {
             this.onClickListener = onClickListener;
