@@ -17,6 +17,7 @@ import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
+import com.cuitrip.app.base.ProgressingFragment;
 import com.cuitrip.app.pay.PayOrderAcivity;
 import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.business.OrderBusiness;
@@ -92,6 +93,10 @@ public class OrderFormActivity extends BaseActivity {
                     LogHelper.e(TAG, "requestOrderDetail suc " + (data == null));
                     try {
                         renderUi((OrderItem) data);
+                        if (moveToConversation && mViewPager != null) {
+                            mViewPager.setCurrentItem(2);
+                            moveToConversation = false;
+                        }
                     } catch (Exception e) {
                         LogHelper.e("omg", e.getMessage());
                     }
@@ -131,7 +136,7 @@ public class OrderFormActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            int count = orderItem == null ? 0 : (showTabs ? ((orderItem == null || TextUtils.isEmpty(orderItem.getTargetId())) ? 2 : 3) : 1);
+            int count = orderItem == null ? 0 : (showTabs ? ((orderItem == null || TextUtils.isEmpty(orderItem.getTargetId())) ? 3 : 3) : 1);
             return count;
         }
 
@@ -150,19 +155,19 @@ public class OrderFormActivity extends BaseActivity {
                     }
                     return PersonInfoFragment.newInstance(id);
                 default:
-                    if (moveToConversation && mViewPager != null) {
-                        mViewPager.setCurrentItem(2);
-                        moveToConversation = false;
+                    if (!TextUtils.isEmpty(orderItem.getTargetId())) {
+                        ConversationFragment fragment = new ConversationFragment();
+                        String target = orderItem.getTargetId();
+                        LogHelper.e(TAG, "build fragment   target id" + target);
+                        String title = orderItem.getServiceName();
+                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                                .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
+                                .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
+                        fragment.setUri(uri);
+                        return fragment;
+                    } else {
+                        return emptyFragment = ProgressingFragment.newInstance();
                     }
-                    ConversationFragment fragment = new ConversationFragment();
-                    String target = orderItem.getTargetId();
-                    LogHelper.e(TAG, "build fragment   target id" + target);
-                    String title = orderItem.getServiceName();
-                    Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
-                            .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
-                            .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
-                    fragment.setUri(uri);
-                    return fragment;
             }
         }
 
@@ -173,6 +178,26 @@ public class OrderFormActivity extends BaseActivity {
                 orderFormFragment = null;
             }
         }
+    }
+
+   Fragment
+            emptyFragment = null;
+
+    public void replaceFragment() {
+        try {
+            if (orderItem!=null &&!TextUtils.isEmpty(orderItem.getTargetId()) &&emptyFragment != null) {
+
+                getSupportFragmentManager().beginTransaction().remove(
+                        emptyFragment
+//                        getFragmentManager().findFragmentByTag("android:switcher:" + R.id.ct_view_pager + ":" + 2)
+                ).commit();
+                emptyFragment = null;
+            }
+        } catch (Exception e) {
+
+        }
+        mAdapter.notifyDataSetChanged();
+        mViewPagerIndicator.notifyDataSetChanged();
     }
 
     OrderFormFragment orderFormFragment;
@@ -196,8 +221,7 @@ public class OrderFormActivity extends BaseActivity {
                         public void onSuccess(LabResponse response, Object data) {
                             LogHelper.e(TAG, "update suc   target id" + s);
                             orderItem.setTargetId(s);
-                            mAdapter.notifyDataSetChanged();
-                            mViewPagerIndicator.notifyDataSetChanged();
+                            replaceFragment();
                         }
 
                         @Override
@@ -210,7 +234,7 @@ public class OrderFormActivity extends BaseActivity {
 
                 @Override
                 public void onError(RongIMClient.ErrorCode errorCode) {
-                    LogHelper.e(TAG, "build failed   target "+errorCode);
+                    LogHelper.e(TAG, "build failed   target " + errorCode);
                     hideNoCancelDialog();
                     MessageUtils.showToast("创建聊天失败");
                 }
@@ -237,8 +261,7 @@ public class OrderFormActivity extends BaseActivity {
             orderFormFragment.refresh(orderItem);
         }
         mTopV.setVisibility(showTabs ? View.VISIBLE : View.GONE);
-        mAdapter.notifyDataSetChanged();
-        mViewPagerIndicator.notifyDataSetChanged();
+        replaceFragment();
 
     }
 
@@ -262,7 +285,7 @@ public class OrderFormActivity extends BaseActivity {
     boolean moveToConversation = false;
 
     public void notifyedMoveConversation() {
-//        moveToConversation = true;
+        moveToConversation = true;
     }
 
     @Override

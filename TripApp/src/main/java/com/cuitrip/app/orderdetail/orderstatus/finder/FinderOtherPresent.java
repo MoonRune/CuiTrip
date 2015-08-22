@@ -1,16 +1,15 @@
-package com.cuitrip.app.orderdetail.orderstatus.traveller;
+package com.cuitrip.app.orderdetail.orderstatus.finder;
 
-import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
+import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
-import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.model.OrderItem;
 
 /**
  * Created by baziii on 15/8/11.
  */
-public class TravellerUnvaliablePresent extends BaseOrderFormPresent<ITravelerOrderDetailView> {
+public class FinderOtherPresent extends BaseOrderFormPresent<IFinderOrderDetailView> {
 
-    public TravellerUnvaliablePresent(ITravelerOrderDetailView orderDetailView, OrderItem orderItem) {
+    public FinderOtherPresent(IFinderOrderDetailView orderDetailView, OrderItem orderItem) {
         super(orderDetailView, orderItem);
     }
 
@@ -28,10 +27,6 @@ public class TravellerUnvaliablePresent extends BaseOrderFormPresent<ITravelerOr
 
     }
 
-    @Override
-    public String getOrderUnvaliableReason(OrderItem orderItem){
-        return ServicePartRenderData.getUnvaliableReason(orderItem);
-    }
     @Override
     public String getBottomText(OrderItem orderItem) {
         return "";

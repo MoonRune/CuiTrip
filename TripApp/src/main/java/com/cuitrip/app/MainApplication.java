@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
+import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
@@ -38,7 +39,27 @@ public class MainApplication extends BaseAppLication {
         RongContext.init(this);
         RongIM.setUserInfoProvider(RongCloudEvent.getInstance(), true);
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(RongCloudEvent.getInstance());
+        RongIM.setLocationProvider(new RongIM.LocationProvider() {
+            @Override
+            public void onStartLocation(final Context context, final LocationCallback callback) {
+//保存调用过来的回调接口在应用上下文。
+                MainApplication.getInstance().setCallback(callback);
+//开启定位页面。
+                GaoDeMapActivity.returnForIM(context);
+            }
+        });
     }
+
+    public static  RongIM.LocationProvider.LocationCallback callback;
+
+    public static RongIM.LocationProvider.LocationCallback getCallback() {
+        return callback;
+    }
+
+    public static void setCallback(RongIM.LocationProvider.LocationCallback callback) {
+        MainApplication.callback = callback;
+    }
+
     public void onCreate() {
         super.onCreate();
         initRongIM();

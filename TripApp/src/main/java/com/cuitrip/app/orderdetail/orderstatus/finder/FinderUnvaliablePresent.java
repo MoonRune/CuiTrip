@@ -2,6 +2,7 @@ package com.cuitrip.app.orderdetail.orderstatus.finder;
 
 import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
+import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.model.OrderItem;
 
 /**
@@ -27,6 +28,10 @@ public class FinderUnvaliablePresent extends BaseOrderFormPresent<IFinderOrderDe
 
     }
 
+    @Override
+    public String getOrderUnvaliableReason(OrderItem orderItem){
+        return ServicePartRenderData.getUnvaliableReason(orderItem);
+    }
     @Override
     public String getBottomText(OrderItem orderItem) {
         return "";

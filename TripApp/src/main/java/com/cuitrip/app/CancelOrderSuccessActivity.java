@@ -3,12 +3,10 @@ package com.cuitrip.app;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
-import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
 
 /**
@@ -35,9 +33,7 @@ public class CancelOrderSuccessActivity extends BaseActivity  {
         showActionBar(R.string.ct_cancel_suc);
         setContentView(R.layout.ct_order_cancel_sux);
         setViewText(R.id.service_name, mOrderInfo.getServiceName());
-        setViewText(R.id.cuthor_name, mOrderInfo.getInsiderName());
         setViewText(R.id.service_address, mOrderInfo.getServiceAddress());
-        ImageHelper.displayPersonImage(mOrderInfo.getHeadPic(), (ImageView) findViewById(R.id.author_img), null);
         findViewById(R.id.go_order_list).setOnClickListener(new View.OnClickListener(){
 
             @Override

@@ -22,13 +22,15 @@ public class PriceDescActivity extends BaseActivity {
     public static final int REQUEST_CODE = 1;
     public static final String INCLUDE_KEY = "PriceDescActivity.INCLUDE_KEY";
     public static final String UNINCLUDE_KEY = "PriceDescActivity.UNINCLUDE_KEY";
+    public static final String IS_FINDER = "PriceDescActivity.IS_FINDER";
     @InjectView(R.id.ct_price_include_et)
     EditText ctPriceIncludeEt;
     @InjectView(R.id.ct_price_uninclude_et)
     EditText ctPriceUnincludeEt;
 
-    public static void start(Activity activity, String include, String uninclude) {
-        Intent intent = new Intent(activity, PriceDescActivity.class).putExtra(INCLUDE_KEY, include).putExtra(UNINCLUDE_KEY, uninclude);
+    public static void start(Activity activity, String include, String uninclude,boolean isFinder) {
+        Intent intent = new Intent(activity, PriceDescActivity.class).putExtra(INCLUDE_KEY, include).putExtra(UNINCLUDE_KEY, uninclude)
+                .putExtra(IS_FINDER, isFinder);
         activity.startActivityForResult(intent, REQUEST_CODE);
     }
 

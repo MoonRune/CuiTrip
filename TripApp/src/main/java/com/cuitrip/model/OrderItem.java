@@ -83,6 +83,15 @@ public class OrderItem implements Serializable {
     private String lat;
     private String lng;
     private String targetId;
+    private String serviceTime;//游玩时间长度
+
+    public String getServiceTime() {
+        return serviceTime;
+    }
+
+    public void setServiceTime(String serviceTime) {
+        this.serviceTime = serviceTime;
+    }
 
     public String getTargetId() {
         return targetId;

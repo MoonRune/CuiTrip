@@ -25,6 +25,7 @@ import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.pingplusplus.android.PaymentActivity;
@@ -120,12 +121,17 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                 double value = Double.valueOf(item.getServiceNormalPrice())
                         - Double.valueOf(item.getDiscount().getMoney());
                 DecimalFormat df = new DecimalFormat("#.00");
-                ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + df.format(value));
+                if (value<0){
+                    ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  0.00" );
+                }else {
+                    ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + df.format(value));
+                }
             } catch (NumberFormatException e) {
-            }
-            ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice(
 
-            ));
+                ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice(
+
+                ));
+            }
         } else {
             ctOrderDiscountContentTv.setVisibility(View.GONE);
             ctOrderDiscount.setText("-  0");
@@ -273,8 +279,10 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                 ((TextView) view.findViewById(R.id.content)).setText(
                         item.getMoneyType() + item.getMoney()
                 );
+                LogHelper.e("validate ",item.getInvalidDate());
+                LogHelper.e("validate reverted ",Utils.getMsToD(item.getInvalidDate()));
                 ((TextView) view.findViewById(R.id.time)).setText(
-                        "有效期至" + Utils.getMsToD(item.getValidDate())
+                                "有效期至" + Utils.getMsToD(item.getInvalidDate())
                 );
             } else {
                 ((TextView) view.findViewById(R.id.content)).setText(

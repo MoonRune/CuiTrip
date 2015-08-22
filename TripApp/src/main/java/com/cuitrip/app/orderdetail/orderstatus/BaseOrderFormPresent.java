@@ -20,12 +20,19 @@ public abstract class BaseOrderFormPresent<T extends IOrderDetailView> extends I
 
 
     public OrderMode build(OrderItem orderItem) {
-        OrderMode result = new OrderMode(builServiceData(orderItem),
+        ServicePartRenderData servicePartRenderData = builServiceData(orderItem);
+        if (servicePartRenderData!=null) {
+            servicePartRenderData.setUnvaliableReason(getOrderUnvaliableReason(orderItem));
+        }
+        OrderMode result = new OrderMode(servicePartRenderData,
                 buildCommenetData(orderItem),
                 buildOrderProgress(orderItem), getMenuText(orderItem), getBottomText(orderItem), getBottomEnable(orderItem));
         return result;
     }
 
+    public String getOrderUnvaliableReason(OrderItem orderItem){
+        return null;
+    }
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         return null;
     }
@@ -33,6 +40,7 @@ public abstract class BaseOrderFormPresent<T extends IOrderDetailView> extends I
     public OrderProgressingRenderData buildOrderProgress(OrderItem orderItem) {
         return null;
     }
+
 
 
     public abstract String getBottomText(OrderItem orderItem);

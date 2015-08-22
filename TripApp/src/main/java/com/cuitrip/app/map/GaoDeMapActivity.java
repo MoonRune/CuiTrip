@@ -3,6 +3,7 @@ package com.cuitrip.app.map;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
@@ -22,10 +23,16 @@ import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiItemDetail;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
+import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.utils.LogHelper;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import io.rong.message.LocationMessage;
 
 /**
  * Created by baziii on 15/8/18.
@@ -34,9 +41,15 @@ public class GaoDeMapActivity extends BaseActivity {
     public static final String VALUE_LAT = "VALUE_LAT";
     public static final String VALUE_LNG = "VALUE_LNG";
     public static final String VALUE_NAME = "VALUE_NAME";
+    public static final String IM_RESULT = "IM_RESULT";
     public static final int REQUEST = 13;
     MapView mapView;
     AMap aMap;
+
+    public static void returnForIM(Context activity){
+        activity.startActivity(new Intent(activity, GaoDeMapActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(IM_RESULT,true));
+
+    }
 
     public static void startSearch(Activity activity) {
         activity.startActivityForResult(new Intent(activity, GaoDeMapActivity.class), REQUEST);
@@ -165,6 +178,12 @@ public class GaoDeMapActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mapView.onDestroy();
+
+//销毁页面时候的清空回调和是否回调错误
+        if(MainApplication.getCallback() != null) {
+            MainApplication.getCallback().onFailure("失败");
+            MainApplication.setCallback(null);
+        }
     }
 
     public void queryAndSave(final double lat, final double lng) {
@@ -175,14 +194,37 @@ public class GaoDeMapActivity extends BaseActivity {
                 hideLoading();
                 if (rCode == 0) {
                     if (result != null && result.getRegeocodeAddress() != null && result.getRegeocodeAddress().getFormatAddress() != null) {
-                        String addressName = result.getRegeocodeAddress().getFormatAddress() + "附近";
-                        Intent intent = new Intent();
-                        intent.putExtra(VALUE_LAT, lat);
-                        intent.putExtra(VALUE_LNG, lng);
-                        intent.putExtra(VALUE_NAME, addressName);
 
+                        String addressName = result.getRegeocodeAddress().getFormatAddress() + "附近";
                         LogHelper.e("set map ", "" + lat + "|" + lng + "|" + addressName);
-                        setResult(RESULT_OK, intent);
+                        if (getIntent().getBooleanExtra(IM_RESULT,false)) {
+                            Map.Entry<Double,Double> pointF = bd_encrypt(lat,lng);
+                            LogHelper.e("encry"," "+pointF.getKey()+"|"+pointF.getValue());
+//                            pointF = bd_decrypt(lat, lng);
+//                            LogHelper.e("bd_decrypt"," "+pointF.getKey()+"|"+pointF.getValue());
+
+                           String url= "http://restapi.amap.com/v3/staticmap?location="+pointF.getValue()+","+pointF.getKey()+"&zoom=16&size=300*300&key=8aa78f0b74184f42e6e620866ec13802";
+//                            Uri uri = Uri.parse(" http://restapi.amap.com/v3/staticmap").buildUpon()
+//                                    .appendQueryParameter("size", "240*240")
+//                                    .appendQueryParameter("key", "8aa78f0b74184f42e6e620866ec13802")
+//                                    .appendQueryParameter("zoom", "16")
+//                                    .appendQueryParameter("location",  "116.481485,39.990464").build();
+                            LogHelper.e("set map ",""+url);
+                            Uri uri = Uri.parse(url);
+                            LocationMessage   mMsg = LocationMessage.obtain(pointF.getValue(),pointF.getKey(),
+                                    addressName, uri);
+                            MainApplication.getCallback().onSuccess(mMsg);
+                            MainApplication.setCallback(null);
+                            finish();
+//                           ?location=116.481485,39.990464&zoom=10&size=750*300&markers=mid,,A:116.481485,39.990464&key=ee95e52bf08006f63fd29bcfbcf21df0
+                        }else {
+                            Intent intent = new Intent();
+                            intent.putExtra(VALUE_LAT, lat);
+                            intent.putExtra(VALUE_LNG, lng);
+                            intent.putExtra(VALUE_NAME, addressName);
+
+                            setResult(RESULT_OK, intent);
+                        }
                         finish();
                     } else {
 
@@ -196,8 +238,29 @@ public class GaoDeMapActivity extends BaseActivity {
             }
         });
         RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(lat, lng),
-                200, GeocodeSearch.AMAP);// 第一个参数表示一个 Latlng,第二参数表示范围多少米,第三个参数 表示是火系坐标系还是 GPS 原生坐标系
+                20, GeocodeSearch.AMAP);// 第一个参数表示一个 Latlng,第二参数表示范围多少米,第三个参数 表示是火系坐标系还是 GPS 原生坐标系
         geocoderSearch.getFromLocationAsyn(query);
+    }
+    final double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
+
+    Map.Entry<Double,Double> bd_encrypt(double gg_lat, double gg_lon)
+    {
+        double x = gg_lon, y = gg_lat;
+        double z = Math.sqrt(x * x + y * y) + 0.00002 *  Math.sin(y * x_pi);
+        double theta =  Math.atan2(y, x) + 0.000003 *  Math.cos(x * x_pi);
+        Double bd_lon = (Double) (z *  Math.cos(theta) + 0.0065);
+        Double  bd_lat = (Double) (z *  Math.sin(theta) + 0.006);
+        return new HashMap.SimpleEntry<Double,Double>(gg_lat,gg_lon);
+    }
+
+    Map.Entry<Double,Double> bd_decrypt(double bd_lat, double bd_lon )
+    {
+        double x = bd_lon - 0.0065, y = bd_lat - 0.006;
+        double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
+        double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
+        Double gg_lon = (Double) (z * Math.cos(theta));
+        Double gg_lat = (Double) (z * Math.sin(theta));
+        return new HashMap.SimpleEntry<Double,Double>(gg_lat,gg_lon);
     }
 
     public void moveAndMark(double lat, double lng, String title) {

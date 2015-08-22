@@ -44,15 +44,15 @@ public class ServicePriceDescActivity extends BaseActivity {
         switch (priceType){
             case ServiceInfo.PAYWAY_ALL:
                 ctPriceTypeTv.setText(getString(R.string.ct_service_pay_way)+":"+getString(R.string.price_way_all));
-                ctPriceTypeDescTv.setText(getString(R.string.ct_price_payway_all_detail_msg));
+                ctPriceTypeDescTv.setText(getString(R.string.ct_price_payway_all_detail_msg_traveller));
                 break;
             case ServiceInfo.PAYWAY_PER:
                 ctPriceTypeTv.setText(getString(R.string.ct_service_pay_way)+":"+getString(R.string.price_way_per));
-                ctPriceTypeDescTv.setText(getString(R.string.ct_price_payway_per_detail_msg));
+                ctPriceTypeDescTv.setText(getString(R.string.ct_price_payway_per_detail_msg_traveller));
                 break;
             case ServiceInfo.PAYWAY_FREE:
                 ctPriceTypeTv.setText(getString(R.string.ct_service_pay_way)+":"+getString(R.string.price_way_free));
-                ctPriceTypeDescTv.setText(getString(R.string.ct_price_payway_free_detail_msg));
+                ctPriceTypeDescTv.setText(getString(R.string.ct_price_payway_free_detail_msg_traveller));
                 break;
             default:
                 MessageUtils.showToast(getString(R.string.data_error));

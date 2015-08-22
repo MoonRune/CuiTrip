@@ -44,10 +44,15 @@ public class ServicePartViewHolder implements PartViewHolder<ServicePartRenderDa
     LinearLayout ctOrderPriceIncludeLl;
     @InjectView(R.id.ct_order_price_uninclude_ll)
     LinearLayout ctOrderPriceUnincludeLl;
+    @InjectView(R.id.ct_order_unvaliable_tv)
+    TextView ctOrderUnvaliableTv;
+    @InjectView(R.id.ct_order_unvaliable_ll)
+    LinearLayout ctOrderUnvaliableLl;
 
     public void build(View view) {
         ButterKnife.inject(this, view);
     }
+
     public void build(Activity activity) {
         ButterKnife.inject(this, activity);
     }
@@ -64,6 +69,12 @@ public class ServicePartViewHolder implements PartViewHolder<ServicePartRenderDa
         ctServiceMeetLocationTv.setText(data.getMeetLocation());
         ctOrderPriceIncludeTv.setText(data.getPriceInclude());
         ctOrderPriceUnincludeTv.setText(data.getPriceUninclude());
+        if (!TextUtils.isEmpty(data.getUnvaliableReason())) {
+            ctOrderUnvaliableLl.setVisibility(View.VISIBLE);
+            ctOrderUnvaliableTv.setText(data.getUnvaliableReason());
+        }else {
+            ctOrderUnvaliableLl.setVisibility(View.GONE);
+        }
     }
 
 }

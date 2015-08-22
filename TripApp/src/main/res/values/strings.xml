@@ -281,6 +281,9 @@
     <string name="ct_male">男</string>
     <string name="ct_female">女</string>
 
+    <string name="ct_gende_non">未设置</string>
+
+    <string name="ct_gende_non_code">0</string>
     <string name="ct_male_code">1</string>
     <string name="ct_female_code">2</string>
     <string name="ct_profile_title_name">头像</string>
@@ -382,13 +385,13 @@
     <string name="order_person_identity">身份证件</string>
     <string name="order_person_validated">已验证身份</string>
     <string name="ct_modify_order_menu">修改预订</string>
-    <string name="order_status_wait_confirm">等待确认</string>
-    <string name="R.string.order_status_wait_pay">等待支付</string>
-    <string name="R.string.order_status_wait_start">等待开始</string>
-    <string name="R.string.order_status_wait_end">旅程进行中</string>
-    <string name="R.string.order_status_wait_comment">等待评价</string>
-    <string name="R.string.order_status_over">旅程已结束</string>
-    <string name="R.string.order_status_unavaliable">预订已失效</string>
+    <string name="order_status_wait_confirm">等待发现者确认</string>
+    <string name="order_status_wait_pay">等待支付</string>
+    <string name="order_status_wait_start">等待开始</string>
+    <string name="order_status_wait_end">旅程进行中</string>
+    <string name="order_status_wait_comment">等待评价</string>
+    <string name="order_status_over">旅程已结束</string>
+    <string name="order_status_unavaliable">预订已失效</string>
     <string name="ct_create_service_hint">几段精心的文字，几张精美的图片，让您的发现与众不同，更会获得旅行者的青睐。(最多2500个字，9张图片)</string>
     <string name="ct_meet_location">见面地点</string>
     <string name="ct_service_tag">特色标签</string>
@@ -453,6 +456,12 @@
     <string name="ct_price_payway_all_detail_msg">在您接收的人数范围内，无论旅行者有几人都只收取一个费用，您需要设定一个最终费用。</string>
     <string name="ct_price_payway_per_detail_msg">在您可接待的人数范围内，按参加的人数收取费用，您需要设定单人费用。</string>
     <string name="ct_price_payway_free_detail_msg">您将提供免费的旅程体验，不收取任何费用。</string>
+
+
+
+    <string name="ct_price_payway_all_detail_msg_traveller">在发现者可接待的人数范围内，无论您有几人，都只收取一次服务费用，具体产生的餐饮、交通、门票等费用，请看明细说明。</string>
+    <string name="ct_price_payway_per_detail_msg_traveller">在发现者可接待的人数范围内，按参加的人数收取费用，具体产生的餐饮、交通、门票等费用，请看明细说明。发现者提供免费体验的旅程，</string>
+    <string name="ct_price_payway_free_detail_msg_traveller">不收取任何服务费，其他可能产生的餐饮、交通、门票等费用，请看明细说明。</string>
     <string name="ct_tags_select_message">添加一些标签，让旅行者更快明白您发现的内容</string>
     <string name="ct_tags_select_limit_message">最多设置4个标签</string>
     <string name="commit_service_title">提交发现</string>

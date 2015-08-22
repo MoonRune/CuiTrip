@@ -150,4 +150,32 @@
             tools:text="order_price_uninclude"
             style="@style/order_form_value" />
     </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ct_order_unvaliable_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            style="@style/order_form_divide"
+            />
+        <TextView
+            android:text="订单失效原因"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            style="@style/order_form_hint"/>
+
+        <View
+            style="@style/order_form_divide"
+            />
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ct_order_unvaliable_tv"
+            tools:text="order_price_uninclude"
+            style="@style/order_form_value" />
+    </LinearLayout>
 </LinearLayout>

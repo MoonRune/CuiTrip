@@ -1,5 +1,7 @@
 package com.cuitrip.app.pro;
 
+import android.text.TextUtils;
+
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
@@ -18,9 +20,11 @@ public class ServicePartRenderData {
     protected String priceWithCurrency;
     protected String priceInclude;
     protected String priceUninclude;
+    protected String unvaliableReason;
 
     public ServicePartRenderData(String serviceName,
-                                 String orderDate, String meetLocation, String orderPeopleSize, String serviceDuration, String priceWithCurrency, String priceInclude, String priceUninclude) {
+                                 String orderDate, String meetLocation, String orderPeopleSize, String serviceDuration, String priceWithCurrency, String priceInclude,
+                                 String priceUninclude) {
         this.serviceName = serviceName;
         this.orderDate = orderDate;
         this.meetLocation = meetLocation;
@@ -29,6 +33,14 @@ public class ServicePartRenderData {
         this.priceWithCurrency = priceWithCurrency;
         this.priceInclude = priceInclude;
         this.priceUninclude = priceUninclude;
+    }
+
+    public String getUnvaliableReason() {
+        return unvaliableReason;
+    }
+
+    public void setUnvaliableReason(String unvaliableReason) {
+        this.unvaliableReason = unvaliableReason;
     }
 
     public String getMeetLocation() {
@@ -105,7 +117,7 @@ public class ServicePartRenderData {
     }
 
     public static String getOrderDurationText(OrderItem orderItem) {
-        return orderItem.getBuyerNum();
+        return orderItem.getServiceTime();
     }
 
 
@@ -118,17 +130,17 @@ public class ServicePartRenderData {
             case OrderItem.STATUS_WAIT_COFIRM:
                 return PlatformUtil.getInstance().getString(R.string.order_status_wait_confirm);
             case OrderItem.STATUS_WAIT_PAY:
-                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_pay);
+                return PlatformUtil.getInstance().getString(R.string.order_status_wait_pay);
             case OrderItem.STATUS_WAIT_START:
-                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_start);
+                return PlatformUtil.getInstance().getString(R.string.order_status_wait_start);
             case OrderItem.STATUS_WAIT_END:
-                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_end);
+                return PlatformUtil.getInstance().getString(R.string.order_status_wait_end);
             case OrderItem.STATUS_WAIT_COMMENT:
-                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_wait_comment);
+                return PlatformUtil.getInstance().getString(R.string.order_status_wait_comment);
             case OrderItem.STATUS_OVER:
-                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_over);
+                return PlatformUtil.getInstance().getString(R.string.order_status_over);
             case OrderItem.STATUS_UNVALIABLE:
-                return PlatformUtil.getInstance().getString(R.string.R_string_order_status_unavaliable);
+                return PlatformUtil.getInstance().getString(R.string.order_status_unavaliable);
             default:
                 return orderItem.getStatusContent();
         }
@@ -145,6 +157,12 @@ public class ServicePartRenderData {
     public static String getOrderPriceUninclude(OrderItem orderItem) {
         return orderItem.getFeeExclude();
     }
+    public static String getUnvaliableReason(OrderItem orderItem) {
+        if (TextUtils.isEmpty(orderItem.getInvalidReason())){
+            return "无";
+        }
+        return orderItem.getInvalidReason();
+    }
 
 
     public static ServicePartRenderData getInstance(OrderItem orderItem) {
@@ -152,7 +170,8 @@ public class ServicePartRenderData {
         ServicePartRenderData result = new ServicePartRenderData(orderItem.getServiceName(),
                 getOrderDateText(orderItem)
                 , getOrderMeet(orderItem),
-                getOrderPeopleSizeText(orderItem), getOrderDurationText(orderItem),
+                getOrderPeopleSizeText(orderItem),
+                getOrderDurationText(orderItem),
                 getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem));
         return result;
     }

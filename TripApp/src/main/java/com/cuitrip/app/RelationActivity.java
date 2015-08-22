@@ -2,6 +2,7 @@ package com.cuitrip.app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
@@ -25,6 +26,16 @@ public class RelationActivity extends BaseActivity {
             public void onClick(View view) {
                 Utils.requestDial(RelationActivity.this, "8657186992999");
             }
+        });findViewById(R.id.ct_mail).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {sendEmail();
+            }
         });
+    }
+
+    public void sendEmail(){
+        Intent data=new Intent(Intent.ACTION_SENDTO);
+        data.setData(Uri.parse("mailto:service@cuitrip.com"));
+        startActivity(data);
     }
 }

@@ -1,6 +1,7 @@
 package com.cuitrip.app.conversation.rong;
 
 import android.os.AsyncTask;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.MainApplication;
@@ -21,6 +22,8 @@ import com.lab.utils.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -60,74 +63,97 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                 try {
                     final String myId = userInfo.getUid();
                     final List<OrderItem> mOrderDatas = JSON.parseArray(data.toString(), OrderItem.class);
-                    new AsyncTask() {
-                        public String getOtherName(String id, String id2, String name1, String name2) {
-                            if (myId.equals(id)) {
-                                return name1;
-                            }
-                            return name2;
-                        }
+                    if (mOrderDatas != null &&!mOrderDatas.isEmpty()) {
+                        LogHelper.e(TAG,"order size"+mOrderDatas.size());
+                        new AsyncTask() {
+                            final List<ConversationItem> sorteds = new ArrayList();
 
-                        final List<ConversationItem> sorteds= new ArrayList();
-                        @Override
-                        protected Object doInBackground(Object[] params) {
-                            final HashMap<String, ConversationItem> result = new HashMap<String, ConversationItem>();
-                            for (OrderItem orderItem : mOrderDatas) {
-                                result.put(orderItem.getTargetId(), new ConversationItem(
-                                        "",
-                                        getOtherName(orderItem.getInsiderId(), orderItem.getTravellerId(), orderItem.getInsiderName(), orderItem.getTravellerName()),
-                                        0,
-                                        orderItem.getServiceName(),
-                                        "空",
-                                        "",
-                                        orderItem.getHeadPic(), orderItem.getOid()));
-                            }
-                            final CountDownLatch countDownLatch = new CountDownLatch(1);
-                            RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-                                @Override
-                                public void onSuccess(final List<Conversation> conversations) {
-                                    if (conversations == null) {
-                                        LogHelper.e(TAG, "empty conversation" );
-                                        return;
+                            @Override
+                            protected Object doInBackground(Object[] params) {
+                                final HashMap<String, ConversationItem> result = new HashMap<String, ConversationItem>();
+                                final ArrayList<ConversationItem> lefted = new ArrayList<ConversationItem>();
+                                for (OrderItem orderItem : mOrderDatas) {
+                                    if (!TextUtils.isEmpty(orderItem.getTargetId())) {
+                                        result.put(orderItem.getTargetId(), new ConversationItem(
+                                                "",
+                                                orderItem.getUserNick(),
+                                                0,
+                                                orderItem.getServiceName(),
+                                                "空",
+                                                "",
+                                                orderItem.getHeadPic(), orderItem.getOid()));
+                                        LogHelper.e(TAG,"put  "+orderItem.getOid());
+                                    } else {
+                                        lefted.add(new ConversationItem(
+                                                "",
+                                                orderItem.getUserNick(),
+                                                0,
+                                                orderItem.getServiceName(),
+                                                "空",
+                                                "",
+                                                orderItem.getHeadPic(), orderItem.getOid()));
+                                        LogHelper.e(TAG,"put  "+orderItem.getOid());
+
                                     }
-                                    for (Conversation conversation : conversations) {
-                                        if (result.containsKey(conversation.getTargetId())) {
-                                            LogHelper.e(TAG, "has "+conversation.getTargetId() );
-                                            ConversationItem item = result.get(conversation.getTargetId());
-                                            filterName(conversation, item);
-                                            sorteds.add(item);
+                                }
+                                LogHelper.e(TAG,"result size"+result.size());
+
+
+                                final CountDownLatch countDownLatch = new CountDownLatch(1);
+                                RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                                    @Override
+                                    public void onSuccess(final List<Conversation> conversations) {
+                                        if (conversations == null) {
+                                            LogHelper.e(TAG, "empty conversation");
+                                            return;
                                         }
+                                        for (Conversation conversation : conversations) {
+                                            if (result.containsKey(conversation.getTargetId())) {
+                                                LogHelper.e(TAG, "has " + conversation.getTargetId());
+                                                ConversationItem item = result.get(conversation.getTargetId());
+                                                filterName(conversation, item);
+                                            }
+                                        }
+                                        LogHelper.e(TAG, " ok ");
+                                        sorteds.addAll(result.values());
+                                        sorteds.addAll(lefted);
+                                        countDownLatch.countDown();
                                     }
-                                    LogHelper.e(TAG, " ok " );
-                                    sorteds.addAll(result.values());
-                                    countDownLatch.countDown();
+
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                        LogHelper.e("fetch conversations", "|error|" + errorCode);
+
+                                        countDownLatch.countDown();
+                                    }
+
+                                }, Conversation.ConversationType.DISCUSSION);
+                                try {
+                                    countDownLatch.await();
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
                                 }
-
-                                public void onError(RongIMClient.ErrorCode errorCode) {
-                                    LogHelper.e("fetch conversations", "|error|" + errorCode);
-
-                                    countDownLatch.countDown();
-                                }
-
-                            }, Conversation.ConversationType.DISCUSSION);
-                            try {
-                                countDownLatch.await();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
+                                Collections.sort(sorteds, new Comparator<ConversationItem>() {
+                                    @Override
+                                    public int compare(ConversationItem lhs, ConversationItem rhs) {
+                                        return (int) (rhs.getLast()- lhs.getLast());
+                                    }
+                                });
+                                return null;
                             }
 
-                            return null;
-                        }
-
-                        @Override
-                        protected void onPostExecute(Object o) {
-                            itemListFetchCallback.onSuc(sorteds);
+                            @Override
+                            protected void onPostExecute(Object o) {
+                                LogHelper.e(TAG,"sorteds size"+sorteds.size());
+                                for (ConversationItem orderItem : sorteds) {
+                                    LogHelper.e(TAG," result:"+orderItem.toString());
+                                }
+                                    itemListFetchCallback.onSuc(sorteds);
 //                            itemListFetchCallback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.data_error)));
-                            super.onPostExecute(o);
-                        }
+                                super.onPostExecute(o);
+                            }
 
-                    }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
-
+                        }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
+                    }
                 } catch (Exception e) {
                     itemListFetchCallback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.data_error)));
                 }
@@ -137,6 +163,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                 item.setId(conversation.getTargetId());
                 item.setUnreadCount(conversation.getUnreadMessageCount());
                 item.setTime(String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime())));
+                item.setLast(conversation.getSentTime());
                 if (conversation.getLatestMessage() == null) {
                     item.setLastWords("");
 

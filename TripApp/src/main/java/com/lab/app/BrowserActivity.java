@@ -13,6 +13,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+import com.cuitrip.app.RelationActivity;
 import com.lab.utils.Constants;
 import com.lab.utils.LogHelper;
 import com.lab.utils.imageupload.URLImageParser;
@@ -60,7 +61,7 @@ public class BrowserActivity extends BaseActivity {
     public class JumpConcat{
         @JavascriptInterface
         public void jumpConcat(){
-           LogHelper.e("omg","asdfasdfasfsadf");
+            RelationActivity.start(BrowserActivity.this);
         }
 
     }

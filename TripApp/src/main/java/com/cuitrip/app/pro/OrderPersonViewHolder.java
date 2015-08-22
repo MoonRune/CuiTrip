@@ -9,6 +9,7 @@ import com.cuitrip.app.base.PartViewHolder;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -72,7 +73,7 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
 
         setWithDefault(ctUserRealNameTv, data.getUserRealName());
         setWithDefault(ctUserBirthTv, data.getUserBirth());
-        setWithDefault(ctUserGenderTv, data.getUserGender());
+        setWithDefault(ctUserGenderTv, Utils.getGender(data.getUserGender()));
 
         setWithDefault(ctUserCityTv, data.getUserCity());
         setWithDefault(ctUserCarrerTv, data.getUserCarrer());

@@ -27,6 +27,7 @@ import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFetcher;
 import com.cuitrip.app.orderdetail.orderstatus.IOrderFormPresent;
+import com.cuitrip.app.orderdetail.orderstatus.finder.FinderOtherPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderOverPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderUnvaliablePresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitCommentPresent;
@@ -34,6 +35,7 @@ import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitConfirmPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitEndPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitPayPresent;
 import com.cuitrip.app.orderdetail.orderstatus.finder.FinderWaitStartPresent;
+import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerOtherPresent;
 import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerOverPresent;
 import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerUnvaliablePresent;
 import com.cuitrip.app.orderdetail.orderstatus.traveller.TravellerWaitCommentPresent;
@@ -344,6 +346,7 @@ public class OrderFormFragment extends BaseFragment {
                     baseOrderFormPresent = new TravellerUnvaliablePresent(mOrderDetailView, orderItem);
                     break;
                 default:
+                    baseOrderFormPresent = new TravellerOtherPresent(mOrderDetailView,orderItem);
                     break;
             }
         }
@@ -396,6 +399,7 @@ public class OrderFormFragment extends BaseFragment {
                     baseOrderFormPresent = new FinderUnvaliablePresent(mOrderDetailView, orderItem);
                     break;
                 default:
+                    baseOrderFormPresent = new FinderOtherPresent(mOrderDetailView,orderItem);
                     break;
             }
         }

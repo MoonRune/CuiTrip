@@ -39,6 +39,7 @@ import io.rong.message.VoiceMessage;
  */
 public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnReceiveMessageListener,
         RongIMClient.ConnectionStatusListener {
+    public static final String TAG= "RongCloudEvent";
 
 
     private RongCloudEvent() {
@@ -58,7 +59,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         return sRongCloudEvent;
     }
 
-    public static final String TAG = "RongCloudEvent";
     //query for userinfo  from api && local  ??
 
     public static void DisConnectRong() {
@@ -86,27 +86,31 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         }
         String token = userInfo.getRongyunToken();
         LogHelper.e(TAG, "rongyun roken is : " + token);
-        RongIM.connect(token, new RongIMClient.ConnectCallback() {
+        try {
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
-            @Override
-            public void onSuccess(String userId) {
-                LogHelper.e("ron suc", "" + userId);
-/* 连接成功 */
-            }
+                @Override
+                public void onSuccess(String userId) {
+                    LogHelper.e("ron suc", "" + userId);
+    /* 连接成功 */
+                }
 
-            @Override
-            public void onError(RongIMClient.ErrorCode e) {
-                LogHelper.e("ron failed", "");
-/* 连接失败，注意并不需要您做重连 */
-            }
+                @Override
+                public void onError(RongIMClient.ErrorCode e) {
+                    LogHelper.e("ron failed", "");
+    /* 连接失败，注意并不需要您做重连 */
+                }
 
-            @Override
-            public void onTokenIncorrect() {
-                LogHelper.e("ron token error", "");
-/* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
-            }
+                @Override
+                public void onTokenIncorrect() {
+                    LogHelper.e("ron token error", "");
+    /* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
+                }
 
-        });
+            });
+        } catch (Exception e) {
+            MessageUtils.showToast(R.string.load_error);
+        }
     }
 
     SyncHttpClient mClient = new SyncHttpClient();
@@ -149,11 +153,20 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
     @Override
     public boolean onReceived(Message message, int left) {
+        LogHelper.e(TAG,"on receive message");
         MessageContent messageContent = message.getContent();
 
         String content = "";
-        String title = messageContent.getUserInfo().getName();
-        String contentLittle = messageContent.getUserInfo().getName() + "发来消息";
+        UserInfo userInfo=messageContent.getUserInfo();
+        String title = "";
+        String contentLittle  = "发来消息";
+        if (userInfo!=null) {
+             title = userInfo.getName();
+            if (!TextUtils.isEmpty(title)) {
+                contentLittle = title + "发来消息";
+            }
+        }
+        LogHelper.e(TAG,"on receive type");
         if (messageContent instanceof TextMessage) {//文本消息
             TextMessage textMessage = (TextMessage) messageContent;
             content = textMessage.getContent();
@@ -175,16 +188,17 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         }
         buildNotification(message.getTargetId().hashCode(), title, content, contentLittle);
 
-        return false;
+        return true;
 
     }
 
     public void buildNotification(int id, String content, String title, String contentLittle) {
+        LogHelper.e(TAG,TextUtils.join(" | ",new String[]{String.valueOf(id), content,  title,  contentLittle}));
         //定义NotificationManager
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) MainApplication.getInstance().getSystemService(ns);
         //定义通知栏展现的内容信息
-        int icon = R.drawable.logo;
+        int icon = R.drawable.ct_ic_launcher;
         long when = System.currentTimeMillis();
         Notification notification = new Notification(icon, contentLittle, when);
 

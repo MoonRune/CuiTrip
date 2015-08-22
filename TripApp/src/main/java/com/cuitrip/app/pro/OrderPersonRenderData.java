@@ -1,6 +1,7 @@
 package com.cuitrip.app.pro;
 
 import com.cuitrip.model.UserInfo;
+import com.lab.utils.LogHelper;
 import com.lab.utils.Utils;
 
 /**
@@ -192,9 +193,10 @@ public class OrderPersonRenderData {
     }
 
     public static OrderPersonRenderData getInstance(UserInfo userInfo) {
+        LogHelper.e("omg","get instance "+userInfo.getGmtCreated());
         return new OrderPersonRenderData(userInfo.getHeadPic(),
                 userInfo.getNick(),
-                Utils.getMsToD( userInfo.getGmtCreated()),
+                "注册时间:"+Utils.getMsToD( userInfo.getGmtCreated()),
                 userInfo.getRealName(),
                 userInfo.getBirthDay(),
                 Utils.getGender(userInfo.getGender()),

@@ -17,29 +17,16 @@
 
 
 
-            <de.hdodenhof.circleimageview.CircleImageView
+            <ImageView
                 android:id="@+id/author_img"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
-                tools:src="@drawable/ct_default_user"
+                android:src="@drawable/result_s"
                 android:layout_below="@+id/service_address"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
                 android:layout_marginTop="20dp"
-                android:scaleType="centerCrop"
-                app:border_color="@color/ct_white"
-                app:border_width="@dimen/ct_logo_border" />
-
-            <TextView
-                android:id="@+id/cuthor_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/author_img"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                tools:text="user name"
-                android:textColor="@color/ct_gray"
-                android:textSize="@dimen/ct_ts_4" />
+                android:scaleType="centerCrop" />
 
             <TextView
                 android:id="@+id/service_name"
@@ -48,7 +35,7 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dp"
                 tools:text="service name"
-                android:textColor="@color/ct_text_title"
+                android:textColor="@color/ct_main_color"
                 android:textSize="@dimen/ct_ts_2" />
 
             <TextView
@@ -81,8 +68,9 @@
             <Button
                 android:id="@+id/go_order_list"
                 style="@style/ctMainBackgroundRecButton"
-                android:background="@drawable/select_blue_corner"
-                android:text="@string/ct_go_order_list"
+                android:background="@drawable/selector_blue_stoken_empty_corner"
+                android:textColor="@color/ct_blue_white"
+                android:text="查看其他推荐行程"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="30dp"/>

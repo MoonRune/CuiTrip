@@ -208,15 +208,17 @@ public class Utils {
 
     public static void initGenderMap() {
         sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_male_code), PlatformUtil.getInstance().getString(R.string.ct_male));
+        sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_gende_non_code), PlatformUtil.getInstance().getString(R.string.ct_gende_non));
         sGenderHashMap.put(PlatformUtil.getInstance().getString(R.string.ct_female_code), PlatformUtil.getInstance().getString(R.string.ct_female));
     }
 
     public static String getGender(String code) {
-        if (sGenderHashMap == null) {
+        if (sGenderHashMap == null||sGenderHashMap.isEmpty()) {
             initGenderMap();
         }
-        if (sGenderHashMap.containsKey(code)) {
-            return sGenderHashMap.get(code);
+        LogHelper.e("omg","gender"+code+" |"+sGenderHashMap.containsKey(code.trim()));
+        if (sGenderHashMap.containsKey(code.trim())) {
+            return sGenderHashMap.get(code.trim());
         }
         return code;
     }

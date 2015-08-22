@@ -14,6 +14,7 @@ import android.widget.ListView;
 
 import com.cuitrip.adapter.RecommendAdapter;
 import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.RecommendItem;
 import com.cuitrip.model.RecommendOutData;
 import com.cuitrip.service.R;
@@ -140,6 +141,10 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.like_img:
+                    if (!LoginInstance.isLogin(getActivity())){
+                        MessageUtils.showToast("请先登录");
+                        return ;
+                    }
                     if (v.getTag() != null && v.getTag() instanceof RecommendItem) {
                         final RecommendItem item = ((RecommendItem) v.getTag());
                         if (item.isLiked()) {

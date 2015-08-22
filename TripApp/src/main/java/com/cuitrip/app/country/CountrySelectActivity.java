@@ -173,6 +173,18 @@ public class CountrySelectActivity extends BaseActivity {
                 } else {
                     msg = PlatformUtil.getInstance().getString(R.string.data_error);
                 }
+                    for (int x = listViews.size() - 1; x >= 0; x--) {
+                        if (x > code) {
+                            listViews.get(x).setVisibility(View.GONE);
+                            ((LocationAdapter) listViews.get(x).getAdapter()).clear();
+
+                        }
+                        if (x == code) {
+                            listViews.get(x).setVisibility(View.VISIBLE);
+                            ((LocationAdapter) listViews.get(x).getAdapter()).clear();
+                        }
+
+                    }
                 MessageUtils.showToast(msg);
                 hideNoCancelDialog();
             }
@@ -230,7 +242,7 @@ public class CountrySelectActivity extends BaseActivity {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.area_item, null);
+            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.area_item, parent,false);
             AreaMode mode = ((AreaMode) getItem(position));
             if (mode != null) {
                 ((TextView) view.findViewById(R.id.area)).setTag(mode);

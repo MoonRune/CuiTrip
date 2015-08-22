@@ -362,7 +362,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             case R.id.price_desc_block:
                 String include = mServiceInfo == null ? "" : mServiceInfo.getPriceInclude();
                 String uninclude = mServiceInfo == null ? "" : mServiceInfo.getPriceUninclude();
-                PriceDescActivity.start(this, include, uninclude);
+                PriceDescActivity.start(this, include, uninclude,true);
                 break;
             case R.id.time_block: {
                 builder = MessageUtils.createHoloBuilder(this);

@@ -117,7 +117,7 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
         switch (view.getId()) {
             case R.id.cancel_order:
                 String message = null;
-                if (TextUtils.isEmpty(content.getText())) {
+                if (TextUtils.isEmpty(content.getText().toString().trim())) {
                     MessageUtils.showToast(R.string.ct_cancel_null_reason);
                     return;
                 }

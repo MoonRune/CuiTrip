@@ -10,7 +10,7 @@
         android:id="@+id/area"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/select_white_gray"
+        android:background="@drawable/select_alpha_gray"
         android:gravity="center"
         android:padding="10dp"
         android:text="17sp"

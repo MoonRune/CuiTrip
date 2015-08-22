@@ -11,7 +11,7 @@ public class DiscountItem {
     private String code;
     private String money;
     private String moneyType;
-    private String validDate;
+    private String invalidDate;
 
     public String getCode() {
         return code;
@@ -37,11 +37,11 @@ public class DiscountItem {
         this.moneyType = moneyType;
     }
 
-    public String getValidDate() {
-        return validDate;
+    public String getInvalidDate() {
+        return invalidDate;
     }
 
-    public void setValidDate(String validDate) {
-        this.validDate = validDate;
+    public void setInvalidDate(String invalidDate) {
+        this.invalidDate = invalidDate;
     }
 }

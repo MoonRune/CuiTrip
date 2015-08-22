@@ -3,6 +3,7 @@ package com.cuitrip.app.pay;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.CtFetchCallback;
@@ -14,6 +15,7 @@ import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -27,7 +29,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class PayOrderPresent {
 
-    public static final String DEFAULT_CURRENCY = "cny";
+    public static final String TAG = "PayOrderPresent";
     String oid;
     IPayOrderView iPayOrderView;
 
@@ -72,10 +74,15 @@ public class PayOrderPresent {
             OrderBusiness.getValidCoupon(((PayOrderAcivity) iPayOrderView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
+                    LogHelper.e(TAG," result "+String.valueOf(response.result));
                     try {
-                        discountItems = JSON.parseArray(data.toString(), DiscountItem.class);
+                        JSONObject jsonObject =  JSONObject.parseObject(String.valueOf(response.result));
+
+                        LogHelper.e(TAG," result  list s "+jsonObject.getString("lists"));
+                        discountItems = JSON.parseArray(jsonObject.getString("lists"), DiscountItem.class);
 
                     } catch (Exception e) {
+                        LogHelper.e(TAG," result  error"+e.getMessage());
                     }
                     if (discountItems == null) {
                         discountItems = new ArrayList<>();
@@ -138,6 +145,7 @@ public class PayOrderPresent {
 
         @Override
         public void getChar(String oid, String type, String ip, String currency, String couponId, final CtFetchCallback<String> callback) {
+           LogHelper.e(TAG,TextUtils.join("|",new String[]{oid,type,ip,currency,couponId}));
             OrderBusiness.getCharge(((PayOrderAcivity) iPayOrderView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {

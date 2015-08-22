@@ -260,7 +260,11 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                 DateActivity.startTraveller(this, mServiceDetail.getServiceInfo().getSid());
                 break;
             case R.id.author_more:
-                ServiceFinderInfoAllActivity.start(this, mServiceDetail.getServiceInfo().getInsiderId());
+                if (LoginInstance.isLogin(this)) {
+                    ServiceFinderInfoAllActivity.start(this, mServiceDetail.getServiceInfo().getInsiderId());
+                } else {
+                    reLogin();
+                }
                 break;
             case R.id.service_bill_introduce_view:
                 ServicePriceDescActivity.start(this,
