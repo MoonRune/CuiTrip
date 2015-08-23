@@ -113,11 +113,11 @@ public class ServicePartRenderData {
     }
 
     public static String getOrderPeopleSizeText(OrderItem orderItem) {
-        return orderItem.getBuyerNum();
+        return orderItem.getBuyerNum()+"人";
     }
 
     public static String getOrderDurationText(OrderItem orderItem) {
-        return orderItem.getServiceTime();
+        return orderItem.getServiceTime()+"小时";
     }
 
 

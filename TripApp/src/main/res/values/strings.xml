@@ -201,7 +201,7 @@
     <string name="ct_login_out">退出登录</string>
 
     <string name="ct_setting">设置</string>
-    <string name="ct_profile">个人设置</string>
+    <string name="ct_profile">关于我</string>
     <string name="ct_homepage">我的主页</string>
     <string name="ct_homepage_eidt">介绍自己</string>
     <string name="ct_id">身份认证</string>
@@ -383,7 +383,7 @@
     <string name="order_person_phone">电话号码</string>
     <string name="order_person_email">电子邮件地址</string>
     <string name="order_person_identity">身份证件</string>
-    <string name="order_person_validated">已验证身份</string>
+    <string name="order_person_validated">验证</string>
     <string name="ct_modify_order_menu">修改预订</string>
     <string name="order_status_wait_confirm">等待发现者确认</string>
     <string name="order_status_wait_pay">等待支付</string>

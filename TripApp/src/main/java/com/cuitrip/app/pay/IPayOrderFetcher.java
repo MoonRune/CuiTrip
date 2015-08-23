@@ -12,4 +12,5 @@ public interface IPayOrderFetcher {
     void removeDiscount(String oid,CtApiCallback callback);
     void getChar(String oid,String type,String ip,String currency, String couponId,CtFetchCallback<String> callback);
     void notifiOrderStatus(String oid,CtApiCallback callback);
+    void needCharge(String oid,String currency, String couponId,CtFetchCallback<Boolean> callback);
 }

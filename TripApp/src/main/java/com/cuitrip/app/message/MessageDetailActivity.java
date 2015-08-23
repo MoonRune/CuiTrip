@@ -7,7 +7,6 @@ import android.widget.TextView;
 
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
-import com.lab.utils.Utils;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,7 +35,7 @@ public class MessageDetailActivity extends BaseActivity {
         MessageMode mode = (MessageMode) getIntent().getSerializableExtra(KEY);
         showActionBar(mode.getName());
         title.setText(mode.getName());
-        time.setText(Utils.getMsToSeconds(mode.getDate()));
+        time.setText(mode.getDate());
         content.setText(mode.getContent());
     }
 }

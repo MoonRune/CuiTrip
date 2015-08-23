@@ -189,8 +189,20 @@ public class OrderBusiness {
         params.put("channel", channel);
         params.put("clientIp", clientIp);
         params.put("payCurrency", payCurrency);
-        params.put("couponId", couponId);
+        params.put("couponIds", couponId);
         return client.post(context, BusinessHelper.getApiUrl("getCharge"), params, handler);
+    }
+
+
+    public static RequestHandle getFinalPrice(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                          String oid, String payCurrency,
+                                          String couponId) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("orderId", oid);
+        params.put("payCurrency", payCurrency);
+        params.put("couponIds", couponId);
+        return client.post(context, BusinessHelper.getApiUrl("getFinalPrice"), params, handler);
     }
 
     public static RequestHandle notifyPayStatus(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,

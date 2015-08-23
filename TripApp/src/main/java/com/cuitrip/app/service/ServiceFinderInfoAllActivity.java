@@ -18,6 +18,7 @@ import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.imageupload.URLImageParser;
 import com.loopj.android.http.AsyncHttpClient;
@@ -174,8 +175,12 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
             aboutHint.setVisibility(View.VISIBLE);
             aboutValue.setVisibility(View.VISIBLE);
             aboutHint.setText("关于" + data.getUserName());
-            String introduce = URLImageParser.replae(data.getIntroduce());
-             introduce = URLImageParser.replaeWidth(data.getIntroduce());
+            String introduce =data.getIntroduce();
+            LogHelper.e("omg1",introduce);
+            introduce = URLImageParser.replae(introduce);
+            LogHelper.e("omg2",introduce);
+             introduce = URLImageParser.replaeWidth(introduce);
+            LogHelper.e("omg3",introduce);
             URLImageParser urlImageParser = new URLImageParser(aboutValue,this,introduce);
             aboutValue.setText(Html.fromHtml(introduce,urlImageParser,null));
         }

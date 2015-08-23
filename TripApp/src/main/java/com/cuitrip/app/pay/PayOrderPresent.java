@@ -55,7 +55,7 @@ public class PayOrderPresent {
 
                     orderItem = ((OrderItem) data);
                     count.decrementAndGet();
-                    onResult(count,callback,orderItem,discountItems);
+                    onResult(count, callback, orderItem, discountItems);
                 }
 
                 @Override
@@ -74,21 +74,21 @@ public class PayOrderPresent {
             OrderBusiness.getValidCoupon(((PayOrderAcivity) iPayOrderView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
-                    LogHelper.e(TAG," result "+String.valueOf(response.result));
+                    LogHelper.e(TAG, " result " + String.valueOf(response.result));
                     try {
-                        JSONObject jsonObject =  JSONObject.parseObject(String.valueOf(response.result));
+                        JSONObject jsonObject = JSONObject.parseObject(String.valueOf(response.result));
 
-                        LogHelper.e(TAG," result  list s "+jsonObject.getString("lists"));
+                        LogHelper.e(TAG, " result  list s " + jsonObject.getString("lists"));
                         discountItems = JSON.parseArray(jsonObject.getString("lists"), DiscountItem.class);
 
                     } catch (Exception e) {
-                        LogHelper.e(TAG," result  error"+e.getMessage());
+                        LogHelper.e(TAG, " result  error" + e.getMessage());
                     }
                     if (discountItems == null) {
                         discountItems = new ArrayList<>();
                     }
                     count.decrementAndGet();
-                    onResult(count,callback,orderItem,discountItems);
+                    onResult(count, callback, orderItem, discountItems);
                 }
 
                 @Override
@@ -102,7 +102,7 @@ public class PayOrderPresent {
                     callback.onFailed(new CtException(reason));
 
                 }
-            }, UnitUtils.getMoenyType());
+            }, UnitUtils.getMoneyType());
 
 
         }
@@ -111,9 +111,9 @@ public class PayOrderPresent {
                              List<DiscountItem> discountItems) {
             if (count.get() <= 0) {
                 if (orderItem != null) {
-                    callback.onSuc(PayOrderMode.getInstance(orderItem,discountItems));
-                }else {
-                    callback.onFailed(new CtException( PlatformUtil.getInstance().getString(R.string.ct_get_order_detail_failed)));
+                    callback.onSuc(PayOrderMode.getInstance(orderItem, discountItems));
+                } else {
+                    callback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.ct_get_order_detail_failed)));
                 }
             }
         }
@@ -145,7 +145,7 @@ public class PayOrderPresent {
 
         @Override
         public void getChar(String oid, String type, String ip, String currency, String couponId, final CtFetchCallback<String> callback) {
-           LogHelper.e(TAG,TextUtils.join("|",new String[]{oid,type,ip,currency,couponId}));
+            LogHelper.e(TAG, TextUtils.join("|", new String[]{oid, type, ip, currency, couponId}));
             OrderBusiness.getCharge(((PayOrderAcivity) iPayOrderView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
@@ -167,6 +167,36 @@ public class PayOrderPresent {
         @Override
         public void notifiOrderStatus(String oid, CtApiCallback callback) {
 
+        }
+
+        @Override
+        public void needCharge(String oid, String currency, String couponId, final CtFetchCallback<Boolean> callback) {
+            LogHelper.e(TAG, TextUtils.join("|", new String[]{oid, currency, couponId}));
+            OrderBusiness.getFinalPrice(((PayOrderAcivity) iPayOrderView), mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    LogHelper.e(TAG, " need char " + String.valueOf(response.result));
+                    JSONObject jsonObject = JSONObject.parseObject(String.valueOf(data));
+                    double value = 0;
+
+                    try {
+                        value = Double.valueOf(jsonObject.getString("finalPrice"));
+                    } catch (NumberFormatException e) {
+                        value = 1;
+                    }
+                    callback.onSuc(value > 0);
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    String msg = response.msg;
+                    if (TextUtils.isEmpty(msg)) {
+                        msg = PlatformUtil.getInstance().getString(R.string.ct_pay_failed);
+                    }
+                    callback.onFailed(new CtException(msg));
+                }
+
+            }, oid, currency, couponId);
         }
     };
 
@@ -199,7 +229,45 @@ public class PayOrderPresent {
 
 
     public void clickPay() {
-        iPayOrderView.uiPayMethod();
+
+        iPayOrderView.uiShowRefreshLoading();
+        String temp = "";
+        if (payOrderMode != null && payOrderMode.getDiscount() != null) {
+            temp = payOrderMode.getDiscount().getCode();
+        }
+        final String coupId = temp;
+        payOrderFetcher.needCharge(oid, UnitUtils.getMoneyType(), coupId, new CtFetchCallback<Boolean>() {
+            @Override
+            public void onSuc(Boolean aBoolean) {
+                if (aBoolean) {
+                    iPayOrderView.uiHideRefreshLoading();
+                    iPayOrderView.uiPayMethod();
+                } else {
+                    payOrderFetcher.getChar(oid, "", Utils.getLocalHostIp(), UnitUtils.getMoneyType(), coupId, new CtFetchCallback<String>() {
+                        @Override
+                        public void onSuc(String s) {
+                            iPayOrderView.uiHideRefreshLoading();
+                            iPayOrderView.uiPaySuc();
+                        }
+
+                        @Override
+                        public void onFailed(CtException throwable) {
+                            iPayOrderView.uiHideRefreshLoading();
+                            iPayOrderView.uiPayFailed(throwable.getMessage());
+
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onFailed(CtException throwable) {
+                MessageUtils.showToast(throwable.getMessage());
+                iPayOrderView.uiHideRefreshLoading();
+
+            }
+        });
     }
 
     public void payWith(String method) {
@@ -208,7 +276,7 @@ public class PayOrderPresent {
         if (payOrderMode != null && payOrderMode.getDiscount() != null) {
             coupId = payOrderMode.getDiscount().getCode();
         }
-        payOrderFetcher.getChar(oid, method, Utils.getLocalHostIp(), UnitUtils.getMoenyType(), coupId, new CtFetchCallback<String>() {
+        payOrderFetcher.getChar(oid, method, Utils.getLocalHostIp(), UnitUtils.getMoneyType(), coupId, new CtFetchCallback<String>() {
             @Override
             public void onSuc(String s) {
                 iPayOrderView.uiHideRefreshLoading();

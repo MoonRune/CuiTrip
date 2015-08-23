@@ -13,7 +13,7 @@
     android:paddingRight="@dimen/ct_width_padding"
     android:paddingTop="15dp"
     android:gravity="top">
-<LinearLayout
+<RelativeLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
@@ -26,6 +26,7 @@
         tools:src="@drawable/ct_default" />
 
     <LinearLayout
+        android:layout_toRightOf="@+id/author_img"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -65,15 +66,11 @@
             android:textSize="13sp"
             tools:text="order_address" />
     </LinearLayout>
-
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="1dp"
-        android:layout_weight="1"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/content"
+        android:layout_alignParentRight="true"
+        android:background="@color/ct_white"
         android:orientation="horizontal"
         android:paddingBottom="5dp"
         android:paddingLeft="@dimen/ct_width_padding"
@@ -90,7 +87,7 @@
             android:textSize="13sp"
             tools:text="progressing" />
     </LinearLayout>
-</LinearLayout><View
+</RelativeLayout><View
     android:layout_marginTop="15dp"
     android:layout_width="match_parent"
     android:layout_height="1dp"

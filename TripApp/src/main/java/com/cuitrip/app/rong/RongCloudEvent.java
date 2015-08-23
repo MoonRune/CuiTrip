@@ -8,10 +8,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.orderdetail.OrderFormActivity;
+import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
+import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
@@ -39,7 +43,7 @@ import io.rong.message.VoiceMessage;
  */
 public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnReceiveMessageListener,
         RongIMClient.ConnectionStatusListener {
-    public static final String TAG= "RongCloudEvent";
+    public static final String TAG = "RongCloudEvent";
 
 
     private RongCloudEvent() {
@@ -153,20 +157,51 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
     @Override
     public boolean onReceived(Message message, int left) {
-        LogHelper.e(TAG,"on receive message");
+        LogHelper.e(TAG, "on receive message" + message.getTargetId());
+//        MessageContent messageContent = message.getContent();
+//
+//        String content = "";
+//        UserInfo userInfo = messageContent.getUserInfo();
+//        String title = "";
+//        String contentLittle = "发来消息";
+//        if (userInfo != null) {
+//            title = userInfo.getName();
+//            if (!TextUtils.isEmpty(title)) {
+//                contentLittle = title + "发来消息";
+//            }
+//        }
+//        LogHelper.e(TAG, "on receive type");
+//        content = getContext(message);
+//        buildNotification(message.getTargetId().hashCode(), title, content, contentLittle);
+        try {
+            com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+            int type = 2;
+//            public static final int TYPE_TRAVEL = 1;
+//            public static final int TYPE_FINDER = 2;;
+            if (userInfo.isTravel()) {
+                type = 1;
+            }
+            String content = getContext(message);
+            if (!TextUtils.isEmpty(content)) {
+                queryForInfo(MainApplication.getInstance(), message, content, type);
+            } else {
+                try {
+                    LogHelper.e(TAG, " seems should not see " + message.getObjectName() + "|" + message.toString());
+                } catch (Exception e) {
+                    LogHelper.e(TAG, " seems should not see error" + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            LogHelper.e(TAG, " error " + e.getMessage());
+        }
+        return true;
+
+    }
+
+    public String getContext(Message message) {
         MessageContent messageContent = message.getContent();
 
         String content = "";
-        UserInfo userInfo=messageContent.getUserInfo();
-        String title = "";
-        String contentLittle  = "发来消息";
-        if (userInfo!=null) {
-             title = userInfo.getName();
-            if (!TextUtils.isEmpty(title)) {
-                contentLittle = title + "发来消息";
-            }
-        }
-        LogHelper.e(TAG,"on receive type");
         if (messageContent instanceof TextMessage) {//文本消息
             TextMessage textMessage = (TextMessage) messageContent;
             content = textMessage.getContent();
@@ -184,16 +219,53 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             LogHelper.e(TAG, "onReceived-informationNotificationMessage:" + informationNotificationMessage.getMessage());
             content = "[提醒]";
         } else {
-            content = "[通知]";
+//            content = "[通知]";
+            return null;
         }
-        buildNotification(message.getTargetId().hashCode(), title, content, contentLittle);
-
-        return true;
-
+        return content;
     }
 
-    public void buildNotification(int id, String content, String title, String contentLittle) {
-        LogHelper.e(TAG,TextUtils.join(" | ",new String[]{String.valueOf(id), content,  title,  contentLittle}));
+    public void queryForInfo(final Context context, final Message message, final String content, int type) {
+        OrderBusiness.getOrderList(context, mClient, new LabAsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                if (data != null) {
+                    try {
+                        List<OrderItem> orderItems = JSON.parseArray(data.toString(), OrderItem.class);
+                        for (OrderItem orderItem : orderItems) {
+                            if (message.getTargetId().equals(orderItem.getTargetId())) {
+                                String title = "";
+                                String contentLittle = "发来消息";
+                                if (!TextUtils.isEmpty(orderItem.getUserNick())) {
+                                    title = orderItem.getUserNick();
+                                    if (!TextUtils.isEmpty(title)) {
+                                        contentLittle = title + "发来消息";
+                                    }
+                                }
+                                buildNotification(message.getTargetId().hashCode(),
+                                        orderItem.getUserNick(), content, contentLittle, orderItem.getOid());
+                                return;
+                            }
+                        }
+                        buildNotification(message.getTargetId().hashCode(), "", content, "请切换身份以查看", null);
+
+                    } catch (Exception e) {
+                        buildNotification(message.getTargetId().hashCode(), "[未知]" + e.getMessage(), content, "发来消息", null);
+
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                buildNotification(message.getTargetId().hashCode(), "[未知]", content, "发来消息", null);
+
+            }
+        }, type);
+    }
+
+    public void buildNotification(int id, String content, String title, String contentLittle, String oid) {
+        LogHelper.e(TAG, TextUtils.join(" | ", new String[]{String.valueOf(id), content, title, contentLittle}));
         //定义NotificationManager
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) MainApplication.getInstance().getSystemService(ns);
@@ -206,8 +278,12 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         CharSequence contentTitle = title;
         CharSequence contentText = content;
         Intent notificationIntent = new Intent(MainApplication.getInstance(), IndexActivity.class);
+        if (!TextUtils.isEmpty(oid)) {
+            notificationIntent = OrderFormActivity.getStartIntent(MainApplication.getInstance(), oid);
+        }
         PendingIntent contentIntent = PendingIntent.getActivity(MainApplication.getInstance(), 0,
-                notificationIntent, 0);
+                notificationIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
+        notification.flags |= Notification.FLAG_AUTO_CANCEL;
         notification.setLatestEventInfo(MainApplication.getInstance(), contentTitle, contentText,
                 contentIntent);
 

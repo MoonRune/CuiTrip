@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.base.CtApiCallback;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.ListFetchCallback;
 import com.cuitrip.business.MessageBusiness;
@@ -67,6 +68,7 @@ public class MessagePresent {
                 @Override
                 public void onFailure(LabResponse response, Object data) {
 
+                    LogHelper.e("omg","onFailure ");
                     String msg ;
                     if (response !=null &&!TextUtils.isEmpty(response.msg)){
                         msg = response.msg;
@@ -109,6 +111,29 @@ public class MessagePresent {
                 }
             }, userType, pattern, pattern+defaultsize);
         }
+
+        @Override
+        public void deleteMessage(String id, final CtApiCallback callback) {
+            MessageBusiness.deleteMessage(((MessageListActivity) mMessageView), mClient, new LabAsyncHttpResponseHandler() {
+
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    callback.onSuc();
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+
+                    String msg;
+                    if (response != null && !TextUtils.isEmpty(response.msg)) {
+                        msg = response.msg;
+                    } else {
+                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                    }
+                    callback.onFailed(new CtException(msg));
+                }
+            }, id);
+        }
     }
 
     public void requestLoadMore() {
@@ -132,12 +157,22 @@ public class MessagePresent {
         });
     }
 
-    public void onClickMessage(MessageMode messageMode) {
+    public void onClickMessage(final MessageMode messageMode) {
         mMessageView.jumpMessage(messageMode);
     }
 
-    public void onMove(MessageMode messageMode) {
-        mMessageView.deleteMessage(messageMode);
+    public void onMove(final MessageMode messageMode) {
+        mMessageFetcher.deleteMessage(messageMode.getId(), new CtApiCallback() {
+            @Override
+            public void onSuc() {
+                mMessageView.deleteMessage(messageMode);
+            }
+
+            @Override
+            public void onFailed(CtException throwable) {
+                MessageUtils.showToast(throwable.getMessage());
+            }
+        });
     }
 
     public void requestRefresh() {

@@ -39,6 +39,7 @@
                 android:id="@+id/ct_message_notification_count"
                 android:layout_width="16dp"
                 android:layout_height="16dp"
+                android:textSize="11sp"
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:background="@drawable/shape_red_circle"

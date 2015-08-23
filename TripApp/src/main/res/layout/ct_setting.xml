@@ -12,6 +12,31 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/ct_single_px"
         android:background="@color/ct_divider" />
+
+    <LinearLayout
+        android:id="@+id/ct_money_hint_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/ctMyProfile"
+            android:drawableRight="@null"
+            android:layout_width="wrap_content"
+            android:text="货币"/>
+
+        <TextView
+            android:gravity="right|center_vertical"
+            android:drawablePadding="10dp"
+            android:textColor="@color/ct_content"
+            android:id="@+id/ct_money_value_tv_tv"
+            style="@style/ctMyProfile"
+            android:text=""/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ct_single_px"
+        android:background="@color/ct_divider" />
     <TextView
         android:id="@+id/ct_about"
         style="@style/ctMyProfile"

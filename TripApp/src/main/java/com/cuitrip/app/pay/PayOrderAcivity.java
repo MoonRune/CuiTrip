@@ -113,6 +113,8 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         ctServiceNameTv.setText(item.getServiceName());
         ctOrderDateBuyerSizeTv.setText(item.getOrderDate() + " - " + item.getBuyerSize());
         ctOrderPriceWhithCurrencyTv.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
+
+        ctOrderDiscountsTv.setText("您还有"+(item.getDiscountItems() == null ? 0 :item.getDiscountItems().size())+"个优惠可使用");
         if (item.getDiscount() != null) {
             ctOrderDiscountContentTv.setVisibility(View.VISIBLE);
             ctOrderDiscountContentTv.setText("目前使用的优惠码 优惠" + item.getDiscount().getMoneyType() + item.getDiscount().getMoney());
@@ -185,6 +187,16 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         intent.setComponent(componentName);
         intent.putExtra(PaymentActivity.EXTRA_CHARGE, payParams);
         startActivityForResult(intent, REQUEST_CODE_PAYMENT);
+    }
+
+    @Override
+    public void uiPaySuc() {
+        onPaySuccess();
+    }
+
+    @Override
+    public void uiPayFailed(String msg) {
+    onPayFailed(msg);
     }
 
     public class PayMethodPop implements View.OnClickListener {

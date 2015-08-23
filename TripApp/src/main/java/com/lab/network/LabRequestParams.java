@@ -25,7 +25,7 @@ public class LabRequestParams extends RequestParams {
 
         }
         put("lang", UnitUtils.getLanguage());
-        put("moneyType", UnitUtils.getMoenyType());
+        put("moneyType", UnitUtils.getMoneyType());
     }
 
 

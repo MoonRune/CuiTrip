@@ -65,19 +65,22 @@
             <View style="@style/order_form_divide" />
 
             <LinearLayout
+                android:id="@+id/ct_user_validate_date_ll"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/select_white_gray"
                 android:orientation="horizontal">
 
                 <TextView
                     style="@style/order_info_hint"
                     android:text="有效期至" />
 
-                <EditText
+                <TextView
                     android:id="@+id/ct_user_validate_date_tv"
                     style="@style/order_info_value"
                     android:background="@null"
-                    android:digits="1234567890-"
+                    android:clickable="false"
+                    android:focusable="false"
                     android:hint="例:2000-10-1" />
             </LinearLayout>
 
@@ -144,5 +147,16 @@
             android:layout_marginTop="20dp"
             android:background="@drawable/selector_blue_stoken_empty_corner"
             android:text="重新上传"/>
+        <TextView
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"
+            android:textSize="13sp"
+            android:textColor="@color/ct_content"
+            android:lineSpacingMultiplier="1.3"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="请上传您的有效身份证件，包括身份证、护照。\n如证件有效期与其他证件信息不在同一页，请同时上传有效期所在的那一页。\n您可以使用相机、手机拍照，或者扫描仪，请确保证件上的文字清晰可辨识。"/>
     </LinearLayout>
 </ScrollView>

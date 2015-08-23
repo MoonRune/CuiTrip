@@ -135,6 +135,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 LogHelper.e(TAG, "" + data.toString());
+                stopRerfresh();
                 try {
                     JSONObject json = JSONObject.parseObject(data.toString());
 
@@ -176,6 +177,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
                     msg=getString(R.string.ct_fetch_failed);
                 }
                 MessageUtils.showToast(msg);
+                stopRerfresh();
             }
 
             @Override

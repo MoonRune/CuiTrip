@@ -14,4 +14,6 @@ public interface IPayOrderView extends IRefreshView<PayOrderMode> {
 
     void showMessage(String msg);
     void requestPay(String payParams);
+    void uiPaySuc();
+    void uiPayFailed(String msg);
 }

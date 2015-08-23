@@ -72,6 +72,13 @@ public class OrderFormActivity extends BaseActivity {
         context.startActivity(intent);
     }
 
+    public static Intent getStartIntent(Context context, String orderId) {
+        Intent intent = new Intent(context, OrderFormActivity.class);
+        intent.putExtra(ORDER_ID, orderId);
+        intent.putExtra(MOVE_TO_CONVERSATION, true);
+        return intent;
+    }
+
     public static void start(Context context, String orderId, String targetId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
         intent.putExtra(ORDER_ID, orderId);
