@@ -30,7 +30,7 @@ public class TravellerWaitStartPresent extends BaseOrderFormPresent<ITravelerOrd
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "查看地图";
+        return "";
     }
 
     @Override

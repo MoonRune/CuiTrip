@@ -84,6 +84,7 @@
         android:id="@+id/ct_service_meet_location_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/select_white_gray"
         android:orientation="horizontal">
 
         <TextView

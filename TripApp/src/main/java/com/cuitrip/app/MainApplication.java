@@ -37,8 +37,12 @@ public class MainApplication extends BaseAppLication {
         RongIM.init(this);
         RongIMClient.init(this);
         RongContext.init(this);
-        RongIM.setUserInfoProvider(RongCloudEvent.getInstance(), true);
+    }
+
+    public void initRongImCallback(){
+        RongIM.getInstance().getRongIMClient().setOnReceivePushMessageListener(RongCloudEvent.getInstance());
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(RongCloudEvent.getInstance());
+        RongIM.setUserInfoProvider(RongCloudEvent.getInstance(), true);
         RongIM.setLocationProvider(new RongIM.LocationProvider() {
             @Override
             public void onStartLocation(final Context context, final LocationCallback callback) {
@@ -48,6 +52,7 @@ public class MainApplication extends BaseAppLication {
                 GaoDeMapActivity.returnForIM(context);
             }
         });
+
     }
 
     public static  RongIM.LocationProvider.LocationCallback callback;
@@ -66,17 +71,17 @@ public class MainApplication extends BaseAppLication {
         sContext = this;
         ImageHelper.initImageLoader(getApplicationContext());
         SmsSdkHelper.initSmsSDK(getApplicationContext());
-        if("io.rong.app".equals(getCurProcessName(getApplicationContext())) ||
+        if("com.cuitrip.service".equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
 
-
+            initRongIM();
             /**
              * 融云SDK事件监听处理
              *
              * 注册相关代码，只需要在主进程里做。
              */
-            if ("io.rong.app".equals(getCurProcessName(getApplicationContext()))) {
-
+            if ("com.cuitrip.service".equals(getCurProcessName(getApplicationContext()))) {
+                initRongImCallback();
 //                RongCloudEvent.init(this);
 //                DemoContext.init(this);
 //                Thread.setDefaultUncaughtExceptionHandler(new RongExceptionHandler(this));

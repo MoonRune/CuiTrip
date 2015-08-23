@@ -21,6 +21,7 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.SyncHttpClient;
 
 import java.util.ArrayList;
@@ -29,6 +30,7 @@ import java.util.concurrent.CountDownLatch;
 
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import io.rong.imlib.RongIMClient.OnReceivePushMessageListener;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
@@ -37,12 +39,13 @@ import io.rong.message.InformationNotificationMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
+import io.rong.notification.PushNotificationMessage;
 
 /**
  * Created by baziii on 15/8/11.
  */
 public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnReceiveMessageListener,
-        RongIMClient.ConnectionStatusListener {
+        RongIMClient.ConnectionStatusListener ,OnReceivePushMessageListener{
     public static final String TAG = "RongCloudEvent";
 
 
@@ -183,7 +186,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             }
             String content = getContext(message);
             if (!TextUtils.isEmpty(content)) {
-                queryForInfo(MainApplication.getInstance(), message, content, type);
+                queryForInfo(MainApplication.getInstance(), message, content, type,false);
             } else {
                 try {
                     LogHelper.e(TAG, " seems should not see " + message.getObjectName() + "|" + message.toString());
@@ -225,8 +228,9 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         return content;
     }
 
-    public void queryForInfo(final Context context, final Message message, final String content, int type) {
-        OrderBusiness.getOrderList(context, mClient, new LabAsyncHttpResponseHandler() {
+    AsyncHttpClient mAsyncHttpClient = new AsyncHttpClient();
+    public void queryForInfo(final Context context, final Message message, final String content, int type,boolean async) {
+        OrderBusiness.getOrderList(context, async?mAsyncHttpClient:mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 if (data != null) {
@@ -310,5 +314,36 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 MessageUtils.showToast("在其他设别上登录");
                 break;
         }
+    }
+
+    @Override
+    public boolean onReceivePushMessage(PushNotificationMessage message) {
+        LogHelper.e(TAG,"onReceivePushMessage");
+
+        try {
+            com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+            int type = 2;
+//            public static final int TYPE_TRAVEL = 1;
+//            public static final int TYPE_FINDER = 2;;
+            if (userInfo.isTravel()) {
+                type = 1;
+            }
+
+            String content = message.getPushContent();
+            if (!TextUtils.isEmpty(content)) {
+                LogHelper.e(TAG,"content  not empty");
+
+                queryForInfo(MainApplication.getInstance(), message, content, type,true);
+            } else {
+                try {
+                    LogHelper.e(TAG, " seems should not see " +String.valueOf( message.getContent()));
+                } catch (Exception e) {
+                    LogHelper.e(TAG, " seems should not see error" + e.getMessage());
+                }
+            }
+        } catch (Exception e) {
+            LogHelper.e(TAG, " error " + e.getMessage());
+        }
+        return true;
     }
 }

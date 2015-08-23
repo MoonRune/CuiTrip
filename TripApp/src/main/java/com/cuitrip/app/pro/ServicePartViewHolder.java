@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cuitrip.app.base.PartViewHolder;
+import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.service.R;
 import com.lab.utils.LogHelper;
 
@@ -57,7 +58,7 @@ public class ServicePartViewHolder implements PartViewHolder<ServicePartRenderDa
         ButterKnife.inject(this, activity);
     }
 
-    public void render(ServicePartRenderData data) {
+    public void render(final ServicePartRenderData data) {
         LogHelper.e("omg", data.toString());
         mServiceNameTv.setText(data.getServiceName());
         if (!TextUtils.isEmpty(data.getServiceDuration())) {
@@ -72,8 +73,22 @@ public class ServicePartViewHolder implements PartViewHolder<ServicePartRenderDa
         if (!TextUtils.isEmpty(data.getUnvaliableReason())) {
             ctOrderUnvaliableLl.setVisibility(View.VISIBLE);
             ctOrderUnvaliableTv.setText(data.getUnvaliableReason());
-        }else {
+        } else {
             ctOrderUnvaliableLl.setVisibility(View.GONE);
+        }
+        if (TextUtils.isEmpty(data.getMeetLocation())) {
+            ctServiceMeetLocationLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                }
+            });
+        } else {
+            ctServiceMeetLocationLayout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    GaoDeMapActivity.startShow(v.getContext(), data.getLat(), data.getLng(), data.getMeetLocation());
+                }
+            });
         }
     }
 

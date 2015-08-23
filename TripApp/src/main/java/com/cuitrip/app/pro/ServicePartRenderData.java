@@ -21,10 +21,13 @@ public class ServicePartRenderData {
     protected String priceInclude;
     protected String priceUninclude;
     protected String unvaliableReason;
+    protected double lat;
+    protected double lng;
 
     public ServicePartRenderData(String serviceName,
                                  String orderDate, String meetLocation, String orderPeopleSize, String serviceDuration, String priceWithCurrency, String priceInclude,
-                                 String priceUninclude) {
+                                 String priceUninclude,
+                                 double lat, double lng) {
         this.serviceName = serviceName;
         this.orderDate = orderDate;
         this.meetLocation = meetLocation;
@@ -33,6 +36,25 @@ public class ServicePartRenderData {
         this.priceWithCurrency = priceWithCurrency;
         this.priceInclude = priceInclude;
         this.priceUninclude = priceUninclude;
+        this.lat = lat;
+        this.lng = lng;
+    }
+
+
+    public double getLat() {
+        return lat;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
     }
 
     public String getUnvaliableReason() {
@@ -113,11 +135,11 @@ public class ServicePartRenderData {
     }
 
     public static String getOrderPeopleSizeText(OrderItem orderItem) {
-        return orderItem.getBuyerNum()+"人";
+        return orderItem.getBuyerNum() + "人";
     }
 
     public static String getOrderDurationText(OrderItem orderItem) {
-        return orderItem.getServiceTime()+"小时";
+        return orderItem.getServiceTime() + "小时";
     }
 
 
@@ -157,13 +179,28 @@ public class ServicePartRenderData {
     public static String getOrderPriceUninclude(OrderItem orderItem) {
         return orderItem.getFeeExclude();
     }
+
     public static String getUnvaliableReason(OrderItem orderItem) {
-        if (TextUtils.isEmpty(orderItem.getInvalidReason())){
+        if (TextUtils.isEmpty(orderItem.getInvalidReason())) {
             return "无";
         }
         return orderItem.getInvalidReason();
     }
+    public static double  getLat(OrderItem orderItem) {
 
+        try {
+            return Double.valueOf(orderItem.getLat());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+    public static double  getLng(OrderItem orderItem) {
+        try {
+            return Double.valueOf(orderItem.getLng());
+        } catch (Exception e) {
+            return 0;
+        }
+    }
 
     public static ServicePartRenderData getInstance(OrderItem orderItem) {
 
@@ -172,7 +209,8 @@ public class ServicePartRenderData {
                 , getOrderMeet(orderItem),
                 getOrderPeopleSizeText(orderItem),
                 getOrderDurationText(orderItem),
-                getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem));
+                getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem),
+                getLat(orderItem),getLng(orderItem));
         return result;
     }
 }

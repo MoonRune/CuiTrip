@@ -20,6 +20,7 @@ import com.cuitrip.app.ModifyOrderActivity;
 import com.cuitrip.app.base.ProgressingFragment;
 import com.cuitrip.app.pay.PayOrderAcivity;
 import com.cuitrip.app.pro.ServicePartRenderData;
+import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
@@ -143,7 +144,7 @@ public class OrderFormActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            int count = orderItem == null ? 0 : (showTabs ? ((orderItem == null || TextUtils.isEmpty(orderItem.getTargetId())) ? 3 : 3) : 1);
+            int count = orderItem == null ? 0 : 3;
             return count;
         }
 
@@ -286,6 +287,7 @@ public class OrderFormActivity extends BaseActivity {
             notifyedMoveConversation();
         }
         requestOrderDetail();
+        RongCloudEvent.ConnectRong(false);
 
     }
 
