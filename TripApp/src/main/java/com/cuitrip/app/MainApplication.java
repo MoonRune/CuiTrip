@@ -42,6 +42,7 @@ public class MainApplication extends BaseAppLication {
     public void initRongImCallback(){
         RongIM.getInstance().getRongIMClient().setOnReceivePushMessageListener(RongCloudEvent.getInstance());
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(RongCloudEvent.getInstance());
+        RongIM.setConversationBehaviorListener(RongCloudEvent.getInstance());
         RongIM.setUserInfoProvider(RongCloudEvent.getInstance(), true);
         RongIM.setLocationProvider(new RongIM.LocationProvider() {
             @Override

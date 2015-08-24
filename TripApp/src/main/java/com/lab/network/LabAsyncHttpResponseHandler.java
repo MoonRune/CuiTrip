@@ -25,6 +25,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
         if (statusCode == 200) {
             try {
+                LogHelper.e("LoginActivity", "result "+new String(responseBody, "UTF-8"));
                 LabResponse response = LabResponse.parseResponse(responseBody);
                 if (response != null && response.code == 0) {
                     if (clazz != null && response.result != null

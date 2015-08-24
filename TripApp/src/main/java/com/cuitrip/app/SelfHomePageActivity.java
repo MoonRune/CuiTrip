@@ -146,7 +146,12 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
                         return;
                     }
                     if (status != 1) {
-                        MessageUtils.showToast(R.string.ct_homepage_status_not_suc);
+                        String content = "";
+                        try {
+                            content = json.getString("introduce");
+                        } catch (Exception e) {
+                        }
+                        SelfHomePageEditorActivity.startActivity(SelfHomePageActivity.this, content);
                         finish();
                         return ;
                     }

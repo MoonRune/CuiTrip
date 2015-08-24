@@ -42,6 +42,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     boolean isResumeRefresh = false;
 
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -63,6 +64,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     @Override
     public void onResume() {
         super.onResume();
+        showActionBar(getString(R.string.conversation_list_title));
         if (LoginInstance.isLogin(MainApplication.getInstance())) {
             mPresent.onCallRefresh();
         }

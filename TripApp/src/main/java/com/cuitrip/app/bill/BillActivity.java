@@ -94,7 +94,9 @@ public class BillActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_OK:
-                BillCashActivity.start(this, bills.getBalance(), bills.getMoneyType(), bills.getRate());
+                if(bills!=null) {
+                    BillCashActivity.start(this, bills.getBalance(), bills.getMoneyType(), bills.getRate());
+                }
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -158,6 +160,7 @@ public class BillActivity extends BaseActivity {
         OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler(Bills.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
+                LogHelper.e(TAG," suc"+String.valueOf(response.result));
                 if (data != null && data instanceof Bills) {
                      bills = ((Bills) data);
                     StringBuilder stringBuilder = new StringBuilder();
@@ -184,12 +187,14 @@ public class BillActivity extends BaseActivity {
                     hideLoading();
                     loading = false;
                 } else {
+                    LogHelper.e(TAG," not bills Data");
                     onFailure(response, data);
                 }
             }
 
             @Override
             public void onFailure(LabResponse response, Object data) {
+                LogHelper.e(TAG," failed");
                 String msg;
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     msg = response.msg;

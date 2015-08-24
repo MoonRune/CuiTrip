@@ -36,6 +36,8 @@ import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -404,11 +406,19 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void submit() {
+       final String email = mPersonalEmailEt.getText().toString();
+        if (!TextUtils.isEmpty(email)){
+            Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+            Matcher matcher = pattern.matcher(email);
+           if(!matcher.matches()){
+               MessageUtils.showToast("请输入正确的邮箱");
+               return;
+           }
+        }
         disableEdit();
         if (mIsUpLoading) {
             return;
         }
-        final String email = mPersonalEmailEt.getText().toString();
         final String phone = mPersonalPhoneEt.getText().toString();
         final String birth = mPersonalBirthEt.getText().toString();
         final String ava = TextUtils.isEmpty(userInfo.getHeadPic())?mUploadedAvaUrl:userInfo.getHeadPic();
@@ -622,7 +632,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             }
 
             public void onUnExceptedError() {
-                mPersonalDescTv.setText(getString(R.string.ct_fetch_failed));
+                mPersonalDescTv.setText(getString(R.string.ct_homepage_status_not_suc));
                 mPersonalDescV.setOnClickListener(SelfActivity.this);
             }
 

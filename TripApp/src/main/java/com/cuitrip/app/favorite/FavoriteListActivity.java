@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.cuitrip.app.ServiceDetailActivity;
 import com.cuitrip.app.base.BaseVerticalListActivity;
 import com.cuitrip.service.R;
 
@@ -85,7 +86,7 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
 
     @Override
     public void jump(FavoriteMode messageMode) {
-
+        ServiceDetailActivity.start(this,messageMode.getId());
     }
 
     @Override

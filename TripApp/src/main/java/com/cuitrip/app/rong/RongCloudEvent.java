@@ -7,10 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.text.TextUtils;
+import android.view.View;
 
 import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.UserBusiness;
@@ -31,11 +33,13 @@ import java.util.concurrent.CountDownLatch;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.RongIMClient.OnReceivePushMessageListener;
+import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Message;
 import io.rong.imlib.model.MessageContent;
 import io.rong.imlib.model.UserInfo;
 import io.rong.message.ImageMessage;
 import io.rong.message.InformationNotificationMessage;
+import io.rong.message.LocationMessage;
 import io.rong.message.RichContentMessage;
 import io.rong.message.TextMessage;
 import io.rong.message.VoiceMessage;
@@ -44,8 +48,8 @@ import io.rong.notification.PushNotificationMessage;
 /**
  * Created by baziii on 15/8/11.
  */
-public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnReceiveMessageListener,
-        RongIMClient.ConnectionStatusListener ,OnReceivePushMessageListener{
+public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnReceiveMessageListener, RongIM.ConversationBehaviorListener,
+        RongIMClient.ConnectionStatusListener, OnReceivePushMessageListener {
     public static final String TAG = "RongCloudEvent";
 
 
@@ -174,7 +178,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 //            }
 //        }
 //        LogHelper.e(TAG, "on receive type");
-//        content = getContext(message);
 //        buildNotification(message.getTargetId().hashCode(), title, content, contentLittle);
         try {
             com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
@@ -184,9 +187,9 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             if (userInfo.isTravel()) {
                 type = 1;
             }
-            String content = getContext(message);
+            String content = getMessageContent(message.getContent());
             if (!TextUtils.isEmpty(content)) {
-                queryForInfo(MainApplication.getInstance(), message, content, type,false);
+                queryForInfo(MainApplication.getInstance(), message, content, type, false);
             } else {
                 try {
                     LogHelper.e(TAG, " seems should not see " + message.getObjectName() + "|" + message.toString());
@@ -201,8 +204,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
     }
 
-    public String getContext(Message message) {
-        MessageContent messageContent = message.getContent();
+    public static String getMessageContent(MessageContent messageContent ) {
 
         String content = "";
         if (messageContent instanceof TextMessage) {//文本消息
@@ -217,6 +219,9 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         } else if (messageContent instanceof RichContentMessage) {//图文消息
             RichContentMessage richContentMessage = (RichContentMessage) messageContent;
             content = "[图文]";
+        } else if (messageContent instanceof LocationMessage) {//图文消息
+            LocationMessage location = (LocationMessage) messageContent;
+            content = "[地址:" + location.getPoi() + "]";
         } else if (messageContent instanceof InformationNotificationMessage) {//小灰条消息
             InformationNotificationMessage informationNotificationMessage = (InformationNotificationMessage) messageContent;
             LogHelper.e(TAG, "onReceived-informationNotificationMessage:" + informationNotificationMessage.getMessage());
@@ -229,8 +234,9 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     }
 
     AsyncHttpClient mAsyncHttpClient = new AsyncHttpClient();
-    public void queryForInfo(final Context context, final Message message, final String content, int type,boolean async) {
-        OrderBusiness.getOrderList(context, async?mAsyncHttpClient:mClient, new LabAsyncHttpResponseHandler() {
+
+    public void queryForInfo(final Context context, final Message message, final String content, int type, boolean async) {
+        OrderBusiness.getOrderList(context, async ? mAsyncHttpClient : mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 if (data != null) {
@@ -318,7 +324,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
     @Override
     public boolean onReceivePushMessage(PushNotificationMessage message) {
-        LogHelper.e(TAG,"onReceivePushMessage");
+        LogHelper.e(TAG, "onReceivePushMessage");
 
         try {
             com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
@@ -331,12 +337,12 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
             String content = message.getPushContent();
             if (!TextUtils.isEmpty(content)) {
-                LogHelper.e(TAG,"content  not empty");
+                LogHelper.e(TAG, "content  not empty");
 
-                queryForInfo(MainApplication.getInstance(), message, content, type,true);
+                queryForInfo(MainApplication.getInstance(), message, content, type, true);
             } else {
                 try {
-                    LogHelper.e(TAG, " seems should not see " +String.valueOf( message.getContent()));
+                    LogHelper.e(TAG, " seems should not see " + String.valueOf(message.getContent()));
                 } catch (Exception e) {
                     LogHelper.e(TAG, " seems should not see error" + e.getMessage());
                 }
@@ -344,6 +350,43 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         } catch (Exception e) {
             LogHelper.e(TAG, " error " + e.getMessage());
         }
+        return true;
+    }
+
+    @Override
+    public boolean onUserPortraitClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
+        return true;
+    }
+
+    @Override
+    public boolean onUserPortraitLongClick(Context context, Conversation.ConversationType conversationType, UserInfo userInfo) {
+        return true;
+    }
+
+    @Override
+    public boolean onMessageClick(Context context, View view, Message message) {
+        LogHelper.e("omg", "onMessageClick" + context.getClass().getName());
+        if (message != null && message.getContent() != null) {
+            if (message.getContent() instanceof LocationMessage) {
+                LocationMessage locationMessage = ((LocationMessage) message.getContent());
+                LogHelper.e("omg", "LocationMessage" + locationMessage.getLat() + "|" + locationMessage.getLng());
+//                BillActivity.start(context);
+                GaoDeMapActivity.startShow(context, locationMessage.getLat(), locationMessage.getLng(), locationMessage.getPoi());
+                LogHelper.e("omg", "LocationMessage end");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public boolean onMessageLinkClick(String s) {
+        LogHelper.e("omg", "onMessageLinkClick");
+        return true;
+    }
+
+    @Override
+    public boolean onMessageLongClick(Context context, View view, Message message) {
         return true;
     }
 }

@@ -60,6 +60,12 @@ public class GaoDeMapActivity extends BaseActivity {
                 .putExtra(VALUE_LAT, lat).putExtra(VALUE_LNG, lng).putExtra(VALUE_NAME, name));
     }
 
+
+    public static Intent getStartShow(Context context, double lat, double lng, String name) {
+       return  (new Intent(context, GaoDeMapActivity.class)
+                .putExtra(VALUE_LAT, lat).putExtra(VALUE_LNG, lng).putExtra(VALUE_NAME, name));
+    }
+
     public static boolean isSelected(int request, int response, Intent date) {
         return request == REQUEST && response == RESULT_OK;
     }
@@ -96,9 +102,12 @@ public class GaoDeMapActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gaode_map);
         mapView = (MapView) findViewById(R.id.map);
+        LogHelper.e("gaode","create");
         mapView.onCreate(savedInstanceState);// 必须要写 init();
         init();
+        LogHelper.e("gaode","init");
         if (!readIntent()) {
+            LogHelper.e("gaode","select");
             getSupportActionBar().setCustomView(R.layout.ct_action_search);
             getSupportActionBar().setDisplayShowCustomEnabled(true);
             getSupportActionBar().collapseActionView();
@@ -123,11 +132,20 @@ public class GaoDeMapActivity extends BaseActivity {
                     return true;
                 }
             });
+            move(25.044061, 121.510841);
         } else {
-            moveAndMark(lat, lng, name);
+            LogHelper.e("gaode","show");
+            mapView.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    moveAndMark(lat, lng, name);
+                }
+            },300);
+            LogHelper.e("gaode","show ok");
         }
+
         getSupportActionBar().show();
-        move(25.044061, 121.510841);
+        LogHelper.e("gaode","done");
     }
 
     public void save() {
@@ -211,7 +229,7 @@ public class GaoDeMapActivity extends BaseActivity {
 //                                    .appendQueryParameter("location",  "116.481485,39.990464").build();
                             LogHelper.e("set map ",""+url);
                             Uri uri = Uri.parse(url);
-                            LocationMessage   mMsg = LocationMessage.obtain(pointF.getValue(),pointF.getKey(),
+                            LocationMessage   mMsg = LocationMessage.obtain(lat,lng,
                                     addressName, uri);
                             MainApplication.getCallback().onSuccess(mMsg);
                             MainApplication.setCallback(null);

@@ -9,6 +9,7 @@ import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.ListFetchCallback;
 import com.cuitrip.app.conversation.ConversationItem;
 import com.cuitrip.app.conversation.IConversationsFetcher;
+import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.app.rong.RongTitleTagHelper;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
@@ -31,11 +32,6 @@ import java.util.concurrent.CountDownLatch;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
-import io.rong.message.DiscussionNotificationMessage;
-import io.rong.message.ImageMessage;
-import io.rong.message.RichContentMessage;
-import io.rong.message.TextMessage;
-import io.rong.message.VoiceMessage;
 
 /**
  * Created by baziii on 15/8/7.
@@ -164,28 +160,8 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                 item.setUnreadCount(conversation.getUnreadMessageCount());
                 item.setTime(String.valueOf(RongTitleTagHelper.buildDateString(conversation.getSentTime())));
                 item.setLast(conversation.getSentTime());
-                if (conversation.getLatestMessage() == null) {
-                    item.setLastWords("");
 
-                } else if (conversation.getLatestMessage() instanceof VoiceMessage) {
-                    VoiceMessage voiceMessage = (VoiceMessage) conversation.getLatestMessage();
-                    item.setLastWords("[语音]");
-                } else if (conversation.getLatestMessage() instanceof TextMessage) {
-                    TextMessage textMessage = (TextMessage) conversation.getLatestMessage();
-                    item.setLastWords(textMessage.getContent());
-
-                } else if (conversation.getLatestMessage() instanceof RichContentMessage) {
-                    RichContentMessage richContentMessage = (RichContentMessage) conversation.getLatestMessage();
-                    item.setLastWords(richContentMessage.getContent());
-                } else if (conversation.getLatestMessage() instanceof DiscussionNotificationMessage) {
-                    DiscussionNotificationMessage discussionNotificationMessage = (DiscussionNotificationMessage) conversation.getLatestMessage();
-
-                    item.setLastWords("[提醒]");
-                } else if (conversation.getLatestMessage() instanceof ImageMessage) {
-                    item.setLastWords("[图片]");
-                } else {
-                    item.setLastWords("其他消息");
-                }
+                item.setLastWords(RongCloudEvent.getMessageContent(conversation.getLatestMessage()));
             }
 
             @Override

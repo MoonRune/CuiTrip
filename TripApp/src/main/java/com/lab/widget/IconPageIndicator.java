@@ -153,9 +153,14 @@ public class IconPageIndicator extends HorizontalScrollView implements PageIndic
                 @Override
                 public void onClick(View v) {
 
-                    int viewPosition = Integer.parseInt(v.getTag().toString());
-
-                    mViewPager.setCurrentItem(viewPosition);
+                    try {
+                        int viewPosition = Integer.parseInt(v.getTag().toString());
+                        if (mViewPager != null) {
+                            mViewPager.setCurrentItem(viewPosition);
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             });
             mIconsLayout.addView(view);
