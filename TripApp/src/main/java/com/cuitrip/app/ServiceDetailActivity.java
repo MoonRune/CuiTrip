@@ -270,8 +270,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             case R.id.service_bill_introduce_view:
                 ServicePriceDescActivity.start(this,
                         mServiceDetail.getServiceInfo().getPriceType(),
-                        mServiceDetail.getServiceInfo().getPriceInclude(),
-                        mServiceDetail.getServiceInfo().getPriceUninclude());
+                        mServiceDetail.getServiceInfo().getFeeInclude(),
+                        mServiceDetail.getServiceInfo().getFeeExclude());
 //                startActivity(new Intent(this, BrowserActivity.class)
 //                        .putExtra(BrowserActivity.DATA, "file:///android_asset/html_bill.html")
 //                        .putExtra(BrowserActivity.TITLE, getString(R.string.ct_service_bill)));

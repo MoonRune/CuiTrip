@@ -100,12 +100,12 @@ public class ServiceAboutActivity extends BaseActivity implements IServiceAboutV
 
     @Override
     public void uiShowRefreshLoading() {
-        showLoading();
+        showNoCancelDialog();
     }
 
     @Override
     public void uiHideRefreshLoading() {
-        hideLoading();
+        hideNoCancelDialog();
     }
 
     @Override

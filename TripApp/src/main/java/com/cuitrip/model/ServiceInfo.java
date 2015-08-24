@@ -96,9 +96,9 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
 
     private String descptWithNoPic;
 
-    private String meetLocation;
-    private String priceInclude;
-    private String priceUninclude;
+    private String meetingPlace;
+    private String feeInclude;
+    private String feeExclude;
 
     private String showCurrency;
     private String showPrice;
@@ -121,28 +121,29 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
 
     // tag &&tags??
 
-    public String getMeetLocation() {
-        return meetLocation;
+
+    public String getMeetingPlace() {
+        return meetingPlace;
     }
 
-    public void setMeetLocation(String meetLocation) {
-        this.meetLocation = meetLocation;
+    public void setMeetingPlace(String meetingPlace) {
+        this.meetingPlace = meetingPlace;
     }
 
-    public String getPriceInclude() {
-        return priceInclude;
+    public String getFeeInclude() {
+        return feeInclude;
     }
 
-    public void setPriceInclude(String priceInclude) {
-        this.priceInclude = priceInclude;
+    public void setFeeInclude(String feeInclude) {
+        this.feeInclude = feeInclude;
     }
 
-    public String getPriceUninclude() {
-        return priceUninclude;
+    public String getFeeExclude() {
+        return feeExclude;
     }
 
-    public void setPriceUninclude(String priceUninclude) {
-        this.priceUninclude = priceUninclude;
+    public void setFeeExclude(String feeExclude) {
+        this.feeExclude = feeExclude;
     }
 
     public Integer getPriceType() {

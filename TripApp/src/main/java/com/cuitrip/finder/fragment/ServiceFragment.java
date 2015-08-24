@@ -156,7 +156,7 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                         if (info.getCheckStatus() == 0) {
                             //do nothing
                         } else if (info.getCheckStatus() == 1) {
-                            ServiceAboutActivity.start(getActivity(),info.getSid());
+                            ServiceAboutActivity.start(getActivity(), info.getSid());
 //                            startActivity(new Intent(getActivity(), ServiceDetailActivity.class)
 //                                    .putExtra(ServiceDetailActivity.SERVICE_ID, info.getSid())
 //                                    .putExtra(ServiceDetailActivity.USER_TYPE, UserInfo.USER_FINDER));
@@ -172,7 +172,7 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
                 @Override
                 public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int x, long l) {
-                    final int i = x-1;
+                    final int i = x - 1;
                     AlertDialog.Builder builder = MessageUtils.createHoloBuilder(getActivity());
                     builder.setAdapter(new ArrayAdapter<String>(getActivity(), R.layout.ct_choice_item, R.id.checktext,
                             new String[]{getResources().getString(R.string.ct_delete), getResources().getString(R.string.ct_cancel)}), new Dialog.OnClickListener() {
@@ -187,7 +187,7 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
                                     mAdapter.notifyDataSetChanged();
                                 } else {
                                     ServiceInfo serviceInfo = (ServiceInfo) info;
-                                    if (serviceInfo!=null) {
+                                    if (serviceInfo != null) {
                                         deleteService(serviceInfo.getSid());
                                     }
                                 }
@@ -386,7 +386,7 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
         }
 
         private String getFailedString(ServiceInfo serviceInfo) {
-            if (serviceInfo.getExtInfoObject() == null && !TextUtils.isEmpty(serviceInfo.getExtInfoObject().getRefuseReason())) {
+            if (serviceInfo != null && serviceInfo.getExtInfoObject() != null && !TextUtils.isEmpty(serviceInfo.getExtInfoObject().getRefuseReason())) {
                 return serviceInfo.getExtInfoObject().getRefuseReason();
             }
             return PlatformUtil.getInstance().getString(R.string.ct_invalidate_service_failed_with_no_reason);

@@ -117,7 +117,9 @@ public class ServiceAboutPresent {
     }
 
     public void clickModify() {
-        iServiceAboutView.jumpModifyService(detail.getServiceInfo());
+        if (detail!=null) {
+            iServiceAboutView.jumpModifyService(detail.getServiceInfo());
+        }
     }
 
     public void clickService() {

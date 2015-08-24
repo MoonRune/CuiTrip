@@ -16,9 +16,11 @@ import android.widget.TextView;
 
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.AvailableDate;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.model.ServiceInfo;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -30,6 +32,9 @@ import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 
 /**
@@ -214,6 +219,39 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                             startActivity(new Intent(CreateOrderActivity.this, CreateorderSuccessActivity.class)
                                     .putExtra(CreateorderSuccessActivity.ORDER_INFO, item));
                             //finish();
+                            try {
+                                final OrderItem orderItem = ((OrderItem) data);
+                                String myid = "";
+                                UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+                                if (userInfo != null) {
+                                    myid = userInfo.getUid();
+                                }
+                                List<String> userIds = new ArrayList<>();
+                                userIds.add(item.getInsiderId());
+                                userIds.add(myid);
+                                String title = orderItem.getOid();
+                                RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
+                                    @Override
+                                    public void onSuccess(final String s) {
+                                        OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(LabResponse response, Object data) {
+                                            }
+
+                                            @Override
+                                            public void onFailure(LabResponse response, Object data) {
+
+                                            }
+                                        }, orderItem.getOid(), s);
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                    }
+                                });
+                            } catch (Exception e) {
+                                MessageUtils.showToast("创建聊天失败");
+                            }
                         }
                     }
 

@@ -27,12 +27,9 @@ import com.cuitrip.app.PriceDescActivity;
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.app.country.CountrySelectActivity;
 import com.cuitrip.app.map.GaoDeMapActivity;
-import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.ServiceBusiness;
-import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.model.ServiceInfo;
-import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.app.BrowserActivity;
@@ -50,8 +47,6 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.InjectViews;
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 /**
  * Created on 7/26.
@@ -157,14 +152,14 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         if (!TextUtils.isEmpty(mServiceInfo.getTag())) {
             mTag.setText(mServiceInfo.getTag());
         }
-        if (!TextUtils.isEmpty(mServiceInfo.getMeetLocation())) {
-            mMeet.setText(mServiceInfo.getMeetLocation());
+        if (!TextUtils.isEmpty(mServiceInfo.getMeetingPlace())) {
+            mMeet.setText(mServiceInfo.getMeetingPlace());
         }
 
         refreshPrice();
         revertTags();
         mTag.setText(mServiceInfo.getTag());
-        mMeet.setTag(mServiceInfo.getMeetLocation());
+        mMeet.setTag(mServiceInfo.getMeetingPlace());
         refreshPriceDes();
 
         if (mServiceInfo.getMaxbuyerNum() != null) {
@@ -286,41 +281,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                         hideNoCancelDialog();
                         startActivity(new Intent(CreateServiceOtherActivity.this, CreateServiceSuccessActivity.class));
                         setResult(RESULT_OK);
-                        try {
-                            if (data !=null &&data instanceof OrderItem) {
-                                final OrderItem orderItem = ((OrderItem) data);
-                                String myid = "";
-                                UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
-                                if (userInfo != null) {
-                                    myid = userInfo.getUid();
-                                }
-                                List<String> userIds = new ArrayList<>();
-                                userIds.add(mServiceInfo.getInsiderId());
-                                userIds.add(myid);
-                                String title = orderItem.getOid();
-                                RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
-                                    @Override
-                                    public void onSuccess(final String s) {
-                                        OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
-                                            @Override
-                                            public void onSuccess(LabResponse response, Object data) {
-                                            }
-
-                                            @Override
-                                            public void onFailure(LabResponse response, Object data) {
-
-                                            }
-                                        }, orderItem.getOid(), s);
-                                    }
-
-                                    @Override
-                                    public void onError(RongIMClient.ErrorCode errorCode) {
-                                    }
-                                });
-                            }
-                        } catch (Exception e) {
-                            MessageUtils.showToast("创建聊天失败");
-                        }
                         finish();
                         LogHelper.e("omg", "suc");
                     }
@@ -337,8 +297,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 LocationHelper.getLoation(),
                 mMeet.getText().toString().trim(),
                 mTag.getText().toString().trim(),
-                mServiceInfo.getPriceInclude(),
-                mServiceInfo.getPriceUninclude(),
+                mServiceInfo.getFeeInclude(),
+                mServiceInfo.getFeeExclude(),
                 mServiceInfo.getLat(),
                 mServiceInfo.getLng()
         );
@@ -360,8 +320,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 GaoDeMapActivity.startSearch(this);
                 break;
             case R.id.price_desc_block:
-                String include = mServiceInfo == null ? "" : mServiceInfo.getPriceInclude();
-                String uninclude = mServiceInfo == null ? "" : mServiceInfo.getPriceUninclude();
+                String include = mServiceInfo == null ? "" : mServiceInfo.getFeeInclude();
+                String uninclude = mServiceInfo == null ? "" : mServiceInfo.getFeeExclude();
                 PriceDescActivity.start(this, include, uninclude,true);
                 break;
             case R.id.time_block: {
@@ -449,7 +409,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         } catch (NumberFormatException e) {
         }
         mServiceInfo.setServiceTime(timeValue);
-        mServiceInfo.setMeetLocation(mMeet.getText().toString());
+        mServiceInfo.setMeetingPlace(mMeet.getText().toString());
         mServiceInfo.setTag(mTag.getText().toString());
         setResult(RESULT_CANCELED,new Intent().putExtra(CreateServiceActivity.SERVICE_INFO,mServiceInfo));
     }
@@ -458,16 +418,16 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (PriceDescActivity.isModifyed(requestCode, resultCode, data)) {
-            mServiceInfo.setPriceInclude(PriceDescActivity.getInclude(data));
-            mServiceInfo.setPriceUninclude(PriceDescActivity.getUninclude(data));
+            mServiceInfo.setFeeInclude(PriceDescActivity.getInclude(data));
+            mServiceInfo.setFeeExclude(PriceDescActivity.getUninclude(data));
             refreshPriceDes();
             return;
         }
         if (GaoDeMapActivity.isSelected(requestCode, resultCode, data)) {
-            mServiceInfo.setMeetLocation(GaoDeMapActivity.getName(data));
+            mServiceInfo.setMeetingPlace(GaoDeMapActivity.getName(data));
             mServiceInfo.setLat(String.valueOf(GaoDeMapActivity.getLat(data)));
             mServiceInfo.setLng(String.valueOf(GaoDeMapActivity.getLng(data)));
-            LogHelper.e("get map ",""+mServiceInfo.getMeetLocation()+"|"+mServiceInfo.getLat()+"|"+mServiceInfo.getLng());
+            LogHelper.e("get map ",""+mServiceInfo.getMeetingPlace()+"|"+mServiceInfo.getLat()+"|"+mServiceInfo.getLng());
             mMeet.setText(GaoDeMapActivity.getName(data));
         }
         if (CountrySelectActivity.isWrited(requestCode, resultCode, data)) {
@@ -524,14 +484,14 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     public void refreshPriceDes() {
 
         StringBuilder stringBuilder = new StringBuilder();
-        if (!TextUtils.isEmpty(mServiceInfo.getPriceInclude())) {
-            stringBuilder.append(mServiceInfo.getPriceInclude());
+        if (!TextUtils.isEmpty(mServiceInfo.getFeeInclude())) {
+            stringBuilder.append(mServiceInfo.getFeeInclude());
         }
-        if (!TextUtils.isEmpty(mServiceInfo.getPriceUninclude())) {
+        if (!TextUtils.isEmpty(mServiceInfo.getFeeExclude())) {
             if (!TextUtils.isEmpty(stringBuilder.toString())) {
                 stringBuilder.append(";");
             }
-            stringBuilder.append(mServiceInfo.getPriceUninclude());
+            stringBuilder.append(mServiceInfo.getFeeExclude());
         }
         mPriceDesc.setText(stringBuilder.toString());
 
