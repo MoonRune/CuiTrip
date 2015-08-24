@@ -138,7 +138,7 @@ public class ServiceAboutMode {
                 orderItem == null ? "" : orderItem.getServiceInfo().getBackPic(),
                 orderItem == null ? "" : orderItem.getServiceInfo().getName(),
                 orderItem == null ? "" : orderItem.getServiceInfo().getAddress(),
-                orderItem == null ? "" : Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated()),
+            "发布于"+ (   orderItem == null ? "" : Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated())),
                 serviceStatistic == null ? "" : serviceStatistic.getPaidNum(),
                 serviceStatistic == null ? "" : serviceStatistic.getOrderDoneNum(),
                 serviceStatistic == null ? "" : serviceStatistic.getCancelNum(),

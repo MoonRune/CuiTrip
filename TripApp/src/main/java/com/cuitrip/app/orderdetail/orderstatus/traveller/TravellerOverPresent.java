@@ -31,8 +31,8 @@ public class TravellerOverPresent extends BaseOrderFormPresent<ITravelerOrderDet
     @Override
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         CommentPartRenderData renderData =new CommentPartRenderData(
-                "我的评论",
-                orderItem.getHeadPic(),
+                "我的评价",
+                "",
                 orderItem.getCommentScore() ,
                 CommentPartRenderData.DEFAULT_MAX_SCORE,
                 orderItem.getComment()

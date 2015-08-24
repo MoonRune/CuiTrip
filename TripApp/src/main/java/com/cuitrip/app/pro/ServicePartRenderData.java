@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
+import com.lab.utils.LogHelper;
 import com.lab.utils.Utils;
 
 /**
@@ -131,6 +132,7 @@ public class ServicePartRenderData {
 
 
     public static String getOrderDateText(OrderItem orderItem) {
+        LogHelper.e("getOrderDateText",orderItem.getServiceDate()+ " to "+Utils.getMsToD(orderItem.getServiceDate()));
         return Utils.getMsToD(orderItem.getServiceDate());
     }
 

@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.view.View;
 
-import com.alibaba.fastjson.JSON;
 import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.map.GaoDeMapActivity;
@@ -52,7 +51,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         RongIMClient.ConnectionStatusListener, OnReceivePushMessageListener {
     public static final String TAG = "RongCloudEvent";
 
-
+    public static final int DEFAULT_CHECK_MODE_NOTIFCATION_ID = 2;
+    public static final int DEFAULT_ERROR_NOTIFCATION_ID = 3;
     private RongCloudEvent() {
 
     }
@@ -165,46 +165,25 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     @Override
     public boolean onReceived(Message message, int left) {
         LogHelper.e(TAG, "on receive message" + message.getTargetId());
-//        MessageContent messageContent = message.getContent();
-//
-//        String content = "";
-//        UserInfo userInfo = messageContent.getUserInfo();
-//        String title = "";
-//        String contentLittle = "发来消息";
-//        if (userInfo != null) {
-//            title = userInfo.getName();
-//            if (!TextUtils.isEmpty(title)) {
-//                contentLittle = title + "发来消息";
-//            }
-//        }
-//        LogHelper.e(TAG, "on receive type");
-//        buildNotification(message.getTargetId().hashCode(), title, content, contentLittle);
-        try {
-            com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
-            int type = 2;
-//            public static final int TYPE_TRAVEL = 1;
-//            public static final int TYPE_FINDER = 2;;
-            if (userInfo.isTravel()) {
-                type = 1;
-            }
-            String content = getMessageContent(message.getContent());
-            if (!TextUtils.isEmpty(content)) {
-                queryForInfo(MainApplication.getInstance(), message, content, type, false);
-            } else {
-                try {
+        if (OrderFormActivity.CURRENT_TARGET == null || !OrderFormActivity.CURRENT_TARGET.equals(message.getTargetId())) {
+            LogHelper.e(TAG, "on receive message query" );
+            try {
+                com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+                String content = getMessageContent(message.getContent());
+                if (!TextUtils.isEmpty(content)) {
+                    queryForInfo(MainApplication.getInstance(), message, content, userInfo, false);
+                } else {
                     LogHelper.e(TAG, " seems should not see " + message.getObjectName() + "|" + message.toString());
-                } catch (Exception e) {
-                    LogHelper.e(TAG, " seems should not see error" + e.getMessage());
                 }
+            } catch (Exception e) {
+                LogHelper.e(TAG, " error " + e.getMessage());
             }
-        } catch (Exception e) {
-            LogHelper.e(TAG, " error " + e.getMessage());
         }
         return true;
 
     }
 
-    public static String getMessageContent(MessageContent messageContent ) {
+    public static String getMessageContent(MessageContent messageContent) {
 
         String content = "";
         if (messageContent instanceof TextMessage) {//文本消息
@@ -235,43 +214,42 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
     AsyncHttpClient mAsyncHttpClient = new AsyncHttpClient();
 
-    public void queryForInfo(final Context context, final Message message, final String content, int type, boolean async) {
-        OrderBusiness.getOrderList(context, async ? mAsyncHttpClient : mClient, new LabAsyncHttpResponseHandler() {
+    public void queryForInfo(final Context context, final Message message, final String content, final com.cuitrip.model.UserInfo me, boolean async) {
+
+        OrderBusiness.getOrderByRongTargetId(context, async ? mAsyncHttpClient : mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
-                if (data != null) {
+                if (data != null && data instanceof OrderItem) {
+                    OrderItem orderItem = ((OrderItem) data);
                     try {
-                        List<OrderItem> orderItems = JSON.parseArray(data.toString(), OrderItem.class);
-                        for (OrderItem orderItem : orderItems) {
-                            if (message.getTargetId().equals(orderItem.getTargetId())) {
-                                String title = "";
-                                String contentLittle = "发来消息";
-                                if (!TextUtils.isEmpty(orderItem.getUserNick())) {
-                                    title = orderItem.getUserNick();
-                                    if (!TextUtils.isEmpty(title)) {
-                                        contentLittle = title + "发来消息";
-                                    }
+                        if ((me.isTravel() && me.getUid().equals(orderItem.getTravellerId()))
+                                || ((!me.isTravel()) && me.getUid().equals(orderItem.getInsiderId()))) {
+                            String title = "";
+                            String contentLittle = "发来消息";
+                            if (!TextUtils.isEmpty(orderItem.getUserNick())) {
+                                title = orderItem.getUserNick();
+                                if (!TextUtils.isEmpty(title)) {
+                                    contentLittle = title + "发来消息";
                                 }
-                                buildNotification(message.getTargetId().hashCode(),
-                                        orderItem.getUserNick(), content, contentLittle, orderItem.getOid());
-                                return;
                             }
+                            buildNotification(message.getTargetId().hashCode(),
+                                    orderItem.getUserNick(), content, contentLittle, orderItem.getOid());
+                            return;
                         }
-                        buildNotification(message.getTargetId().hashCode(), "", content, "请切换身份以查看", null);
+                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, "", content, "请切换身份以查看", null);
 
                     } catch (Exception e) {
-                        buildNotification(message.getTargetId().hashCode(), "[未知]" + e.getMessage(), content, "发来消息", null);
-
+                        buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, "[未知]" + e.getMessage(), content, "发来消息", null);
                     }
                 }
             }
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                buildNotification(message.getTargetId().hashCode(), "[未知]", content, "发来消息", null);
+                buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, "[未知]", content, "发来消息", null);
 
             }
-        }, type);
+        }, message.getTargetId());
     }
 
     public void buildNotification(int id, String content, String title, String contentLittle, String oid) {
@@ -328,24 +306,14 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
         try {
             com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
-            int type = 2;
-//            public static final int TYPE_TRAVEL = 1;
-//            public static final int TYPE_FINDER = 2;;
-            if (userInfo.isTravel()) {
-                type = 1;
-            }
 
             String content = message.getPushContent();
             if (!TextUtils.isEmpty(content)) {
                 LogHelper.e(TAG, "content  not empty");
 
-                queryForInfo(MainApplication.getInstance(), message, content, type, true);
+                queryForInfo(MainApplication.getInstance(), message, content, userInfo, true);
             } else {
-                try {
-                    LogHelper.e(TAG, " seems should not see " + String.valueOf(message.getContent()));
-                } catch (Exception e) {
-                    LogHelper.e(TAG, " seems should not see error" + e.getMessage());
-                }
+                LogHelper.e(TAG, " seems should not see " + String.valueOf(message.getContent()));
             }
         } catch (Exception e) {
             LogHelper.e(TAG, " error " + e.getMessage());

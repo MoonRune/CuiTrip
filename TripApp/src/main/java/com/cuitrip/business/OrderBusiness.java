@@ -242,4 +242,12 @@ public class OrderBusiness {
         return client.post(context, BusinessHelper.getApiUrl("updateTargetId"), params, handler);
     }
 
+    public static RequestHandle getOrderByRongTargetId(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                        String targetId) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("targetId", targetId);
+        return client.post(context, BusinessHelper.getApiUrl("getInfoByTargetId"), params, handler);
+    }
+
 }

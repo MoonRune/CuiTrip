@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.UserBusiness;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
@@ -63,25 +64,13 @@ public class BillCashActivity extends BaseActivity {
         rate = getIntent().getStringExtra(MOENY_RATE_KEY);
 
         render();
+        account.setText(LoginInstance.getPaypalAccount());
     }
 
     public void render() {
-        StringBuilder stringBuilder = new StringBuilder();
-        if (!TextUtils.isEmpty(avaliableMoneyType)) {
-            stringBuilder.append(avaliableMoneyType.toUpperCase());
-        } else {
-
-        }
-        if (!TextUtils.isEmpty(avaliableMoney)) {
-            stringBuilder.append(avaliableMoney);
-        } else {
-            stringBuilder.append("0");
-
-        }
-        amount.setText(stringBuilder.toString());
+        amount.setText(getString(R.string.currency_money, avaliableMoneyType.toUpperCase(), avaliableMoney));
         try {
-            desc.setText(getString(R.string.rate_desc) + rate +
-                    (avaliableMoneyType == null ?"" :avaliableMoneyType.toUpperCase()));
+            desc.setText(getString(R.string.rate_desc, rate, avaliableMoneyType.toUpperCase()));
         } catch (Exception e) {
             desc.setText(R.string.data_error);
         }
@@ -102,10 +91,11 @@ public class BillCashActivity extends BaseActivity {
 
     public void submit() {
         showLoading();
+        LoginInstance.setPaypalAccount(account.getText().toString());
         UserBusiness.getCash(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
-                LogHelper.e("omg","suc "+String.valueOf(response.result));
+                LogHelper.e("omg", "suc " + String.valueOf(response.result));
                 MessageUtils.showToast(getString(R.string.get_cash_suc));
                 finish();
                 hideLoading();
@@ -114,7 +104,7 @@ public class BillCashActivity extends BaseActivity {
             @Override
             public void onFailure(LabResponse response, Object data) {
 
-                LogHelper.e("omg","failed ");
+                LogHelper.e("omg", "failed ");
                 String msg;
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     msg = response.msg;

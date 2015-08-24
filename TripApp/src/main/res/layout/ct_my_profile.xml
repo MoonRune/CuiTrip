@@ -88,6 +88,8 @@
                 android:layout_height="1dp" />
 
             <LinearLayout
+                android:id="@+id/ct_personal_birth_ll"
+                android:background="@drawable/select_white_gray"
                 style="@style/profileLayout"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/ct_profile_height"
@@ -99,14 +101,22 @@
                     android:layout_height="wrap_content"
                     android:text="出生年月" />
 
-                <EditText
-                    android:id="@+id/ct_personal_birth_et"
+                <TextView
+                    android:id="@+id/ct_personal_birth_tv"
                     style="@style/profileEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:layout_marginRight="10dp"
                     android:layout_height="match_parent"
-                    android:digits="1234567890-"
-                    android:inputType="date"
                     android:hint="请填写出生年月" />
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ct_narrow_right" />
             </LinearLayout>
 
             <TextView
@@ -192,9 +202,17 @@
                 <TextView
                     android:id="@+id/ct_personal_area_et"
                     style="@style/profileEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
                     android:layout_height="wrap_content"
                     android:hint="@string/ct_profile_hint_area"/>
+
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ct_narrow_right" />
             </LinearLayout>
 
             <TextView
@@ -311,9 +329,16 @@
                 <TextView
                     android:id="@+id/ct_selft_desc_tv"
                     style="@style/profileEditText"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_marginRight="10dp"
                     android:layout_height="wrap_content"
                     android:text="设置"/>
+                <ImageView
+                    android:layout_width="5dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:src="@drawable/ct_narrow_right" />
             </LinearLayout>
 
 

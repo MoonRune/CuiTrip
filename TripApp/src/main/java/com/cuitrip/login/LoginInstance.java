@@ -12,6 +12,13 @@ import com.cuitrip.model.UserInfo;
 import com.lab.utils.LogHelper;
 
 public class LoginInstance {
+
+    static final String FILE = "_user_about";
+
+
+    static final String KEY_UNITINFO_ID = "_user_account_info";
+    static final String KEY_PAYPAL_ACCOUNT_ID = "_paypal_account";
+
     static final String KEY_USERINFO_ID = "_user_info";
 
     private static LoginInstance sInstance;
@@ -39,7 +46,7 @@ public class LoginInstance {
 
     public static void update(Context context, UserInfo userInfo) {
         LoginInstance info = getInstance(context);
-        if (info.sUserInfo!=null&&!TextUtils.isEmpty(info.sUserInfo.getUid())&&userInfo != null && !TextUtils.isEmpty(userInfo.getUid()) && info.sUserInfo.getUid().equals(userInfo.getUid())) {
+        if (info.sUserInfo != null && !TextUtils.isEmpty(info.sUserInfo.getUid()) && userInfo != null && !TextUtils.isEmpty(userInfo.getUid()) && info.sUserInfo.getUid().equals(userInfo.getUid())) {
             if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
                 userInfo.setRongyunToken(info.sUserInfo.getRongyunToken());
             }
@@ -53,9 +60,12 @@ public class LoginInstance {
                     .commit();
         } else {
             sp.edit().remove(KEY_USERINFO_ID).commit();
+            SharedPreferences about = context.getSharedPreferences(FILE, Context.MODE_PRIVATE);
+            about.edit().clear().commit();
+
         }
         LogHelper.e("omg", "update ed ");
-                    RongCloudEvent.ConnectRongForce();
+        RongCloudEvent.ConnectRongForce();
         LogHelper.e("omg", "ConnectRongForce ");
     }
 
@@ -77,4 +87,25 @@ public class LoginInstance {
     public UserInfo getUserInfo() {
         return sUserInfo;
     }
+
+
+    public static String sPaypalAccount;
+
+    public static void setPaypalAccount(String account) {
+        SharedPreferences sp = MainApplication.getInstance().getSharedPreferences(FILE, Context.MODE_PRIVATE);
+        sp.edit().putString(KEY_PAYPAL_ACCOUNT_ID, account).commit();
+    }
+
+    public static String getPaypalAccount() {
+        if (sPaypalAccount == null) {
+            synchronized (LoginInstance.class) {
+                if (sPaypalAccount == null) {
+                    SharedPreferences sp = MainApplication.getInstance().getSharedPreferences(FILE, Context.MODE_PRIVATE);
+                    sPaypalAccount = sp.getString(KEY_PAYPAL_ACCOUNT_ID, "");
+                }
+            }
+        }
+        return sPaypalAccount;
+    }
+
 }

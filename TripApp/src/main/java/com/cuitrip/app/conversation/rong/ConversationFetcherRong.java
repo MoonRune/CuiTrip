@@ -179,17 +179,4 @@ public class ConversationFetcherRong implements IConversationsFetcher {
         return userInfo.getNick();
     }
 
-    public static String getAva(UserInfo userInfo) {
-        if (userInfo == null) {
-            return "";
-        }
-        return userInfo.getHeadPic();
-    }
-
-    public static String geServicetName(OrderItem userInfo) {
-        if (userInfo == null) {
-            return "";
-        }
-        return userInfo.getServiceName();
-    }
 }

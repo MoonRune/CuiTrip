@@ -73,6 +73,7 @@ public class Utils {
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         try {
             long result = sdf.parse(time.trim()).getTime();
+            LogHelper.e("parseStringToLongTime", time + "|" + result);
             return result;
         } catch (Exception e) {
             return -1;
@@ -84,7 +85,7 @@ public class Utils {
     static SimpleDateFormat Y_M_D = new SimpleDateFormat(DATE_FORMAT_DAY, Locale.CHINA);
     static SimpleDateFormat Y_M_D_H_M = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.CHINA);
 
-    {
+    static {
         H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         Y_M_D.setTimeZone(TimeZone.getTimeZone("GMT+800"));
         Y_M_D_H_M.setTimeZone(TimeZone.getTimeZone("GMT+800"));
@@ -121,7 +122,8 @@ public class Utils {
         } catch (NumberFormatException e) {
             value = parseStringToLongTime(dateTime, DATE_FORMAT_SECOND);
         }
-        return Y_M_D.format(value);
+        String result = Y_M_D.format(value);
+        return result;
     }
 
     public static String getMsToSeconds(String dateTime) {
@@ -213,10 +215,10 @@ public class Utils {
     }
 
     public static String getGender(String code) {
-        if (sGenderHashMap == null||sGenderHashMap.isEmpty()) {
+        if (sGenderHashMap == null || sGenderHashMap.isEmpty()) {
             initGenderMap();
         }
-        LogHelper.e("omg","gender"+code+" |"+sGenderHashMap.containsKey(code.trim()));
+        LogHelper.e("omg", "gender" + code + " |" + sGenderHashMap.containsKey(code.trim()));
         if (sGenderHashMap.containsKey(code.trim())) {
             return sGenderHashMap.get(code.trim());
         }

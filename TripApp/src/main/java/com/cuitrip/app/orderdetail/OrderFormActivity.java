@@ -43,12 +43,14 @@ import io.rong.imkit.RongIM;
 import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
+import io.rong.imlib.model.Discussion;
 
 /**
  * Created by baziii on 15/8/11.
  */
 public class OrderFormActivity extends BaseActivity {
 
+    public static String CURRENT_TARGET;
     public static final String TAG = "OrderFormActivity";
     public static final String ORDER_ID = "OrderFormActivity.ORDER_ID";
     public static final String TARGET_ID = "OrderFormActivity.TARGET_ID";
@@ -164,6 +166,22 @@ public class OrderFormActivity extends BaseActivity {
                     return PersonInfoFragment.newInstance(id);
                 default:
                     if (!TextUtils.isEmpty(orderItem.getTargetId())) {
+                        CURRENT_TARGET = orderItem.getTargetId();
+                        RongIM.getInstance().getRongIMClient().getDiscussion(CURRENT_TARGET, new RongIMClient.ResultCallback<Discussion>() {
+                            @Override
+                            public void onSuccess(Discussion discussion) {
+                                if (discussion.getMemberIdList() == null ||discussion.getMemberIdList().size()<2){
+                                    MainApplication.getInstance().orderRongMembersizeError();
+                                    buildConversation(orderItem);
+                                }
+                                LogHelper.e(TAG,"SUC "+discussion.getMemberIdList()+" : " +TextUtils.join("|",discussion.getMemberIdList()));
+                            }
+
+                            @Override
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                LogHelper.e(TAG,"failed");
+                            }
+                        });
                         ConversationFragment fragment = new ConversationFragment();
                         String target = orderItem.getTargetId();
                         LogHelper.e(TAG, "build fragment   target id" + target);
@@ -188,8 +206,7 @@ public class OrderFormActivity extends BaseActivity {
         }
     }
 
-   Fragment
-            emptyFragment = null;
+   Fragment emptyFragment = null;
 
     public void replaceFragment() {
         try {
@@ -208,6 +225,12 @@ public class OrderFormActivity extends BaseActivity {
         mViewPagerIndicator.notifyDataSetChanged();
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        CURRENT_TARGET = null;
+    }
+
     OrderFormFragment orderFormFragment;
 
     public String buildOrderConversationTitle(OrderItem orderItem) {
@@ -218,6 +241,15 @@ public class OrderFormActivity extends BaseActivity {
         List<String> userIds = new ArrayList<>();
         userIds.add(orderItem.getInsiderId());
         userIds.add(orderItem.getTravellerId());
+        LogHelper.e("omg",""+orderItem.getTravellerId()+"  -"+orderItem.getInsiderId());
+        if (orderItem.getInsiderId() == null ||TextUtils.isEmpty(orderItem.getInsiderId())
+                ||orderItem.getTravellerId() == null ||TextUtils.isEmpty(orderItem.getTravellerId())
+                ||orderItem.getTravellerId().equals(orderItem.getInsiderId())){
+            MainApplication.getInstance().orderMemberIdError();
+            MessageUtils.showToast(R.string.data_error);
+            finish();
+            return;
+        }
         String title = buildOrderConversationTitle(orderItem);
         try {
             RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
@@ -281,6 +313,34 @@ public class OrderFormActivity extends BaseActivity {
         ButterKnife.inject(this);
         mViewPager.setAdapter(mAdapter = new OrderViewsAdapter(getSupportFragmentManager()));
         mViewPager.setOffscreenPageLimit(2);
+        mViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position){
+                    case 0:
+                        showActionBar("预订");
+                        break;
+                    case 1:
+                        showActionBar("用户信息");
+                        break;
+                    case 2:
+                        showActionBar("聊天");
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
         mViewPagerIndicator.setViewPager(mViewPager);
         String targetId = getIntent().getStringExtra(TARGET_ID);
         if (getIntent().getBooleanExtra(MOVE_TO_CONVERSATION, false)) {

@@ -16,7 +16,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,7 +29,6 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.GetImageHelper;
 import com.lab.utils.ImageHelper;
-import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.imageupload.IImageUploader;
 import com.lab.utils.imageupload.ImageUploadCallback;
@@ -38,9 +36,7 @@ import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.TimeZone;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -219,31 +215,12 @@ public class SelfIdentificationActivity extends BaseActivity implements CountryP
     @OnClick(R.id.ct_user_validate_date_ll)
     public void showDate(){
 
-       AlertDialog.Builder builder = MessageUtils.createHoloBuilder(this);
-        Calendar calendar= Calendar.getInstance();
-        calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
-        final DatePicker datePicker = new DatePicker(this);
-        int year=calendar.get(Calendar.YEAR);
-        int monthOfYear=calendar.get(Calendar.MONTH);
-        int dayOfMonth=calendar.get(Calendar.DAY_OF_MONTH);
-        datePicker.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener(){
-
-            public void onDateChanged(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                LogHelper.e("omg","onDateChanged");
-            }
-
-        });
-        builder.setView(datePicker);
-        builder.setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                ctUserValidateDateTv.setText(datePicker.getYear()+"-"+(datePicker.getMonth()+1)+"-"+datePicker.getDayOfMonth());
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.show();
-        dialog.show();
+      MessageUtils.showDateCheck(this, new MessageUtils.DateCheckListener() {
+          @Override
+          public void onDataSelect(String s) {
+              ctUserValidateDateTv.setText(s);
+          }
+      });
     }
 
     @OnClick(R.id.ct_user_country_v)

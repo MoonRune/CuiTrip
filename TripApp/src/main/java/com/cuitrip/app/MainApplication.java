@@ -3,19 +3,27 @@ package com.cuitrip.app;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
 
 import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.rong.RongCloudEvent;
+import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.cuitrip.util.IResourceFetcher;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseAppLication;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.SmsSdkHelper;
+import com.loopj.android.http.AsyncHttpClient;
+import com.umeng.analytics.MobclickAgent;
 
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
@@ -156,6 +164,7 @@ public class MainApplication extends BaseAppLication {
     }
 
     public void logOut(){
+        cleanDeviceTOken();
         RongCloudEvent.DisConnectRong();
         LoginInstance.logout(this);
         Intent intent = new Intent(this, LogoActivity.class);
@@ -163,4 +172,38 @@ public class MainApplication extends BaseAppLication {
         startActivity(intent);
     }
 
+    public void cleanDeviceTOken(){
+        uploadDeviceToken("");
+    }
+    AsyncHttpClient mClient = new AsyncHttpClient();
+
+    /**
+     *
+     String deviceId = UmengRegistrar.getRegistrationId(this);
+     * @param deviceId
+     */
+    public void uploadDeviceToken(String deviceId){
+        LogHelper.e("LoginActivity", "device_id: " + deviceId);
+        UserInfo info = (UserInfo) LoginInstance.getInstance(this).getUserInfo();
+        if (!TextUtils.isEmpty(deviceId)) {
+            UserBusiness.upDevicetoken(this, mClient, new LabAsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    LogHelper.e("LoginActivity", "device_id: suc");
+                }
+
+                @Override
+                public void onFailure(LabResponse response, Object data) {
+                    LogHelper.e("LoginActivity", "device_id: failed ");
+                }
+            }, deviceId, info.getUid(), info.getToken());
+        }
+    }
+
+    public void orderMemberIdError(){
+        MobclickAgent.onEventEnd(this, "1001");
+    }
+    public void orderRongMembersizeError(){
+        MobclickAgent.onEventEnd(this, "1002");
+    }
 }

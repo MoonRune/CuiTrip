@@ -4,10 +4,12 @@ package com.lab.utils;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -15,9 +17,55 @@ import android.widget.Toast;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.service.R;
 
+import java.text.DecimalFormat;
+import java.util.Calendar;
+import java.util.TimeZone;
+
 public class MessageUtils {
 
     private static Toast mToast = null;
+
+    public interface DateCheckListener {
+        void onDataSelect(String s);
+    }
+
+    public static void showDateCheck(Context context, final DateCheckListener dateCheckListener) {
+        AlertDialog.Builder builder = MessageUtils.createHoloBuilder(context);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
+        final DatePicker datePicker = new DatePicker(context);
+        int year = calendar.get(Calendar.YEAR);
+        int monthOfYear = calendar.get(Calendar.MONTH);
+        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+        datePicker.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener() {
+
+            public void onDateChanged(DatePicker view, int year,
+                                      int monthOfYear, int dayOfMonth) {
+                LogHelper.e("omg", "onDateChanged");
+            }
+
+        });
+        builder.setView(datePicker);
+        builder.setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                if (dateCheckListener != null) {
+                    dateCheckListener.onDataSelect(datePicker.getYear() + "-" +
+                            fillToTwo(datePicker.getMonth() + 1)
+                            + "-" + fillToTwo(datePicker.getDayOfMonth()));
+                }
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.show();
+        dialog.show();
+    }
+
+    public static String fillToTwo(int value) {
+        DecimalFormat df = new DecimalFormat("00");
+        return df.format(value);
+    }
 
     public static void showToast(int resId) {
         showToast(null, MainApplication.sContext.getString(resId));
@@ -74,6 +122,7 @@ public class MessageUtils {
         builder = new AlertDialog.Builder(context, R.style.cuiAppDialog);
         return builder;
     }
+
     public static AlertDialog.Builder createBuilder(Context context) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(context);

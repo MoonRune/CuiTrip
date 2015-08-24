@@ -65,8 +65,10 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     @InjectView(R.id.ct_personal_ava_iv)
     CircleImageView mPersonalAvaIv;
 
-    @InjectView(R.id.ct_personal_birth_et)
-    EditText mPersonalBirthEt;
+    @InjectView(R.id.ct_personal_birth_ll)
+    View mPersonalBirthLL;
+    @InjectView(R.id.ct_personal_birth_tv)
+    TextView mPersonalBirthTv;
     @InjectView(R.id.ct_personal_name_et)
     EditText mPersonalNameEt;
     @InjectView(R.id.ct_personal_nick_et)
@@ -182,7 +184,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         mPersonalNickEt.setText(userInfo.getNick());
         mPersonalAvaNickTv.setText(userInfo.getNick());
         mPersonalAvaRegistTv.setText("注册时间:"+Utils.getMsToD(userInfo.getGmtCreated()));
-        mPersonalBirthEt.setText(userInfo.getBirthDay());
+        mPersonalBirthTv.setText(userInfo.getBirthDay());
 
         mPersonalGenderTv.setText(getGender(userInfo.getGender()));
 
@@ -260,6 +262,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         if (TextUtils.isEmpty(userInfo.getRealName())) {
             mPersonalNameEt.setOnFocusChangeListener(this);
         }
+        mPersonalBirthLL.setOnClickListener(this);
         mPersonalNickEt.setOnFocusChangeListener(this);
         mPersonalDescV.setOnClickListener(this);
         mPersonalAreaTv.setOnClickListener(this);
@@ -420,7 +423,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             return;
         }
         final String phone = mPersonalPhoneEt.getText().toString();
-        final String birth = mPersonalBirthEt.getText().toString();
+        final String birth = mPersonalBirthTv.getText().toString();
         final String ava = TextUtils.isEmpty(userInfo.getHeadPic())?mUploadedAvaUrl:userInfo.getHeadPic();
         final String name = TextUtils.isEmpty(userInfo.getRealName()) ? mPersonalNameEt.getText().toString() : userInfo.getRealName();
         final String nick = mPersonalNickEt.getText().toString();
@@ -480,6 +483,14 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         switch (v.getId()) {
             case R.id.ct_personal_area_ll:
                 CountrySelectActivity.start(this);
+                break;
+            case R.id.ct_personal_birth_ll:
+                MessageUtils.showDateCheck(this, new MessageUtils.DateCheckListener() {
+                    @Override
+                    public void onDataSelect(String s) {
+                        mPersonalBirthTv.setText(s);
+                    }
+                });
                 break;
             case R.id.ct_selft_desc_v:
                 SelfHomePageActivity.startForResult(this);

@@ -233,7 +233,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             if (time != null && time.indexOf(" ") > 1) {
                 OrderHolder.mTime.setText(time.substring(0, time.indexOf(" ")));
             } else {
-                OrderHolder.mTime.setText(item.getGmtCreated());
+                OrderHolder.mTime.setText(item.getServiceDate());
             }
 
             OrderHolder.mService.setText(item.getServiceName());

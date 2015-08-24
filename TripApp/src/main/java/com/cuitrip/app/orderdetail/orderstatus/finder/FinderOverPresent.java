@@ -31,7 +31,7 @@ public class FinderOverPresent extends BaseOrderFormPresent<IFinderOrderDetailVi
     @Override
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         CommentPartRenderData renderData =new CommentPartRenderData(
-                orderItem.getInsiderName()+"的评论",
+                orderItem.getUserNick()+"的评论",
                 orderItem.getHeadPic(),
                 orderItem.getCommentScore() ,
                 CommentPartRenderData.DEFAULT_MAX_SCORE,

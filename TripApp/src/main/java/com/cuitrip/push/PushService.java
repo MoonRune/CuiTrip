@@ -4,10 +4,8 @@ import android.app.Notification;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Message;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.text.TextUtils;
 
 import com.cuitrip.app.IndexActivity;
@@ -60,7 +58,7 @@ public class PushService extends UmengBaseIntentService {
 
     private void showNotification(Context context, UMessage msg) {
         Intent intent = new Intent(this, IndexActivity.class);
-        intent.putExtra(IndexActivity.GO_TO_TAB, IndexActivity.MESSAGE_TAB);
+        intent.putExtra(IndexActivity.GO_TO_TAB, IndexActivity.ORDER_TAB);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);

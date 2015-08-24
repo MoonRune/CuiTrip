@@ -94,7 +94,7 @@ public class BillActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_OK:
-                if(bills!=null) {
+                if (bills != null) {
                     BillCashActivity.start(this, bills.getBalance(), bills.getMoneyType(), bills.getRate());
                 }
                 return true;
@@ -160,25 +160,13 @@ public class BillActivity extends BaseActivity {
         OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler(Bills.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
-                LogHelper.e(TAG," suc"+String.valueOf(response.result));
+                LogHelper.e(TAG, " suc" + String.valueOf(response.result));
                 if (data != null && data instanceof Bills) {
-                     bills = ((Bills) data);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    if (!TextUtils.isEmpty(bills.moneyType)) {
-                        stringBuilder.append(bills.moneyType.toUpperCase());
-                    } else {
-
-                    }
-                    if (!TextUtils.isEmpty(bills.balance)) {
-                        stringBuilder.append(bills.balance);
-                    } else {
-                        stringBuilder.append("0");
-
-                    }
+                    bills = ((Bills) data);
                     LogHelper.e(TAG, " res " + String.valueOf(response.result));
-                    amount.setText(stringBuilder.toString());
+                    amount.setText(getString(R.string.currency_money, bills.moneyType.toUpperCase(), bills.balance));
                     try {
-                        desc.setText(getString(R.string.rate_desc) + bills.rate + bills.moneyType.toUpperCase());
+                        desc.setText(getString(R.string.rate_desc, bills.rate, bills.moneyType.toUpperCase()));
                     } catch (Exception e) {
                         desc.setText(R.string.data_error);
                     }
@@ -187,14 +175,14 @@ public class BillActivity extends BaseActivity {
                     hideLoading();
                     loading = false;
                 } else {
-                    LogHelper.e(TAG," not bills Data");
+                    LogHelper.e(TAG, " not bills Data");
                     onFailure(response, data);
                 }
             }
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                LogHelper.e(TAG," failed");
+                LogHelper.e(TAG, " failed");
                 String msg;
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     msg = response.msg;
@@ -217,23 +205,11 @@ public class BillActivity extends BaseActivity {
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 if (data != null && data instanceof Bills) {
-                     bills = ((Bills) data);
-                    StringBuilder stringBuilder = new StringBuilder();
-                    if (!TextUtils.isEmpty(bills.moneyType)) {
-                        stringBuilder.append(bills.moneyType);
-                    } else {
-
-                    }
-                    if (!TextUtils.isEmpty(bills.balance)) {
-                        stringBuilder.append(bills.balance);
-                    } else {
-                        stringBuilder.append("0");
-
-                    }
+                    bills = ((Bills) data);
                     LogHelper.e(TAG, " res " + String.valueOf(response.result));
-                    amount.setText(stringBuilder.toString());
+                    amount.setText(getString(R.string.currency_money, bills.moneyType.toUpperCase(), bills.balance));
                     try {
-                        desc.setText(getString(R.string.rate_desc) + bills.rate + bills.moneyType.toUpperCase());
+                        desc.setText(getString(R.string.rate_desc, bills.rate, bills.moneyType.toUpperCase()));
                     } catch (Exception e) {
                         desc.setText(R.string.data_error);
                     }
@@ -280,7 +256,7 @@ public class BillActivity extends BaseActivity {
         }
 
         public void render(BillData data) {
-            LogHelper.e("render bills",data.toString());
+            LogHelper.e("render bills", data.toString());
             ImageHelper.displayPersonImage(data.getHeadPic(), image, null);
             name.setText(data.getTitle());
             time.setText(Utils.getMsToD(data.getGmtCreated()));
@@ -290,26 +266,30 @@ public class BillActivity extends BaseActivity {
                 DecimalFormat df = new DecimalFormat("#.00");
                 if (value >= 0) {
                     amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_black));
-                    amount.setText(getUpCasedMoneyType(data) + data.getMoney());
+                    amount.setText("+  " + getUpCasedMoneyType(data) + data.getMoney());
                 } else {
                     amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_blue_pressed));
-                    amount.setText("-  " + getUpCasedMoneyType(data)+ data.getMoney());
+                    amount.setText("-  " + getUpCasedMoneyType(data) + data.getMoney());
                 }
             } catch (NumberFormatException e) {
                 amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_black));
-                amount.setText(getUpCasedMoneyType(data)+data.getMoney());
+                amount.setText(getUpCasedMoneyType(data) + data.getMoney());
             }
         }
-        public String getUpCasedMoneyType(BillData data){
-         return   (TextUtils.isEmpty(data.getMoneyType())?"":data.getMoneyType().toUpperCase()  );
+
+        public String getUpCasedMoneyType(BillData data) {
+            return (TextUtils.isEmpty(data.getMoneyType()) ? "" : data.getMoneyType().toUpperCase());
         }
     }
 
     public class BillAdapter extends RecyclerView.Adapter<BillItemView> {
 
-        List<BillData> billDatas = new ArrayList<>();
+        private List<BillData> billDatas = new ArrayList<>();
 
         public void setBillDatas(List<BillData> billDatas) {
+            if (billDatas == null) {
+                billDatas = new ArrayList<>();
+            }
             this.billDatas = billDatas;
             notifyDataSetChanged();
         }
@@ -332,7 +312,7 @@ public class BillActivity extends BaseActivity {
 
         @Override
         public int getItemCount() {
-            return billDatas.size();
+            return billDatas == null ? 0 : billDatas.size();
         }
     }
 }

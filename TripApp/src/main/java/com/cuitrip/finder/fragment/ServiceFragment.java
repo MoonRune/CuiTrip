@@ -20,7 +20,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -373,17 +372,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             return holder;
         }
 
-        private String getVisitedString(ServiceInfo serviceInfo) {
-            return "visit wait api";
-        }
-
-        private String getLikedString(ServiceInfo serviceInfo) {
-            return "like wait api";
-        }
-
-        private String getAvaliabeString(ServiceInfo serviceInfo) {
-            return "date wait api";
-        }
 
         private String getFailedString(ServiceInfo serviceInfo) {
             if (serviceInfo != null && serviceInfo.getExtInfoObject() != null && !TextUtils.isEmpty(serviceInfo.getExtInfoObject().getRefuseReason())) {
@@ -400,7 +388,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
             serviceViewHolder.ctServiceName.setText(localService.getName());
 
-            serviceViewHolder.contentBlock.setVisibility(View.GONE);
             serviceViewHolder.serviceReason.setVisibility(View.GONE);
             serviceViewHolder.serviceChecking.setVisibility(View.GONE);
 
@@ -410,7 +397,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
 
             serviceViewHolder.ctDate.setVisibility(View.GONE);
             serviceViewHolder.ctServiceName.setVisibility(View.GONE);
-            serviceViewHolder.contentBlock.setVisibility(View.GONE);
             serviceViewHolder.serviceReason.setVisibility(View.GONE);
             serviceViewHolder.serviceChecking.setVisibility(View.VISIBLE);
 
@@ -425,11 +411,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
             serviceViewHolder.ctServiceName.setText(serviceInfo.getName());
 
-            serviceViewHolder.contentBlock.setVisibility(View.VISIBLE);
-            serviceViewHolder.ctVisitNumTv.setText(getVisitedString(serviceInfo));
-            serviceViewHolder.ctFavoriteNumTv.setText(getLikedString(serviceInfo));
-            serviceViewHolder.ctAvaliableDateTv.setText(getAvaliabeString(serviceInfo));
-
             serviceViewHolder.serviceReason.setVisibility(View.GONE);
             serviceViewHolder.serviceChecking.setVisibility(View.GONE);
 
@@ -442,7 +423,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
             serviceViewHolder.ctServiceName.setText(serviceInfo.getName());
 
-            serviceViewHolder.contentBlock.setVisibility(View.GONE);
 
             serviceViewHolder.serviceReason.setVisibility(View.VISIBLE);
             serviceViewHolder.serviceReason.setText(getFailedString(serviceInfo));
@@ -455,7 +435,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
             serviceViewHolder.ctDate.setVisibility(View.GONE);
             serviceViewHolder.ctServiceName.setVisibility(View.VISIBLE);
             serviceViewHolder.ctServiceName.setText(R.string.network_data_error);
-            serviceViewHolder.contentBlock.setVisibility(View.GONE);
             serviceViewHolder.serviceReason.setVisibility(View.GONE);
             serviceViewHolder.serviceChecking.setVisibility(View.GONE);
         }
@@ -484,14 +463,6 @@ public class ServiceFragment extends BaseFragment implements SwipeRefreshLayout.
     class ServiceViewHolder extends ViewHolder {
         @InjectView(R.id.service_img)
         ImageView ctServiceImg;
-        @InjectView(R.id.ct_visit_num_tv)
-        TextView ctVisitNumTv;
-        @InjectView(R.id.ct_favorite_num_tv)
-        TextView ctFavoriteNumTv;
-        @InjectView(R.id.ct_avaliable_date_tv)
-        TextView ctAvaliableDateTv;
-        @InjectView(R.id.content_block)
-        LinearLayout contentBlock;
         @InjectView(R.id.service_reason)
         TextView serviceReason;
         @InjectView(R.id.ct_date)

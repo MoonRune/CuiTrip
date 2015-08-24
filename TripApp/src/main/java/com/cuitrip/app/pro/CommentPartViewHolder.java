@@ -1,5 +1,6 @@
 package com.cuitrip.app.pro;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -32,7 +33,12 @@ public class CommentPartViewHolder implements PartViewHolder<CommentPartRenderDa
 
     public void render(CommentPartRenderData data) {
         mCommentAuthorNameTv.setText(data.getAuthorName());
-        ImageHelper.displayCtImage(data.getAuthorAva(), mCommentAuthorAvaIm, null);
+        if (TextUtils.isEmpty(data.getAuthorAva())){
+            mCommentAuthorAvaIm.setVisibility(View.GONE);
+        }else {
+            mCommentAuthorAvaIm.setVisibility(View.VISIBLE);
+            ImageHelper.displayCtImage(data.getAuthorAva(), mCommentAuthorAvaIm, null);
+        }
         mCommentStarsRt.setMax(data.getStartsMax());
         mCommentStarsRt.setRating(data.getStarts());
         mCommentContentTv.setText(data.getCommentContent());

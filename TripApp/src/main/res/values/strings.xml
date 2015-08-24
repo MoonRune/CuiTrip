@@ -510,7 +510,8 @@
     <string name="ct_favorite_unavliable">看看其他推荐</string>
     <string name="ct_favorite_unavaliable">发现者已不再提供此旅程，再看看其他推荐吧</string>
     <string name="ct_mount_left">余额</string>
-    <string name="rate_desc">今日汇率:100USD=</string>
+    <string name="rate_desc"><![CDATA[今日汇率: 100USD = %1$s%2$s]]></string>
+    <string name="currency_money"> %1$s %2$s</string>
     <string name="un_setted">未设置</string>
     <string name="conversation_list_title">聊天</string>
 </resources>

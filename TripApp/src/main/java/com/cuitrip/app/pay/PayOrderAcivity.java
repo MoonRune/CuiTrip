@@ -122,16 +122,10 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
             try {
                 double value = Double.valueOf(item.getServiceNormalPrice())
                         - Double.valueOf(item.getDiscount().getMoney());
-                DecimalFormat df = new DecimalFormat("#.00");
-                if (value<0){
-                    ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  0.00" );
-                }else {
+                DecimalFormat df = new DecimalFormat("0.00");
                     ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + df.format(value));
-                }
-            } catch (NumberFormatException e) {
-
+            } catch (Exception e) {
                 ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice(
-
                 ));
             }
         } else {
