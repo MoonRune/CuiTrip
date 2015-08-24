@@ -92,7 +92,7 @@ public class CountrySelectActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.country_select);
-        showActionBar("选择国家地区");
+        showActionBar(getString(R.string.count_select_title));
         ButterKnife.inject(this);
         listViews.add(countryList);
         listViews.add(preList);
@@ -145,7 +145,7 @@ public class CountrySelectActivity extends BaseActivity {
                 if (data != null && data instanceof LocationMode) {
                     for (int x = listViews.size() - 1; x >= 0; x--) {
                         if (((LocationMode) data).getContent() == null ||((LocationMode) data).getContent().isEmpty()){
-                            MessageUtils.showToast("没有下级区域");
+                            MessageUtils.showToast(getString(R.string.non_lower_areas));
                         }
                         if (x > code) {
                             listViews.get(x).setVisibility(View.GONE);
@@ -249,7 +249,7 @@ public class CountrySelectActivity extends BaseActivity {
                 ((TextView) view.findViewById(R.id.area)).setText(mode.getName());
                 ((TextView) view.findViewById(R.id.area)).setOnClickListener(onClickListener);
             } else {
-                ((TextView) view.findViewById(R.id.area)).setText("无数据");
+                ((TextView) view.findViewById(R.id.area)).setText(R.string.no_date);
 
             }
             return view;

@@ -174,7 +174,7 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
         }else {
             aboutHint.setVisibility(View.VISIBLE);
             aboutValue.setVisibility(View.VISIBLE);
-            aboutHint.setText("关于" + data.getUserName());
+            aboutHint.setText(getString(R.string.about_with, data.getUserName()));
             String introduce =data.getIntroduce();
             LogHelper.e("omg1",introduce);
             introduce = URLImageParser.replae(introduce);

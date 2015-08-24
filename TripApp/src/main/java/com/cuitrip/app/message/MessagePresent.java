@@ -43,7 +43,7 @@ public class MessagePresent {
     public class MessageFetcher implements IMessageFetcher {
 
         AsyncHttpClient mClient = new AsyncHttpClient();
-        int defaultsize = 10;
+        int defaultsize = 20;
 
         @Override
         public void getMessageList(final ListFetchCallback<MessageMode> itemListFetchCallback) {

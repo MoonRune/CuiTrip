@@ -4,6 +4,8 @@ import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
 /**
  * Created by baziii on 15/8/11.
@@ -35,12 +37,12 @@ public class FinderWaitEndPresent extends BaseOrderFormPresent<IFinderOrderDetai
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "结束旅程";
+        return PlatformUtil.getInstance().getString(R.string.end_order_text);
     }
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "联系脆饼";
+        return PlatformUtil.getInstance().getString(R.string.connect_cuitrip);
     }
 
     @Override

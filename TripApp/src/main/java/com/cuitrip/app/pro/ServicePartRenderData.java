@@ -137,11 +137,11 @@ public class ServicePartRenderData {
     }
 
     public static String getOrderPeopleSizeText(OrderItem orderItem) {
-        return orderItem.getBuyerNum() + "人";
+        return PlatformUtil.getInstance().getString(R.string.per_man_with_num_above,orderItem.getBuyerNum());
     }
 
     public static String getOrderDurationText(OrderItem orderItem) {
-        return orderItem.getServiceTime() + "小时";
+        return  PlatformUtil.getInstance().getString(R.string.per_hour_with_num_above,orderItem.getServiceTime() );
     }
 
 
@@ -184,7 +184,7 @@ public class ServicePartRenderData {
 
     public static String getUnvaliableReason(OrderItem orderItem) {
         if (TextUtils.isEmpty(orderItem.getInvalidReason())) {
-            return "无";
+            return PlatformUtil.getInstance().getString(R.string.no_date);
         }
         return orderItem.getInvalidReason();
     }

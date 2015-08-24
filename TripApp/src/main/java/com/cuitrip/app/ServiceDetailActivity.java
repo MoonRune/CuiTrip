@@ -207,7 +207,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                     }
                 }
                 findViewById(R.id.comment_click).setOnClickListener(this);
-                ((TextView) findViewById(R.id.comment_click)).setText("查看其他" + commentCount+"条评论");
+                ((TextView) findViewById(R.id.comment_click)).setText(getString(R.string.watch_other_comments,commentCount));
             } else {
                 findViewById(R.id.comment_block).setVisibility(View.GONE);
 

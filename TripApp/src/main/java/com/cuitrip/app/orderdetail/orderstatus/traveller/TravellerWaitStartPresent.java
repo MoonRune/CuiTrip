@@ -3,6 +3,8 @@ package com.cuitrip.app.orderdetail.orderstatus.traveller;
 import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
 /**
  * Created by baziii on 15/8/11.
@@ -35,7 +37,7 @@ public class TravellerWaitStartPresent extends BaseOrderFormPresent<ITravelerOrd
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "取消预订";
+        return PlatformUtil.getInstance().getString(R.string.cancel_order_text);
     }
 
     @Override

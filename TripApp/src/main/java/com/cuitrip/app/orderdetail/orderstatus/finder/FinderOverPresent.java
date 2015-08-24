@@ -4,6 +4,8 @@ import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.CommentPartRenderData;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
 /**
  * Created by baziii on 15/8/11.
@@ -31,7 +33,7 @@ public class FinderOverPresent extends BaseOrderFormPresent<IFinderOrderDetailVi
     @Override
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         CommentPartRenderData renderData =new CommentPartRenderData(
-                orderItem.getUserNick()+"的评论",
+                 PlatformUtil.getInstance().getString(R.string.someones_comment_with_name,orderItem.getUserNick()),
                 orderItem.getHeadPic(),
                 orderItem.getCommentScore() ,
                 CommentPartRenderData.DEFAULT_MAX_SCORE,

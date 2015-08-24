@@ -47,6 +47,22 @@ public class IndexActivity extends BaseTabHostActivity {
     private static final int EXIT_TIME = 2000;
 
     @Override
+    public void showActionBar(String title) {
+        super.showActionBar(title);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+    }
+
+    @Override
+    public void showActionBar(int titleId) {
+        super.showActionBar(titleId);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+        getSupportActionBar().setDisplayShowHomeEnabled(false);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         UmengUpdateAgent.update(this);

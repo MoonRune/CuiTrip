@@ -250,7 +250,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                                     }
                                 });
                             } catch (Exception e) {
-                                MessageUtils.showToast("创建聊天失败");
+                                MessageUtils.showToast(R.string.load_error);
                             }
                         }
                     }

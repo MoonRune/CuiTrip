@@ -4,6 +4,8 @@ import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.CommentPartRenderData;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
 /**
  * Created by baziii on 15/8/11.
@@ -31,7 +33,7 @@ public class TravellerOverPresent extends BaseOrderFormPresent<ITravelerOrderDet
     @Override
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         CommentPartRenderData renderData =new CommentPartRenderData(
-                "我的评价",
+                PlatformUtil.getInstance().getString(R.string.my_account),
                 "",
                 orderItem.getCommentScore() ,
                 CommentPartRenderData.DEFAULT_MAX_SCORE,

@@ -141,6 +141,11 @@ public class MainApplication extends BaseAppLication {
             }
 
             @Override
+            public String getString(int id, Object... objs) {
+                return MainApplication.getInstance().getString(id,objs);
+            }
+
+            @Override
             public int getColor(int id) {
                 return MainApplication.getInstance().getResources().getColor(id);
             }

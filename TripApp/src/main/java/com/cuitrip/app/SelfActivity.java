@@ -183,7 +183,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         mPersonalNickEt.setText(userInfo.getNick());
         mPersonalAvaNickTv.setText(userInfo.getNick());
-        mPersonalAvaRegistTv.setText("注册时间:"+Utils.getMsToD(userInfo.getGmtCreated()));
+        mPersonalAvaRegistTv.setText(getString(R.string.regist_time,Utils.getMsToD(userInfo.getGmtCreated())));
         mPersonalBirthTv.setText(userInfo.getBirthDay());
 
         mPersonalGenderTv.setText(getGender(userInfo.getGender()));
@@ -414,7 +414,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
             Matcher matcher = pattern.matcher(email);
            if(!matcher.matches()){
-               MessageUtils.showToast("请输入正确的邮箱");
+               MessageUtils.showToast(getString(R.string.please_input_right_email));
                return;
            }
         }

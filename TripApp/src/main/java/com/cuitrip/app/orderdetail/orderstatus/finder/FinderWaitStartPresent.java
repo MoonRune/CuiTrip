@@ -3,6 +3,8 @@ package com.cuitrip.app.orderdetail.orderstatus.finder;
 import com.cuitrip.app.orderdetail.IFinderOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
 /**
  * Created by baziii on 15/8/11.
@@ -30,12 +32,12 @@ public class FinderWaitStartPresent extends BaseOrderFormPresent<IFinderOrderDet
 
     @Override
     public String getBottomText(OrderItem orderItem) {
-        return "开始旅程";
+        return PlatformUtil.getInstance().getString(R.string.begin_order_text);
     }
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "取消预订";
+        return PlatformUtil.getInstance().getString(R.string.cancel_order_text);
     }
 
     @Override

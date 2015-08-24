@@ -79,11 +79,11 @@ public class BillCashActivity extends BaseActivity {
     @OnClick(R.id.submit)
     public void trySubmit() {
         if (TextUtils.isEmpty(account.getText().toString())) {
-            MessageUtils.showToast("请输入帐号 ");
+            MessageUtils.showToast(getString(R.string.please_input_account));
             return;
         }
         if (TextUtils.isEmpty(money.getText().toString())) {
-            MessageUtils.showToast("请输入金额 ");
+            MessageUtils.showToast(getString(R.string.please_input_amount));
             return;
         }
         submit();

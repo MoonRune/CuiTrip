@@ -119,20 +119,20 @@ public class SelfIdentificationActivity extends BaseActivity implements CountryP
 
     public void trySubmit() {
         if (TextUtils.isEmpty(identityMode.getCountry())) {
-            MessageUtils.showToast("请设置国家");
+            MessageUtils.showToast(getString(R.string.please_set_country));
             return;
         }
         if (TextUtils.isEmpty(identityMode.getIdentityType())) {
-            MessageUtils.showToast("请设置证件类型");
+            MessageUtils.showToast(getString(R.string.please_set_identity_type));
             return;
         }
         if (TextUtils.isEmpty(identityMode.getIdentityDate())) {
-            MessageUtils.showToast("请设置有效日期");
+            MessageUtils.showToast(getString(R.string.please_set_identity_date));
             return;
         }
 
         if (identityMode.getImages().size() < 2) {
-            MessageUtils.showToast("请上传2张照片");
+            MessageUtils.showToast(getString(R.string.please_upload_images_with_num,2));
             return;
         }
         submit();
@@ -203,7 +203,7 @@ public class SelfIdentificationActivity extends BaseActivity implements CountryP
 
     @OnLongClick(R.id.ct_identity_one)
     public boolean removeBitmapOne() {
-        MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片吗").setPositiveButton(R.string.ct_confirm,
+        MessageUtils.createHoloBuilder(this).setTitle(R.string.delete_image_confirm_msg).setPositiveButton(R.string.ct_confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -233,7 +233,7 @@ public class SelfIdentificationActivity extends BaseActivity implements CountryP
 
     @OnLongClick(R.id.ct_identity_two)
     public boolean removeBitmapTwo() {
-        MessageUtils.createHoloBuilder(this).setTitle("确定要删除该图片吗").setPositiveButton(R.string.ct_confirm,
+        MessageUtils.createHoloBuilder(this).setTitle(R.string.delete_image_confirm_msg).setPositiveButton(R.string.ct_confirm,
                 new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

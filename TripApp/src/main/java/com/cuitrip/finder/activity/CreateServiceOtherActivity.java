@@ -226,11 +226,11 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
     private void tryCommitService() {
         if (TextUtils.isEmpty(mTag.getText().toString().trim())) {
-            MessageUtils.showToast("请设置标签");
+            MessageUtils.showToast(getString(R.string.please_input_tags));
             return;
         }
         if (TextUtils.isEmpty(mMeet.getText().toString().trim())) {
-            MessageUtils.showToast("见面地点");
+            MessageUtils.showToast(getString(R.string.please_input_meeting_location));
             return;
         }
         if (TextUtils.isEmpty(mAddress.getText().toString().trim())) {

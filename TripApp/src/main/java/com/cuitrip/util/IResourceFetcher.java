@@ -5,5 +5,6 @@ package com.cuitrip.util;
  */
 public interface IResourceFetcher {
     String getString(int id);
+    String getString(int id,Object...objs);
     int getColor(int id);
 }

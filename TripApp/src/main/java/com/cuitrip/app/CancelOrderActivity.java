@@ -124,7 +124,7 @@ public class CancelOrderActivity extends BaseActivity implements View.OnClickLis
                 message = content.getText().toString();
 
                 final String msg = message;
-                MessageUtils.dialogBuilder(CancelOrderActivity.this, true, null, "确定要取消订单吗", null, getString(R.string.ct_confirm), new View.OnClickListener() {
+                MessageUtils.dialogBuilder(CancelOrderActivity.this, true, null, getString(R.string.ct_cancel_order_confirm_msg), null, getString(R.string.ct_confirm), new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         cancelOrder(msg);

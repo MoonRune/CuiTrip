@@ -26,6 +26,10 @@ public class PlatformUtil implements IResourceFetcher{
     public String getString(int id) {
         return mResourceFetcher.getString(id);
     }
+    @Override
+    public String getString(int id,Object...objs) {
+        return mResourceFetcher.getString(id,objs);
+    }
 
     public int getColor(int res){
         return mResourceFetcher.getColor(res);

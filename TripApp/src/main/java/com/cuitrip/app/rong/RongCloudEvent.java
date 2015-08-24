@@ -18,6 +18,7 @@ import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
@@ -158,7 +159,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             return result.get(0);
         }
         LogHelper.e("UserInfoProvider", "search name : null");
-        UserInfo empty = new UserInfo(userId, "载入中", uri);
+        UserInfo empty = new UserInfo(userId, PlatformUtil.getInstance().getString(R.string.loading_text), uri);
         return empty;
     }
 
@@ -191,20 +192,20 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             content = textMessage.getContent();
         } else if (messageContent instanceof ImageMessage) {//图片消息
             ImageMessage imageMessage = (ImageMessage) messageContent;
-            content = "[图片]";
+            content = PlatformUtil.getInstance().getString(R.string.im_default_message_image);
         } else if (messageContent instanceof VoiceMessage) {//语音消息
             VoiceMessage voiceMessage = (VoiceMessage) messageContent;
-            content = "[声音]";
+            content = PlatformUtil.getInstance().getString(R.string.im_default_message_voice);
         } else if (messageContent instanceof RichContentMessage) {//图文消息
             RichContentMessage richContentMessage = (RichContentMessage) messageContent;
-            content = "[图文]";
+            content = PlatformUtil.getInstance().getString(R.string.im_default_message_rich_text);
         } else if (messageContent instanceof LocationMessage) {//图文消息
             LocationMessage location = (LocationMessage) messageContent;
-            content = "[地址:" + location.getPoi() + "]";
+            content = PlatformUtil.getInstance().getString(R.string.im_default_message_location_with_string_in, location.getPoi());
         } else if (messageContent instanceof InformationNotificationMessage) {//小灰条消息
             InformationNotificationMessage informationNotificationMessage = (InformationNotificationMessage) messageContent;
             LogHelper.e(TAG, "onReceived-informationNotificationMessage:" + informationNotificationMessage.getMessage());
-            content = "[提醒]";
+            content = PlatformUtil.getInstance().getString(R.string.im_default_message_notificataion);
         } else {
 //            content = "[通知]";
             return null;
@@ -225,28 +226,28 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                         if ((me.isTravel() && me.getUid().equals(orderItem.getTravellerId()))
                                 || ((!me.isTravel()) && me.getUid().equals(orderItem.getInsiderId()))) {
                             String title = "";
-                            String contentLittle = "发来消息";
+                            String contentLittle = context.getString(R.string.send_message_with_name_below,"");
                             if (!TextUtils.isEmpty(orderItem.getUserNick())) {
                                 title = orderItem.getUserNick();
                                 if (!TextUtils.isEmpty(title)) {
-                                    contentLittle = title + "发来消息";
+                                    contentLittle =  context.getString(R.string.send_message_with_name_below,title);
                                 }
                             }
                             buildNotification(message.getTargetId().hashCode(),
                                     orderItem.getUserNick(), content, contentLittle, orderItem.getOid());
                             return;
                         }
-                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, "", content, "请切换身份以查看", null);
+                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, "", content, context.getString(R.string.switch_mode_to_watch), null);
 
                     } catch (Exception e) {
-                        buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, "[未知]" + e.getMessage(), content, "发来消息", null);
+                        buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, context.getString(R.string.unknown) + e.getMessage(), content, context.getString(R.string.send_message_with_name_below,""), null);
                     }
                 }
             }
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, "[未知]", content, "发来消息", null);
+                buildNotification(DEFAULT_ERROR_NOTIFCATION_ID,context.getString(R.string.unknown), content,context.getString(R.string.send_message_with_name_below,""), null);
 
             }
         }, message.getTargetId());
@@ -283,19 +284,19 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     public void onChanged(ConnectionStatus connectionStatus) {
         switch (connectionStatus) {
             case DISCONNECTED:
-                MessageUtils.showToast("失去连接");
+                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_disconnected));
                 break;
             case CONNECTED:
-                MessageUtils.showToast("已连接");
+                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_connected));
                 break;
             case CONNECTING:
-                MessageUtils.showToast("正在连接中");
+                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_connecting));
                 break;
             case NETWORK_UNAVAILABLE:
-                MessageUtils.showToast("网络差");
+                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_network_unavaliable));
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT:
-                MessageUtils.showToast("在其他设别上登录");
+                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_kick_off));
                 break;
         }
     }

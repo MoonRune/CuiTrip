@@ -2,6 +2,8 @@ package com.cuitrip.app.service;
 
 import com.cuitrip.model.ServiceDetail;
 import com.cuitrip.model.ServiceStatistic;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.utils.LogHelper;
 import com.lab.utils.Utils;
 
@@ -138,7 +140,7 @@ public class ServiceAboutMode {
                 orderItem == null ? "" : orderItem.getServiceInfo().getBackPic(),
                 orderItem == null ? "" : orderItem.getServiceInfo().getName(),
                 orderItem == null ? "" : orderItem.getServiceInfo().getAddress(),
-            "发布于"+ (   orderItem == null ? "" : Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated())),
+           PlatformUtil.getInstance().getString(R.string.publish_at, (orderItem == null ? "" : Utils.getMsToD(orderItem.getServiceInfo().getGmtCreated()))),
                 serviceStatistic == null ? "" : serviceStatistic.getPaidNum(),
                 serviceStatistic == null ? "" : serviceStatistic.getOrderDoneNum(),
                 serviceStatistic == null ? "" : serviceStatistic.getCancelNum(),

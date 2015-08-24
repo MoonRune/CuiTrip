@@ -267,7 +267,7 @@ public class OrderFormActivity extends BaseActivity {
                         @Override
                         public void onFailure(LabResponse response, Object data) {
                             LogHelper.e(TAG, "update failed   target id" + s);
-                            MessageUtils.showToast("创建聊天失败");
+                            MessageUtils.showToast(R.string.load_error);
                         }
                     }, orderItem.getOid(), s);
                 }
@@ -276,11 +276,11 @@ public class OrderFormActivity extends BaseActivity {
                 public void onError(RongIMClient.ErrorCode errorCode) {
                     LogHelper.e(TAG, "build failed   target " + errorCode);
                     hideNoCancelDialog();
-                    MessageUtils.showToast("创建聊天失败");
+                    MessageUtils.showToast(R.string.load_error);
                 }
             });
         } catch (Exception e) {
-            MessageUtils.showToast("创建聊天失败");
+            MessageUtils.showToast(R.string.load_error);
         }
     }
 
@@ -323,13 +323,13 @@ public class OrderFormActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
-                        showActionBar("预订");
+                        showActionBar(getString(R.string.order_form_order_title));
                         break;
                     case 1:
-                        showActionBar("用户信息");
+                        showActionBar(getString(R.string.order_form_user_title));
                         break;
                     case 2:
-                        showActionBar("聊天");
+                        showActionBar(getString(R.string.order_form_conversation_title));
                         break;
                     default:
                         break;

@@ -142,7 +142,7 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
             switch (v.getId()) {
                 case R.id.like_img:
                     if (!LoginInstance.isLogin(getActivity())){
-                        MessageUtils.showToast("请先登录");
+                        MessageUtils.showToast(getString(R.string.please_login_first));
                         return ;
                     }
                     if (v.getTag() != null && v.getTag() instanceof RecommendItem) {

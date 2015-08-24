@@ -199,7 +199,7 @@ public class GaoDeMapActivity extends BaseActivity {
 
 //销毁页面时候的清空回调和是否回调错误
         if(MainApplication.getCallback() != null) {
-            MainApplication.getCallback().onFailure("失败");
+            MainApplication.getCallback().onFailure(getString(R.string.data_error));
             MainApplication.setCallback(null);
         }
     }
@@ -213,7 +213,7 @@ public class GaoDeMapActivity extends BaseActivity {
                 if (rCode == 0) {
                     if (result != null && result.getRegeocodeAddress() != null && result.getRegeocodeAddress().getFormatAddress() != null) {
 
-                        String addressName = result.getRegeocodeAddress().getFormatAddress() + "附近";
+                        String addressName = result.getRegeocodeAddress().getFormatAddress();
                         LogHelper.e("set map ", "" + lat + "|" + lng + "|" + addressName);
                         if (getIntent().getBooleanExtra(IM_RESULT,false)) {
                             Map.Entry<Double,Double> pointF = bd_encrypt(lat,lng);

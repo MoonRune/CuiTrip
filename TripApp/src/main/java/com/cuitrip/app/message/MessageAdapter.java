@@ -36,8 +36,11 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
             if (originSize < nowSize) {
                 notifyItemRangeChanged(0, originSize);
                 notifyItemRangeInserted(originSize, nowSize - originSize);
+            } else if (originSize == nowSize) {
+                notifyItemRangeChanged(0, nowSize);
             } else {
                 notifyItemRangeChanged(0, nowSize);
+                notifyItemRangeRemoved(nowSize, originSize - nowSize);
             }
         }
     }
@@ -64,7 +67,7 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     @Override
     public MessageViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(MessageViewHolder.RES, parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(MessageViewHolder.RES, parent, false);
         MessageViewHolder viewHolder = new MessageViewHolder(view, mOnClickListener);
         return viewHolder;
     }

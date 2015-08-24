@@ -114,10 +114,10 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         ctOrderDateBuyerSizeTv.setText(item.getOrderDate() + " - " + item.getBuyerSize());
         ctOrderPriceWhithCurrencyTv.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
 
-        ctOrderDiscountsTv.setText("您还有"+(item.getDiscountItems() == null ? 0 :item.getDiscountItems().size())+"个优惠可使用");
+        ctOrderDiscountsTv.setText(getString(R.string.coups_lef_with_num_in,(item.getDiscountItems() == null ? 0 :item.getDiscountItems().size())));
         if (item.getDiscount() != null) {
             ctOrderDiscountContentTv.setVisibility(View.VISIBLE);
-            ctOrderDiscountContentTv.setText("目前使用的优惠码 优惠" + item.getDiscount().getMoneyType() + item.getDiscount().getMoney());
+            ctOrderDiscountContentTv.setText(getString(R.string.current_coup , item.getDiscount().getMoneyType() , item.getDiscount().getMoney()));
             ctOrderDiscount.setText("-  " + item.getDiscount().getMoney());
             try {
                 double value = Double.valueOf(item.getServiceNormalPrice())
@@ -232,7 +232,7 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                     if (Utils.isAliInstalled()) {
                         payOrderPresent.payWith(PAY_CHANEL_ALIPAY);
                     } else {
-                        onPayFailed("请先安装支付宝应用");
+                        onPayFailed(getString(R.string.please_install_alipay));
                     }
                     break;
                 case R.id.ct_wx_v:
@@ -288,11 +288,11 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                 LogHelper.e("validate ",item.getInvalidDate());
                 LogHelper.e("validate reverted ",Utils.getMsToD(item.getInvalidDate()));
                 ((TextView) view.findViewById(R.id.time)).setText(
-                                "有效期至" + Utils.getMsToD(item.getInvalidDate())
+                                getString(R.string.validate_time_to_with_string, Utils.getMsToD(item.getInvalidDate()))
                 );
             } else {
                 ((TextView) view.findViewById(R.id.content)).setText(
-                        "不使用"
+                        R.string.no_use
                 );
                 ((TextView) view.findViewById(R.id.time)).setText(
                         ""

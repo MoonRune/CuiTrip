@@ -4,6 +4,8 @@ import com.cuitrip.app.orderdetail.ITravelerOrderDetailView;
 import com.cuitrip.app.orderdetail.orderstatus.BaseOrderFormPresent;
 import com.cuitrip.app.pro.OrderProgressingRenderData;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 
 /**
  * Created by baziii on 15/8/11.
@@ -39,7 +41,7 @@ public class TravellerWaitEndPresent extends BaseOrderFormPresent<ITravelerOrder
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return "联系脆饼";
+        return PlatformUtil.getInstance().getString(R.string.connect_cuitrip);
     }
 
     @Override

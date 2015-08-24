@@ -36,8 +36,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteViewHolder> {
             if (originSize < nowSize) {
                 notifyItemRangeChanged(0, originSize);
                 notifyItemRangeInserted(originSize, nowSize - originSize);
+            } else if (originSize == nowSize) {
+                notifyItemRangeChanged(0, nowSize);
             } else {
                 notifyItemRangeChanged(0, nowSize);
+                notifyItemRangeRemoved(nowSize, originSize - nowSize);
             }
         }
     }

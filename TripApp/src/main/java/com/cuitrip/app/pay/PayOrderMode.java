@@ -2,6 +2,8 @@ package com.cuitrip.app.pay;
 
 import com.cuitrip.model.DiscountItem;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.utils.Utils;
 
 import java.util.List;
@@ -110,7 +112,7 @@ public class PayOrderMode {
                 orderItem.getServicePIC(),
                 orderItem.getServiceName(),
                 Utils.getMsToD(orderItem.getServiceDate() ) ,
-                orderItem.getBuyerNum()+"人",
+                 PlatformUtil.getInstance().getString(R.string.per_man_with_num_above,orderItem.getBuyerNum()),
                 orderItem.getOrderPrice(),
                 orderItem.getPayCurrency(),
                 discountItems
