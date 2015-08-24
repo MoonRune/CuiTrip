@@ -9,10 +9,6 @@ public class MessageServerItem {
     private String content;
     private String gmtCreated;
 
-    //todo
-    public boolean isNotSystem(){
-        return true;
-    }
     public String getMessageId() {
         return messageId;
     }

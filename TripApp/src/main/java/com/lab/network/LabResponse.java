@@ -20,9 +20,6 @@ public class LabResponse {
     public int code;
     public String msg;
     public Object result;
-    public String  moneyType;
-    public String  balance;
-    public String  rate;
 //    "moneyType": "CNY",		// 余额显示币种
 //            "balance": "2000.00",		// 账户余额
 //            "rate": "640.08",		// 100 美元换算成moneyType 的价值
@@ -34,9 +31,6 @@ public class LabResponse {
         LabResponse resp = new LabResponse();
         resp.code = code != null ? code : -1;
         resp.msg = json.getString("msg");
-        resp.moneyType = json.getString("moneyType");
-        resp.balance = json.getString("balance");
-        resp.rate = json.getString("rate");
         try{
             resp.result = json.getJSONObject("result");
         }catch (Exception e){

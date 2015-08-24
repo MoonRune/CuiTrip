@@ -14,52 +14,54 @@
             android:id="@+id/ct_delete"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:gravity="center"
             android:background="@drawable/selector_red_more"
+            android:gravity="center"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:textSize="19sp"
             android:text="@string/ct_delete"
-            android:textColor="@color/ct_white" />
+            android:textColor="@color/ct_white"
+            android:textSize="19sp" />
     </RelativeLayout>
 
 
     <LinearLayout
-        tools:visibility="visible"
         android:id="@+id/ct_message_layout"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@drawable/select_white_gray"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:visibility="visible">
 
         <TextView
             android:id="@+id/ct_message_name"
             android:layout_width="wrap_content"
             android:layout_height="44dp"
-            android:layout_weight="1"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="15dp"
+            android:layout_weight="1"
             android:gravity="center_vertical"
-            android:textSize="15sp"
             android:textColor="@color/ct_black"
+            android:textSize="15sp"
             tools:text="name" />
 
         <TextView
-            android:textSize="11sp"
-            android:textColor="@color/ct_a7"
             android:id="@+id/ct_message_time"
             android:layout_width="wrap_content"
-            android:gravity="center_vertical"
             android:layout_height="44dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="15dp"
             android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/ct_a7"
+            android:textSize="11sp"
             tools:text="content" />
+
         <ImageView
-            android:layout_marginRight="15dp"
-            android:src="@drawable/ct_narrow_right"
             android:layout_width="8dp"
-            android:layout_height="8dp" />
+            android:layout_height="8dp"
+            android:layout_marginRight="15dp"
+            android:src="@drawable/ct_narrow_right" />
     </LinearLayout>
+
 </com.lab.widget.CanClickSwipeLayout>

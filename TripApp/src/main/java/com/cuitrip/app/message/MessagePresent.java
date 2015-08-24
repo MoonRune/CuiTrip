@@ -123,7 +123,6 @@ public class MessagePresent {
 
                 @Override
                 public void onFailure(LabResponse response, Object data) {
-
                     String msg;
                     if (response != null && !TextUtils.isEmpty(response.msg)) {
                         msg = response.msg;

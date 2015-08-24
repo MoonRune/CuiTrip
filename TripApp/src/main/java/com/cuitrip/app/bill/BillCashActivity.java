@@ -7,12 +7,14 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -64,8 +66,25 @@ public class BillCashActivity extends BaseActivity {
     }
 
     public void render() {
-        amount.setText(avaliableMoney + avaliableMoneyType);
-        desc.setText(getString(R.string.rate_desc) + rate + avaliableMoneyType);
+        StringBuilder stringBuilder = new StringBuilder();
+        if (!TextUtils.isEmpty(avaliableMoneyType)) {
+            stringBuilder.append(avaliableMoneyType.toUpperCase());
+        } else {
+
+        }
+        if (!TextUtils.isEmpty(avaliableMoney)) {
+            stringBuilder.append(avaliableMoney);
+        } else {
+            stringBuilder.append("0");
+
+        }
+        amount.setText(stringBuilder.toString());
+        try {
+            desc.setText(getString(R.string.rate_desc) + rate +
+                    (avaliableMoneyType == null ?"" :avaliableMoneyType.toUpperCase()));
+        } catch (Exception e) {
+            desc.setText(R.string.data_error);
+        }
     }
 
     @OnClick(R.id.submit)
@@ -86,6 +105,7 @@ public class BillCashActivity extends BaseActivity {
         UserBusiness.getCash(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
+                LogHelper.e("omg","suc "+String.valueOf(response.result));
                 MessageUtils.showToast(getString(R.string.get_cash_suc));
                 finish();
                 hideLoading();
@@ -94,6 +114,7 @@ public class BillCashActivity extends BaseActivity {
             @Override
             public void onFailure(LabResponse response, Object data) {
 
+                LogHelper.e("omg","failed ");
                 String msg;
                 if (response != null && !TextUtils.isEmpty(response.msg)) {
                     msg = response.msg;
@@ -103,6 +124,6 @@ public class BillCashActivity extends BaseActivity {
                 MessageUtils.showToast(msg);
                 hideLoading();
             }
-        }, account.getText().toString(), money.getText().toString(), avaliableMoneyType);
+        }, account.getText().toString(), money.getText().toString(), UnitUtils.getCashType());
     }
 }

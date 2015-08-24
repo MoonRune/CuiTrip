@@ -74,6 +74,11 @@ public class MessageUtils {
         builder = new AlertDialog.Builder(context, R.style.cuiAppDialog);
         return builder;
     }
+    public static AlertDialog.Builder createBuilder(Context context) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(context);
+        return builder;
+    }
 //
 //    public static AlertDialog.Builder createHoloTranBuilder(Context context) {
 //        AlertDialog.Builder builder;

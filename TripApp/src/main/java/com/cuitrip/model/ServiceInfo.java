@@ -100,6 +100,25 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
     private String priceInclude;
     private String priceUninclude;
 
+    private String showCurrency;
+    private String showPrice;
+
+    public String getShowCurrency() {
+        return showCurrency;
+    }
+
+    public void setShowCurrency(String showCurrency) {
+        this.showCurrency = showCurrency;
+    }
+
+    public String getShowPrice() {
+        return showPrice;
+    }
+
+    public void setShowPrice(String showPrice) {
+        this.showPrice = showPrice;
+    }
+
     // tag &&tags??
 
     public String getMeetLocation() {

@@ -34,7 +34,7 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
             findViewById(R.id.ct_modify_passwd).setVisibility(View.VISIBLE);
             findViewById(R.id.logout).setVisibility(View.VISIBLE);
             findViewById(R.id.ct_money_hint_ll).setVisibility(View.VISIBLE);
-            ((TextView) findViewById(R.id.ct_money_value_tv_tv)).setText(UnitUtils.getMoneyType().toUpperCase());
+            ((TextView) findViewById(R.id.ct_money_value_tv_tv)).setText(UnitUtils.getSettingMoneyType().toUpperCase());
 
 
         }else{
@@ -60,8 +60,8 @@ public class SettingActivity extends BaseActivity implements View.OnClickListene
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i <  UnitUtils.MONEY_TYPES.length) {
-                            UnitUtils.setMoneyType(UnitUtils.MONEY_TYPES[i]);
-                            ((TextView) findViewById(R.id.ct_money_value_tv_tv)).setText(UnitUtils.getMoneyType().toUpperCase());
+                            UnitUtils.setSettingMoneyType(UnitUtils.MONEY_TYPES[i]);
+                            ((TextView) findViewById(R.id.ct_money_value_tv_tv)).setText(UnitUtils.getSettingMoneyType().toUpperCase());
                         }
                     }
                 });

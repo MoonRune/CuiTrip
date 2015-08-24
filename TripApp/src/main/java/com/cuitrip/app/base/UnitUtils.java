@@ -18,17 +18,23 @@ public class UnitUtils {
     static final String KEY_UNITINFO_ID = "_app_unit_info";
 
     public static final String DEFAULT_MONEY_TYPE="cny";
-    public static String[] MONEY_TYPES={DEFAULT_MONEY_TYPE.toUpperCase(),"twd".toUpperCase()};
+    public static final String DEFAULT_CASH_MONEY_TYPE="usd";
+    public static String[] MONEY_TYPES={DEFAULT_MONEY_TYPE.toUpperCase(),"twd".toUpperCase(),DEFAULT_CASH_MONEY_TYPE.toUpperCase()};
     public static String getDefaultCity(){
     return "";
     }
     public static  String sMoneyType;
-    public static void setMoneyType(String type){
+    public static void setSettingMoneyType(String type){
         sMoneyType = type.toLowerCase();
         SharedPreferences sp = MainApplication.getInstance().getSharedPreferences(KEY_UNITINFO_ID, Context.MODE_PRIVATE);
         sp.edit().putString(KEY_UNITINFO_ID, sMoneyType).commit();
     }
-    public static String getMoneyType(){
+
+    /**
+     * 仅仅为 getServiceDetail服务。。。。和 账单
+     * @return
+     */
+    public static String getSettingMoneyType(){
         if (sMoneyType == null) {
             synchronized (UnitUtils.class){
                 if (sMoneyType == null){
@@ -44,6 +50,13 @@ public class UnitUtils {
         return "zh-Hans";
     }
 
+    public static final String getMoneyType(){
+        return DEFAULT_MONEY_TYPE.toLowerCase();
+    }
+
+    public static final String getCashType(){
+        return DEFAULT_CASH_MONEY_TYPE.toLowerCase();
+    }
 
     //TW，中国： CHN
     public static String getCreateServiceCountry() {

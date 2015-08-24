@@ -74,7 +74,7 @@
 
         <TextView
             style="@style/order_info_hint"
-            android:text="提现金额" />
+            android:text="提现金额(USD)" />
 
         <EditText
             android:background="@null"

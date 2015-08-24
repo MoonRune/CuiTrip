@@ -11,19 +11,10 @@ public class MessageMode implements java.io.Serializable {
     protected String id;
     protected String date;
     protected String content;
-    protected boolean canDelete;
 
 
     //是否正在左滑
     protected boolean isLeft = false;
-
-    public boolean isCanDelete() {
-        return canDelete;
-    }
-
-    public void setCanDelete(boolean canDelete) {
-        this.canDelete = canDelete;
-    }
 
     public MessageMode(String name, String id, String date, String data) {
         this.name = name;
@@ -72,17 +63,9 @@ public class MessageMode implements java.io.Serializable {
         this.isLeft = isLeft;
     }
 
-    public MessageMode(String name, String id, String date, String content, boolean candelete) {
-        this.name = name;
-        this.id = id;
-        this.date = date;
-        this.content = content;
-        this.canDelete = candelete;
-    }
-
     public static MessageMode getInstance(MessageServerItem item) {
         return new MessageMode(item.getTitle(), item.getMessageId(),
-                Utils.getMsToSeconds(item.getGmtCreated()), item.getContent(),
-                item.isNotSystem());
+                Utils.getMsToSeconds(item.getGmtCreated()), item.getContent()
+              );
     }
 }

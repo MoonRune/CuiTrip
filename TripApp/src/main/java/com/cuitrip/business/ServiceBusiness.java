@@ -163,9 +163,10 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle getServiceDetail(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                 String sid) {
+                                                 String sid,String showCurrency) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
+        params.put("showCurrency",showCurrency);
         return client.post(context, BusinessHelper.getApiUrl("getServiceDetail"), params, handler);
     }
 

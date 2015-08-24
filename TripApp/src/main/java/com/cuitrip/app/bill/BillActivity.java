@@ -14,10 +14,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.model.BillData;
+import com.cuitrip.model.Bills;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
@@ -58,10 +58,8 @@ public class BillActivity extends BaseActivity {
     boolean isResumeRefresh = false;
     BillAdapter adapter = new BillAdapter();
     AsyncHttpClient mClient = new AsyncHttpClient();
+    Bills bills;
 
-    String money ;
-    String moneyType ;
-    String rate ;
     public static void start(Context context) {
         if (context != null) {
             context.startActivity(new Intent(context, BillActivity.class));
@@ -96,7 +94,7 @@ public class BillActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_OK:
-                BillCashActivity.start(this,money,moneyType,rate);
+                BillCashActivity.start(this, bills.getBalance(), bills.getMoneyType(), bills.getRate());
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -150,24 +148,44 @@ public class BillActivity extends BaseActivity {
 
     @Override
     protected void hideLoading() {
+        isResumeRefresh = false;
         mSwipeRefreshLayout.setRefreshing(false);
     }
 
     public void requestPresentRefresh() {
         showLoading();
         loading = true;
-        OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler() {
+        OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler(Bills.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
-                money = response.balance;
-                moneyType=response.moneyType;
-                rate=response.rate;
-                amount.setText(response.moneyType + response.balance);
-                desc.setText(getString(R.string.rate_desc) + response.rate + response.moneyType);
-                List<BillData> bills = JSONObject.parseArray(data.toString(), BillData.class);
-                adapter.setBillDatas(bills);
-                hideLoading();
-                loading = false;
+                if (data != null && data instanceof Bills) {
+                     bills = ((Bills) data);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    if (!TextUtils.isEmpty(bills.moneyType)) {
+                        stringBuilder.append(bills.moneyType.toUpperCase());
+                    } else {
+
+                    }
+                    if (!TextUtils.isEmpty(bills.balance)) {
+                        stringBuilder.append(bills.balance);
+                    } else {
+                        stringBuilder.append("0");
+
+                    }
+                    LogHelper.e(TAG, " res " + String.valueOf(response.result));
+                    amount.setText(stringBuilder.toString());
+                    try {
+                        desc.setText(getString(R.string.rate_desc) + bills.rate + bills.moneyType.toUpperCase());
+                    } catch (Exception e) {
+                        desc.setText(R.string.data_error);
+                    }
+                    adapter.setBillDatas(bills.getLists());
+                    adapter.notifyDataSetChanged();
+                    hideLoading();
+                    loading = false;
+                } else {
+                    onFailure(response, data);
+                }
             }
 
             @Override
@@ -183,23 +201,44 @@ public class BillActivity extends BaseActivity {
                 loading = false;
 
             }
-        }, UnitUtils.getMoneyType(), 0, DEFAULT_SIZE);
+        }, UnitUtils.getSettingMoneyType(), 0, DEFAULT_SIZE);
     }
 
     public void requestPresentLoadMore() {
         showLoading();
         loading = true;
         int size = adapter.getItemCount();
-        OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler() {
+        OrderBusiness.getBills(this, mClient, new LabAsyncHttpResponseHandler(Bills.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
-                amount.setText(response.moneyType + response.balance);
-                desc.setText(response.rate);
-                List<BillData> bills = JSONObject.parseArray(data.toString(), BillData.class);
-                adapter.getBillDatas().addAll(bills);
-                adapter.notifyDataSetChanged();
-                hideLoading();
-                loading = false;
+                if (data != null && data instanceof Bills) {
+                     bills = ((Bills) data);
+                    StringBuilder stringBuilder = new StringBuilder();
+                    if (!TextUtils.isEmpty(bills.moneyType)) {
+                        stringBuilder.append(bills.moneyType);
+                    } else {
+
+                    }
+                    if (!TextUtils.isEmpty(bills.balance)) {
+                        stringBuilder.append(bills.balance);
+                    } else {
+                        stringBuilder.append("0");
+
+                    }
+                    LogHelper.e(TAG, " res " + String.valueOf(response.result));
+                    amount.setText(stringBuilder.toString());
+                    try {
+                        desc.setText(getString(R.string.rate_desc) + bills.rate + bills.moneyType.toUpperCase());
+                    } catch (Exception e) {
+                        desc.setText(R.string.data_error);
+                    }
+                    adapter.getBillDatas().addAll(bills.getLists());
+                    adapter.notifyDataSetChanged();
+                    hideLoading();
+                    loading = false;
+                } else {
+                    onFailure(response, data);
+                }
             }
 
             @Override
@@ -236,24 +275,28 @@ public class BillActivity extends BaseActivity {
         }
 
         public void render(BillData data) {
+            LogHelper.e("render bills",data.toString());
             ImageHelper.displayPersonImage(data.getHeadPic(), image, null);
             name.setText(data.getTitle());
-            time.setText(Utils.getMsToD(data.getGmtModified()));
+            time.setText(Utils.getMsToD(data.getGmtCreated()));
 
             try {
                 double value = Double.valueOf(data.getMoney());
                 DecimalFormat df = new DecimalFormat("#.00");
-                if (value > 0) {
+                if (value >= 0) {
                     amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_black));
-                    amount.setText(data.getMoneyType() + data.getMoney());
+                    amount.setText(getUpCasedMoneyType(data) + data.getMoney());
                 } else {
                     amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_blue_pressed));
-                    amount.setText("-  " + data.getMoneyType() + data.getMoney());
+                    amount.setText("-  " + getUpCasedMoneyType(data)+ data.getMoney());
                 }
             } catch (NumberFormatException e) {
                 amount.setTextColor(PlatformUtil.getInstance().getColor(R.color.ct_black));
-                amount.setText(data.getMoney() + data.getMoneyType());
+                amount.setText(getUpCasedMoneyType(data)+data.getMoney());
             }
+        }
+        public String getUpCasedMoneyType(BillData data){
+         return   (TextUtils.isEmpty(data.getMoneyType())?"":data.getMoneyType().toUpperCase()  );
         }
     }
 

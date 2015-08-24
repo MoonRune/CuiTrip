@@ -15,7 +15,7 @@ public class BillData {
     private String moneyType;
     private String money;
     private String headPic;
-    private String gmtModified;
+    private String gmtCreated;
 
     public String getTitle() {
         return title;
@@ -49,11 +49,11 @@ public class BillData {
         this.headPic = headPic;
     }
 
-    public String getGmtModified() {
-        return gmtModified;
+    public String getGmtCreated() {
+        return gmtCreated;
     }
 
-    public void setGmtModified(String gmtModified) {
-        this.gmtModified = gmtModified;
+    public void setGmtCreated(String gmtCreated) {
+        this.gmtCreated = gmtCreated;
     }
 }

@@ -17,6 +17,7 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.AvailableDate;
@@ -118,7 +119,7 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
                 }
 
             }
-        }, mOrder.getSid());
+        }, mOrder.getSid(), UnitUtils.getSettingMoneyType());
     }
 
     @Override

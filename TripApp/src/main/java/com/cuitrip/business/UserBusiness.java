@@ -3,9 +3,11 @@ package com.cuitrip.business;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cuitrip.app.MainApplication;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
 import com.lab.utils.LogHelper;
+import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
 
@@ -183,7 +185,17 @@ public class UserBusiness {
         params.put("payPalAccount", payPalAccount);
         params.put("cashAmount", cashAmount);
         params.put("moneyType", moneyType);
+        LogHelper.e("omg",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("getCash"), params, handler);
+    }
+
+    public static RequestHandle forceUpdate(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("version", Utils.getAppVersionName(MainApplication.getInstance()));
+        params.put("platform", "android");
+        LogHelper.e("omg",params.toString());
+        return client.post(context, BusinessHelper.getApiUrl("forceUpdate"), params, handler);
     }
 
 

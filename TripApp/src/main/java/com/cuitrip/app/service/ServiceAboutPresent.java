@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.CtFetchCallback;
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.ServiceDetail;
 import com.cuitrip.model.ServiceStatistic;
@@ -55,7 +56,7 @@ public class ServiceAboutPresent {
                             }
                             notifyOnfailed(msg, atomicInteger, callback);
                         }
-                    }, serviceId);
+                    }, serviceId, UnitUtils.getSettingMoneyType());
             ServiceBusiness.getStatistic(((ServiceAboutActivity) iServiceAboutView),
                     mClinet, new LabAsyncHttpResponseHandler(ServiceStatistic.class) {
                         @Override

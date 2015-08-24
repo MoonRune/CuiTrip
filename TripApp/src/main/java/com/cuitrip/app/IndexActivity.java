@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TabHost;
@@ -13,15 +14,20 @@ import android.widget.TextView;
 
 import com.cuitrip.app.conversation.ConversationListFragment;
 import com.cuitrip.app.rong.RongCloudEvent;
+import com.cuitrip.business.UserBusiness;
 import com.cuitrip.finder.fragment.ServiceFragment;
 import com.cuitrip.login.LoginInstance;
+import com.cuitrip.model.ForceUpdate;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.push.MessagePrefs;
 import com.cuitrip.push.PushService;
 import com.cuitrip.service.R;
 import com.lab.app.BaseTabHostActivity;
+import com.lab.network.LabAsyncHttpResponseHandler;
+import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.loopj.android.http.AsyncHttpClient;
 import com.umeng.update.UmengUpdateAgent;
 
 public class IndexActivity extends BaseTabHostActivity {
@@ -56,8 +62,28 @@ public class IndexActivity extends BaseTabHostActivity {
         IntentFilter filter = new IntentFilter(PushService.NEW_MESSAGE_BROADCAT);
         registerReceiver(mNewMessageComing, filter);
         RongCloudEvent.ConnectRong(false);
+        validateForceUpdate();
     }
 
+    protected void validateForceUpdate(){
+        UserBusiness.forceUpdate(this, new AsyncHttpClient(), new LabAsyncHttpResponseHandler(ForceUpdate.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                if (data!=null &&data instanceof ForceUpdate &&((ForceUpdate)data).isForceUpdate()){
+                    showForceUpdate();
+                }
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+
+            }
+        });
+    }
+    private void showForceUpdate(){
+        MessageUtils.createBuilder(this).setCancelable(false).setView(
+                LayoutInflater.from(this).inflate(R.layout.force_update,null)).show().show();
+    }
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

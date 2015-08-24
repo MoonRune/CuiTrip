@@ -26,6 +26,6 @@
         android:drawablePadding="5dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:textColor="@color/ct_blue_white"
+        android:textColor="@color/ct_blue_green"
         android:background="@drawable/selector_blue_stoken_empty_corner"/>
 </LinearLayout>

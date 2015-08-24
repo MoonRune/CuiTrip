@@ -8,16 +8,13 @@
         style="@style/ctMyProfile"
         android:text="@string/ct_modify_pass"
         android:layout_marginTop="20dp"/>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ct_single_px"
-        android:background="@color/ct_divider" />
 
     <LinearLayout
         android:id="@+id/ct_money_hint_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
         <TextView
             style="@style/ctMyProfile"
@@ -33,19 +30,13 @@
             style="@style/ctMyProfile"
             android:text=""/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ct_single_px"
-        android:background="@color/ct_divider" />
     <TextView
+        android:layout_marginTop="5dp"
         android:id="@+id/ct_about"
         style="@style/ctMyProfile"
-        android:text="@string/ct_about" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ct_single_px"
-        android:background="@color/ct_divider" />
+        android:text="@string/ct_about" />/>
     <TextView
+        android:layout_marginTop="5dp"
         android:id="@+id/ct_relation"
         style="@style/ctMyProfile"
         android:text="@string/ct_relation_us" />

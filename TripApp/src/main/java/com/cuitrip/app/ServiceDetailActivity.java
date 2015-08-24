@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.app.service.ServiceFinderInfoAllActivity;
 import com.cuitrip.app.service.ServicePriceDescActivity;
 import com.cuitrip.app.service.ServideDetailDescActivity;
@@ -110,7 +111,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                 }
 
             }
-        }, id);
+        }, id, UnitUtils.getSettingMoneyType());
     }
 
     private void bind(ServiceDetail data) {
@@ -144,9 +145,9 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 //            setViewText(R.id.service_price, info.getMoneyType() + " " + info.getPrice());
             String price;
             if (info.getPriceType() == 1) { //按人计费
-                price = info.getMoneyType() + " " + info.getPrice() + getString(R.string.ct_service_unit);
+                price = info.getShowCurrency().toUpperCase() + " " + info.getShowPrice() + getString(R.string.ct_service_unit);
             } else {
-                price = info.getMoneyType() + " " + info.getPrice();
+                price = info.getShowCurrency().toUpperCase() + " " + info.getShowPrice();
             }
             setViewText(R.id.service_price, price);
 
