@@ -65,7 +65,7 @@ public class OrderFormActivity extends BaseActivity {
     View mTopV;
     OrderViewsAdapter mAdapter;
     OrderItem orderItem = null;
-
+    String orderId;
     AsyncHttpClient mClient = new AsyncHttpClient();
     boolean showTabs = true;
 
@@ -123,7 +123,7 @@ public class OrderFormActivity extends BaseActivity {
                 LogHelper.e(TAG, "requestOrderDetail failed ");
 
             }
-        }, getIntent().getStringExtra(ORDER_ID));
+        }, orderId);
     }
 
     public class OrderViewsAdapter extends FragmentPagerAdapter implements IconPagerAdapter {
@@ -167,19 +167,27 @@ public class OrderFormActivity extends BaseActivity {
                 default:
                     if (!TextUtils.isEmpty(orderItem.getTargetId())) {
                         CURRENT_TARGET = orderItem.getTargetId();
+                        LogHelper.e("omg member", " CURRENT_TARGET " + CURRENT_TARGET);
                         RongIM.getInstance().getRongIMClient().getDiscussion(CURRENT_TARGET, new RongIMClient.ResultCallback<Discussion>() {
                             @Override
                             public void onSuccess(Discussion discussion) {
-                                if (discussion.getMemberIdList() == null ||discussion.getMemberIdList().size()<2){
+                                LogHelper.e("omg member", TextUtils.join("|", discussion.getMemberIdList()));
+                                if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() < 2
+                                        || discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
+                                        ) {
                                     MainApplication.getInstance().orderRongMembersizeError();
                                     buildConversation(orderItem);
                                 }
-                                LogHelper.e(TAG,"SUC "+discussion.getMemberIdList()+" : " +TextUtils.join("|",discussion.getMemberIdList()));
+                                LogHelper.e(TAG, "SUC " + discussion.getMemberIdList() + " : " + TextUtils.join("|", discussion.getMemberIdList()));
                             }
 
                             @Override
                             public void onError(RongIMClient.ErrorCode errorCode) {
-                                LogHelper.e(TAG,"failed");
+                                LogHelper.e(TAG, " member failed " + errorCode.name() + "|" + errorCode.getMessage());
+                                if (errorCode.equals(RongIMClient.ErrorCode.NOT_IN_DISCUSSION)) {
+                                    MainApplication.getInstance().orderRongMembersizeError();
+                                    buildConversation(orderItem);
+                                }
                             }
                         });
                         ConversationFragment fragment = new ConversationFragment();
@@ -206,11 +214,11 @@ public class OrderFormActivity extends BaseActivity {
         }
     }
 
-   Fragment emptyFragment = null;
+    Fragment emptyFragment = null;
 
     public void replaceFragment() {
         try {
-            if (orderItem!=null &&!TextUtils.isEmpty(orderItem.getTargetId()) &&emptyFragment != null) {
+            if (orderItem != null && !TextUtils.isEmpty(orderItem.getTargetId()) && emptyFragment != null) {
 
                 getSupportFragmentManager().beginTransaction().remove(
                         emptyFragment
@@ -241,10 +249,10 @@ public class OrderFormActivity extends BaseActivity {
         List<String> userIds = new ArrayList<>();
         userIds.add(orderItem.getInsiderId());
         userIds.add(orderItem.getTravellerId());
-        LogHelper.e("omg",""+orderItem.getTravellerId()+"  -"+orderItem.getInsiderId());
-        if (orderItem.getInsiderId() == null ||TextUtils.isEmpty(orderItem.getInsiderId())
-                ||orderItem.getTravellerId() == null ||TextUtils.isEmpty(orderItem.getTravellerId())
-                ||orderItem.getTravellerId().equals(orderItem.getInsiderId())){
+        LogHelper.e("omg", "" + orderItem.getTravellerId() + "  -" + orderItem.getInsiderId());
+        if (orderItem.getInsiderId() == null || TextUtils.isEmpty(orderItem.getInsiderId())
+                || orderItem.getTravellerId() == null || TextUtils.isEmpty(orderItem.getTravellerId())
+                || orderItem.getTravellerId().equals(orderItem.getInsiderId())) {
             MainApplication.getInstance().orderMemberIdError();
             MessageUtils.showToast(R.string.data_error);
             finish();
@@ -306,6 +314,13 @@ public class OrderFormActivity extends BaseActivity {
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        LogHelper.e("omg","onNewIntent");
+        requestData(intent);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ct_order_form);
@@ -321,7 +336,7 @@ public class OrderFormActivity extends BaseActivity {
 
             @Override
             public void onPageSelected(int position) {
-                switch (position){
+                switch (position) {
                     case 0:
                         showActionBar(getString(R.string.order_form_order_title));
                         break;
@@ -342,12 +357,19 @@ public class OrderFormActivity extends BaseActivity {
             }
         });
         mViewPagerIndicator.setViewPager(mViewPager);
-        String targetId = getIntent().getStringExtra(TARGET_ID);
-        if (getIntent().getBooleanExtra(MOVE_TO_CONVERSATION, false)) {
+        requestData(getIntent());
+        RongCloudEvent.ConnectRong(false);
+
+    }
+
+    public void requestData(Intent intent) {
+        if (intent.getBooleanExtra(MOVE_TO_CONVERSATION, false)) {
             notifyedMoveConversation();
         }
+        orderId  = intent.getStringExtra(ORDER_ID);
+        LogHelper.e(TAG," request "+orderId);
+        mViewPager.setCurrentItem(0);
         requestOrderDetail();
-        RongCloudEvent.ConnectRong(false);
 
     }
 

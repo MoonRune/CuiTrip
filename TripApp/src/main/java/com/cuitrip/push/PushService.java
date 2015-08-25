@@ -34,14 +34,15 @@ public class PushService extends UmengBaseIntentService {
 
     @Override
     protected void onMessage(Context context, Intent intent) {
-        LogHelper.d(TAG, "onMessage: " + intent.toString());
+        LogHelper.e(TAG, "onMessage: " + intent.toString());
         super.onMessage(context, intent);
         try {
             String message = intent.getStringExtra(BaseConstants.MESSAGE_BODY);
-            LogHelper.d(TAG, "onMessage: " + message);
+            LogHelper.e(TAG, "onMessage: " + message);
             UMessage msg = new UMessage(new JSONObject(message));
             UTrack.getInstance(context).trackMsgClick(msg);
             updateMsg(context, msg);
+            LogHelper.e(TAG, "onMessage: end");
         } catch (Exception e) {
             LogHelper.e(TAG, e.getMessage());
         }
@@ -59,8 +60,9 @@ public class PushService extends UmengBaseIntentService {
     private void showNotification(Context context, UMessage msg) {
         Intent intent = new Intent(this, IndexActivity.class);
         intent.putExtra(IndexActivity.GO_TO_TAB, IndexActivity.ORDER_TAB);
+        LogHelper.e("showNotification", "ORDER_TAB");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent,
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt() % 10000, intent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         Notification notification = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ct_ic_launcher)

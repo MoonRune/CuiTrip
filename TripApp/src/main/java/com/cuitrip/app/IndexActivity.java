@@ -1,9 +1,6 @@
 package com.cuitrip.app;
 
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -20,7 +17,6 @@ import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.ForceUpdate;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.push.MessagePrefs;
-import com.cuitrip.push.PushService;
 import com.cuitrip.service.R;
 import com.lab.app.BaseTabHostActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -45,7 +41,6 @@ public class IndexActivity extends BaseTabHostActivity {
     public static final String MY_TAB = "my";
 
     private View mNewMessageDot;
-    private NewMessageComingListener mMessageComingListener;
 
     private volatile boolean mExiting = false;
     private static final int EXIT_TIME = 2000;
@@ -75,14 +70,17 @@ public class IndexActivity extends BaseTabHostActivity {
         LogHelper.e("LoginActivity", "index oncreate");
         if (intent != null) {
             String tabTag = intent.getStringExtra(GO_TO_TAB);
+            LogHelper.e("showNotification", "index ty"+tabTag);
             if (!TextUtils.isEmpty(tabTag)) {
                 mTabHost.setCurrentTabByTag(tabTag);
             }
         }
-        IntentFilter filter = new IntentFilter(PushService.NEW_MESSAGE_BROADCAT);
-        registerReceiver(mNewMessageComing, filter);
         RongCloudEvent.ConnectRong(false);
         validateForceUpdate();
+
+        RongCloudEvent.getInstance().buildNotification(2, "content a ", "title a", "tick a ", "11820150825152319183");
+        RongCloudEvent.getInstance().buildNotification(1, "content", "title", "tick", "11720150825152626183");
+
     }
 
     protected void validateForceUpdate() {
@@ -213,32 +211,7 @@ public class IndexActivity extends BaseTabHostActivity {
         }
     }
 
-    public void setNewMessageComingListener(NewMessageComingListener messageComingListener) {
-        mMessageComingListener = messageComingListener;
-    }
-
-    public interface NewMessageComingListener {
-        void onNewMessage();
-    }
-
-
-    //新的push广播消息
-    private BroadcastReceiver mNewMessageComing = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            if (intent != null && PushService.NEW_MESSAGE_BROADCAT.equals(intent.getAction())) {
-                if (!MESSAGE_TAB.equals(mTabHost.getCurrentTabTag())) {
-                    mNewMessageDot.setVisibility(View.VISIBLE);
-                }
-                if (mMessageComingListener != null) {
-                    mMessageComingListener.onNewMessage();
-                }
-            }
-        }
-    };
-
     public void onDestroy() {
         super.onDestroy();
-        unregisterReceiver(mNewMessageComing);
     }
 }

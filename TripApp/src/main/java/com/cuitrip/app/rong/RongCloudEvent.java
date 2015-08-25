@@ -54,6 +54,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
     public static final int DEFAULT_CHECK_MODE_NOTIFCATION_ID = 2;
     public static final int DEFAULT_ERROR_NOTIFCATION_ID = 3;
+
     private RongCloudEvent() {
 
     }
@@ -167,7 +168,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     public boolean onReceived(Message message, int left) {
         LogHelper.e(TAG, "on receive message" + message.getTargetId());
         if (OrderFormActivity.CURRENT_TARGET == null || !OrderFormActivity.CURRENT_TARGET.equals(message.getTargetId())) {
-            LogHelper.e(TAG, "on receive message query" );
+            LogHelper.e(TAG, "on receive message query");
             try {
                 com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
                 String content = getMessageContent(message.getContent());
@@ -223,14 +224,15 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 if (data != null && data instanceof OrderItem) {
                     OrderItem orderItem = ((OrderItem) data);
                     try {
+
                         if ((me.isTravel() && me.getUid().equals(orderItem.getTravellerId()))
                                 || ((!me.isTravel()) && me.getUid().equals(orderItem.getInsiderId()))) {
                             String title = "";
-                            String contentLittle = context.getString(R.string.send_message_with_name_below,"");
+                            String contentLittle = context.getString(R.string.send_message_with_name_below, "");
                             if (!TextUtils.isEmpty(orderItem.getUserNick())) {
                                 title = orderItem.getUserNick();
                                 if (!TextUtils.isEmpty(title)) {
-                                    contentLittle =  context.getString(R.string.send_message_with_name_below,title);
+                                    contentLittle = context.getString(R.string.send_message_with_name_below, title);
                                 }
                             }
                             buildNotification(message.getTargetId().hashCode(),
@@ -240,28 +242,32 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                         buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, "", content, context.getString(R.string.switch_mode_to_watch), null);
 
                     } catch (Exception e) {
-                        buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, context.getString(R.string.unknown) + e.getMessage(), content, context.getString(R.string.send_message_with_name_below,""), null);
+                        buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, context.getString(R.string.unknown) + e.getMessage(), content, context.getString(R.string.send_message_with_name_below, ""), null);
                     }
                 }
             }
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                buildNotification(DEFAULT_ERROR_NOTIFCATION_ID,context.getString(R.string.unknown), content,context.getString(R.string.send_message_with_name_below,""), null);
+                buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, context.getString(R.string.unknown), content, context.getString(R.string.send_message_with_name_below, ""), null);
 
             }
         }, message.getTargetId());
     }
 
     public void buildNotification(int id, String content, String title, String contentLittle, String oid) {
-        LogHelper.e(TAG, TextUtils.join(" | ", new String[]{String.valueOf(id), content, title, contentLittle}));
+        LogHelper.e(TAG, TextUtils.join(" | ", new String[]{String.valueOf(id), content, title, contentLittle,oid}));
         //定义NotificationManager
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) MainApplication.getInstance().getSystemService(ns);
         //定义通知栏展现的内容信息
         int icon = R.drawable.ct_ic_launcher;
         long when = System.currentTimeMillis();
-        Notification notification = new Notification(icon, contentLittle, when);
+
+        Notification.Builder builder = new Notification.Builder(MainApplication.getInstance());
+        builder.setSmallIcon(icon);
+        builder.setTicker(contentLittle);
+        builder.setWhen(when);
 
         //定义下拉通知栏时要展现的内容信息
         CharSequence contentTitle = title;
@@ -270,14 +276,16 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         if (!TextUtils.isEmpty(oid)) {
             notificationIntent = OrderFormActivity.getStartIntent(MainApplication.getInstance(), oid);
         }
-        PendingIntent contentIntent = PendingIntent.getActivity(MainApplication.getInstance(), 0,
-                notificationIntent, PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_UPDATE_CURRENT);
-        notification.flags |= Notification.FLAG_AUTO_CANCEL;
-        notification.setLatestEventInfo(MainApplication.getInstance(), contentTitle, contentText,
-                contentIntent);
+        notificationIntent.setFlags(notificationIntent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent contentIntent = PendingIntent.getActivity(MainApplication.getInstance(), id,
+                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        builder.setAutoCancel(true);
+        builder.setContentTitle(contentTitle);
+        builder.setContentText(contentText);
+        builder.setContentIntent(contentIntent);
 
         //用mNotificationManager的notify方法通知用户生成标题栏消息通知
-        mNotificationManager.notify(id, notification);
+        mNotificationManager.notify(id, builder.getNotification());
     }
 
     @Override

@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="89dp"
+    android:layout_height="wrap_content"
+    android:minHeight="89dp"
     android:orientation="vertical">
 
     <View
@@ -12,7 +13,8 @@
         style="@style/ctDivider" />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="88dp"
+        android:layout_height="wrap_content"
+        android:minHeight="88dp"
         android:background="@drawable/select_white_gray"
         android:orientation="horizontal"
         android:paddingBottom="14dp"
@@ -68,7 +70,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/ct_content"
                 android:textSize="15dp"
-                tools:text="content" />
+                tools:text="contentasdfasfsafdasdfasdfasdfasdfasfadsfasfasfdsafasfasfds" />
 
             <TextView
                 android:id="@+id/ct_message_service"
@@ -76,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/ct_a7"
                 android:textSize="13dp"
-                tools:text="service" />
+                tools:text="serviceasdfasdfasfdasfasdfasdfdasfasdfadsfasdfasfsdfasfsdfafsafsdfasfsadfasfasdfasfasfasdf" />
         </LinearLayout>
 
 
