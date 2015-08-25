@@ -534,7 +534,7 @@
     <string name="current_coup">目前使用的优惠码 优惠%1$s %2$s</string>
     <string name="per_man_with_num_above">%1$s人</string>
     <string name="regist_time_with_string_below">注册时间:</string>
-    <string name="per_hour_with_num_above">小时</string>
+    <string name="per_hour_with_num_above">%1$s小时</string>
     <string name="im_default_message_image">[图片]</string>
     <string name="im_default_message_voice">[声音]</string>
     <string name="im_default_message_rich_text">[图文]</string>
