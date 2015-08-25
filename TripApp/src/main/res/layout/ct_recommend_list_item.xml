@@ -92,9 +92,7 @@
 
     <ImageView
         android:id="@+id/like_img"
-        android:padding="10dp"
-        android:layout_marginRight="6dp"
-        android:layout_marginTop="6dp"
+        android:padding="6dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:src="@drawable/selector_now_like"

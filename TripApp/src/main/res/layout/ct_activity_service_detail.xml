@@ -138,7 +138,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginBottom="10dp"
-                    android:textSize="@dimen/ct_ts_3"
+                    android:textSize="19sp"
                     android:textColor="@color/ct_black"
                     android:text="@string/ct_service_introduce" />
 
@@ -295,7 +295,7 @@
 
 
             <RelativeLayout
-                tools:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:background="@color/ct_white"
                 android:paddingLeft="@dimen/ct_width_padding"

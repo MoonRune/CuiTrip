@@ -74,7 +74,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                                 orderItem.getUserNick(),
                                                 0,
                                                 orderItem.getServiceName(),
-                                                PlatformUtil.getInstance().getString(R.string.empty),
+                                                "",
                                                 "",
                                                 orderItem.getHeadPic(), orderItem.getOid()));
                                         LogHelper.e(TAG,"put  "+orderItem.getOid());
@@ -84,7 +84,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                                 orderItem.getUserNick(),
                                                 0,
                                                 orderItem.getServiceName(),
-                                                PlatformUtil.getInstance().getString(R.string.empty),
+                                                "",
                                                 "",
                                                 orderItem.getHeadPic(), orderItem.getOid()));
                                         LogHelper.e(TAG,"put  "+orderItem.getOid());

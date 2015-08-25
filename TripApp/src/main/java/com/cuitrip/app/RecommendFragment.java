@@ -190,7 +190,7 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
 
                                         }
                                     }, item.getSid(), item.getServiceName(), item.getServiceAddress(), item.getServicePicUrl(),
-                                    item.getInsiderId(), item.getUserNick(), item.getHeadPic(), item.getCarrer());
+                                    item.getInsiderId(), item.getUserNick(), item.getHeadPic(), item.getCareer());
 
                         }
                     }

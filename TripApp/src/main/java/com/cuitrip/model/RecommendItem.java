@@ -17,10 +17,18 @@ public class RecommendItem {
     private String headPic;
     private String userNick;
     private String servicePicUrl;
-    private String carrer;//todo api
     private boolean isLiked;
     private String isShow;// 1 可进到详情 0 不可进
     private String insiderId;
+    private String career;
+
+    public String getCareer() {
+        return career;
+    }
+
+    public void setCareer(String career) {
+        this.career = career;
+    }
 
     public String getInsiderId() {
         return insiderId;
@@ -51,13 +59,6 @@ public class RecommendItem {
         this.isLiked = isLiked;
     }
 
-    public String getCarrer() {
-        return carrer;
-    }
-
-    public void setCarrer(String carrer) {
-        this.carrer = carrer;
-    }
 
     public String getSid() {
         return sid;

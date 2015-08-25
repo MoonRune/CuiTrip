@@ -198,7 +198,7 @@ public class OrderPersonRenderData {
         LogHelper.e("omg","get instance "+userInfo.getGmtCreated());
         return new OrderPersonRenderData(userInfo.getHeadPic(),
                 userInfo.getNick(),
-                PlatformUtil.getInstance().getString(R.string.regist_time_with_string_below,Utils.getMsToD( userInfo.getGmtCreated())),
+                PlatformUtil.getInstance().getString(R.string.regist_time_with_string_below,Utils.getMsToD(userInfo.getGmtCreated())),
                 userInfo.getRealName(),
                 userInfo.getBirthDay(),
                 Utils.getGender(userInfo.getGender()),

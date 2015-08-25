@@ -1,8 +1,10 @@
 package com.example.service.app;
 
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
+import android.util.DisplayMetrics;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.country.CountrySelectActivity;
@@ -37,22 +39,33 @@ public class CountrySelectTest extends ActivityInstrumentationTestCase2<CountryS
         HashMap<String, String> tw = new HashMap<>();
 
         try {
-            resources.getConfiguration().setLocale( Locale.CHINA);
-            for (Field field : R.string.class.getFields()) {
-                int value = field.getInt(R.class);
-                zh.put(field.getName(), resources.getString(value));
+            {
+                Configuration config = resources.getConfiguration();//获得设置对象
+                DisplayMetrics dm = resources.getDisplayMetrics();//获得屏幕参数：主要是分辨率，像素等。
+                config.locale = Locale.SIMPLIFIED_CHINESE; //简体中
+                resources.updateConfiguration(config, dm);
+                for (Field field : R.string.class.getFields()) {
+                    int value = field.getInt(R.class);
+                    StringBuffer stringBuffer = new StringBuffer();
+                    stringBuffer.append(resources.getString(value));
+                    zh.put(field.getName(), new String(resources.getString(value)));
+                }
             }
-
-            resources.getConfiguration().setLocale( Locale.TAIWAN);
-            for (Field field : R.string.class.getFields()) {
-                int value = field.getInt(R.class);
-                tw.put(field.getName(), resources.getString(value));
+            {
+                Configuration config = resources.getConfiguration();//获得设置对象
+                DisplayMetrics dm = resources.getDisplayMetrics();//获得屏幕参数：主要是分辨率，像素等。
+                config.locale = Locale.TRADITIONAL_CHINESE; //繁体
+                resources.updateConfiguration(config, dm);
+                for (Field field : R.string.class.getFields()) {
+                    int value = field.getInt(R.class);
+                    tw.put(field.getName(), resources.getString(value));
+                }
             }
-            LogHelper.e("value",zh.size()+"|"+tw.size()+"------------");
+            LogHelper.e("value", zh.size() + "|" + tw.size() + "------------");
+//
+            for (Map.Entry<String, String> entry : zh.entrySet()) {
 
-            for (Map.Entry<String,String> entry : zh.entrySet()) {
-
-                LogHelper.e("value hehehe","\""+ entry.getValue()+"\":\""+tw.get(entry.getKey())+"\";");
+                LogHelper.e("value hehehe", "\"" + entry.getValue() + "\":\"" + tw.get(entry.getKey()) + "\";");
             }
         } catch (IllegalAccessException e) {
             e.printStackTrace();

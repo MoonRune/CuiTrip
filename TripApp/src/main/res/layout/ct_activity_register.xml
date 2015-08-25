@@ -38,6 +38,7 @@
             android:layout_marginBottom="10dp"
             android:background="@drawable/shape_white_corner"
             android:gravity="center_vertical"
+            android:paddingLeft="10dp"
             android:orientation="horizontal">
 
             <TextView
@@ -50,7 +51,7 @@
                 android:gravity="center"
                 android:paddingRight="15dp"
                 android:textColor="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4"
+                android:textSize="19sp"
                 tools:text="+86" />
 
             <TextView
@@ -75,7 +76,7 @@
                 android:singleLine="true"
                 android:textColor="@color/ct_text_title"
                 android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4" />
+                android:textSize="19sp" />
 
             <ImageView
                 android:id="@+id/ct_account_clear"
@@ -106,7 +107,7 @@
                 android:singleLine="true"
                 android:textColor="@color/ct_text_title"
                 android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4" />
+                android:textSize="19sp" />
 
             <TextView
                 android:id="@+id/ct_get_vcode"
@@ -148,7 +149,7 @@
                 android:singleLine="true"
                 android:textColor="@color/ct_text_title"
                 android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4" />
+                android:textSize="19sp" />
 
             <ImageView
                 android:id="@+id/ct_passwd_clear"
@@ -185,7 +186,7 @@
                 android:singleLine="true"
                 android:textColor="@color/ct_text_title"
                 android:textColorHint="@color/ct_text_hint"
-                android:textSize="@dimen/ct_ts_4" />
+                android:textSize="19sp" />
 
             <ImageView
                 android:id="@+id/ct_nick_clear"

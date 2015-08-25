@@ -83,23 +83,23 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     }
 
     public static void ConnectRong(boolean force) {
-        if (!LoginInstance.isLogin(MainApplication.getInstance())) {
-            return;
-        }
-        com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
-        if (userInfo == null || TextUtils.isEmpty(userInfo.getUid())) {
-            return;
-        }
-        if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
-            LogHelper.e(TAG, "rongyun roken null");
-            if (force) {
-                MainApplication.getInstance().logOutWithError();
-            }
-            return;
-        }
-        String token = userInfo.getRongyunToken();
-        LogHelper.e(TAG, "rongyun roken is : " + token);
         try {
+            if (!LoginInstance.isLogin(MainApplication.getInstance())) {
+                return;
+            }
+            com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+            if (userInfo == null || TextUtils.isEmpty(userInfo.getUid())) {
+                return;
+            }
+            if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
+                LogHelper.e(TAG, "rongyun roken null");
+                if (force) {
+                    MainApplication.getInstance().logOutWithError();
+                }
+                return;
+            }
+            String token = userInfo.getRongyunToken();
+            LogHelper.e(TAG, "rongyun roken is : " + token);
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
                 @Override
@@ -208,8 +208,13 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             LogHelper.e(TAG, "onReceived-informationNotificationMessage:" + informationNotificationMessage.getMessage());
             content = PlatformUtil.getInstance().getString(R.string.im_default_message_notificataion);
         } else {
+            if (messageContent == null) {
+                content = PlatformUtil.getInstance().getString(R.string.send_message_with_name_below, "");
+            } else {
+                content = null;
+            }
+            LogHelper.e("omg", " receive push message other" + messageContent);
 //            content = "[通知]";
-            return null;
         }
         return content;
     }
@@ -217,7 +222,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     AsyncHttpClient mAsyncHttpClient = new AsyncHttpClient();
 
     public void queryForInfo(final Context context, final Message message, final String content, final com.cuitrip.model.UserInfo me, boolean async) {
-
+        LogHelper.e("queryForInfo target ", "" + message.getTargetId());
         OrderBusiness.getOrderByRongTargetId(context, async ? mAsyncHttpClient : mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
@@ -256,7 +261,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     }
 
     public void buildNotification(int id, String content, String title, String contentLittle, String oid) {
-        LogHelper.e(TAG, TextUtils.join(" | ", new String[]{String.valueOf(id), content, title, contentLittle,oid}));
+        LogHelper.e(TAG, TextUtils.join(" | ", new String[]{String.valueOf(id), content, title, contentLittle, oid}));
         //定义NotificationManager
         String ns = Context.NOTIFICATION_SERVICE;
         NotificationManager mNotificationManager = (NotificationManager) MainApplication.getInstance().getSystemService(ns);
@@ -310,19 +315,72 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     }
 
     @Override
-    public boolean onReceivePushMessage(PushNotificationMessage message) {
+    public boolean onReceivePushMessage(final PushNotificationMessage message) {
         LogHelper.e(TAG, "onReceivePushMessage");
 
         try {
-            com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+            final com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
 
-            String content = message.getPushContent();
-            if (!TextUtils.isEmpty(content)) {
-                LogHelper.e(TAG, "content  not empty");
+            if (message.getContent() != null) {
+                String content = getMessageContent(message.getContent());
+                if (!TextUtils.isEmpty(content)) {
+                    LogHelper.e(TAG, "content  not empty");
 
-                queryForInfo(MainApplication.getInstance(), message, content, userInfo, true);
+                    queryForInfo(MainApplication.getInstance(), message, content, userInfo, true);
+                } else {
+                    LogHelper.e(TAG, " seems should not see " + String.valueOf(message.getContent()));
+                }
             } else {
-                LogHelper.e(TAG, " seems should not see " + String.valueOf(message.getContent()));
+                LogHelper.e(TAG, "message.getContent() empty");
+                String token = userInfo.getRongyunToken();
+                LogHelper.e(TAG, "rongyun roken is : " + token);
+                RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+                    @Override
+                    public void onSuccess(String userId) {
+                        LogHelper.e("ron suc", "" + userId);
+                        RongIMClient.getInstance().getConversation(
+                                Conversation.ConversationType.DISCUSSION, message.getTargetId(), new RongIMClient.ResultCallback<Conversation>() {
+                                    @Override
+                                    public void onSuccess(Conversation conversation) {
+                                        if (conversation != null) {
+                                            LogHelper.e(TAG, "suc ");
+                                            message.setContent(conversation.getLatestMessage());
+                                            String content = getMessageContent(message.getContent());
+                                            if (!TextUtils.isEmpty(content)) {
+                                                LogHelper.e(TAG, "content  not empty");
+
+                                                queryForInfo(MainApplication.getInstance(), message, content, userInfo, true);
+                                            } else {
+                                                LogHelper.e(TAG, " seems should not see " + String.valueOf(message.getContent()));
+                                            }
+                                        }
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                        LogHelper.e(TAG, "failed " + errorCode);
+
+                                    }
+                                }
+                        );
+    /* 连接成功 */
+                    }
+
+                    @Override
+                    public void onError(RongIMClient.ErrorCode e) {
+                        LogHelper.e("ron failed", "");
+    /* 连接失败，注意并不需要您做重连 */
+                    }
+
+                    @Override
+                    public void onTokenIncorrect() {
+                        LogHelper.e("ron token error", "");
+    /* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
+                    }
+
+                });
+
             }
         } catch (Exception e) {
             LogHelper.e(TAG, " error " + e.getMessage());

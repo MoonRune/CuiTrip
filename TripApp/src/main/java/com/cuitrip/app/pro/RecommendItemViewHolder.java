@@ -2,6 +2,7 @@ package com.cuitrip.app.pro;
 
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -30,6 +31,10 @@ public class RecommendItemViewHolder {
     CircleImageView authorImg;
     @InjectView(R.id.author_block)
     LinearLayout authorBlock;
+    @InjectView(R.id.author_carrer)
+    TextView authorCarrer;
+    @InjectView(R.id.like_img)
+    ImageView likeImg;
 
     public RoundedImageView getServiceImg() {
         return serviceImg;
@@ -55,14 +60,21 @@ public class RecommendItemViewHolder {
         return authorBlock;
     }
 
-    public RecommendItemViewHolder(View view){
-        ButterKnife.inject(this,view);
+    public RecommendItemViewHolder(View view) {
+        ButterKnife.inject(this, view);
 
     }
-    public void render(RecommendRenderData data){
+
+    public void render(RecommendRenderData data) {
         if (!TextUtils.isEmpty(data.getAddress())) {
-            authorAddress.setText("  -  " + data.getAddress());
+            authorAddress.setText(data.getAddress());
         }
+        if (TextUtils.isEmpty(data.getAuthorCarrer())) {
+            authorCarrer.setText("");
+        } else {
+            authorCarrer.setText("  -  " + data.getAuthorCarrer());
+        }
+
         authorName.setText(data.getAuthorName());
         ImageHelper.displayPersonImage(data.getAuthorAva(), authorImg, null);
         ImageHelper.displayCtImage(data.getHeadPic(), serviceImg, null);

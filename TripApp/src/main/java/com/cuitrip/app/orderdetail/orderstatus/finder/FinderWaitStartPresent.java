@@ -27,7 +27,7 @@ public class FinderWaitStartPresent extends BaseOrderFormPresent<IFinderOrderDet
 
     @Override
     public void clickMenu() {
-        mOrderDetailView.jumpCancelOrder(mOrderItem);
+        mOrderDetailView.jumpHelp(mOrderItem);
     }
 
     @Override
@@ -37,7 +37,7 @@ public class FinderWaitStartPresent extends BaseOrderFormPresent<IFinderOrderDet
 
     @Override
     public String getMenuText(OrderItem orderItem) {
-        return PlatformUtil.getInstance().getString(R.string.cancel_order_text);
+        return PlatformUtil.getInstance().getString(R.string.connect_cuitrip);
     }
 
     @Override

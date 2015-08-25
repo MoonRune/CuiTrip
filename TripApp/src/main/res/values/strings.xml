@@ -185,7 +185,7 @@
     <string name="ct_null_country">请选择国家</string>
     <string name="ct_null_passwd">请填写密码</string>
     <string name="ct_error_phone">请填写正确的手机号码</string>
-    <string name="ct_geting_vcode">获取中...</string>
+    <string name="ct_geting_vcode">获取中&#8230;</string>
     <string name="ct_registerd_suc">注册成功</string>
     <string name="ct_registerd_suc_login">注册成功,请登录</string>
     <string name="ct_login_suc">登录成功</string>
@@ -217,7 +217,7 @@
     <string name="ct_relation_tips_code_and_wx">请扫描二维码或加微信号：cuibinglvxing</string>
     <string name="ct_relation_call">紧急情况请致电我们</string>
     <string name="ct_mail" translatable="false">service@cuitrip.com</string>
-    <string name="ct_copyright">Copyright © 2015 Cuitrip All Rights Reserved</string>
+    <string name="ct_copyright" translatable="false">Copyright © 2015 Cuitrip All Rights Reserved</string>
 
     <string name="ct_finder">行程</string>
     <string name="ct_your_find">你的发现</string>
@@ -283,9 +283,9 @@
 
     <string name="ct_gende_non">未设置</string>
 
-    <string name="ct_gende_non_code">0</string>
-    <string name="ct_male_code">1</string>
-    <string name="ct_female_code">2</string>
+    <string name="ct_gende_non_code" translatable="false">0</string>
+    <string name="ct_male_code" translatable="false">1</string>
+    <string name="ct_female_code" translatable="false">2</string>
     <string name="ct_profile_title_name">头像</string>
     <string name="ct_profile_title_realname">真实姓名</string>
     <string name="ct_profile_hint_realname">请填写真实姓名</string>
@@ -306,7 +306,7 @@
     <string name="ct_profile_name_edit_alert">您的真实姓名为%1$s,保存后不可修改</string>
     <string name="ct_profile_gender_edit_alert">您的性别为%1$s,保存后不可修改</string>
     <string name="ct_profile_nick_edit_alert">昵称30天内只可修改一次</string>
-    <string name="ct_data_submiting">正在提交数据..</string>
+    <string name="ct_data_submiting">正在提交数据&#8230;</string>
     <string name="ct_submmit_suc">提交成功</string>
     <string name="ct_submmit_failed">提交失败</string>
     <string name="ct_invitation_friends">邀请朋友</string>
@@ -330,7 +330,7 @@
     <string name="ct_pay_failed">支付失败</string>
     <string name="ct_pay_suc">您已支付成功</string>
     <string name="ct_pay_suc_content">可以在旅程中查看您的预约</string>
-    <string name="ct_watch_trips">去到旅程中看预定的服务</string>
+    <string name="ct_watch_trips">去到旅程中看预订的服务</string>
     <string name="ct_cny">人民币</string>
     <string name="ct_twd">新台币</string>
     <string name="ct_please_relogin">请重新登录</string>
@@ -405,7 +405,7 @@
     <string name="price_include_input_hint_et">请描述费用包含项目</string>
     <string name="price_uninclude_input_hint_et">请描述必要的的费用所不包括的项目</string>
     <string name="ct_price_desc_title">费用说明</string>
-    <string name="ct_order_price_uninclude_empty_msg">请描述必要的的费用所不包括的项目</string>
+    <string name="ct_order_price_uninclude_empty_msg">请描述必要的费用所不包括的项目</string>
     <string name="ct_order_price_include_empty_msg">请描述费用包括的项目</string>
 
     <string name="ct_forget_password">忘记密码？</string>
@@ -494,14 +494,14 @@
     <string name="ct_favorite_unavaliable">发现者已不再提供此旅程，再看看其他推荐吧</string>
     <string name="ct_mount_left">余额</string>
     <string name="rate_desc"><![CDATA[今日汇率: 100USD = %1$s%2$s]]></string>
-    <string name="currency_money"><![CDATA[ %1$s %2$s]]></string>
+    <string name="currency_money" translatable="false"><![CDATA[ %1$s %2$s]]></string>
     <string name="un_setted">未设置</string>
     <string name="conversation_list_title">聊天</string>
     <string name="ct_cancel_order_confirm_msg">确定要取消订单吗</string>
     <string name="please_login_first">请先登录</string>
     <string name="regist_time">注册时间:%1$s</string>
     <string name="please_input_right_email">请输入正确的邮箱</string>
-    <string name="watch_other_comments">查看其他%1$s条评论</string>
+    <string name="watch_other_comments">查看其他%1$s条评价</string>
     <string name="please_input_account">请输入帐号</string>
     <string name="please_input_amount">请输入金额</string>
     <string name="empty">空</string>
@@ -516,7 +516,7 @@
     <string name="order_form_order_title">预订</string>
     <string name="order_form_user_title">用户信息</string>
     <string name="order_form_conversation_title">聊天</string>
-    <string name="someones_comment_with_name">%1$s的评论</string>
+    <string name="someones_comment_with_name">%1$s的评价</string>
     <string name="confirm_order_text">确认预订</string>
     <string name="refuse_oder_text">拒绝</string>
     <string name="end_order_text">结束旅程</string>
@@ -525,7 +525,7 @@
     <string name="cancel_order_text">取消预订</string>
     <string name="my_account">我的评价</string>
     <string name="comment_order_text">立即评价</string>
-    <string name="modify_order_text">修改预定</string>
+    <string name="modify_order_text">修改预订</string>
     <string name="pay_order_text">立即支付</string>
     <string name="validate_time_to_with_string">有效期至%1$s</string>
     <string name="no_use">不使用</string>
@@ -533,10 +533,10 @@
     <string name="coups_lef_with_num_in">您还有%1$s个优惠可使用</string>
     <string name="current_coup">目前使用的优惠码 优惠%1$s %2$s</string>
     <string name="per_man_with_num_above">%1$s人</string>
-    <string name="regist_time_with_string_below">注册时间:</string>
+    <string name="regist_time_with_string_below">注册时间:%1$s</string>
     <string name="per_hour_with_num_above">%1$s小时</string>
     <string name="im_default_message_image">[图片]</string>
-    <string name="im_default_message_voice">[声音]</string>
+    <string name="im_default_message_voice">[语音]</string>
     <string name="im_default_message_rich_text">[图文]</string>
     <string name="im_default_message_location_with_string_in">[地址:%1$s]</string>
     <string name="im_default_message_notificataion">[提醒]</string>

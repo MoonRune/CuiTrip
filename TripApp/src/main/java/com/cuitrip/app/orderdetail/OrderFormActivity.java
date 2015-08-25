@@ -145,6 +145,17 @@ public class OrderFormActivity extends BaseActivity {
         }
 
         @Override
+        public int getItemPosition(Object object) {
+            LogHelper.e("replaceFragment", "getItemPosition  " + object + "  " + needRefreshFragmenet);
+            if (needRefreshFragmenet && object instanceof ProgressingFragment) {
+                needRefreshFragmenet = false;
+                return POSITION_NONE;//返回这个表示该对象已改变,需要刷新
+            } else {
+                return POSITION_UNCHANGED;//反之不刷新
+            }
+        }
+
+        @Override
         public int getCount() {
             int count = orderItem == null ? 0 : 3;
             return count;
@@ -165,18 +176,24 @@ public class OrderFormActivity extends BaseActivity {
                     }
                     return PersonInfoFragment.newInstance(id);
                 default:
+                    LogHelper.e("replaceFragment", "getfragment");
                     if (!TextUtils.isEmpty(orderItem.getTargetId())) {
+                        LogHelper.e("replaceFragment", " do replace");
                         CURRENT_TARGET = orderItem.getTargetId();
                         LogHelper.e("omg member", " CURRENT_TARGET " + CURRENT_TARGET);
                         RongIM.getInstance().getRongIMClient().getDiscussion(CURRENT_TARGET, new RongIMClient.ResultCallback<Discussion>() {
                             @Override
                             public void onSuccess(Discussion discussion) {
                                 LogHelper.e("omg member", TextUtils.join("|", discussion.getMemberIdList()));
-                                if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() < 2
-                                        || discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
-                                        ) {
-                                    MainApplication.getInstance().orderRongMembersizeError();
-                                    buildConversation(orderItem);
+                                try {
+                                    if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() < 2
+                                            || !discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
+                                            ) {
+                                        MainApplication.getInstance().orderRongMembersizeError();
+                                        buildConversation(orderItem);
+                                    }
+                                } catch (Exception e) {
+                                    LogHelper.e(TAG, "failed");
                                 }
                                 LogHelper.e(TAG, "SUC " + discussion.getMemberIdList() + " : " + TextUtils.join("|", discussion.getMemberIdList()));
                             }
@@ -215,11 +232,13 @@ public class OrderFormActivity extends BaseActivity {
     }
 
     Fragment emptyFragment = null;
+    boolean needRefreshFragmenet = false;
 
     public void replaceFragment() {
+        LogHelper.e("replaceFragment", "replaceFragment");
         try {
             if (orderItem != null && !TextUtils.isEmpty(orderItem.getTargetId()) && emptyFragment != null) {
-
+                needRefreshFragmenet = true;
                 getSupportFragmentManager().beginTransaction().remove(
                         emptyFragment
 //                        getFragmentManager().findFragmentByTag("android:switcher:" + R.id.ct_view_pager + ":" + 2)
@@ -249,7 +268,7 @@ public class OrderFormActivity extends BaseActivity {
         List<String> userIds = new ArrayList<>();
         userIds.add(orderItem.getInsiderId());
         userIds.add(orderItem.getTravellerId());
-        LogHelper.e("omg", "" + orderItem.getTravellerId() + "  -" + orderItem.getInsiderId());
+        LogHelper.e("omg", "buildConversation start " + orderItem.getTravellerId() + "  -" + orderItem.getInsiderId());
         if (orderItem.getInsiderId() == null || TextUtils.isEmpty(orderItem.getInsiderId())
                 || orderItem.getTravellerId() == null || TextUtils.isEmpty(orderItem.getTravellerId())
                 || orderItem.getTravellerId().equals(orderItem.getInsiderId())) {
@@ -316,7 +335,7 @@ public class OrderFormActivity extends BaseActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        LogHelper.e("omg","onNewIntent");
+        LogHelper.e("omg", "onNewIntent");
         requestData(intent);
     }
 
@@ -366,8 +385,8 @@ public class OrderFormActivity extends BaseActivity {
         if (intent.getBooleanExtra(MOVE_TO_CONVERSATION, false)) {
             notifyedMoveConversation();
         }
-        orderId  = intent.getStringExtra(ORDER_ID);
-        LogHelper.e(TAG," request "+orderId);
+        orderId = intent.getStringExtra(ORDER_ID);
+        LogHelper.e(TAG, " request " + orderId);
         mViewPager.setCurrentItem(0);
         requestOrderDetail();
 
