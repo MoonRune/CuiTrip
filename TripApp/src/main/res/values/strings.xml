@@ -416,40 +416,7 @@
     <string name="ct_no_login_hint_order">预订您喜欢的旅程\n您的出行安排就在这里确认</string>
     <string name="ct_hint_service">发布您最有趣的行程\n告诉旅行者地道的旅行体验</string>
 
-    <string-array name="ct_gender_list">
-        <item>男</item>
-        <item>女</item>
-    </string-array>
 
-    <string-array name="ct_service_times_list">
-        <item>1小时</item>
-        <item>2小时</item>
-        <item>3小时</item>
-        <item>4小时</item>
-        <item>5小时</item>
-        <item>6小时</item>
-        <item>7小时</item>
-        <item>8小时</item>
-        <item>9小时</item>
-        <item>10小时</item>
-        <item>11小时</item>
-        <item>12小时</item>
-    </string-array>
-
-    <string-array name="ct_service_people_list">
-        <item>1人</item>
-        <item>2人</item>
-        <item>3人</item>
-        <item>4人</item>
-        <item>5人</item>
-        <item>6人</item>
-    </string-array>
-
-    <string-array name="ct_service_pay_list">
-        <item>@string/price_way_all</item>
-        <item>@string/price_way_per</item>
-        <item>@string/price_way_free</item>
-    </string-array>
     <string name="price_way_all">一口价</string>
     <string name="price_way_per">按人计费</string>
     <string name="price_way_free">免费</string>
@@ -488,12 +455,28 @@
     <string name="ct_know_more_about_finder">更多了解发现者</string>
     <string name="sys_notification">消息</string>
     <string name="ct_not_validated">未验证</string>
+    <string name="hour_1">1小时</string>
+    <string name="hour_2">2小时</string>
+    <string name="hour_3">3小时</string>
+    <string name="hour_4">4小时</string>
+    <string name="hour_5">5小时</string>
+    <string name="hour_6">6小时</string>
+    <string name="hour_7">7小时</string>
+    <string name="hour_8">8小时</string>
+    <string name="hour_9">9小时</string>
+    <string name="hour_10">10小时</string>
+    <string name="hour_11">11小时</string>
+    <string name="hour_12">12小时</string>
 
 
-    <string-array name="ct_identity_types">
-        <item>@string/ct_identity_type_idcard</item>
-        <item>@string/ct_identity_type_internation</item>
-    </string-array>
+    <string name="people_1">1人</string>
+    <string name="people_2">2人</string>
+    <string name="people_3">3人</string>
+    <string name="people_4">4人</string>
+    <string name="people_5">5人</string>
+    <string name="people_6">6人</string>
+
+
     <string name="ct_identity_type_idcard">身份证</string>
     <string name="ct_identity_type_internation">护照</string>
     <string name="ct_upload_image_failed">上传图片失败</string>
@@ -569,4 +552,8 @@
     <string name="about_with">关于%1$s</string>
     <string name="please_input_tags">请设置标签</string>
     <string name="please_input_meeting_location">见面地点</string>
+    <string name="ct_message_cancel" formatted="false">
+        <![CDATA[若取消操作在旅程开始的48⼩小时外,扣取费⽤用的10%\n若取消操作在旅程开始的48⼩小时内,扣取费⽤用的50%\n若取消操作在旅程开始的24⼩小时内,不予退款\n若有其他特殊原因,请联系脆饼。]]>
+    </string>
+
 </resources>

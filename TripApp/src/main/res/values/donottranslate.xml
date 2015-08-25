@@ -1,4 +1,5 @@
-<resources>
+<?xml version="1.0" encoding="utf-8"?>
+<resources translatable="false">
 
     <string name="empty_string" translatable="false">---</string>
     <string name="channel_id" translatable="false">test</string>
@@ -72,4 +73,44 @@ function login(form){
 </body>
 </html>
 ]]></string>
+
+    <string-array name="ct_gender_list">
+        <item>@string/ct_male</item>
+        <item>@string/ct_female</item>
+    </string-array>
+
+    <string-array name="ct_service_times_list">
+        <item>@string/hour_1</item>
+        <item>@string/hour_2</item>
+        <item>@string/hour_3</item>
+        <item>@string/hour_4</item>
+        <item>@string/hour_5</item>
+        <item>@string/hour_6</item>
+        <item>@string/hour_7</item>
+        <item>@string/hour_8</item>
+        <item>@string/hour_9</item>
+        <item>@string/hour_10</item>
+        <item>@string/hour_11</item>
+        <item>@string/hour_12</item>
+    </string-array>
+
+    <string-array name="ct_service_people_list">
+        <item>@string/people_1</item>
+        <item>@string/people_2</item>
+        <item>@string/people_3</item>
+        <item>@string/people_4</item>
+        <item>@string/people_5</item>
+        <item>@string/people_6</item>
+    </string-array>
+
+    <string-array name="ct_service_pay_list">
+        <item>@string/price_way_all</item>
+        <item>@string/price_way_per</item>
+        <item>@string/price_way_free</item>
+    </string-array>
+
+    <string-array name="ct_identity_types">
+        <item>@string/ct_identity_type_idcard</item>
+        <item>@string/ct_identity_type_internation</item>
+    </string-array>
 </resources>

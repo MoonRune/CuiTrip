@@ -57,7 +57,6 @@ public class ConversationFetcherRong implements IConversationsFetcher {
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 try {
-                    final String myId = userInfo.getUid();
                     final List<OrderItem> mOrderDatas = JSON.parseArray(data.toString(), OrderItem.class);
                     if (mOrderDatas != null &&!mOrderDatas.isEmpty()) {
                         LogHelper.e(TAG,"order size"+mOrderDatas.size());
@@ -149,6 +148,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                             }
 
                         }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
+                        LogHelper.e(TAG, "order size excuted");
                     }
                 } catch (Exception e) {
                     itemListFetchCallback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.data_error)));

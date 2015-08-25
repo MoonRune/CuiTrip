@@ -78,6 +78,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
             mContentView.findViewById(R.id.my_content).setVisibility(View.GONE);
             mContentView.findViewById(R.id.ct_login).setOnClickListener(mLoginListener);
         }
+        getActionBar().invalidateOptionsMenu();
+
     }
 
     private View.OnClickListener mLoginListener = new View.OnClickListener() {
@@ -164,6 +166,14 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
 
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.ct_menu_my, menu);
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(Menu menu) {
+        if (menu.findItem(R.id.action_messages)!=null) {
+            menu.findItem(R.id.action_messages).setVisible(LoginInstance.isLogin(getActivity()));
+        }
+        super.onPrepareOptionsMenu(menu);
     }
 
     public boolean onOptionsItemSelected(MenuItem item) {

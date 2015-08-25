@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
+import com.lab.utils.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
 
@@ -222,6 +223,7 @@ public class OrderBusiness {
         params.put("moneyType", moneyType);
         params.put("size", size);
         params.put("start", start);
+        LogHelper.e("getBills",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("getBills"), params, handler);
     }
 

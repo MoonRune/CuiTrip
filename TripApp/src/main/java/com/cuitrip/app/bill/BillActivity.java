@@ -172,12 +172,10 @@ public class BillActivity extends BaseActivity {
                     }
                     adapter.setBillDatas(bills.getLists());
                     adapter.notifyDataSetChanged();
-                    hideLoading();
-                    loading = false;
-                } else {
-                    LogHelper.e(TAG, " not bills Data");
-                    onFailure(response, data);
                 }
+                hideLoading();
+                loading = false;
+
             }
 
             @Override
@@ -213,13 +211,13 @@ public class BillActivity extends BaseActivity {
                     } catch (Exception e) {
                         desc.setText(R.string.data_error);
                     }
-                    adapter.getBillDatas().addAll(bills.getLists());
-                    adapter.notifyDataSetChanged();
-                    hideLoading();
-                    loading = false;
-                } else {
-                    onFailure(response, data);
+                    if (bills.getLists()!=null) {
+                        adapter.getBillDatas().addAll(bills.getLists());
+                        adapter.notifyDataSetChanged();
+                    }
                 }
+                hideLoading();
+                loading = false;
             }
 
             @Override
@@ -235,7 +233,7 @@ public class BillActivity extends BaseActivity {
                 loading = false;
 
             }
-        }, UnitUtils.getMoneyType(), size, size + DEFAULT_SIZE);
+        }, UnitUtils.getSettingMoneyType(), size, size + DEFAULT_SIZE);
 
     }
 

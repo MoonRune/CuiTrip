@@ -28,6 +28,7 @@ import com.umeng.analytics.MobclickAgent;
 import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
 import io.rong.imlib.RongIMClient;
+import jonathanfinerty.once.Once;
 
 
 public class MainApplication extends BaseAppLication {
@@ -78,6 +79,8 @@ public class MainApplication extends BaseAppLication {
     public void onCreate() {
         super.onCreate();
         sContext = this;
+
+        Once.initialise(this);
         initRongIM();
         ImageHelper.initImageLoader(getApplicationContext());
         SmsSdkHelper.initSmsSDK(getApplicationContext());

@@ -53,7 +53,7 @@
             </RelativeLayout>
 
             <RelativeLayout
-                tools:visibility="visible"
+                tools:visibility="gone"
                 android:id="@+id/service_desc_block"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -116,15 +116,15 @@
                     android:text="@string/ct_watch_detail"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:textSize="@dimen/ct_ts_3"
                     android:background="@drawable/selector_blue_stoken_empty_corner"
                     android:textColor="@color/ct_blue_green" />
                 </RelativeLayout>
 
             <RelativeLayout
-                tools:visibility="visible"
+                tools:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/comment_block"
@@ -286,8 +286,8 @@
                     android:layout_marginTop="10dp"
                     android:text="@string/ct_cuitrip_view_all"
                     android:layout_height="40dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:textSize="@dimen/ct_ts_3"
                     android:background="@drawable/selector_blue_stoken_empty_corner"
                     android:textColor="@color/ct_blue_green" />
@@ -295,6 +295,7 @@
 
 
             <RelativeLayout
+                tools:visibility="gone"
                 android:layout_width="match_parent"
                 android:background="@color/ct_white"
                 android:paddingLeft="@dimen/ct_width_padding"
@@ -339,8 +340,8 @@
                     android:gravity="center"
                     android:layout_marginTop="8dp"
                     android:layout_height="40dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
                     android:textSize="@dimen/ct_ts_3"
                     android:text="@string/ct_know_more_about_finder"
                     android:background="@drawable/selector_blue_stoken_empty_corner"

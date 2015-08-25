@@ -1,9 +1,18 @@
 package com.example.service.app;
 
+import android.content.res.Resources;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.country.CountrySelectActivity;
+import com.cuitrip.service.R;
+import com.lab.utils.LogHelper;
+
+import java.lang.reflect.Field;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * <a href="http://d.android.com/tools/testing/testing_android.html">Testing Fundamentals</a>
@@ -20,12 +29,32 @@ public class CountrySelectTest extends ActivityInstrumentationTestCase2<CountryS
         super.setUp();
         activity = getActivity();
     }
+
     @SmallTest
-    public void testPattern() {
+    public void testSplit() {
+        Resources resources = MainApplication.getInstance().getResources();
+        HashMap<String, String> zh = new HashMap<>();
+        HashMap<String, String> tw = new HashMap<>();
 
         try {
-            Thread.sleep(10000);
-        } catch (InterruptedException e) {
+            resources.getConfiguration().setLocale( Locale.CHINA);
+            for (Field field : R.string.class.getFields()) {
+                int value = field.getInt(R.class);
+                zh.put(field.getName(), resources.getString(value));
+            }
+
+            resources.getConfiguration().setLocale( Locale.TAIWAN);
+            for (Field field : R.string.class.getFields()) {
+                int value = field.getInt(R.class);
+                tw.put(field.getName(), resources.getString(value));
+            }
+            LogHelper.e("value",zh.size()+"|"+tw.size()+"------------");
+
+            for (Map.Entry<String,String> entry : zh.entrySet()) {
+
+                LogHelper.e("value hehehe","\""+ entry.getValue()+"\":\""+tw.get(entry.getKey())+"\";");
+            }
+        } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
     }
