@@ -216,7 +216,7 @@ public class ShareUtil {
             if (eCode != 200) {
                 String eMsg = "";
                 if (eCode == -101) {
-                    eMsg = MainApplication.sContext.getString(com.cuitrip.service.R.string.ct_error_no_authorized);
+                    eMsg = MainApplication.getInstance().getString(com.cuitrip.service.R.string.ct_error_no_authorized);
                     Context context = contextSoft.get();
                     if (context != null) {
                         MessageUtils.showToast(com.cuitrip.service.R.string.ct_share_failed);

@@ -7,9 +7,9 @@ import android.text.TextUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.cuitrip.app.UserConfig;
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.UserBusiness;
-import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
@@ -64,7 +64,7 @@ public class BillCashActivity extends BaseActivity {
         rate = getIntent().getStringExtra(MOENY_RATE_KEY);
 
         render();
-        account.setText(LoginInstance.getPaypalAccount());
+        account.setText(UserConfig.getPaypalAccount());
     }
 
     public void render() {
@@ -91,7 +91,7 @@ public class BillCashActivity extends BaseActivity {
 
     public void submit() {
         showLoading();
-        LoginInstance.setPaypalAccount(account.getText().toString());
+        UserConfig.setPaypalAccount(account.getText().toString());
         UserBusiness.getCash(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {

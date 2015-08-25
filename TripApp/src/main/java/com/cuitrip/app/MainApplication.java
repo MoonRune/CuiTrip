@@ -31,8 +31,9 @@ import io.rong.imlib.RongIMClient;
 
 
 public class MainApplication extends BaseAppLication {
+    public static final String DAILY_FORCE_UPDATE="MainApplication.DAILY_FORCE_UPDATE";
     public static final boolean IS_DEV = true;
-    public static MainApplication sContext;
+    private static MainApplication sContext;
 
     private int mPageWidth;
     private int mPageHeight;
@@ -76,8 +77,8 @@ public class MainApplication extends BaseAppLication {
 
     public void onCreate() {
         super.onCreate();
-        initRongIM();
         sContext = this;
+        initRongIM();
         ImageHelper.initImageLoader(getApplicationContext());
         SmsSdkHelper.initSmsSDK(getApplicationContext());
         if("com.cuitrip.service".equals(getCurProcessName(getApplicationContext())) ||

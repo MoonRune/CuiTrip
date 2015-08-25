@@ -2,7 +2,7 @@
 <resources>
     <string name="cancel">取消</string>
     <string name="finish">完成</string>
-    <string name="sharing">分享操作正在后台进行…</string>
+    <string name="sharing">分享操作正在后台进行&#8230;</string>
     <string name="share_to">分享到</string>
 	<string name="share">分享</string>
 	<string name="multi_share">图文分享</string>

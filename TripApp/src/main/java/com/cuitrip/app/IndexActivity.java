@@ -30,6 +30,10 @@ import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.umeng.update.UmengUpdateAgent;
 
+import java.util.concurrent.TimeUnit;
+
+import jonathanfinerty.once.Once;
+
 public class IndexActivity extends BaseTabHostActivity {
 
     public static final String GO_TO_TAB = "go_to_tab";
@@ -81,25 +85,29 @@ public class IndexActivity extends BaseTabHostActivity {
         validateForceUpdate();
     }
 
-    protected void validateForceUpdate(){
-        UserBusiness.forceUpdate(this, new AsyncHttpClient(), new LabAsyncHttpResponseHandler(ForceUpdate.class) {
-            @Override
-            public void onSuccess(LabResponse response, Object data) {
-                if (data!=null &&data instanceof ForceUpdate &&((ForceUpdate)data).isForceUpdate()){
-                    showForceUpdate();
+    protected void validateForceUpdate() {
+        if (!Once.beenDone(TimeUnit.DAYS, 1, MainApplication.DAILY_FORCE_UPDATE)) {
+            UserBusiness.forceUpdate(this, new AsyncHttpClient(), new LabAsyncHttpResponseHandler(ForceUpdate.class) {
+                @Override
+                public void onSuccess(LabResponse response, Object data) {
+                    if (data != null && data instanceof ForceUpdate && ((ForceUpdate) data).isForceUpdate()) {
+                        showForceUpdate();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(LabResponse response, Object data) {
+                @Override
+                public void onFailure(LabResponse response, Object data) {
 
-            }
-        });
+                }
+            });
+        }
     }
-    private void showForceUpdate(){
+
+    private void showForceUpdate() {
         MessageUtils.createBuilder(this).setCancelable(false).setView(
-                LayoutInflater.from(this).inflate(R.layout.force_update,null)).show().show();
+                LayoutInflater.from(this).inflate(R.layout.force_update, null)).show().show();
     }
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -124,17 +132,18 @@ public class IndexActivity extends BaseTabHostActivity {
     View tab;
 
     public String firstTag;
+
     @Override
     protected void initTabs() {
         UserInfo info = LoginInstance.getInstance(this).getUserInfo();
         if (info != null && !info.isTravel()) {
-            firstTag =SERVICE_TAB;
+            firstTag = SERVICE_TAB;
             mTabHost.addTab(mTabHost.newTabSpec(SERVICE_TAB)
                             .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_finder))), ServiceFragment.class,
                     null);
         } else {
-            firstTag =RECOMMEND_TAB;
+            firstTag = RECOMMEND_TAB;
             mTabHost.addTab(mTabHost.newTabSpec(RECOMMEND_TAB)
                             .setIndicator(createTabView(R.drawable.ct_finder,
                                     getString(R.string.ct_recommend))), RecommendFragment.class,
@@ -145,7 +154,7 @@ public class IndexActivity extends BaseTabHostActivity {
                 OrderFragment.class, null);
 
         mTabHost.addTab(mTabHost.newTabSpec(MESSAGE_TAB)
-                .setIndicator(createMeeageTabView(R.drawable.ct_mennsage, getString(R.string.ct_message))),
+                        .setIndicator(createMeeageTabView(R.drawable.ct_mennsage, getString(R.string.ct_message))),
                 ConversationListFragment.class, null);
         mTabHost.addTab(mTabHost.newTabSpec(MY_TAB)
                         .setIndicator(tab = createTabView(R.drawable.ct_my, getString(R.string.ct_my))),

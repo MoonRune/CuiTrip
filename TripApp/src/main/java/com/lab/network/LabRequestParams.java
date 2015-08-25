@@ -16,7 +16,7 @@ public class LabRequestParams extends RequestParams {
     }
 
     public void setToken(Context context){
-        UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if(info != null){
             put("uid", info.getUid());
             put("token", info.getToken());

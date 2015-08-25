@@ -68,7 +68,7 @@ public class MessageUtils {
     }
 
     public static void showToast(int resId) {
-        showToast(null, MainApplication.sContext.getString(resId));
+        showToast(null, MainApplication.getInstance().getString(resId));
     }
 
     public static void showToast(String tips) {
@@ -77,7 +77,7 @@ public class MessageUtils {
 
     public static void showToast(Context context, String toastString) {
         if (context == null) {
-            context = MainApplication.sContext;
+            context = MainApplication.getInstance();
         }
         if (mToast == null) {
             mToast = Toast.makeText(context, "", Toast.LENGTH_SHORT);
@@ -88,7 +88,7 @@ public class MessageUtils {
 
     public static void showToastCenter(String toastString) {
         if (mToast == null) {
-            mToast = Toast.makeText(MainApplication.sContext, "", Toast.LENGTH_SHORT);
+            mToast = Toast.makeText(MainApplication.getInstance(), "", Toast.LENGTH_SHORT);
         }
         mToast.setText(toastString);
         mToast.setGravity(Gravity.CENTER, 0, 0);

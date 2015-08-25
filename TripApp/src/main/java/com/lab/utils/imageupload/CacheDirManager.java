@@ -42,12 +42,12 @@ public class CacheDirManager {
     private String validateBaseDir() {
         String nowPath = null;
         File tmpFile = null;
-        tmpFile = MainApplication.sContext.getExternalCacheDir();
+        tmpFile = MainApplication.getInstance().getExternalCacheDir();
         if (tmpFile != null && validataPath(nowPath = tmpFile.getAbsolutePath())) {
             LogHelper.e(TAG, "getExternalCacheDir=" + nowPath);
             return nowPath;
         }
-        tmpFile = MainApplication.sContext.getExternalCacheDir();
+        tmpFile = MainApplication.getInstance().getExternalCacheDir();
         if (tmpFile != null && validataPath(nowPath = tmpFile.getAbsolutePath())) {
             LogHelper.e(TAG, "getCacheDir=" + nowPath);
             return nowPath;

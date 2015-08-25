@@ -216,7 +216,7 @@
     <string name="ct_relation_us">联系脆饼</string>
     <string name="ct_relation_tips_code_and_wx">请扫描二维码或加微信号：cuibinglvxing</string>
     <string name="ct_relation_call">紧急情况请致电我们</string>
-    <string name="ct_mail">service@cuitrip.com</string>
+    <string name="ct_mail" translatable="false">service@cuitrip.com</string>
     <string name="ct_copyright">Copyright © 2015 Cuitrip All Rights Reserved</string>
 
     <string name="ct_finder">行程</string>
@@ -519,8 +519,8 @@
     <string name="regist_time">注册时间:%1$s</string>
     <string name="please_input_right_email">请输入正确的邮箱</string>
     <string name="watch_other_comments">查看其他%1$s条评论</string>
-    <string name="please_input_account">"请输入帐号 "</string>
-    <string name="please_input_amount">"请输入金额 "</string>
+    <string name="please_input_account">请输入帐号</string>
+    <string name="please_input_amount">请输入金额</string>
     <string name="empty">空</string>
     <string name="no_date">无数据</string>
     <string name="count_select_title">选择国家地区</string>

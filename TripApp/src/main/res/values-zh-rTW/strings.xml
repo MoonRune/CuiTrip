@@ -98,7 +98,6 @@
     <string name="ct_message_go_order">查看旅程</string>
     <string name="ct_message_send">發送</string>
     <string name="ct_order_cancel_successed">你的行程已取消！</string>
-    <string name="ct_message_cancel" formatted="false">若取消操作在旅程開始的48⼩小時外,扣取費⽤用的10%\n若取消操作在旅程開始的48⼩小時內,扣取費⽤用的50%\n若取消操作在旅程開始的24⼩小時內,不予退款\n若有其他特殊原因,請聯系脆餅</string>
     <string name="ct_yestoday">昨天</string>
     <string name="ct_sun">日</string>
     <string name="ct_mon">一</string>
@@ -160,7 +159,6 @@
     <string name="ct_relation_us">聯絡脆餅</string>
     <string name="ct_relation_tips_code_and_wx">請掃描二維碼或加微信帳號：cuibinglvxing</string>
     <string name="ct_relation_call">緊急情況請來電</string>
-    <string name="ct_mail">service@cuitrip.com</string>
     <string name="ct_copyright">Copyright © 2015 Cuitrip All Rights Reserved</string>
     <string name="ct_finder">行程</string>
     <string name="ct_your_find">你的發現</string>

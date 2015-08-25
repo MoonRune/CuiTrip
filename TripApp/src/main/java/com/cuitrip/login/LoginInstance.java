@@ -7,17 +7,13 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.UserConfig;
 import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.model.UserInfo;
 import com.lab.utils.LogHelper;
 
 public class LoginInstance {
 
-    static final String FILE = "_user_about";
-
-
-    static final String KEY_UNITINFO_ID = "_user_account_info";
-    static final String KEY_PAYPAL_ACCOUNT_ID = "_paypal_account";
 
     static final String KEY_USERINFO_ID = "_user_info";
 
@@ -28,7 +24,7 @@ public class LoginInstance {
     }
 
     public synchronized static LoginInstance getInstance(Context context) {
-        if (context == null) context = MainApplication.sContext;
+        if (context == null) context = MainApplication.getInstance();
         if (sInstance == null) {
             sInstance = new LoginInstance();
             sInstance.read(context);
@@ -60,9 +56,7 @@ public class LoginInstance {
                     .commit();
         } else {
             sp.edit().remove(KEY_USERINFO_ID).commit();
-            SharedPreferences about = context.getSharedPreferences(FILE, Context.MODE_PRIVATE);
-            about.edit().clear().commit();
-
+            UserConfig.clear();
         }
         LogHelper.e("omg", "update ed ");
         RongCloudEvent.ConnectRongForce();
@@ -88,24 +82,5 @@ public class LoginInstance {
         return sUserInfo;
     }
 
-
-    public static String sPaypalAccount;
-
-    public static void setPaypalAccount(String account) {
-        SharedPreferences sp = MainApplication.getInstance().getSharedPreferences(FILE, Context.MODE_PRIVATE);
-        sp.edit().putString(KEY_PAYPAL_ACCOUNT_ID, account).commit();
-    }
-
-    public static String getPaypalAccount() {
-        if (sPaypalAccount == null) {
-            synchronized (LoginInstance.class) {
-                if (sPaypalAccount == null) {
-                    SharedPreferences sp = MainApplication.getInstance().getSharedPreferences(FILE, Context.MODE_PRIVATE);
-                    sPaypalAccount = sp.getString(KEY_PAYPAL_ACCOUNT_ID, "");
-                }
-            }
-        }
-        return sPaypalAccount;
-    }
 
 }

@@ -104,7 +104,7 @@ public class Utils {
             if (day == day1) {
                 return H_M.format(dateTime);
             } else if (day - day1 == 1) {
-                return MainApplication.sContext.getString(R.string.ct_yestoday) + H_M.format(dateTime);
+                return MainApplication.getInstance().getString(R.string.ct_yestoday) + H_M.format(dateTime);
             } else {
                 return Y_M_D_H_M.format(dateTime);
             }

@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">脆饼旅行</string>
+    <string name="app_slogan">多一个朋友,多一种生活</string>
+    <string name="loading_text">加载中&#8230;</string>
+    <string name="load_error">网络异常</string>
+    <string name="parameter_error">参数错误</string>
+    <string name="network_data_error">获取数据失败，请稍后再试</string>
+    <string name="ct_login_failed">登录失败，请登录后重试</string>
+    <string name="ct_upload_failed">上传失败，请重试</string>
+    <string name="ct_confirm">确定</string>
+    <string name="ct_cancel">取消</string>
+    <string name="ct_finish">完成</string>
+    <string name="ct_exit_tip">再按一次退出脆饼旅行</string>
+
+    <string name="ct_recommend">推荐</string>
+    <string name="ct_message">聊天</string>
+    <string name="ct_order">预订</string>
+    <string name="ct_my">我的</string>
+
+    <string name="ct_at_travel">在旅行</string>
+    <string name="ct_at_finder">在发现</string>
+    <string name="ct_empty_messae">你还没有消息</string>
+    <string name="ct_trip_messae">旅程：</string>
+    <string name="ct_trip_no_order_title">您的旅程</string>
+    <string name="ct_trip_no_order_message">如果您已经确认了旅程，将会在这里看到</string>
+    <string name="ct_trip_no_order_recommend">来看看推荐旅程吧</string>
+    <string name="ct_trip_share">#台湾自由行# 我在@脆饼旅行 发现一个很有趣的旅程《%1$s》，感兴趣的朋友看看吧</string>
+
+    <string name="ct_no_login">您还没有登录</string>
+    <string name="ct_no_login_hint">请点击下面按钮登录</string>
+    <string name="ct_no_login_click">点击登录</string>
+
+    <string name="ct_no_finish">开发中，敬请期待...</string>
+
+    <string name="ct_hot_recommend">热门推荐</string>
+    <string name="ct_watch_detail">更多了解这个服务</string>
+    <string name="ct_author_register_time">注册时间</string>
+    <string name="ct_author_identification">验证</string>
+    <string name="ct_author_career">职业</string>
+    <string name="ct_author_interest">兴趣爱好</string>
+    <string name="ct_author_language">语言能力</string>
+    <string name="ct_service_introduce">旅程说明</string>
+    <string name="ct_service_order_date">可约日期</string>
+    <string name="ct_service_date_click">查看日期</string>
+    <string name="ct_service_duration">旅行时长</string>
+    <string name="ct_service_best_time">最佳时间</string>
+    <string name="ct_service_max_person">最多可接待人数</string>
+    <string name="ct_service_bill">费用说明</string>
+    <string name="ct_cuitrip_gongyue">脆饼公约</string>
+    <string name="ct_cuitrip_view_all">查看所有</string>
+    <string name="ct_cuitrip_book">联系预订</string>
+    <string name="ct_cuitrip_comment_count">条评论</string>
+    <string name="ct_cuitrip_comment_no">暂无评论</string>
+    <string name="ct_cuitrip_renzheng">已由脆饼旅行认证身份</string>
+    <string name="ct_cuitrip_renzheng_no">未认证</string>
+    <string name="ct_cuitrip_book_date">可约日期</string>
+
+    <string name="ct_detail_desc">详情描述</string>
+    <string name="ct_all_reviews">所有评价</string>
+    <string name="ct_service_date_selected">选择时间</string>
+    <string name="ct_service_date_title">%1$s年%2$s月</string>
+    <string name="ct_order_date">日期</string>
+    <string name="ct_order_person">人数</string>
+    <string name="ct_order_bill">费用</string>
+    <string name="ct_order_select_date">选择日期</string>
+    <string name="ct_order_select_person_count">选择人数</string>
+    <string name="ct_create_order">提交预约</string>
+    <string name="ct_create_order_null_date">请选择日期</string>
+    <string name="ct_create_order_null_person">请选择人数</string>
+    <string name="ct_create_order_suc_tip">您的预约已经发送给发现者\n你可以在消息中关注最新的反馈信息</string>
+    <string name="ct_go_to_order">前往旅程</string>
+    <string name="ct_order_contact">联系TA</string>
+    <string name="ct_order_order_date">预约日期</string>
+    <string name="ct_order_detail_person">约定人数</string>
+    <string name="ct_order_detail_bill">订单费用</string>
+    <string name="ct_order_my_comment">我的评价</string>
+    <string name="ct_order_cancel">取消预订</string>
+    <string name="ct_order_cancel_suc">旅程取消成功</string>
+    <string name="ct_order_modify">修改预约</string>
+    <string name="ct_order_modify_confirm">修改预约</string>
+    <string name="ct_order_cancel_confir">确认取消</string>
+    <string name="ct_order_cancel_reason">请了解退订条款,并详细填写取消的原因&#32;&#32;(不超过1000个字)</string>
+    <string name="ct_go_order_list">返回</string>
+    <string name="ct_go_recommend">查看其他推荐</string>
+    <string name="ct_cancel_null_reason">请填写取消原因</string>
+    <string name="ct_cancel_suc">取消成功</string>
+    <string name="ct_order_start">您的旅程已经开始了，享受旅程吧！</string>
+    <string name="ct_order_start_tip">在旅程中遇到的问题请点击右上角“联系脆饼”与我们取得联系</string>
+    <string name="ct_call_phone_fail">无法自动转到拨号应用，请拨打 </string>
+    <string name="ct_null_phone_num">暂无电话 </string>
+    <string name="ct_order_comment">评价</string>
+    <string name="ct_order_comment_tip">为你的发现者写段评价吧!</string>
+    <string name="ct_order_comment_hint">所说您的感受吧！</string>
+    <string name="ct_order_comment_commit">提交评价</string>
+    <string name="ct_order_comment_suc">评价成功</string>
+    <string name="ct_order_comment_thanks">感谢您的评价!\n把您的旅程分享给小伙伴吧~</string>
+    <string name="ct_order_comment_share">分享给小伙伴吧~</string>
+    <string name="ct_order_me">我</string>
+    <string name="ct_order_confirm">你要确认该预订吗？</string>
+    <string name="ct_order_refuse">你要确认拒绝预订吗？</string>
+    <string name="ct_order_refuse_suc">预订已拒绝</string>
+    <string name="ct_order_confirm_suc">预订确认成功</string>
+    <string name="ct_order_begin_suc">旅程已开始</string>
+    <string name="ct_order_end_suc">旅程已成功结束</string>
+
+    <string name="ct_message_go_order">查看旅程</string>
+    <string name="ct_message_send">发送</string>
+    <string name="ct_order_cancel_successed">你的行程已取消！</string>
+    <string name="ct_cancel_rule_little"></string>
+    <string name="ct_message_travel_cancel_little" formatted="false">
+如果您需要取消预订，请尽快进行操作。\n
+取消预订会对发现者的行程安排造成一定的影响，因此不是由于情有可原的情况而取消预订都将扣取一定的费用。
+    </string>
+      <string name="ct_message_finder_cancel_little" formatted="false">
+如果您需要取消旅行者的预订，请尽快进行操作。\n
+取消预订会对旅行者的旅程造成严重影响，因此不是由于情有可原的情况而取消预订都将受到处罚。
+    </string>
+     <string name="ct_message_travel_cancel" formatted="false">
+	<![CDATA[<p>如果您需要取消预订，请尽快进行操作。</p>
+ 
+<p>取消预订会对发现者的行程安排造成一定的影响，因此不是由于情有可原的情况而取消预订都将扣取一定的费用。</p>
+ 
+<p>·如果您在旅程开始的48小时或以上时间取消预订，将会扣取已支付费用的10%。</p>
+<p>·如果您在旅程开始的48小时内取消预订，将会扣取已支付费用的50%。</p>
+<p>·如果您在旅程开始的24小时内取消预订，将不会退还已支付的费用。</p>
+<p>·余下的费用将会在7个工作日内自动退还至您的账户。</p>
+<p>·如果您使用了优惠体验码，体验码将失效，只退还您现金支付的对应费用。</p>
+
+<p>如果有其他特殊原因，请<font color="#00ccdd"> <a onclick="jumper.jumpConcat()">联系脆饼</a></font></p>
+]]>
+    </string>
+      <string name="ct_message_finder_cancel" formatted="false">
+	<![CDATA[<p>如果您需要取消旅行者的预订，请尽快进行操作。</p>
+<p>取消预订会对旅行者的旅程造成严重影响，因此不是由于情有可原的情况而取消预订都将受到处罚。</p>
+
+<p>·扣取取消费用：如果您在行程开始的48小时或以上时间取消预订，将会被收取原预订价格50%的费用。我们将会自动从您的下一笔收款中扣除这笔款项，如果下一笔收款不满这笔费用，继续再从下一笔收款中扣除，直到扣取完成。</p>
+<p>·自动评价：您的行程评价页面将自动出现一条评价，指出您取消了一次预订。
+<p>·日历上的对应日期将被屏蔽，不可再被预订。您的日历将会保持屏蔽状态，因此被取消预订的所属日期无法接受其他预订。</p>
+
+<p>情有可原的情况</p>
+<p>如果出现极为罕见的情有可原的情况，您可能会需要取消已确认的预订。在这种情况下，我们可能会放弃执行服务条款中列出的取消预订处罚条例。要裁定是否属于情有可原的情况，您需要提供适当且有效的证明文件。这些情况包括：</p>
+<p>·家人去世</p>
+<p>·自己或家人患重疾</p>
+<p>·国内发生自然灾难</p>
+<p>·国内发生政治动乱</p>
+<p>·旅行目的地发生严重毁坏或处于停业状态</p>
+
+<p>如果有其他特殊原因，请<font color="#00ccdd"> <a onclick="jumper.jumpConcat()">联系脆饼</a></font></p>
+]]>
+    </string>
+    <string name="ct_cancel_rule_detail_title">
+        详细条款
+    </string>
+    <string name="ct_yestoday">昨天</string>
+    <string name="ct_sun">日</string>
+    <string name="ct_mon">一</string>
+    <string name="ct_tues">二</string>
+    <string name="ct_wed">三</string>
+    <string name="ct_thur">四</string>
+    <string name="ct_fri">五</string>
+    <string name="ct_sat">六</string>
+    <string name="ct_can_book">可以预订</string>
+    <string name="ct_booked">不可预订</string>
+
+    <string name="ct_country">国家/地区</string>
+    <string name="ct_mobile_hint">请输入手机号</string>
+    <string name="ct_mobile_vcode">请输入验证码</string>
+    <string name="ct_get_vcode">获取验证码</string>
+    <string name="ct_mobile_passwd">请输入新密码</string>
+    <string name="ct_mobile_new_passwd">请输入新密码</string>
+    <string name="ct_mobile_again">请再次输入密码</string>
+    <string name="ct_ok">确认</string>
+    <string name="ct_modify_suc">密码修改成功</string>
+    <string name="ct_mobile_nick">请输入昵称</string>
+    <string name="ct_register_confirm">注册</string>
+    <string name="ct_register">注册</string>
+    <string name="ct_register_head">我已阅读并同意</string>
+    <string name="ct_register_mid">脆饼使用条款和隐私政策</string>
+    <string name="ct_register_vcode_suc">验证码已发送，请注意查收</string>
+    <string name="ct_gongyue">脆饼公约</string>
+    <string name="ct_null_phone">请填写手机号码</string>
+    <string name="ct_null_vcode">请填写验证码</string>
+    <string name="ct_null_nick">请填写昵称</string>
+    <string name="ct_null_country">请选择国家</string>
+    <string name="ct_null_passwd">请填写密码</string>
+    <string name="ct_error_phone">请填写正确的手机号码</string>
+    <string name="ct_geting_vcode">获取中...</string>
+    <string name="ct_registerd_suc">注册成功</string>
+    <string name="ct_registerd_suc_login">注册成功,请登录</string>
+    <string name="ct_login_suc">登录成功</string>
+    <string name="ct_login">登录</string>
+    <string name="ct_login_confirm">登录</string>
+    <string name="ct_login_forget">忘记密码？</string>
+    <string name="ct_login_go_regist">注册新帐号</string>
+    <string name="ct_login_find_passed">找回密码</string>
+    <string name="ct_login_input_pw_again">请再次输入密码</string>
+    <string name="ct_find_suc">找回密码成功</string>
+    <string name="ct_find_suc_login">找回密码成功成功,请重新登录</string>
+    <string name="ct_login_find_now">立即找回</string>
+    <string name="ct_login_out">退出登录</string>
+
+    <string name="ct_setting">设置</string>
+    <string name="ct_profile">关于我</string>
+    <string name="ct_homepage">我的主页</string>
+    <string name="ct_homepage_eidt">介绍自己</string>
+    <string name="ct_id">身份认证</string>
+    <string name="ct_friends">邀请朋友</string>
+    <string name="ct_help">帮助</string>
+    <string name="ct_to_finder">切换到发现者模式</string>
+    <string name="ct_to_travel">切换到旅行者模式</string>
+    <string name="ct_no_sign">暂无签名</string>
+
+    <string name="ct_modify_pass">修改密码</string>
+    <string name="ct_about">关于脆饼</string>
+    <string name="ct_relation_us">联系脆饼</string>
+    <string name="ct_relation_tips_code_and_wx">请扫描二维码或加微信号：cuibinglvxing</string>
+    <string name="ct_relation_call">紧急情况请致电我们</string>
+    <string name="ct_copyright">Copyright © 2015 Cuitrip All Rights Reserved</string>
+
+    <string name="ct_finder">行程</string>
+    <string name="ct_your_find">你的发现</string>
+    <string name="ct_your_find_tip">你有什么有趣的发现要告诉哦旅行者吗？</string>
+    <string name="ct_create_my_find">发布我的精彩行程</string>
+    <string name="ct_new_service">新建</string>
+    <string name="ct_service_to_edit">待编辑</string>
+    <string name="ct_service_checking">审核中...</string>
+    <string name="ct_service_no_pass">审核未通过</string>
+    <string name="ct_service_date_edit">安排日程与编辑</string>
+    <string name="ct_next">下一步</string>
+    <string name="ct_add_service">添加行程</string>
+    <string name="ct_create_service_title_hint">请输入标题</string>
+    <string name="ct_set_main_pic">设为主图</string>
+    <string name="ct_mainpic_setted">已设为主图</string>
+    <string name="ct_add_pic">添加图片</string>
+    <string name="ct_select_pic_poition">请选择图片插入的位置</string>
+    <string name="ct_at_most_image_size_nine_limition">描述最多只能添加9张图片</string>
+    <string name="ct_delete">删除</string>
+    <string name="ct_i_know">知道了</string>
+    <string name="ct_delete_pic_confirm">确定要删除图片？</string>
+    <string name="ct_service_confirm">确认提交</string>
+    <string name="ct_service_address">游玩的地点</string>
+    <string name="ct_service_address_hint">城市</string>
+    <string name="ct_service_address_null">请输入地点</string>
+    <string name="ct_service_enjoy_time">游玩时长</string>
+    <string name="ct_service_persons">可接待人数</string>
+    <string name="ct_service_pay_way">计费方式</string>
+    <string name="ct_service_money">费用</string>
+    <string name="ct_service_money_set">请设置费用</string>
+    <string name="ct_service_free">免费</string>
+    <string name="ct_service_one_price">一口价</string>
+    <string name="ct_service_price_by_count">按人数计费</string>
+    <string name="ct_service_time_selected">请选择游玩时长</string>
+    <string name="ct_service_meet_selected">请选择见面地点</string>
+    <string name="ct_service_pay_way_selecte_hint">请选择计费方式</string>
+    <string name="ct_service_max_count">最多选择为6人</string>
+    <string name="ct_service_count_null">请选择人数</string>
+    <string name="ct_service_unit">/人</string>
+    <string name="ct_service_create_sucess">提交成功</string>
+    <string name="ct_go_service_list">返回发现列表</string>
+    <string name="ct_create_new_again">继续添加行程</string>
+    <string name="ct_create_suc_tip">我们将尽快完成审核，您将收到邮件和消息提醒</string>
+    <string name="ct_country_selected">地区</string>
+    <string name="ct_country_selected_null">请选择地区</string>
+    <string name="ct_selected_service_date">安排日程</string>
+    <string name="ct_service_booked">不可安排</string>
+    <string name="ct_service_cancelable">已经安排</string>
+    <string name="ct_service_date_setted">提交成功</string>
+    <string name="ct_waiting">请稍后&#8230;</string>
+
+    <string name="ct_submit">提交</string>
+    <string name="ct_save">保存</string>
+    <string name="ct_edit">编辑</string>
+    <string name="ct_home_page_update_posted">更新已提交，等待审核中</string>
+    <string name="select_image_failed">图片生成失败，请重试或者换一个图片选择器</string>
+    <string name="ct_personal_desc_limit_msg">个人介绍请不要超过%1$d个字符.</string>
+    <string name="update_failed">更新失败！</string>
+
+
+    <string name="ct_male">男</string>
+    <string name="ct_female">女</string>
+
+    <string name="ct_gende_non">未设置</string>
+
+    <string name="ct_gende_non_code">0</string>
+    <string name="ct_male_code">1</string>
+    <string name="ct_female_code">2</string>
+    <string name="ct_profile_title_name">头像</string>
+    <string name="ct_profile_title_realname">真实姓名</string>
+    <string name="ct_profile_hint_realname">请填写真实姓名</string>
+    <string name="ct_profile_title_nick">昵称</string>
+    <string name="ct_profile_hint_nick">您的昵称</string>
+    <string name="ct_profile_title_gender">性别</string>
+    <string name="ct_profile_hint_gender">请选择性别</string>
+    <string name="ct_profile_title_area">地区</string>
+    <string name="ct_profile_hint_area">请填写地区</string>
+    <string name="ct_profile_title_job">职业</string>
+    <string name="ct_profile_hint_job">请填写职业</string>
+    <string name="ct_profile_title_hobby">爱好</string>
+    <string name="ct_profile_hint_hobby">您的兴趣爱好</string>
+    <string name="ct_profile_title_language">语言</string>
+    <string name="ct_profile_hint_language">您会哪些语言</string>
+    <string name="ct_profile_title_sign">签名</string>
+    <string name="ct_profile_hint_sign">您的个性签名</string>
+    <string name="ct_profile_name_edit_alert">您的真实姓名为%1$s,保存后不可修改</string>
+    <string name="ct_profile_gender_edit_alert">您的性别为%1$s,保存后不可修改</string>
+    <string name="ct_profile_nick_edit_alert">昵称30天内只可修改一次</string>
+    <string name="ct_data_submiting">正在提交数据..</string>
+    <string name="ct_submmit_suc">提交成功</string>
+    <string name="ct_submmit_failed">提交失败</string>
+    <string name="ct_invitation_friends">邀请朋友</string>
+    <string name="ct_invitation_friends_msg">分享给朋友</string>
+    <string name="ct_wx_not_install">微信未安装</string>
+    <string name="ct_qq_not_install">QQ未安装</string>
+    <string name="ct_share_suc">分享成功</string>
+    <string name="ct_share_cancel">分享取消</string>
+    <string name="ct_share_failed">分享失败</string>
+    <string name="ct_fetch_failed">获取失败</string>
+
+
+    <string name="ct_homepage_status_ing">审核中</string>
+    <string name="ct_homepage_status_suc">已审核</string>
+    <string name="ct_homepage_status_not_suc">未审核</string>
+    <string name="ct_homepage_status_failed">审核未通过</string>
+    <string name="ct_order_info_date">预约的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
+    <string name="ct_order_info_people">预约的人数:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
+    <string name="ct_order_info_service_price">服务费用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
+    <string name="ct_order_info_pay_currency">%1$s支付</string>
+    <string name="ct_pay_failed">支付失败</string>
+    <string name="ct_pay_suc">您已支付成功</string>
+    <string name="ct_pay_suc_content">可以在旅程中查看您的预约</string>
+    <string name="ct_watch_trips">去到旅程中看预定的服务</string>
+    <string name="ct_cny">人民币</string>
+    <string name="ct_twd">新台币</string>
+    <string name="ct_please_relogin">请重新登录</string>
+    <string name="ct_message_please_switch_mode_to_discover">请切换到发现者模式查看详情</string>
+    <string name="ct_message_please_switch_mode_to_traveler">请切换到旅行者模式查看详情</string>
+    <string name="ct_error_no_authorized">没有授权</string>
+    <string name="ct_cancel_order_tips">若您取消旅程，旅行者已支付的费用将全额返还</string>
+    <string name="ct_modify_only_suc">修改成功</string>
+    <string name="ct_order_status_confirm">确认预约</string>
+    <string name="ct_order_status_start">开始旅程</string>
+    <string name="ct_order_status_modify">修改预约</string>
+    <string name="ct_order_status_pay">立即支付</string>
+    <string name="ct_order_status_comment">评价</string>
+    <string name="ct_my_comment">我的评价</string>
+    <string name="ct_someones_comment">%1$s的评价</string>
+    <string name="ct_order_status_close">结束旅程</string>
+    <string name="ct_order_people_num">&#32;%1$s&#32;人</string>
+    <string name="ct_please_input_freecode">请输入免费体验码</string>
+    <string name="ct_freecode_validate_msg">请输入非空的验证码</string>
+    <string name="ct_create_image_failed_msg">图片生成失败，请重试</string>
+    <string name="ct_edit_give_up">放弃编辑</string>
+    <string name="ct_close_and_save">保存并关闭</string>
+    <string name="ct_service_create_header_validate">请输入标题</string>
+    <string name="ct_service_create_image_upload_validate">有图片正在上传，请等待...</string>
+    <string name="ct_service_create_content_validate">请输入发现的具体描述</string>
+    <string name="ct_service_create_image_size_validate">创建发现至少需要上传一张图片</string>
+    <string name="ct_delete_suc">删除成功</string>
+    <string name="ct_delete_failed_can_try">删除失败，请稍后重试</string>
+    <string name="please_relogin">请重新登录</string>
+    <string name="ct_per_man">/人</string>
+    <string name="ct_pay_canceled">支付取消</string>
+    <string name="ct_pay_fail">支付失败</string>
+    <string name="ct_pay_invalid">支付应用未安装</string>
+    <string name="ct_invalidate_service_failed_with_no_reason">审核失败,请联系客服</string>
+    <string name="ct_discount_suc">优惠成功</string>
+    <string name="ct_send_voice_validation">点击发送语音验证</string>
+    <string name="ct_pay_with_freecode">使用体验码支付</string>
+    <string name="ct_pay_with_ali">支付宝支付</string>
+    <string name="ct_pay_with_wx">微信支付</string>
+
+    <string name="ct_discussion_unsupport">该版本不支持此会话</string>
+    <string name="order_person_real_name">真实姓名</string>
+    <string name="order_person_birth">出生年月</string>
+    <string name="order_person_gender">性别</string>
+    <string name="order_person_location">所在国家地区</string>
+    <string name="order_person_carrer">职业</string>
+    <string name="order_person_hobby">爱好</string>
+    <string name="order_person_language">语言</string>
+    <string name="order_person_sign">签名</string>
+    <string name="order_person_phone">电话号码</string>
+    <string name="order_person_email">电子邮件地址</string>
+    <string name="order_person_identity">身份证件</string>
+    <string name="order_person_validated">验证</string>
+    <string name="ct_modify_order_menu">修改预订</string>
+    <string name="order_status_wait_confirm">等待发现者确认</string>
+    <string name="order_status_wait_pay">等待支付</string>
+    <string name="order_status_wait_start">等待开始</string>
+    <string name="order_status_wait_end">旅程进行中</string>
+    <string name="order_status_wait_comment">等待评价</string>
+    <string name="order_status_over">旅程已结束</string>
+    <string name="order_status_unavaliable">预订已失效</string>
+    <string name="ct_create_service_hint">几段精心的文字，几张精美的图片，让您的发现与众不同，更会获得旅行者的青睐。(最多2500个字，9张图片)</string>
+    <string name="ct_meet_location">见面地点</string>
+    <string name="ct_service_tag">特色标签</string>
+    <string name="ct_price_desc">费用说明</string>
+    <string name="ct_price_desc_hint">请输入费用说明</string>
+    <string name="ct_tag_hint">请选择标签</string>
+    <string name="max_tag_limit">最多%1$d个标签</string>
+    <string name="ct_price_desc_message">脆饼支持3种计费方式，请选择适合您的方式：</string>
+    <string name="price_include_input_hint">费用包含：</string>
+    <string name="price_uninclude_input_hint">费用不包含：</string>
+    <string name="price_include_input_hint_et">请描述费用包含项目</string>
+    <string name="price_uninclude_input_hint_et">请描述必要的的费用所不包括的项目</string>
+    <string name="ct_price_desc_title">费用说明</string>
+    <string name="ct_order_price_uninclude_empty_msg">请描述必要的的费用所不包括的项目</string>
+    <string name="ct_order_price_include_empty_msg">请描述费用包括的项目</string>
+
+    <string name="ct_forget_password">忘记密码？</string>
+    <string name="ct_has_account">已有帐号,去登录</string>
+
+    <string name="ct_no_login_hint_mine">完善您的个人信息，建立彼此的信任\n让您的旅程更加安全</string>
+    <string name="ct_no_login_hint_message">告诉发现者您的出行计划和喜好\n你们就从这里开始认识</string>
+    <string name="ct_no_login_hint_order">预订您喜欢的旅程\n您的出行安排就在这里确认</string>
+    <string name="ct_hint_service">发布您最有趣的行程\n告诉旅行者地道的旅行体验</string>
+
+    <string-array name="ct_gender_list">
+        <item>男</item>
+        <item>女</item>
+    </string-array>
+
+    <string-array name="ct_service_times_list">
+        <item>1小时</item>
+        <item>2小时</item>
+        <item>3小时</item>
+        <item>4小时</item>
+        <item>5小时</item>
+        <item>6小时</item>
+        <item>7小时</item>
+        <item>8小时</item>
+        <item>9小时</item>
+        <item>10小时</item>
+        <item>11小时</item>
+        <item>12小时</item>
+    </string-array>
+
+    <string-array name="ct_service_people_list">
+        <item>1人</item>
+        <item>2人</item>
+        <item>3人</item>
+        <item>4人</item>
+        <item>5人</item>
+        <item>6人</item>
+    </string-array>
+
+    <string-array name="ct_service_pay_list">
+        <item>@string/price_way_all</item>
+        <item>@string/price_way_per</item>
+        <item>@string/price_way_free</item>
+    </string-array>
+    <string name="price_way_all">一口价</string>
+    <string name="price_way_per">按人计费</string>
+    <string name="price_way_free">免费</string>
+    <string name="ct_price_payway_all_detail_msg">在您接收的人数范围内，无论旅行者有几人都只收取一个费用，您需要设定一个最终费用。</string>
+    <string name="ct_price_payway_per_detail_msg">在您可接待的人数范围内，按参加的人数收取费用，您需要设定单人费用。</string>
+    <string name="ct_price_payway_free_detail_msg">您将提供免费的旅程体验，不收取任何费用。</string>
+
+
+
+    <string name="ct_price_payway_all_detail_msg_traveller">在发现者可接待的人数范围内，无论您有几人，都只收取一次服务费用，具体产生的餐饮、交通、门票等费用，请看明细说明。</string>
+    <string name="ct_price_payway_per_detail_msg_traveller">在发现者可接待的人数范围内，按参加的人数收取费用，具体产生的餐饮、交通、门票等费用，请看明细说明。发现者提供免费体验的旅程，</string>
+    <string name="ct_price_payway_free_detail_msg_traveller">不收取任何服务费，其他可能产生的餐饮、交通、门票等费用，请看明细说明。</string>
+    <string name="ct_tags_select_message">添加一些标签，让旅行者更快明白您发现的内容</string>
+    <string name="ct_tags_select_limit_message">最多设置4个标签</string>
+    <string name="commit_service_title">提交发现</string>
+    <string name="commit_service_content">提交这个发现给脆饼审核</string>
+    <string name="ct_please_confirm_remove_discount">确定要取消优惠？</string>
+    <string name="ct_get_order_detail_failed">获取订单详情失败</string>
+    <string name="ct_discount_suc_message">优惠成功</string>
+    <string name="ct_cancel_discount_suc_msg">取消优惠成功</string>
+    <string name="ct_please_select_pay_way">请选择支付方式</string>
+    <string name="ct_pay_failed_back_repay">返回重新支付</string>
+    <string name="ct_pay_suc_back">返回我的旅程</string>
+    <string name="ct_pay_suc_title">您已经成功支付</string>
+    <string name="ct_pay_suc_email_title">确认信已经发送到您的邮箱</string>
+    <string name="ct_pay_suc_back_content">祝您旅行愉快\n希望您会喜欢我们的发现者！</string>
+    <string name="ct_payfailed">支付失败</string>
+    <string name="pay_suc">支付成功</string>
+    <string name="ct_fetch_service_detail_failed_error">获取服务详情失败</string>
+    <string name="ct_service_about_title_default">服务详情</string>
+    <string name="ct_pay_order_title_default">订单支付</string>
+    <string name="ct_modify">编辑</string>
+    <string name="data_error">数据错误</string>
+    <string name="service_detail_desc_title">费用说明</string>
+    <string name="fetching_data">正在获取数据</string>
+    <string name="ct_know_more_about_finder">更多了解发现者</string>
+    <string name="sys_notification">消息</string>
+    <string name="ct_not_validated">未验证</string>
+
+
+    <string-array name="ct_identity_types">
+        <item>@string/ct_identity_type_idcard</item>
+        <item>@string/ct_identity_type_internation</item>
+    </string-array>
+    <string name="ct_identity_type_idcard">身份证</string>
+    <string name="ct_identity_type_internation">护照</string>
+    <string name="ct_upload_image_failed">上传图片失败</string>
+    <string name="ct_upload_indeitiy_suc">上传证件成功，等待审核</string>
+    <string name="favorite_title">我的喜欢</string>
+    <string name="message_title">消息</string>
+    <string name="get_cash_suc">提现申请成功</string>
+    <string name="bill_title">账单</string>
+    <string name="get_cash_title">提现</string>
+    <string name="id_check_failed_msg">审核失败</string>
+    <string name="id_check_suc_msg">审核通过</string>
+    <string name="id_check_ing_msg">审核中</string>
+    <string name="self_desc_hint">介绍自己</string>
+    <string name="ct_favorite_unavliable">看看其他推荐</string>
+    <string name="ct_favorite_unavaliable">发现者已不再提供此旅程，再看看其他推荐吧</string>
+    <string name="ct_mount_left">余额</string>
+    <string name="rate_desc"><![CDATA[今日汇率: 100USD = %1$s%2$s]]></string>
+    <string name="currency_money"><![CDATA[ %1$s %2$s]]></string>
+    <string name="un_setted">未设置</string>
+    <string name="conversation_list_title">聊天</string>
+    <string name="ct_cancel_order_confirm_msg">确定要取消订单吗</string>
+    <string name="please_login_first">请先登录</string>
+    <string name="regist_time">注册时间:%1$s</string>
+    <string name="please_input_right_email">请输入正确的邮箱</string>
+    <string name="watch_other_comments">查看其他%1$s条评论</string>
+    <string name="please_input_account">请输入帐号 </string>
+    <string name="please_input_amount">请输入金额 </string>
+    <string name="empty">空</string>
+    <string name="no_date">无数据</string>
+    <string name="count_select_title">选择国家地区</string>
+    <string name="non_lower_areas">没有下级区域</string>
+    <string name="delete_image_confirm_msg">确定要删除该图片吗</string>
+    <string name="please_set_country">请设置国家</string>
+    <string name="please_set_identity_type">请设置证件类型</string>
+    <string name="please_set_identity_date">请设置有效日期</string>
+    <string name="please_upload_images_with_num">请上传%1$s张照片</string>
+    <string name="order_form_order_title">预订</string>
+    <string name="order_form_user_title">用户信息</string>
+    <string name="order_form_conversation_title">聊天</string>
+    <string name="someones_comment_with_name">%1$s的评论</string>
+    <string name="confirm_order_text">确认预订</string>
+    <string name="refuse_oder_text">拒绝</string>
+    <string name="end_order_text">结束旅程</string>
+    <string name="connect_cuitrip">联系脆饼</string>
+    <string name="begin_order_text">开始旅程</string>
+    <string name="cancel_order_text">取消预订</string>
+    <string name="my_account">我的评价</string>
+    <string name="comment_order_text">立即评价</string>
+    <string name="modify_order_text">修改预定</string>
+    <string name="pay_order_text">立即支付</string>
+    <string name="validate_time_to_with_string">有效期至%1$s</string>
+    <string name="no_use">不使用</string>
+    <string name="please_install_alipay">请先安装支付宝应用</string>
+    <string name="coups_lef_with_num_in">您还有%1$s个优惠可使用</string>
+    <string name="current_coup">目前使用的优惠码 优惠%1$s %2$s</string>
+    <string name="per_man_with_num_above">%1$s人</string>
+    <string name="regist_time_with_string_below">注册时间:</string>
+    <string name="per_hour_with_num_above">小时</string>
+    <string name="im_default_message_image">[图片]</string>
+    <string name="im_default_message_voice">[声音]</string>
+    <string name="im_default_message_rich_text">[图文]</string>
+    <string name="im_default_message_location_with_string_in">[地址:%1$s]</string>
+    <string name="im_default_message_notificataion">[提醒]</string>
+    <string name="send_message_with_name_below">%1$s发来消息</string>
+    <string name="switch_mode_to_watch">请切换身份以查看</string>
+    <string name="unknown">[未知]</string>
+    <string name="im_status_disconnected">失去连接</string>
+    <string name="im_status_connected">已连接</string>
+    <string name="im_status_connecting">正在连接中</string>
+    <string name="im_status_network_unavaliable">网络差</string>
+    <string name="im_status_kick_off">在其他设别上登录</string>
+    <string name="publish_at">发布于%1$s</string>
+    <string name="about_with">关于%1$s</string>
+    <string name="please_input_tags">请设置标签</string>
+    <string name="please_input_meeting_location">见面地点</string>
+</resources>

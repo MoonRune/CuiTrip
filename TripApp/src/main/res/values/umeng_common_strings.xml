@@ -14,5 +14,5 @@
 	<string name="umeng_common_download_finish">Download finished,click to install it.</string>
 	<string name="umeng_common_patch_finish">Patch finished,click to install it.</string>
 	<string name="umeng_common_silent_download_finish">New version is ready,click to install it.</string>
-	<string name="umeng_common_icon">icon</string>
+	<string name="umeng_common_icon" translatable="false">icon</string>
 </resources>

@@ -343,7 +343,7 @@ public class SelfHomePageEditorActivity extends BaseActivity {
                 new BitmapDrawable(getResources(), bitmap);
         int tempWidth = bitmap.getWidth();
         int height = bitmap.getHeight();
-        int width = MainApplication.sContext.getPageWidth();
+        int width = MainApplication.getInstance().getPageWidth();
         float leftPadding = getResources().getDimension(R.dimen.ct_personal_desc_left_padding);
         float topPadding = getResources().getDimension(R.dimen.ct_personal_desc_top_padding);
         width -= leftPadding;

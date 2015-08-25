@@ -166,7 +166,7 @@ public class GetImageHelper {
     }
     public static Bitmap resizebitmapToFitScreen(Bitmap bm) {
         try {
-            int width = MainApplication.sContext.getApplicationContext()
+            int width = MainApplication.getInstance().getApplicationContext()
                     .getResources().getDisplayMetrics().widthPixels;
             return resizeBitmapToFitWidth(bm, width);
         }catch (Exception e){

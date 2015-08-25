@@ -56,7 +56,7 @@ public class URLImageParser implements Html.ImageGetter {
         if (urlMap.containsKey(source)) {
             return urlMap.get(source);
         }
-        Drawable urlDrawable = MainApplication.sContext.getResources().getDrawable(R.drawable.ct_default);
+        Drawable urlDrawable = MainApplication.getInstance().getResources().getDrawable(R.drawable.ct_default);
 
         // get the actual source
         ImageGetterAsyncTask asyncTask =
@@ -106,9 +106,9 @@ public class URLImageParser implements Html.ImageGetter {
                 Drawable drawable = Drawable.createFromStream(is, "src");
                 int tempWidth = drawable.getIntrinsicWidth();
                 int height = drawable.getIntrinsicHeight();
-                int width = MainApplication.sContext.getPageWidth();
-                float leftPadding = MainApplication.sContext.getResources().getDimension(R.dimen.ct_personal_desc_left_padding);
-                float topPadding = MainApplication.sContext.getResources().getDimension(R.dimen.ct_personal_desc_top_padding);
+                int width = MainApplication.getInstance().getPageWidth();
+                float leftPadding = MainApplication.getInstance().getResources().getDimension(R.dimen.ct_personal_desc_left_padding);
+                float topPadding = MainApplication.getInstance().getResources().getDimension(R.dimen.ct_personal_desc_top_padding);
                 width -= leftPadding;
                 height = width * height / tempWidth;
                 drawable.setBounds((int) leftPadding, (int) topPadding, (width > 0 ? width : 0) - (int) leftPadding * 2, (height > 0 ? height : 0) + (int) topPadding );

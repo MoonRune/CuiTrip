@@ -35,7 +35,7 @@ public class ServiceBusiness {
         //LabRequestParams params = new LabRequestParams();
         JSONObject object = new JSONObject();
         //params.setToken(context);
-        UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (info != null) {
             object.put("uid", info.getUid());
             object.put("token", info.getToken());
@@ -90,7 +90,7 @@ public class ServiceBusiness {
 //        params.setToken(context);
         JSONObject object = new JSONObject();
         //params.setToken(context);
-        UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (info != null) {
             object.put("uid", info.getUid());
             object.put("token", info.getToken());

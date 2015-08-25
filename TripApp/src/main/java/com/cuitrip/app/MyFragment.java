@@ -57,10 +57,10 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
         LogHelper.e("omg", "onresume");
         showActionBar(getString(R.string.ct_my));
         setHasOptionsMenu(true);
-        if (LoginInstance.isLogin(MainApplication.sContext)) {
+        if (LoginInstance.isLogin(MainApplication.getInstance())) {
             mLogin.setVisibility(View.GONE);
             mContentView.findViewById(R.id.my_content).setVisibility(View.VISIBLE);
-            UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+            UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
             ImageHelper.displayPersonImage(info.getHeadPic(), mImage, null);
             mName.setText(info.getNick());
             mDesc.setText(TextUtils.isEmpty(info.getSign()) ? getString(R.string.ct_no_sign) : info.getSign());

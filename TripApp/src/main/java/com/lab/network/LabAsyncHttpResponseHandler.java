@@ -59,7 +59,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
         LabResponse response = new LabResponse();
         response.code = -1;
         response.result = null;
-        response.msg = MainApplication.sContext.getString(R.string.load_error);
+        response.msg = MainApplication.getInstance().getString(R.string.load_error);
         onFailure(response, null);
     }
 
