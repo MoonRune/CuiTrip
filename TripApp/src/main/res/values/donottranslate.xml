@@ -7,6 +7,10 @@
     <string name="mop_key" translatable="false">test</string>
     <string name="mop_secret" translatable="false">test</string>
 
+
+    <string name="ct_gende_non_code" translatable="false">0</string>
+    <string name="ct_male_code" translatable="false">1</string>
+    <string name="ct_female_code" translatable="false">2</string>
     <string name="instapager_login_html" formatted="false" translatable="false"><![CDATA[
 <!DOCTYPE html>
 <html>

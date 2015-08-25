@@ -282,10 +282,6 @@
     <string name="ct_female">女</string>
 
     <string name="ct_gende_non">未设置</string>
-
-    <string name="ct_gende_non_code" translatable="false">0</string>
-    <string name="ct_male_code" translatable="false">1</string>
-    <string name="ct_female_code" translatable="false">2</string>
     <string name="ct_profile_title_name">头像</string>
     <string name="ct_profile_title_realname">真实姓名</string>
     <string name="ct_profile_hint_realname">请填写真实姓名</string>

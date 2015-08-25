@@ -68,6 +68,6 @@
 	<string name="share_to_qq">分享到QQ</string>
 	<string name="mingdao_share_content">网页分享</string>
 	<string name="share_to_mingdao">分享到明道</string>
-	<string name="share_to_qzone_default">来自%s的分享</string>
+	<string name="share_to_qzone_default">来自%%s的分享</string>
 	<string name="use_login_button">请改用“登录”按钮</string>
 </resources>

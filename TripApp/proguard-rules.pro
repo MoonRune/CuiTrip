@@ -101,6 +101,10 @@
 -keep class **$$ViewInjector { *; }
 -keepnames class * { @butterknife.InjectView *;}
 #butterknife end
+
+-dontwarn   com.malinskiy.superrecyclerview.**
+-dontwarn   com.amap.**
+
 -keep class com.alibaba.fastjson.**{*;}
 -keep class org.agoo.**{*;}
 -keep class org.android.agoo.**{*;}

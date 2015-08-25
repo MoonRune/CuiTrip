@@ -66,6 +66,6 @@
 	<string name="share_to_qq">分享到QQ</string>
 	<string name="mingdao_share_content">網頁分享</string>
 	<string name="share_to_mingdao">分享到明道</string>
-	<string name="share_to_qzone_default">來自%s的分享</string>
+	<string name="share_to_qzone_default">來自%%s的分享</string>
 	<string name="use_login_button">請改用“登入”按鈕</string>
 </resources>
