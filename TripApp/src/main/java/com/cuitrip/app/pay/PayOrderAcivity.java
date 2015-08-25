@@ -197,9 +197,9 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
 
         PopupWindow mPriceTypeWindow;
         @InjectView(R.id.ct_wx_v)
-        TextView ctWxV;
+        View ctWxV;
         @InjectView(R.id.ct_alipay_v)
-        TextView ctAlipayV;
+        View ctAlipayV;
         @InjectView(R.id.empty_view)
         View emptyView;
 

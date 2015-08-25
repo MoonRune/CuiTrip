@@ -21,9 +21,9 @@
             android:textColor="@color/ct_black"
             android:text="@string/ct_please_select_pay_way" />
 
-        <TextView
+        <ImageView
             android:id="@+id/ct_wx_v"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
@@ -31,13 +31,13 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/select_blue_corner"
+            android:background="@drawable/pay_ali_b"
             android:textColor="@color/ct_white_gray"
             android:text="@string/ct_pay_with_wx" />
 
-        <TextView
+        <ImageView
             android:id="@+id/ct_alipay_v"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="10dp"
@@ -45,7 +45,7 @@
             android:layout_marginRight="15dp"
             android:layout_marginLeft="15dp"
             android:layout_marginBottom="20dp"
-            android:background="@drawable/select_blue_corner"
+            android:background="@drawable/pay_ten_g"
             android:textColor="@color/ct_white_gray"
             android:text="@string/ct_pay_with_ali" />
     </LinearLayout>
