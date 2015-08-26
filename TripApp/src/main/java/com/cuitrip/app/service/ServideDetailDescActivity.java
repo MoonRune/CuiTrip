@@ -2,20 +2,28 @@ package com.cuitrip.app.service;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.text.Html;
-import android.view.View;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.cuitrip.app.CreateOrderActivity;
+import com.cuitrip.app.MainApplication;
 import com.cuitrip.model.ServiceInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
+import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.NumberUtils;
 import com.lab.utils.imageupload.URLImageParser;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -36,6 +44,8 @@ public class ServideDetailDescActivity extends BaseActivity {
     @InjectView(R.id.ct_book)
     Button ctBook;
     ServiceInfo serviceInfo;
+    @InjectView(R.id.content)
+    LinearLayout content;
 
     public static void start(Context context, ServiceInfo serviceInfo) {
 
@@ -55,19 +65,94 @@ public class ServideDetailDescActivity extends BaseActivity {
             finish();
             return;
         }
-        showActionBar(getString(R.string.service_detail_desc_title));
+        showActionBar(getString(R.string.ct_detail_desc));
         ceServiceName.setText(serviceInfo.getName());
         ceServiceLocation.setText(serviceInfo.getAddress());
         serviceScore.setRating(NumberUtils.paserFloat(serviceInfo.getScore()));
         String introduce = URLImageParser.replae(serviceInfo.getDescpt());
         introduce = URLImageParser.replaeWidth(introduce);
-        URLImageParser p = new URLImageParser(ctContentV, ServideDetailDescActivity.this, introduce);
-        ctContentV.setText(Html.fromHtml(introduce, p, null));
-        ctBook.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CreateOrderActivity.start(ServideDetailDescActivity.this, serviceInfo);
+//        URLImageParser p = new URLImageParser(ctContentV, ServideDetailDescActivity.this, introduce);
+//        ctContentV.setText(Html.fromHtml(introduce, p, null));
+//        ctBook.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                CreateOrderActivity.start(ServideDetailDescActivity.this, serviceInfo);
+//            }
+//        });
+        while (!TextUtils.isEmpty(introduce) && introduce.indexOf("<div>") >= 0) {
+            if (introduce.indexOf("<div>") >= 0) {
+                String temp = introduce.substring(0, introduce.indexOf("<div>"));
+                introduce = introduce.substring(introduce.indexOf("<div>") + 5);
+                LogHelper.e("now ", introduce);
+                buildTextView(temp);
+                temp = introduce.substring(0, introduce.indexOf("</div>"));
+                buildImage(temp);
+                introduce = introduce.substring(introduce.indexOf("</div>") + 6);
             }
-        });
+        }
+        buildTextView(introduce);
+    }
+
+    public void buildTextView(String temp) {
+
+        if (!TextUtils.isEmpty(temp)) {
+            TextView textView = (TextView) LayoutInflater.from(this).inflate(R.layout.tv, content, false);
+            textView.setText(temp);
+
+            content.addView(textView);
+        }
+    }
+
+    public void buildImage(String image) {
+
+        try {
+            image = image.substring(image.indexOf("http:"), image.indexOf("\"", image.indexOf("http:")));
+            ImageView textView = (ImageView) LayoutInflater.from(this).inflate(R.layout.tv_image, content, false);
+            content.addView(textView);
+            ImageHelper.displayCtImage(image, textView, null);
+//            startDiaplay(textView,image);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startDiaplay(final ImageView imageView, final String url) {
+        imageView.setImageResource(R.drawable.ct_default);
+        new AsyncTask() {
+            Bitmap bitmap;
+            int height;
+            int width;
+
+            @Override
+            protected Object doInBackground(Object[] params) {
+                 bitmap = ImageLoader.getInstance().loadImageSync(url, ImageHelper.getDefaultDisplayImageOptions());
+//                InputStream is = fetch(urlString);
+//                Drawable drawable = Drawable.createFromStream(is, "src");
+                int tempWidth = bitmap.getScaledWidth(MainApplication.getInstance().getResources().getDisplayMetrics());
+                 height = bitmap.getScaledHeight(MainApplication.getInstance().getResources().getDisplayMetrics()) * 2 / 3;
+//                drawable.setBounds(0,0,tempWidth,height);
+                LogHelper.e("omg", "normal  " + tempWidth + " -" + height);
+                LogHelper.e("omg", "page  " + MainApplication.getInstance().getPageWidth() + " -" + MainApplication.getInstance().getPageHeight());
+                 width = MainApplication.getInstance().getPageWidth();
+                height =  width * height /tempWidth ;
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                if (bitmap!=null){
+                    imageView.setImageBitmap(bitmap);
+                    ViewGroup.LayoutParams params =  imageView.getLayoutParams();
+                    params.width =width;
+                    params.height = height;
+                    imageView.setLayoutParams(params);
+                    imageView.invalidate();
+                    LogHelper.e("omg", "set image "+width+"|"+height);
+                }
+                LogHelper.e("omg", "set finished ");
+                super.onPostExecute(o);
+            }
+        }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }

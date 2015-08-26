@@ -1,6 +1,8 @@
 package com.lab.utils.imageupload;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.text.Html;
@@ -8,8 +10,10 @@ import android.widget.TextView;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.service.R;
+import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.loopj.android.http.HttpGet;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -24,10 +28,10 @@ import java.util.HashMap;
  */
 public class URLImageParser implements Html.ImageGetter {
     public static final String TAG = "URLImageParser";
-    public static final String BAD_IMAGE="< img src=";
-    public static final String GOOD_IMAGE="<img src=";
-    public static final String BAD_WIDTH="width=\"100\"";
-    public static final String GOOD_WITDH="width=\"100%\"";
+    public static final String BAD_IMAGE = "< img src=";
+    public static final String GOOD_IMAGE = "<img src=";
+    public static final String BAD_WIDTH = "width=\"100\"";
+    public static final String GOOD_WITDH = "width=\"100%\"";
     Context c;
     TextView container;
     public HashMap<String, Drawable> urlMap = new HashMap<>();
@@ -45,11 +49,12 @@ public class URLImageParser implements Html.ImageGetter {
         this.html = replae(html);
     }
 
-    public static String replae(String oldContent){
-        return oldContent.replaceAll(BAD_IMAGE,GOOD_IMAGE);
+    public static String replae(String oldContent) {
+        return oldContent.replaceAll(BAD_IMAGE, GOOD_IMAGE);
     }
-    public static String replaeWidth(String oldContent){
-        return oldContent.replaceAll(BAD_WIDTH,GOOD_WITDH);
+
+    public static String replaeWidth(String oldContent) {
+        return oldContent.replaceAll(BAD_WIDTH, GOOD_WITDH);
     }
 
     public Drawable getDrawable(String source) {
@@ -85,7 +90,7 @@ public class URLImageParser implements Html.ImageGetter {
         @Override
         protected void onPostExecute(Drawable result) {
             // set the correct bound according to the result from HTTP call
-            LogHelper.e(TAG, "w/h " + result.getIntrinsicWidth() + "/" + result.getIntrinsicHeight()+"  "+result.getBounds());
+            LogHelper.e(TAG, "w/h " + result.getIntrinsicWidth() + "/" + result.getIntrinsicHeight() + "  " + result.getBounds());
             // change the reference of the current drawable to the result
             // from the HTTP call
             urlMap.put(source, result);
@@ -102,16 +107,21 @@ public class URLImageParser implements Html.ImageGetter {
          */
         public Drawable fetchDrawable(String urlString) {
             try {
-                InputStream is = fetch(urlString);
-                Drawable drawable = Drawable.createFromStream(is, "src");
-                int tempWidth = drawable.getIntrinsicWidth();
-                int height = drawable.getIntrinsicHeight();
+                Bitmap bitmap = ImageLoader.getInstance().loadImageSync(urlString, ImageHelper.getDefaultDisplayImageOptions());
+//                InputStream is = fetch(urlString);
+//                Drawable drawable = Drawable.createFromStream(is, "src");
+                Drawable drawable = new BitmapDrawable(bitmap);
+                int tempWidth = bitmap.getScaledWidth(MainApplication.getInstance().getResources().getDisplayMetrics());
+                int height = bitmap.getScaledHeight(MainApplication.getInstance().getResources().getDisplayMetrics()) * 2 / 3;
+//                drawable.setBounds(0,0,tempWidth,height);
+                LogHelper.e("omg", "normal  " + tempWidth + " -" + height);
+                LogHelper.e("omg", "page  " + MainApplication.getInstance().getPageWidth() + " -" + MainApplication.getInstance().getPageHeight());
                 int width = MainApplication.getInstance().getPageWidth();
                 float leftPadding = MainApplication.getInstance().getResources().getDimension(R.dimen.ct_personal_desc_left_padding);
                 float topPadding = MainApplication.getInstance().getResources().getDimension(R.dimen.ct_personal_desc_top_padding);
-                width -= leftPadding;
-                height = width * height / tempWidth;
-                drawable.setBounds((int) leftPadding, (int) topPadding, (width > 0 ? width : 0) - (int) leftPadding * 2, (height > 0 ? height : 0) + (int) topPadding );
+//                height =  width * height /tempWidth ;
+                drawable.setBounds((int) leftPadding, 0, (width > 0 ? width : 0) - (int) leftPadding * 2, (height > 0 ? height : 0));
+                LogHelper.e("omg", "bound " + drawable.getBounds().width() + " - " + drawable.getBounds().height());
                 return drawable;
             } catch (Exception e) {
                 return null;
