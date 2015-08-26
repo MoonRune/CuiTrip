@@ -3,6 +3,7 @@ package com.cuitrip.app;
 import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
+import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.WindowManager;
@@ -75,11 +76,27 @@ public class MainApplication extends BaseAppLication {
     public static void setCallback(RongIM.LocationProvider.LocationCallback callback) {
         MainApplication.callback = callback;
     }
+    public void initStictMode() {
+        if (IS_DEV){
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
+                    .detectDiskReads()
+                    .detectDiskWrites()
+                    .penaltyDialog()
+                    .detectNetwork()   // or .detectAll() for all detectable problems
+                    .penaltyLog()
+                    .build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder()
+                    .detectLeakedSqlLiteObjects()
+                    .detectLeakedClosableObjects()
+                    .penaltyLog()
+                    .penaltyDeath()
+                    .build());
+        }
+    }
 
     public void onCreate() {
         super.onCreate();
         sContext = this;
-
         Once.initialise(this);
         initRongIM();
         ImageHelper.initImageLoader(getApplicationContext());
@@ -109,6 +126,7 @@ public class MainApplication extends BaseAppLication {
             }
         }
         init();
+        initStictMode();
     }
 
     public static String getCurProcessName(Context context) {

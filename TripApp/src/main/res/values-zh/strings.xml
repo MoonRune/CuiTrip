@@ -41,9 +41,9 @@
     <string name="ct_author_interest">兴趣爱好</string>
     <string name="ct_author_language">语言能力</string>
     <string name="ct_service_introduce">旅程说明</string>
-    <string name="ct_service_order_date">可约日期</string>
+    <string name="ct_service_order_date">可预约的日期</string>
     <string name="ct_service_date_click">查看日期</string>
-    <string name="ct_service_duration">旅行时长</string>
+    <string name="ct_service_duration">旅程所需的时间</string>
     <string name="ct_service_best_time">最佳时间</string>
     <string name="ct_service_max_person">最多可接待人数</string>
     <string name="ct_service_bill">费用说明</string>
@@ -509,7 +509,7 @@
     <string name="current_coup">目前使用的优惠码 优惠%1$s %2$s</string>
     <string name="per_man_with_num_above">%1$s人</string>
     <string name="regist_time_with_string_below">注册时间:%1$s</string>
-    <string name="per_hour_with_num_above">%1$s小时</string>
+    <string name="per_hour_with_num_above">约%1$s小时</string>
     <string name="im_default_message_image">[图片]</string>
     <string name="im_default_message_voice">[语音]</string>
     <string name="im_default_message_rich_text">[图文]</string>

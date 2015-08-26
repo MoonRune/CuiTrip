@@ -141,9 +141,9 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.like_img:
-                    if (!LoginInstance.isLogin(getActivity())){
-                        MessageUtils.showToast(getString(R.string.please_login_first));
-                        return ;
+                    if (!LoginInstance.isLogin(getActivity())) {
+                        reLogin();
+                        return;
                     }
                     if (v.getTag() != null && v.getTag() instanceof RecommendItem) {
                         final RecommendItem item = ((RecommendItem) v.getTag());
