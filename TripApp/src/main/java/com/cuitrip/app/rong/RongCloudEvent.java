@@ -24,9 +24,12 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.SyncHttpClient;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -289,9 +292,21 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         builder.setContentTitle(contentTitle);
         builder.setContentText(contentText);
         builder.setContentIntent(contentIntent);
+        Notification notification = builder.getNotification();
+        try {
+            if (!TextUtils.isEmpty(Utils.getSystemProperty("ro.miui.ui.version.name"))) {
+                Field field = notification.getClass().getDeclaredField("extraNotification");
+                Object extraNotification = field.get(notification);
+                Method method = extraNotification.getClass().getDeclaredMethod("setMessageCount", int.class);
+                method.invoke(extraNotification, 0);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         //用mNotificationManager的notify方法通知用户生成标题栏消息通知
-        mNotificationManager.notify(id, builder.getNotification());
+        mNotificationManager.notify(id, notification);
     }
 
     @Override
@@ -416,7 +431,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 //                intent.setAction(android.content.Intent.ACTION_VIEW);
 //                intent.setDataAndType(imageMessage.getLocalUri(), "image/*");
 //                context.startActivity(intent);
-                ImageActivity.start(context,imageMessage.getRemoteUri());
+                ImageActivity.start(context, imageMessage.getRemoteUri());
                 return true;
             }
         }
@@ -433,4 +448,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     public boolean onMessageLongClick(Context context, View view, Message message) {
         return true;
     }
+
+
 }

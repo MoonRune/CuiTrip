@@ -270,7 +270,7 @@
     <string name="ct_submit">提交</string>
     <string name="ct_save">保存</string>
     <string name="ct_edit">编辑</string>
-    <string name="ct_home_page_update_posted">更新已提交，等待审核中</string>
+    <string name="ct_home_page_update_posted">更新已提交</string>
     <string name="select_image_failed">图片生成失败，请重试或者换一个图片选择器</string>
     <string name="ct_personal_desc_limit_msg">个人介绍请不要超过%1$d个字符.</string>
     <string name="update_failed">更新失败！</string>
@@ -314,10 +314,11 @@
     <string name="ct_fetch_failed">获取失败</string>
 
 
+
     <string name="ct_homepage_status_ing">审核中</string>
-    <string name="ct_homepage_status_suc">已审核</string>
-    <string name="ct_homepage_status_not_suc">未审核</string>
-    <string name="ct_homepage_status_failed">审核未通过</string>
+    <string name="ct_homepage_status_suc">已设置</string>
+    <string name="ct_homepage_status_not_suc">未设置</string>
+    <string name="ct_homepage_status_failed">未通过</string>
     <string name="ct_order_info_date">预约的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_people">预约的人数:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_service_price">服务费用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>

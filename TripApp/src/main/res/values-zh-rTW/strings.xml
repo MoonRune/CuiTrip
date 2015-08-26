@@ -210,7 +210,7 @@
     <string name="ct_submit">上傳</string>
     <string name="ct_save">保存</string>
     <string name="ct_edit">編輯</string>
-    <string name="ct_home_page_update_posted">更新已上傳，等待審核中</string>
+    <string name="ct_home_page_update_posted">更新已上傳</string>
     <string name="select_image_failed">圖片產生失敗，請重試或者換壹個圖片選擇器</string>
     <string name="ct_personal_desc_limit_msg">個人介紹請不要超過%1$d個字元。</string>
     <string name="update_failed">更新失敗！</string>
@@ -248,9 +248,9 @@
     <string name="ct_share_failed">分享失敗</string>
     <string name="ct_fetch_failed">獲取失敗</string>
     <string name="ct_homepage_status_ing">審核中</string>
-    <string name="ct_homepage_status_suc">已審核</string>
-    <string name="ct_homepage_status_not_suc">未審核</string>
-    <string name="ct_homepage_status_failed">審核未通過</string>
+    <string name="ct_homepage_status_suc">已設置</string>
+    <string name="ct_homepage_status_not_suc">未設置</string>
+    <string name="ct_homepage_status_failed">未通過</string>
     <string name="ct_order_info_date">預約的日期:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_people">預約的人數:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62;</string>
     <string name="ct_order_info_service_price">服務費用:&#60;b&#62; &#60;font color=\'&#35;00ccdd\'&#62;%1$s&#60;&#47;font&#62;&#60;b&#47;&#62; &#32; %2$s</string>
