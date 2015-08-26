@@ -60,7 +60,7 @@ public class ServideDetailDescActivity extends BaseActivity {
         ceServiceLocation.setText(serviceInfo.getAddress());
         serviceScore.setRating(NumberUtils.paserFloat(serviceInfo.getScore()));
         String introduce = URLImageParser.replae(serviceInfo.getDescpt());
-        introduce = URLImageParser.replaeWidth(serviceInfo.getDescpt());
+        introduce = URLImageParser.replaeWidth(introduce);
         URLImageParser p = new URLImageParser(ctContentV, ServideDetailDescActivity.this, introduce);
         ctContentV.setText(Html.fromHtml(introduce, p, null));
         ctBook.setOnClickListener(new View.OnClickListener() {

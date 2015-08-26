@@ -148,20 +148,27 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             try {
                 double value = Double.valueOf(info.getShowPrice());
                 if (value <= 0) {
-                    money = getString(R.string.ct_service_free);
+                    price = getString(R.string.ct_service_free);
+
                 } else {
                     money = info.getShowPrice();
+                    if (info.getPriceType() == 1) { //按人计费
+                        price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
+                    } else {
+                        price = info.getShowCurrency().toUpperCase() + " " + money;
+                    }
                 }
             } catch (Exception e) {
                 money = info.getShowPrice();
-            }
+                if (info.getPriceType() == 1) { //按人计费
+                    price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
+                } else {
+                    price = info.getShowCurrency().toUpperCase() + " " + money;
+                }
 
-            if (info.getPriceType() == 1) { //按人计费
-                price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
-            } else {
-                price = info.getShowCurrency().toUpperCase() + " " + money;
             }
             setViewText(R.id.service_price, price);
+
 
             setViewText(R.id.service_name, info.getName());
             setViewText(R.id.service_address, info.getAddress());
@@ -192,10 +199,35 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             findViewById(R.id.email_validate).setVisibility(userInfo.isEmailValidated() ? View.VISIBLE : View.GONE);
             findViewById(R.id.idcard_validate).setVisibility(userInfo.isIdentityValidated() ? View.VISIBLE : View.GONE);
 
-            setViewText(R.id.author_career_value, userInfo.getCareer());
-            setViewText(R.id.author_interest_value, userInfo.getInterests());
-            setViewText(R.id.author_language_value, userInfo.getLanguage());
+            if (TextUtils.isEmpty(userInfo.getCareer())) {
+                findViewById(R.id.author_career_ll).setVisibility(View.GONE);
+                findViewById(R.id.author_career_div).setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.author_career_ll).setVisibility(View.VISIBLE);
+                findViewById(R.id.author_career_div).setVisibility(View.VISIBLE);
+                setViewText(R.id.author_career_value, userInfo.getCareer());
 
+            }
+
+            if (TextUtils.isEmpty(userInfo.getInterests())) {
+                findViewById(R.id.author_interest_ll).setVisibility(View.GONE);
+                findViewById(R.id.author_interest_div).setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.author_interest_ll).setVisibility(View.VISIBLE);
+                findViewById(R.id.author_interest_div).setVisibility(View.VISIBLE);
+                setViewText(R.id.author_interest_value, userInfo.getInterests());
+
+            }
+
+            if (TextUtils.isEmpty(userInfo.getLanguage())) {
+                findViewById(R.id.author_language_ll).setVisibility(View.GONE);
+                findViewById(R.id.author_language_div).setVisibility(View.GONE);
+            } else {
+                findViewById(R.id.author_language_ll).setVisibility(View.VISIBLE);
+                findViewById(R.id.author_language_div).setVisibility(View.VISIBLE);
+                setViewText(R.id.author_language_value, userInfo.getLanguage());
+
+            }
             findViewById(R.id.author_img).setOnClickListener(this);
         }
 

@@ -7,6 +7,7 @@ import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cuitrip.app.pro.OrderPersonRenderData;
@@ -20,6 +21,7 @@ import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 import com.lab.utils.imageupload.URLImageParser;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -77,6 +79,50 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
     ImageView ctUserIdentityValidateIm;
     @InjectView(R.id.service_back)
     ImageView serviceBack;
+    @InjectView(R.id.ct_user_real_name_ll)
+    LinearLayout ctUserRealNameLl;
+    @InjectView(R.id.ct_user_real_name_div)
+    View ctUserRealNameDiv;
+    @InjectView(R.id.ct_user_birth_ll)
+    LinearLayout ctUserBirthLl;
+    @InjectView(R.id.ct_user_birth_div)
+    View ctUserBirthDiv;
+    @InjectView(R.id.ct_user_gender_ll)
+    LinearLayout ctUserGenderLl;
+    @InjectView(R.id.ct_user_gender_div)
+    View ctUserGenderDiv;
+    @InjectView(R.id.ct_user_city_ll)
+    LinearLayout ctUserCityLl;
+    @InjectView(R.id.ct_user_city_div)
+    View ctUserCityDiv;
+    @InjectView(R.id.ct_user_carrer_ll)
+    LinearLayout ctUserCarrerLl;
+    @InjectView(R.id.ct_user_carrer_div)
+    View ctUserCarrerDiv;
+    @InjectView(R.id.ct_user_hobby_ll)
+    LinearLayout ctUserHobbyLl;
+    @InjectView(R.id.ct_user_hobby_div)
+    View ctUserHobbyDiv;
+    @InjectView(R.id.ct_user_language_ll)
+    LinearLayout ctUserLanguageLl;
+    @InjectView(R.id.ct_user_language_div)
+    View ctUserLanguageDiv;
+    @InjectView(R.id.ct_user_sign_ll)
+    LinearLayout ctUserSignLl;
+    @InjectView(R.id.ct_user_sign_div)
+    View ctUserSignDiv;
+    @InjectView(R.id.ct_user_phone_validate_ll)
+    LinearLayout ctUserPhoneValidateLl;
+    @InjectView(R.id.ct_user_phone_validate_div)
+    View ctUserPhoneValidateDiv;
+    @InjectView(R.id.ct_user_email_validate_ll)
+    LinearLayout ctUserEmailValidateLl;
+    @InjectView(R.id.ct_user_email_validate_div)
+    View ctUserEmailValidateDiv;
+    @InjectView(R.id.ct_user_identity_validate_ll)
+    LinearLayout ctUserIdentityValidateLl;
+    @InjectView(R.id.ct_user_identity_validate_div)
+    View ctUserIdentityValidateDiv;
 
     public static void start(Context context, String finderid) {
         context.startActivity(new Intent(context, ServiceFinderInfoAllActivity.class).putExtra(
@@ -130,11 +176,23 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
         }, finderId);
     }
 
-    public void setWithDefault(TextView textView, String text) {
+    public void setWithDefault(TextView textView, String text, View ll, View div) {
         if (TextUtils.isEmpty(text)) {
+            ll.setVisibility(View.GONE);
+            div.setVisibility(View.GONE);
             text = PlatformUtil.getInstance().getString(R.string.empty_string);
+        } else {
+
+            ll.setVisibility(View.VISIBLE);
+            div.setVisibility(View.VISIBLE);
         }
         textView.setText(text);
+    }
+
+    public void setValidated(View view, boolean isValidated, View ll, View div) {
+        view.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
+        ll.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
+        div.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
     }
 
     @OnClick(R.id.service_back)
@@ -157,35 +215,36 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
         ctUserNick.setText(data.getUserName());
         ctUserRegister.setText(data.getUserRegisterTime());
 
-        setWithDefault(ctUserRealNameTv, data.getUserRealName());
-        setWithDefault(ctUserBirthTv, data.getUserBirth());
-        setWithDefault(ctUserGenderTv, data.getUserGender());
+        setWithDefault(ctUserRealNameTv, data.getUserRealName(), ctUserRealNameLl, ctUserRealNameDiv);
+        setWithDefault(ctUserBirthTv, data.getUserBirth(), ctUserBirthLl, ctUserBirthDiv);
+        setWithDefault(ctUserGenderTv, Utils.getGender(data.getUserGender()), ctUserGenderLl, ctUserGenderDiv);
 
-        setWithDefault(ctUserCityTv, data.getUserCity());
-        setWithDefault(ctUserCarrerTv, data.getUserCarrer());
-        setWithDefault(ctUserHobbyTv, data.getUserHobby());
-        setWithDefault(ctUserLanguageTv, data.getUserLangeage());
-        setWithDefault(ctUserSignTv, data.getUserSign());
+        setWithDefault(ctUserCityTv, data.getUserCity(), ctUserCityLl, ctUserCityDiv);
+        setWithDefault(ctUserCarrerTv, data.getUserCarrer(), ctUserCarrerLl, ctUserCarrerDiv);
+        setWithDefault(ctUserHobbyTv, data.getUserHobby(), ctUserHobbyLl, ctUserHobbyDiv);
+        setWithDefault(ctUserLanguageTv, data.getUserLangeage(), ctUserLanguageLl, ctUserLanguageDiv);
+        setWithDefault(ctUserSignTv, data.getUserSign(), ctUserSignLl, ctUserSignDiv);
 
-        setValidated(ctUserPhoneValidateIm,data.isUserPhoneValidated());
-        setValidated(ctUserEmailValidateIm,data.isUserEmailValidated());
-        setValidated(ctUserIdentityValidateIm,data.isUserIdentityValidated());
+        setValidated(ctUserPhoneValidateIm, data.isUserPhoneValidated(), ctUserPhoneValidateLl, ctUserPhoneValidateDiv);
+        setValidated(ctUserEmailValidateIm, data.isUserEmailValidated(), ctUserEmailValidateLl, ctUserEmailValidateDiv);
+        setValidated(ctUserIdentityValidateIm, data.isUserIdentityValidated(), ctUserIdentityValidateLl, ctUserIdentityValidateDiv);
 
-        if (TextUtils.isEmpty(data.getIntroduce())){
+
+        if (TextUtils.isEmpty(data.getIntroduce())) {
             aboutHint.setVisibility(View.GONE);
             aboutValue.setVisibility(View.GONE);
-        }else {
+        } else {
             aboutHint.setVisibility(View.VISIBLE);
             aboutValue.setVisibility(View.VISIBLE);
             aboutHint.setText(getString(R.string.about_with, data.getUserName()));
-            String introduce =data.getIntroduce();
-            LogHelper.e("omg1",introduce);
+            String introduce = data.getIntroduce();
+            LogHelper.e("omg1", introduce);
             introduce = URLImageParser.replae(introduce);
-            LogHelper.e("omg2",introduce);
-             introduce = URLImageParser.replaeWidth(introduce);
-            LogHelper.e("omg3",introduce);
-            URLImageParser urlImageParser = new URLImageParser(aboutValue,this,introduce);
-            aboutValue.setText(Html.fromHtml(introduce,urlImageParser,null));
+            LogHelper.e("omg2", introduce);
+            introduce = URLImageParser.replaeWidth(introduce);
+            LogHelper.e("omg3", introduce);
+            URLImageParser urlImageParser = new URLImageParser(aboutValue, this, introduce);
+            aboutValue.setText(Html.fromHtml(introduce, urlImageParser, null));
         }
 //        ctUserPhoneTv.setText(data.getUserPhone());
 //

@@ -12,6 +12,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
     <LinearLayout
+        android:id="@+id/ct_user_real_name_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -27,8 +28,10 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_real_name_div"
         style="@style/order_form_divide" />
     <LinearLayout
+        android:id="@+id/ct_user_birth_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -44,8 +47,10 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_birth_div"
         style="@style/order_form_divide" />
     <LinearLayout
+        android:id="@+id/ct_user_gender_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -61,9 +66,11 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_gender_div"
         style="@style/order_form_divide" />
     </LinearLayout>
     <LinearLayout
+        android:id="@+id/ct_user_city_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -81,9 +88,12 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_city_div"
         style="@style/order_form_divide" />
 
     <LinearLayout
+
+        android:id="@+id/ct_user_carrer_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -100,8 +110,10 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_carrer_div"
         style="@style/order_form_divide" />
     <LinearLayout
+        android:id="@+id/ct_user_hobby_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -118,8 +130,10 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_hobby_div"
         style="@style/order_form_divide" />
     <LinearLayout
+        android:id="@+id/ct_user_language_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -136,8 +150,10 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_language_div"
         style="@style/order_form_divide" />
     <LinearLayout
+        android:id="@+id/ct_user_sign_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -154,5 +170,6 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_sign_div"
         style="@style/order_form_divide" />
 </LinearLayout>

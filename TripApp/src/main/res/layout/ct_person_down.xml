@@ -19,6 +19,7 @@
     <View
         style="@style/order_form_divide" />
     <LinearLayout
+        android:id="@+id/ct_user_phone_validate_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -42,9 +43,11 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_phone_validate_div"
         style="@style/order_form_divide" />
 
     <LinearLayout
+        android:id="@+id/ct_user_email_validate_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -68,9 +71,11 @@
     </LinearLayout>
 
     <View
+        android:id="@+id/ct_user_email_validate_div"
         style="@style/order_form_divide" />
 
     <LinearLayout
+        android:id="@+id/ct_user_identity_validate_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -93,6 +98,7 @@
             android:src="@drawable/idcard_b" />
     </LinearLayout>
     <View
+        android:id="@+id/ct_user_identity_validate_div"
         style="@style/order_form_divide"
         android:layout_marginTop="20dp"/>
 </LinearLayout>
