@@ -603,5 +603,6 @@
     <string name="version_too_low">版本太低，请升级</string>
     <string name="app_downloads">精品应用推荐下载</string>
     <string name="please_input">请输入</string>
+    <string name="set_address">设置地点为%1$s吗？</string>
     <string name="please_desc_address">请输入地址的描述</string>
 </resources>

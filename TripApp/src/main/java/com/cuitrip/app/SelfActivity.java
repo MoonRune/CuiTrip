@@ -198,8 +198,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         mPersonalPhoneEt.setEnabled(TextUtils.isEmpty(userInfo.getMobile()));
         mPersonalPhoneEt.setText(userInfo.getMobile());
 
-
-        mPersonalEmailEt.setEnabled(TextUtils.isEmpty(userInfo.getEmail()));
         mPersonalEmailEt.setText(userInfo.getEmail());
 
         setOnClicks();
