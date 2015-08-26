@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
-import com.lab.location.CtLocation;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
 import com.lab.utils.LogHelper;
@@ -25,7 +24,6 @@ public class ServiceBusiness {
                                                   String desc, List<String> pic, String backPic, String price,
                                                   String maxbuyerNum, String serviceTime, String bestTime,
                                                   String meetingWay, int priceType, String country, String moneyType,
-                                                  CtLocation location,
                                                   String meetingPlace,
                                                   String serviceTags,
                                                   String inlclude,

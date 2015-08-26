@@ -3,6 +3,7 @@ package com.cuitrip.app.pro;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cuitrip.app.base.PartViewHolder;
@@ -48,9 +49,12 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
     ImageView ctUserEmailValidateIm;
     @InjectView(R.id.ct_user_identity_validate_im)
     ImageView ctUserIdentityValidateIm;
+    @InjectView(R.id.person_top_ll)
+    LinearLayout personTopLl;
 
     public void build(View view) {
         ButterKnife.inject(this, view);
+        personTopLl.setVisibility(View.GONE);
     }
 
     public void setWithDefault(TextView textView, String text) {
@@ -63,7 +67,6 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
     public void setValidated(View view, boolean isValidated) {
         view.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
     }
-
 
 
     public void render(OrderPersonRenderData data) {
@@ -81,7 +84,7 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
         setWithDefault(ctUserLanguageTv, data.getUserLangeage());
         setWithDefault(ctUserSignTv, data.getUserSign());
 
-        setValidated(ctUserPhoneValidateIm,data.isUserPhoneValidated());
+        setValidated(ctUserPhoneValidateIm, data.isUserPhoneValidated());
         setValidated(ctUserEmailValidateIm, data.isUserEmailValidated());
         setValidated(ctUserIdentityValidateIm, data.isUserIdentityValidated());
 

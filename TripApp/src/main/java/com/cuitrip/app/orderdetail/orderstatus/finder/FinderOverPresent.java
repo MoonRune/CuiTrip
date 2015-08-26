@@ -34,7 +34,7 @@ public class FinderOverPresent extends BaseOrderFormPresent<IFinderOrderDetailVi
     public CommentPartRenderData buildCommenetData(OrderItem orderItem) {
         CommentPartRenderData renderData =new CommentPartRenderData(
                  PlatformUtil.getInstance().getString(R.string.someones_comment_with_name,orderItem.getUserNick()),
-                orderItem.getHeadPic(),
+                "",
                 orderItem.getCommentScore() ,
                 CommentPartRenderData.DEFAULT_MAX_SCORE,
                 orderItem.getComment()

@@ -61,8 +61,6 @@
 
     <style name="ctStarMini" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ct_star_mini</item>
-        <item name="android:minHeight">22dp</item>
-        <item name="android:maxHeight">22dp</item>
     </style>
 
     <style name="ctDetailLeft" >

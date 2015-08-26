@@ -114,7 +114,10 @@
         <activity
             android:name="com.cuitrip.app.orderdetail.OrderFormActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:launchMode="singleInstance"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name="com.cuitrip.app.base.ImageActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.cuitrip.app.PriceDescActivity"

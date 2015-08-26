@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ct_white">
@@ -14,37 +15,18 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/service_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/ct_text_title"
-                android:textSize="@dimen/ct_ts_2" />
-
-            <TextView
-                android:id="@+id/service_address"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/service_name"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:drawableLeft="@drawable/ct_position"
-                android:drawablePadding="5dp"
-                android:textColor="@color/ct_7c"
-                android:textSize="@dimen/ct_ts_5" />
 
 
             <de.hdodenhof.circleimageview.CircleImageView
+                android:layout_marginTop="50dp"
                 android:id="@+id/author_img"
                 android:layout_width="65dp"
                 android:layout_height="65dp"
                 android:layout_below="@+id/service_address"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="8dp"
-                android:layout_marginTop="20dp"
                 android:scaleType="centerCrop"
+                tools:src="@drawable/ct_default_user"
                 app:border_color="@color/ct_white"
                 app:border_width="@dimen/ct_logo_border" />
 
@@ -55,16 +37,38 @@
                 android:layout_below="@id/author_img"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/ct_gray"
+                tools:text="asdf"
+                android:textColor="@color/ct_main_color"
                 android:textSize="@dimen/ct_ts_4" />
 
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/service_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                tools:text="asdf"
+                android:textColor="@color/ct_title"
+                android:textSize="@dimen/ct_ts_2" />
+
+            <TextView
+                android:id="@+id/service_address"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/service_name"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                tools:text="asdf"
+                android:drawableLeft="@drawable/ct_position"
+                android:drawablePadding="5dp"
+                android:textColor="@color/ct_7c"
+                android:textSize="@dimen/ct_ts_5" />
             <RatingBar
                 android:id="@+id/comment_score"
                 style="@style/ctStarMini"
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="10dp"
                 android:isIndicator="false"
                 android:max="5"
                 android:stepSize="0.5"

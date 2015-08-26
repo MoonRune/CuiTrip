@@ -212,6 +212,10 @@ public class MessageUtils {
         btnV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(contentTv.getText().toString())){
+                    showToast(R.string.please_input);
+                    return;
+                }
                 if (setMessageListener != null) {
                     setMessageListener.setMessage(contentTv.getText().toString());
                 }

@@ -58,7 +58,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
         showActionBar(R.string.ct_order_comment);
         setContentView(R.layout.ct_order_comment);
         setViewText(R.id.service_name, mOrderInfo.getServiceName());
-        setViewText(R.id.cuthor_name, mOrderInfo.getInsiderName());
+        setViewText(R.id.cuthor_name, mOrderInfo.getUserNick());
         setViewText(R.id.service_address, mOrderInfo.getServiceAddress());
         ImageHelper.displayPersonImage(mOrderInfo.getHeadPic(), (ImageView) findViewById(R.id.author_img), null);
         findViewById(R.id.commit_comment).setOnClickListener(this);

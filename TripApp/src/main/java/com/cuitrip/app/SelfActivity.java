@@ -120,7 +120,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
     boolean mNickAlertShown = false;
     boolean mRealnameAlertShown = false;
-    boolean mGenderAlertShown = false;
+    boolean mGenderAlertShown = true; 
 
     SweetAlertDialog mSubmitDialog;
 

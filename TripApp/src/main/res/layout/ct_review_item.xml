@@ -27,7 +27,7 @@
         app:border_color="@color/ct_white"
         tools:src="@drawable/ct_default_user"
         app:border_width="@dimen/ct_logo_border"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <TextView
         android:id="@+id/name"
@@ -50,7 +50,7 @@
         android:paddingTop="3dp"
         android:textColor="@color/ct_a7"
         android:textSize="13sp"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="12dp"/>
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"

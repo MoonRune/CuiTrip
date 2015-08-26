@@ -22,13 +22,15 @@ public class ServicePartRenderData {
     protected String priceInclude;
     protected String priceUninclude;
     protected String unvaliableReason;
+    protected String status;
     protected double lat;
     protected double lng;
 
     public ServicePartRenderData(String serviceName,
                                  String orderDate, String meetLocation, String orderPeopleSize, String serviceDuration, String priceWithCurrency, String priceInclude,
                                  String priceUninclude,
-                                 double lat, double lng) {
+                                 double lat, double lng,
+                                 String status) {
         this.serviceName = serviceName;
         this.orderDate = orderDate;
         this.meetLocation = meetLocation;
@@ -39,8 +41,16 @@ public class ServicePartRenderData {
         this.priceUninclude = priceUninclude;
         this.lat = lat;
         this.lng = lng;
+        this.status = status;
     }
 
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public double getLat() {
         return lat;
@@ -212,7 +222,9 @@ public class ServicePartRenderData {
                 getOrderPeopleSizeText(orderItem),
                 getOrderDurationText(orderItem),
                 getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem),
-                getLat(orderItem),getLng(orderItem));
+                getLat(orderItem),getLng(orderItem),
+                getStatusText(orderItem)
+        );
         return result;
     }
 }

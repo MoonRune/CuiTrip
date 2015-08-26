@@ -14,6 +14,7 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 import com.cuitrip.app.RelationActivity;
+import com.cuitrip.service.R;
 import com.lab.utils.Constants;
 import com.lab.utils.LogHelper;
 import com.lab.utils.imageupload.URLImageParser;
@@ -56,6 +57,12 @@ public class BrowserActivity extends BaseActivity {
         Intent intent =new Intent(context,BrowserActivity.class);
         intent.putExtra(IS_DATA,true);
         intent.putExtra(DATA,data);
+        context.startActivity(intent);
+    }
+    public static void start(Context context,String data,String title){
+        Intent intent =new Intent(context,BrowserActivity.class);
+        intent.putExtra(DATA,data);
+        intent.putExtra(TITLE,title);
         context.startActivity(intent);
     }
     public class JumpConcat{
@@ -105,7 +112,7 @@ public class BrowserActivity extends BaseActivity {
         s.setJavaScriptEnabled(true);
 
 
-        LogHelper.e("omg"," data"+getIntent().getStringExtra(DATA));
+        LogHelper.e("omg", " data" + getIntent().getStringExtra(DATA));
         // Restore a webview if we are meant to restore
         if (savedInstanceState != null) {
             mWebView.restoreState(savedInstanceState);
@@ -137,7 +144,7 @@ public class BrowserActivity extends BaseActivity {
 
                     }
                     LogHelper.e("omg"," url:"+url);
-                    mWebView.loadDataWithBaseURL(url, data, "text/html", "utf-8", null);
+                    mWebView.loadDataWithBaseURL(url, getString(R.string.browser_wrapper,data), "text/html", "utf-8", null);
                 }else{
                     mWebView.loadUrl(data);
                 }
@@ -213,9 +220,9 @@ public class BrowserActivity extends BaseActivity {
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             LogHelper.e("omg","url"+url);
             if(ACCEPTED_URI_SCHEMA.matcher(url).matches()){
-                return false;
+                return true;
             }
-            return true;
+            return false;
         }
     };
 }

@@ -23,6 +23,7 @@ import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
+import com.lab.app.BrowserActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
@@ -135,7 +136,8 @@ public class MyFragment extends BaseFragment implements View.OnClickListener {
                 InvitationActivity.startActivity(getActivity());
                 break;
             case R.id.ct_help:
-                startActivity(new Intent(getActivity(), HelpActivity.class));
+
+                BrowserActivity.start(getActivity(), "http://www.cuitrip.com/mobile/help.html",getString(R.string.ct_help));
                 break;
             case R.id.ct_switch:
                 final UserInfo info = LoginInstance.getInstance(getActivity()).getUserInfo();

@@ -161,6 +161,7 @@
             style="@style/order_form_divide"
             />
         <TextView
+            android:layout_marginTop="30dp"
             android:text="@string/order_cancel_reason"
             android:layout_width="match_parent"
             android:layout_height="44dp"

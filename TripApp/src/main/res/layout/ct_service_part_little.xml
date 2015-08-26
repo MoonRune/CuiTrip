@@ -29,7 +29,25 @@
       android:background="@color/ct_divider"
       />
 
+    <LinearLayout
+        android:id="@+id/ct_order_status_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <TextView
+            android:text="@string/order_status_hint"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_order_status_tv"
+            tools:text="order_time"
+            style="@style/order_form_value" />
+    </LinearLayout>
 
+
+
+    <View
+        style="@style/order_form_divide"
+        />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -42,6 +60,8 @@
                 tools:text="order_time"
                 style="@style/order_form_value" />
         </LinearLayout>
+
+
 
     <View
         style="@style/order_form_divide"

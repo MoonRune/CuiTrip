@@ -2,6 +2,7 @@ package com.cuitrip.app.pro;
 
 import android.app.Activity;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cuitrip.app.base.PartViewHolder;
@@ -23,11 +24,16 @@ public class ServicePartWithoutViewHolder implements PartViewHolder<ServicePartR
     TextView mPersonSizeTv;
     @InjectView(R.id.ct_order_price_tv)
     TextView mOrderPriceTv;
+    @InjectView(R.id.ct_order_status_tv)
+    TextView ctOrderStatusTv;
+    @InjectView(R.id.ct_order_status_ll)
+    LinearLayout ctOrderStatusLl;
 
 
     public void build(View view) {
         ButterKnife.inject(this, view);
     }
+
     public void build(Activity activity) {
         ButterKnife.inject(this, activity);
     }
@@ -37,5 +43,6 @@ public class ServicePartWithoutViewHolder implements PartViewHolder<ServicePartR
         mOrderTimeTv.setText(data.getOrderDate());
         mOrderPriceTv.setText(data.getPriceWithCurrency());
         mPersonSizeTv.setText(data.getOrderPeopleSize());
+        ctOrderStatusTv.setText(data.getStatus());
     }
 }

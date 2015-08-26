@@ -296,7 +296,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 }, mServiceInfo.getSid(), mServiceInfo.getName(), mAddress.getText().toString().trim(), desc,
                 mServiceInfo.getPic(), mServiceInfo.getBackPic(), paywayValue == 2 ? "0" : mMoney.getText().toString().trim(),
                 countValue, timeValue, null, null, paywayValue, "TW", mPriceType.getText().toString().trim(),
-                LocationHelper.getLoation(),
                 mMeet.getText().toString().trim(),
                 mTag.getText().toString().trim(),
                 mServiceInfo.getFeeInclude(),

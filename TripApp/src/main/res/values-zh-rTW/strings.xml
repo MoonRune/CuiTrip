@@ -527,11 +527,12 @@
     <string name="order_prices">費用</string>
     <string name="price_include">費用包含</string>
     <string name="price_exclude">費用不包含</string>
-    <string name="order_cancel_reason">訂單失效原因</string>
+    <string name="order_cancel_reason">預訂失效的原因</string>
     <string name="cash_unit">貨幣</string>
     <string name="version_too_low">版本太低，請升級</string>
     <string name="app_downloads">精品應用推薦下載</string>
     <string name="set_address">設置地點為%1$s吗？</string>
     <string name="please_input">請輸入</string>
     <string name="please_desc_address">請輸入地址的描述</string>
+    <string name="order_status_hint">預訂狀態</string>
 </resources>

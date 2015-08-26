@@ -37,9 +37,15 @@
     <TextView
         android:layout_marginTop="10dp"
         android:textSize="15sp"
+        android:background="@color/ct_common_bg"
         android:textColor="@color/ct_content"
         android:id="@+id/ct_price_include_tv"
-        android:layout_width="wrap_content"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:minLines="4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="asdf"  />
 
@@ -56,7 +62,13 @@
         android:id="@+id/ct_price_uninclude_tv"
         android:textSize="15sp"
         android:textColor="@color/ct_content"
-        android:layout_width="wrap_content"
+        android:background="@color/ct_common_bg"
+        android:paddingTop="5dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="5dp"
+        android:minLines="4"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         tools:text="asdf"  />
 </LinearLayout>

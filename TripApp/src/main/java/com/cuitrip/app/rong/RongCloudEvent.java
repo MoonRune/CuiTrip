@@ -11,6 +11,7 @@ import android.view.View;
 
 import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.base.ImageActivity;
 import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.business.OrderBusiness;
@@ -244,7 +245,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                                     orderItem.getUserNick(), content, contentLittle, orderItem.getOid());
                             return;
                         }
-                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, context.getString(R.string.switch_mode_to_watch),  content, context.getString(R.string.switch_mode_to_watch), null);
+                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, context.getString(R.string.switch_mode_to_watch), content, context.getString(R.string.switch_mode_to_watch), null);
 
                     } catch (Exception e) {
                         buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, context.getString(R.string.unknown) + e.getMessage(), content, context.getString(R.string.send_message_with_name_below, ""), null);
@@ -408,6 +409,14 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 //                BillActivity.start(context);
                 GaoDeMapActivity.startShow(context, locationMessage.getLat(), locationMessage.getLng(), locationMessage.getPoi());
                 LogHelper.e("omg", "LocationMessage end");
+                return true;
+            } else if (message.getContent() instanceof ImageMessage) {
+                ImageMessage imageMessage = ((ImageMessage) message.getContent());
+//                Intent intent = new Intent();
+//                intent.setAction(android.content.Intent.ACTION_VIEW);
+//                intent.setDataAndType(imageMessage.getLocalUri(), "image/*");
+//                context.startActivity(intent);
+                ImageActivity.start(context,imageMessage.getRemoteUri());
                 return true;
             }
         }

@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/ct_main_color"
+            android:textColor="@color/ct_black"
             android:button="@drawable/select_radio"
             android:layout_marginTop="14dp"
             android:layout_marginLeft="10dp"
@@ -51,7 +51,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
-            android:textColor="@color/ct_main_color"
+            android:textColor="@color/ct_black"
             android:button="@drawable/select_radio"
             android:layout_marginLeft="10dp"
             android:paddingLeft="10dp"
@@ -76,7 +76,7 @@
             android:button="@drawable/select_radio"
             android:layout_marginLeft="10dp"
             android:paddingLeft="10dp"
-            android:textColor="@color/ct_main_color"
+            android:textColor="@color/ct_black"
             android:text="@string/price_way_per"/>
         <TextView
             android:layout_marginTop="9dp"

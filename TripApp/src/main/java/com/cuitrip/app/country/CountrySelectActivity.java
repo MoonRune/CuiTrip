@@ -87,6 +87,9 @@ public class CountrySelectActivity extends BaseActivity {
     public void save() {
         setResult(RESULT_OK, new Intent().putExtra(VALUE, TextUtils.join("-", valus)));
     }
+    AreaMode countrySelect = null;
+    AreaMode preSelect = null;
+    AreaMode citySelect = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,28 +101,50 @@ public class CountrySelectActivity extends BaseActivity {
         listViews.add(preList);
         listViews.add(cityList);
         request(0, "");
-        countryList.setAdapter(new LocationAdapter(new View.OnClickListener() {
+        countryList.setAdapter(new LocationAdapter(0,new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (v.getTag()!=null &&v.getTag() instanceof AreaMode){
+                    countrySelect = (AreaMode) v.getTag();
+                    LogHelper.e("omg", "unselect  onclick location id "+countrySelect.getLocationId());
+                }
+                LogHelper.e("omg", "select  onclick" + v);
+                v.setSelected(true);
                 request(1, ((AreaMode) v.getTag()).getAbbr());
                 selectArea(0, ((AreaMode) v.getTag()));
+                ((LocationAdapter) countryList.getAdapter()).notifyDataSetChanged();
 
             }
         }));
-        preList.setAdapter(new LocationAdapter(new View.OnClickListener() {
+        preList.setAdapter(new LocationAdapter(1,new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                if (v.getTag()!=null &&v.getTag() instanceof AreaMode){
+                    preSelect = (AreaMode) v.getTag();
+                }
+
+                v.setSelected(true);
+
                 if (((LocationAdapter) preList.getAdapter()).hasLowerArea()) {
                     request(2, ((AreaMode) v.getTag()).getAbbr());
                 }
                 selectArea(1, ((AreaMode) v.getTag()));
+                ((LocationAdapter) preList.getAdapter()).notifyDataSetChanged();
 
             }
         }));
-        cityList.setAdapter(new LocationAdapter(new View.OnClickListener() {
+        cityList.setAdapter(new LocationAdapter(2,new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (v.getTag()!=null &&v.getTag() instanceof AreaMode){
+                    citySelect = (AreaMode) v.getTag();
+                }
+
+                 v.setSelected(true);
+
                 selectArea(2, ((AreaMode) v.getTag()));
+                ((LocationAdapter) cityList.getAdapter()).notifyDataSetChanged();
 
             }
         }));
@@ -191,10 +216,10 @@ public class CountrySelectActivity extends BaseActivity {
         }, UnitUtils.getLanguage(), location);
     }
 
-    public static class LocationAdapter extends BaseAdapter {
+    public  class LocationAdapter extends BaseAdapter {
         LocationMode mode;
         View.OnClickListener onClickListener;
-
+        int index;
         public boolean hasLowerArea() {
             if (mode != null) {
                 int type = 0;
@@ -208,8 +233,9 @@ public class CountrySelectActivity extends BaseActivity {
             return false;
         }
 
-        public LocationAdapter(View.OnClickListener onClickListener) {
+        public LocationAdapter(int index,View.OnClickListener onClickListener) {
             this.onClickListener = onClickListener;
+            this.index = index;
         }
 
         public void set(LocationMode mode) {
@@ -245,9 +271,29 @@ public class CountrySelectActivity extends BaseActivity {
             View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.area_item, parent,false);
             AreaMode mode = ((AreaMode) getItem(position));
             if (mode != null) {
-                ((TextView) view.findViewById(R.id.area)).setTag(mode);
-                ((TextView) view.findViewById(R.id.area)).setText(mode.getName());
-                ((TextView) view.findViewById(R.id.area)).setOnClickListener(onClickListener);
+                TextView textView =((TextView) view.findViewById(R.id.area));
+               textView.setTag(mode);
+               textView.setText(mode.getName());
+               textView.setOnClickListener(onClickListener);
+                AreaMode tempMode = null;
+                switch (index){
+                    case 0:
+
+                        tempMode = countrySelect;
+                        break;
+                    case 1:
+                        tempMode = preSelect;
+                        break;
+                    case 2:
+                        tempMode = citySelect;
+                        break;
+                }
+                if (tempMode!=null && mode.equals(tempMode)){
+                    textView.setSelected(true);
+                    LogHelper.e("omg", "select  notification " + textView);
+                }else {
+                   textView.setSelected(false);
+                }
             } else {
                 ((TextView) view.findViewById(R.id.area)).setText(R.string.no_date);
 
