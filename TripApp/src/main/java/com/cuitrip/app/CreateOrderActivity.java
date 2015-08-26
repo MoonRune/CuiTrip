@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -56,6 +57,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     private List<String> mAvailableDate;
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
+    String selectedCount;
 
     public static void start(Context context, ServiceInfo serviceInfo) {
 
@@ -103,7 +105,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 if (mAdapter.isDate()) {
                     mDate.setText(mAdapter.getData().get(i));
                 } else {
-                    mCount.setText(mAdapter.getData().get(i));
+                    selectedCount = mAdapter.getData().get(i);
+                    mCount.setText(getString(R.string.per_man_with_num_above, mAdapter.getData().get(i)));
                 }
             }
         });
@@ -201,14 +204,14 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         if (mDate.getText().equals(getString(R.string.ct_order_select_date))) {
             MessageUtils.showToast(R.string.ct_create_order_null_date);
             return;
-        } else if (mCount.getText().equals(getString(R.string.ct_order_select_person_count))) {
+        } else if (mCount.getText().equals(getString(R.string.ct_order_select_person_count)) || TextUtils.isEmpty(selectedCount)) {
             MessageUtils.showToast(R.string.ct_create_order_null_person);
             return;
         }
         showNoCancelDialog();
         LogHelper.e("omg", "create order" + mService.getInsiderId() + "|" + mService.getSid() + "|" + mService.getName() + "|" +
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY) + "|" +
-                mCount.getText().toString() + "|" + mService.getPrice() + "|" + mService.getMoneyType());
+                selectedCount + "|" + mService.getPrice() + "|" + mService.getMoneyType());
         OrderBusiness.createOrder(this, mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
@@ -262,7 +265,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     }
                 }, mService.getInsiderId(), mService.getSid(), mService.getName(),
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY),
-                mCount.getText().toString(), mService.getPrice(), mService.getMoneyType());
+                selectedCount, mService.getPrice(), mService.getMoneyType());
     }
 
 
@@ -329,7 +332,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     viewholder.mText.setChecked(false);
                 }
             } else {
-                if (mCount.getText().toString().equals(getItem(i))) {
+                if (selectedCount != null && selectedCount.equals(getItem(i))) {
                     viewholder.mText.setChecked(true);
                 } else {
                     viewholder.mText.setChecked(false);

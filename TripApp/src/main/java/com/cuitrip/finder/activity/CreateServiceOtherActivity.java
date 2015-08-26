@@ -311,6 +311,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         switch (view.getId()) {
 
             case R.id.ct_tag_block:
+                view.requestFocus();
                 tagsPop.showTags();
                 break;
             case R.id.address_block:
@@ -333,7 +334,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i < getTimes().length) {
 
-                            mTime.setText(String.valueOf(i + 1));
+                            mTime.setText(getString(R.string.per_hour_with_num_above,String.valueOf(i + 1)));
                             timeValue = String.valueOf(i + 1);
                         }
                     }
@@ -353,7 +354,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i < getPersons().length) {
-                            mCount.setText(getPersons()[i]);
+                            mCount.setText(getString(R.string.per_man_with_num_above,String.valueOf(i + 1)));
                             countValue = String.valueOf(i + 1);
                         }
                     }
@@ -361,6 +362,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 builder.create().show();
                 break;
             case R.id.pay_block:
+                view.requestFocus();
                 priceTypePop.showPriceType();
                 break;
             case R.id.pay_introduce:

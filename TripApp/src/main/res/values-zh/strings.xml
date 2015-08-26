@@ -34,12 +34,12 @@
     <string name="ct_no_finish">开发中，敬请期待...</string>
 
     <string name="ct_hot_recommend">热门推荐</string>
-    <string name="ct_watch_detail">更多了解这个服务</string>
+    <string name="ct_watch_detail">了解整个旅程</string>
     <string name="ct_author_register_time">注册时间</string>
-    <string name="ct_author_identification">验证</string>
+    <string name="ct_author_identification">身份验证</string>
     <string name="ct_author_career">职业</string>
-    <string name="ct_author_interest">兴趣爱好</string>
-    <string name="ct_author_language">语言能力</string>
+    <string name="ct_author_interest">兴趣</string>
+    <string name="ct_author_language">语言</string>
     <string name="ct_service_introduce">旅程说明</string>
     <string name="ct_service_order_date">可预约的日期</string>
     <string name="ct_service_date_click">查看日期</string>
@@ -49,7 +49,7 @@
     <string name="ct_service_bill">费用说明</string>
     <string name="ct_cuitrip_gongyue">脆饼公约</string>
     <string name="ct_cuitrip_view_all">查看所有</string>
-    <string name="ct_cuitrip_book">联系预订</string>
+    <string name="ct_cuitrip_book">立即预约</string>
     <string name="ct_cuitrip_comment_count">条评论</string>
     <string name="ct_cuitrip_comment_no">暂无评论</string>
     <string name="ct_cuitrip_renzheng">已由脆饼旅行认证身份</string>
@@ -264,7 +264,7 @@
     <string name="ct_selected_service_date">安排日程</string>
     <string name="ct_service_booked">不可安排</string>
     <string name="ct_service_cancelable">已经安排</string>
-    <string name="ct_service_date_setted">提交成功</string>
+    <string name="ct_service_date_setted">设置成功</string>
     <string name="ct_waiting">请稍后&#8230;</string>
 
     <string name="ct_submit">提交</string>
@@ -445,7 +445,7 @@
     <string name="data_error">数据错误</string>
     <string name="service_detail_desc_title">费用说明</string>
     <string name="fetching_data">正在获取数据</string>
-    <string name="ct_know_more_about_finder">更多了解发现者</string>
+    <string name="ct_know_more_about_finder">了解发现者</string>
     <string name="sys_notification">消息</string>
     <string name="ct_not_validated">未验证</string>
 
@@ -549,4 +549,5 @@
     <string name="people_5">5人</string>
     <string name="people_6">6人</string>
     <string name="watch_other_comments">查看其他%1$s条评价</string>
+    <string name="price_desc">明确的费用说明对保障您和旅行者的权益至关重要。我们建议您给出更详细的费用说明，帮助旅行者更好的了解您的服务。</string>
 </resources>

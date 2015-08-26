@@ -24,13 +24,13 @@ import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.adapter.BasePageAdapter;
 import com.lab.app.BaseActivity;
-import com.lab.app.BrowserActivity;
 import com.lab.app.DateActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.NumberUtils;
+import com.lab.utils.Utils;
 import com.lab.utils.share.ShareUtil;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -117,7 +117,6 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     private void bind(ServiceDetail data) {
         findViewById(R.id.service_share).setOnClickListener(this);
         findViewById(R.id.service_order_view).setOnClickListener(this);
-        findViewById(R.id.service_cuibin_introduce_view).setOnClickListener(this);
         findViewById(R.id.ct_book).setOnClickListener(this);
 
         final TextView index = (TextView) findViewById(R.id.service_index);
@@ -158,7 +157,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             ratingBar.setRating(NumberUtils.paserFloat(info.getScore()));
 
             setViewText(R.id.service_content, info.getDescptWithnoPic());
-            setViewText(R.id.service_max_person_value, info.getMaxbuyerNum() + "");
+            setViewText(R.id.service_max_person_value, getString(R.string.per_man_with_num_above, info.getMaxbuyerNum()));
 
             setViewText(R.id.service_duration_value, info.getServiceTime());
             //setViewText(R.id.service_best_time_value, info.getBestTime());
@@ -197,7 +196,13 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             }
             if (commentCount > 0) {
                 findViewById(R.id.comment_block).setVisibility(View.VISIBLE);
-                setViewText(R.id.comment_count, review.getReviewNum() + getString(R.string.ct_cuitrip_comment_count));
+                if (review.getLastReview() != null) {
+                    setViewText(R.id.comment_count, review.getLastReview().getNick() );
+                    setViewText(R.id.comment_time, Utils.getMsToD(review.getLastReview().getGmtCreated()));
+                } else {
+                    setViewText(R.id.comment_count, "");
+                    setViewText(R.id.comment_time, "");
+                }
                 if (review.getLastReview() != null) {
                     String content = review.getLastReview().getContent();
                     if (TextUtils.isEmpty(content)) {
@@ -207,7 +212,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                     }
                 }
                 findViewById(R.id.comment_click).setOnClickListener(this);
-                ((TextView) findViewById(R.id.comment_click)).setText(getString(R.string.watch_other_comments,commentCount));
+                ((TextView) findViewById(R.id.comment_click)).setText(getString(R.string.watch_other_comments, commentCount));
             } else {
                 findViewById(R.id.comment_block).setVisibility(View.GONE);
 
@@ -215,7 +220,8 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
         } else {
             findViewById(R.id.comment_block).setVisibility(View.GONE);
-            setViewText(R.id.comment_count, 0 + getString(R.string.ct_cuitrip_comment_count));
+            setViewText(R.id.comment_count, "");
+            setViewText(R.id.comment_time, "");
             setViewText(R.id.comment_content, getString(R.string.ct_cuitrip_comment_no));
             //TODO:
             findViewById(R.id.comment_click).setOnClickListener(this);
@@ -272,14 +278,6 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                         mServiceDetail.getServiceInfo().getPriceType(),
                         mServiceDetail.getServiceInfo().getFeeInclude(),
                         mServiceDetail.getServiceInfo().getFeeExclude());
-//                startActivity(new Intent(this, BrowserActivity.class)
-//                        .putExtra(BrowserActivity.DATA, "file:///android_asset/html_bill.html")
-//                        .putExtra(BrowserActivity.TITLE, getString(R.string.ct_service_bill)));
-                break;
-            case R.id.service_cuibin_introduce_view:
-                startActivity(new Intent(this, BrowserActivity.class)
-                        .putExtra(BrowserActivity.DATA, "file:///android_asset/html_about.html")
-                        .putExtra(BrowserActivity.TITLE, getString(R.string.ct_gongyue)));
                 break;
             case R.id.comment_click:
                 startActivity(new Intent(this, ViewReviewsActivity.class).putExtra(SERVICE_ID, mServiceId));
@@ -296,8 +294,11 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                 }
                 break;
             case R.id.author_img:
-                //TODO: 发现者详情
-                startActivity(new Intent(this, FinderDetailActivity.class).putExtra(FinderDetailActivity.USER_INFO, mServiceDetail.getUserInfo()));
+                if (LoginInstance.isLogin(this)) {
+                    ServiceFinderInfoAllActivity.start(this, mServiceDetail.getServiceInfo().getInsiderId());
+                } else {
+                    reLogin();
+                }
                 break;
         }
     }
@@ -312,7 +313,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     }
 
     private void gotoDate() {
-        DateActivity.startFinder(this,mServiceDetail.getServiceInfo().getSid());
+        DateActivity.startFinder(this, mServiceDetail.getServiceInfo().getSid());
     }
 
     private void share() {

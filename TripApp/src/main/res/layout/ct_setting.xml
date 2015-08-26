@@ -14,7 +14,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="5dp">
+        android:layout_marginTop="1dp">
 
         <TextView
             style="@style/ctMyProfile"
@@ -36,7 +36,7 @@
         style="@style/ctMyProfile"
         android:text="@string/ct_about" />/>
     <TextView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="1dp"
         android:id="@+id/ct_relation"
         style="@style/ctMyProfile"
         android:text="@string/ct_relation_us" />

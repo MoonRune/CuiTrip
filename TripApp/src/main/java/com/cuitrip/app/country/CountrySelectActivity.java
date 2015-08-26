@@ -111,8 +111,8 @@ public class CountrySelectActivity extends BaseActivity {
             public void onClick(View v) {
                 if (((LocationAdapter) preList.getAdapter()).hasLowerArea()) {
                     request(2, ((AreaMode) v.getTag()).getAbbr());
-                    selectArea(1, ((AreaMode) v.getTag()));
                 }
+                selectArea(1, ((AreaMode) v.getTag()));
 
             }
         }));

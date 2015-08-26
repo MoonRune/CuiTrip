@@ -11,7 +11,7 @@ import com.cuitrip.service.R;
 
 import java.util.List;
 
-import jp.wasabeef.recyclerview.animators.SlideInLeftAnimator;
+import jp.wasabeef.recyclerview.animators.SlideInRightAnimator;
 
 /**
  * Created by baziii on 15/8/10.
@@ -56,7 +56,7 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
         super.onCreate(savedInstanceState);
         showActionBar(getString(R.string.favorite_title));
         mRecyclerView.setAdapter(mAdapter);
-        SlideInLeftAnimator animator = new SlideInLeftAnimator();
+        SlideInRightAnimator animator = new SlideInRightAnimator();
         mRecyclerView.setItemAnimator(animator);
         requestPresentRefresh();
     }

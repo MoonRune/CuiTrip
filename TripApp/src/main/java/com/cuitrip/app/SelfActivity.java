@@ -183,7 +183,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         mPersonalNickEt.setText(userInfo.getNick());
         mPersonalAvaNickTv.setText(userInfo.getNick());
-        mPersonalAvaRegistTv.setText(getString(R.string.regist_time,Utils.getMsToD(userInfo.getGmtCreated())));
+        mPersonalAvaRegistTv.setText(getString(R.string.regist_time, Utils.getMsToD(userInfo.getGmtCreated())));
         mPersonalBirthTv.setText(userInfo.getBirthDay());
 
         mPersonalGenderTv.setText(getGender(userInfo.getGender()));
@@ -212,8 +212,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
         if (getIndentityClickable()) {
             mPersonalIdentityV.setOnClickListener(this);
-        }
-        else {
+        } else {
             mPersonalIdentityV.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -249,13 +248,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void setOnClicks() {
-        //性别只能改一次
-        if (TextUtils.isEmpty(getGender(userInfo.getGender()))) {
-            mPersonalGenderLl.setOnClickListener(this);
-            mPersonalGenderArrowV.setVisibility(View.VISIBLE);
-        } else {
-            mPersonalGenderArrowV.setVisibility(View.INVISIBLE);
-        }
+        mPersonalGenderLl.setOnClickListener(this);
+        mPersonalGenderArrowV.setVisibility(View.VISIBLE);
         mPersonalAvaLl.setOnClickListener(this);
 
 
@@ -409,14 +403,14 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void submit() {
-       final String email = mPersonalEmailEt.getText().toString();
-        if (!TextUtils.isEmpty(email)){
+        final String email = mPersonalEmailEt.getText().toString();
+        if (!TextUtils.isEmpty(email)) {
             Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
             Matcher matcher = pattern.matcher(email);
-           if(!matcher.matches()){
-               MessageUtils.showToast(getString(R.string.please_input_right_email));
-               return;
-           }
+            if (!matcher.matches()) {
+                MessageUtils.showToast(getString(R.string.please_input_right_email));
+                return;
+            }
         }
         disableEdit();
         if (mIsUpLoading) {
@@ -424,7 +418,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         final String phone = mPersonalPhoneEt.getText().toString();
         final String birth = mPersonalBirthTv.getText().toString();
-        final String ava = TextUtils.isEmpty(userInfo.getHeadPic())?mUploadedAvaUrl:userInfo.getHeadPic();
+        final String ava = TextUtils.isEmpty(userInfo.getHeadPic()) ? mUploadedAvaUrl : userInfo.getHeadPic();
         final String name = TextUtils.isEmpty(userInfo.getRealName()) ? mPersonalNameEt.getText().toString() : userInfo.getRealName();
         final String nick = mPersonalNickEt.getText().toString();
         final String gender = TextUtils.isEmpty(getGender(userInfo.getGender())) ? getGender(mPersonalGenderTv.getText().toString()) : userInfo.getGender();
@@ -450,13 +444,13 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                         userInfo.setBirthDay(birth);
                         userInfo.setEmail(email);
                         LoginInstance.update(SelfActivity.this, userInfo);
-                        LogHelper.e("omg","update suc");
+                        LogHelper.e("omg", "update suc");
                     }
 
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
                         save();
-                        LogHelper.e("omg","selft save suc");
+                        LogHelper.e("omg", "selft save suc");
                         enableEdit(true, "");
                         finish();
                     }
@@ -505,16 +499,16 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 String[] pics = null;
                 String pic1 = "";
                 String pic2 = "";
-                LogHelper.e("pics",""+userInfo.getIdPictures());
+                LogHelper.e("pics", "" + userInfo.getIdPictures());
                 if (!TextUtils.isEmpty(userInfo.getIdPictures())) {
                     pics = userInfo.getIdPictures().split(",");
-                    LogHelper.e("pics",TextUtils.join("-",pics));
+                    LogHelper.e("pics", TextUtils.join("-", pics));
                     if (pics != null && pics.length >= 2) {
                         pic1 = pics[0];
                         pic2 = pics[1];
                     }
                 }
-                LogHelper.e("pics",pic1+"   "+pic2);
+                LogHelper.e("pics", pic1 + "   " + pic2);
                 SelfIdentificationActivity.start(this, userInfo.getIdRefuseReason(),
                         userInfo.getIdArea(), userInfo.getIdType(), userInfo.getIdValidTime(), pic1, pic2);
                 break;

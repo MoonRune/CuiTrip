@@ -124,15 +124,15 @@
                 </RelativeLayout>
 
             <RelativeLayout
-                tools:visibility="gone"
+                tools:visibility="visible"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/comment_block"
-                android:paddingTop="40dp"
                 android:background="@color/ct_white"
                 android:padding="@dimen/ct_width_padding">
 
                 <TextView
+                    android:layout_marginTop="40dp"
                     android:id="@+id/service_introduce"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -226,23 +226,10 @@
                     style="@style/ctDivider"
                     android:layout_below="@+id/service_bill_introduce" />
 
-                <TextView
-                    android:id="@+id/service_cuibin_introduce"
-                    style="@style/ctDetailLeft"
-                    android:layout_below="@+id/divider9"
-                    android:text="@string/ct_cuitrip_gongyue" />
-
-                <TextView
-                    android:id="@+id/service_cuibin_introduce_view"
-                    style="@style/ctDetailRight"
-                    android:textColor="@color/ct_main_color"
-                    android:layout_below="@+id/divider9"
-                    android:text="查看详情" />
-
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:layout_below="@+id/service_cuibin_introduce" />
+                    android:layout_below="@+id/service_bill_introduce" />
             </RelativeLayout>
             <LinearLayout
                 tools:visibility="gone"
@@ -262,8 +249,16 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:textSize="@dimen/ct_ts_3"
+                    android:textSize="19sp"
                     android:textColor="@color/ct_title"/>
+
+                <TextView
+                    android:id="@+id/comment_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:textSize="13sp"
+                    android:textColor="@color/ct_content"/>
 
                 <TextView
                     android:id="@+id/comment_content"
