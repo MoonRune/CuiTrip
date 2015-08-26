@@ -28,7 +28,7 @@
                     android:layout_marginTop="20dp"
                     android:textColor="@color/ct_text_title"
                     android:textSize="19sp"
-                    android:text="您已评价成功" />
+                    android:text="@string/comment_suc" />
                 <TextView
                     android:id="@+id/service_name"
                     android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/selector_blue_stoken_empty_corner"
                 android:textColor="@color/ct_blue_green"
-                android:text="查看其他推荐行程" />
+                android:text="@string/other_travel" />
 
         </LinearLayout>
     </ScrollView>

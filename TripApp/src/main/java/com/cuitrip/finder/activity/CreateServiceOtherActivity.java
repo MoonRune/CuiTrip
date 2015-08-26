@@ -2,6 +2,7 @@ package com.cuitrip.finder.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -143,7 +145,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
         if (!TextUtils.isEmpty(mServiceInfo.getServiceTime())) {
             timeValue = mServiceInfo.getServiceTime();
-            mTime.setText(mServiceInfo.getServiceTime());
+            mTime.setText(getString(R.string.per_hour_with_num_above, timeValue));
         }
 
         if (!TextUtils.isEmpty(mServiceInfo.getAddress())) {
@@ -164,7 +166,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
         if (mServiceInfo.getMaxbuyerNum() != null) {
             countValue = mServiceInfo.getMaxbuyerNum() + "";
-            mCount.setText(countValue);
+            mCount.setText(getString(R.string.per_man_with_num_above, countValue));
         }
 //        if(mServiceInfo.getCountry() != null){
 //            for(int i =0; i<countryValues.length; i++){
@@ -311,7 +313,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         switch (view.getId()) {
 
             case R.id.ct_tag_block:
-                view.requestFocus();
+                hidenSoftInput();
                 tagsPop.showTags();
                 break;
             case R.id.address_block:
@@ -323,7 +325,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             case R.id.price_desc_block:
                 String include = mServiceInfo == null ? "" : mServiceInfo.getFeeInclude();
                 String uninclude = mServiceInfo == null ? "" : mServiceInfo.getFeeExclude();
-                PriceDescActivity.start(this, include, uninclude,true);
+                PriceDescActivity.start(this, include, uninclude, true);
                 break;
             case R.id.time_block: {
                 builder = MessageUtils.createHoloBuilder(this);
@@ -334,7 +336,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i < getTimes().length) {
 
-                            mTime.setText(getString(R.string.per_hour_with_num_above,String.valueOf(i + 1)));
+                            mTime.setText(getString(R.string.per_hour_with_num_above, String.valueOf(i + 1)));
                             timeValue = String.valueOf(i + 1);
                         }
                     }
@@ -354,7 +356,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         if (i < getPersons().length) {
-                            mCount.setText(getString(R.string.per_man_with_num_above,String.valueOf(i + 1)));
+                            mCount.setText(getString(R.string.per_man_with_num_above, String.valueOf(i + 1)));
                             countValue = String.valueOf(i + 1);
                         }
                     }
@@ -362,7 +364,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                 builder.create().show();
                 break;
             case R.id.pay_block:
-                view.requestFocus();
+                hidenSoftInput();
                 priceTypePop.showPriceType();
                 break;
             case R.id.pay_introduce:
@@ -403,9 +405,17 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
     }
 
 
-    public void saveToPreModify(){
-        LogHelper.e("save","saveToPreModify");
-        mServiceInfo.setAddress(  mAddress.getText().toString());
+    public void hidenSoftInput() {
+        View view = getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void saveToPreModify() {
+        LogHelper.e("save", "saveToPreModify");
+        mServiceInfo.setAddress(mAddress.getText().toString());
         try {
             mServiceInfo.setMaxbuyerNum(Integer.valueOf(countValue));
         } catch (NumberFormatException e) {
@@ -413,7 +423,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
         mServiceInfo.setServiceTime(timeValue);
         mServiceInfo.setMeetingPlace(mMeet.getText().toString());
         mServiceInfo.setTag(mTag.getText().toString());
-        setResult(RESULT_CANCELED,new Intent().putExtra(CreateServiceActivity.SERVICE_INFO,mServiceInfo));
+        setResult(RESULT_CANCELED, new Intent().putExtra(CreateServiceActivity.SERVICE_INFO, mServiceInfo));
     }
 
 
@@ -429,7 +439,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             mServiceInfo.setMeetingPlace(GaoDeMapActivity.getName(data));
             mServiceInfo.setLat(String.valueOf(GaoDeMapActivity.getLat(data)));
             mServiceInfo.setLng(String.valueOf(GaoDeMapActivity.getLng(data)));
-            LogHelper.e("get map ",""+mServiceInfo.getMeetingPlace()+"|"+mServiceInfo.getLat()+"|"+mServiceInfo.getLng());
+            LogHelper.e("get map ", "" + mServiceInfo.getMeetingPlace() + "|" + mServiceInfo.getLat() + "|" + mServiceInfo.getLng());
             mMeet.setText(GaoDeMapActivity.getName(data));
         }
         if (CountrySelectActivity.isWrited(requestCode, resultCode, data)) {
@@ -547,7 +557,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     tags = datas;
 
                 } catch (Exception e) {
-                    LogHelper.e("get tags","error"+e.getMessage());
+                    LogHelper.e("get tags", "error" + e.getMessage());
                 }
                 if (tagsPop != null) {
                     tagsPop.build();
@@ -675,7 +685,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
         public void build() {
             if (tags != null && !tags.isEmpty()) {
-                LogHelper.e("get tags",TextUtils.join("|",tags));
+                LogHelper.e("get tags", TextUtils.join("|", tags));
                 view.findViewById(R.id.progress_bar).setVisibility(View.GONE);
                 LinearLayout tagsLayout = (LinearLayout) view.findViewById(R.id.ct_tags_layout);
                 tagsLayout.setVisibility(View.VISIBLE);

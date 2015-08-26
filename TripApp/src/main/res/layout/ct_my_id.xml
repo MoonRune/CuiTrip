@@ -36,7 +36,7 @@
 
                 <TextView
                     style="@style/order_info_hint"
-                    android:text="国家和地区" />
+                    android:text="@string/identity_country" />
 
                 <TextView
                     android:id="@+id/ct_user_country_tv"
@@ -54,7 +54,7 @@
 
                 <TextView
                     style="@style/order_info_hint"
-                    android:text="证件类型" />
+                    android:text="@string/identity_type" />
 
                 <TextView
                     android:id="@+id/ct_user_identity_type_tv"
@@ -73,7 +73,7 @@
 
                 <TextView
                     style="@style/order_info_hint"
-                    android:text="有效期至" />
+                    android:text="@string/identity_date_to" />
 
                 <TextView
                     android:id="@+id/ct_user_validate_date_tv"
@@ -81,7 +81,7 @@
                     android:background="@null"
                     android:clickable="false"
                     android:focusable="false"
-                    android:hint="例:2000-10-1" />
+                    android:hint="@string/identity_date_hint" />
             </LinearLayout>
 
         </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_height="wrap_content"
                 android:drawableLeft="@drawable/add_s_g"
                 android:drawablePadding="10dp"
-                android:text="上传证件照片"
+                android:text="@string/upload_identity_image"
                 android:gravity="center"/>
         </RelativeLayout>
         <TextView
@@ -146,7 +146,7 @@
             android:paddingRight="20dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/selector_blue_stoken_empty_corner"
-            android:text="重新上传"/>
+            android:text="@string/reload"/>
         <TextView
             android:layout_marginTop="30dp"
             android:layout_marginBottom="30dp"
@@ -157,6 +157,6 @@
             android:layout_marginRight="15dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="请上传您的有效身份证件，包括身份证、护照。\n如证件有效期与其他证件信息不在同一页，请同时上传有效期所在的那一页。\n您可以使用相机、手机拍照，或者扫描仪，请确保证件上的文字清晰可辨识。"/>
+            android:text="@string/identity_detail_msg"/>
     </LinearLayout>
 </ScrollView>

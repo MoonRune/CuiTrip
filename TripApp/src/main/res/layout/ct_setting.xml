@@ -20,7 +20,7 @@
             style="@style/ctMyProfile"
             android:drawableRight="@null"
             android:layout_width="wrap_content"
-            android:text="货币"/>
+            android:text="@string/cash_unit"/>
 
         <TextView
             android:gravity="right|center_vertical"

@@ -35,18 +35,20 @@
         android:textSize="19sp"
         tools:text="header" />
 
-    <TextView
+    <EditText
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:id="@+id/dialog_content_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:gravity="top"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
         android:paddingTop="5dp"
+        android:background="@null"
         android:textColor="@color/ct_text_content"
         android:textSize="15sp"
-        tools:text="content" />
-
+        android:hint="@string/please_input"/>
     <Button
         android:id="@+id/dialog_click_v"
         style="@style/ctMainBackgroundButton"

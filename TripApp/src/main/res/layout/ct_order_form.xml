@@ -21,7 +21,7 @@
         tools:text="123"
         android:paddingLeft="10dp"
         android:textSize="13sp"
-        android:textColor="@color/ct_00aabb"
+        android:textColor="@color/ct_white"
         android:layout_weight="1"/>
     <com.lab.widget.IconPageIndicator
         android:id="@+id/ct_view_pager_indicator"

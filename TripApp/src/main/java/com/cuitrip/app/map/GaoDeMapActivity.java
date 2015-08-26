@@ -6,20 +6,18 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
+import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
-import com.amap.api.services.core.LatLonPoint;
 import com.amap.api.services.core.PoiItem;
-import com.amap.api.services.geocoder.GeocodeResult;
-import com.amap.api.services.geocoder.GeocodeSearch;
-import com.amap.api.services.geocoder.RegeocodeQuery;
-import com.amap.api.services.geocoder.RegeocodeResult;
 import com.amap.api.services.poisearch.PoiItemDetail;
 import com.amap.api.services.poisearch.PoiResult;
 import com.amap.api.services.poisearch.PoiSearch;
@@ -28,6 +26,7 @@ import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.utils.LogHelper;
+import com.lab.utils.MessageUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -46,8 +45,8 @@ public class GaoDeMapActivity extends BaseActivity {
     MapView mapView;
     AMap aMap;
 
-    public static void returnForIM(Context activity){
-        activity.startActivity(new Intent(activity, GaoDeMapActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(IM_RESULT,true));
+    public static void returnForIM(Context activity) {
+        activity.startActivity(new Intent(activity, GaoDeMapActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(IM_RESULT, true));
 
     }
 
@@ -62,7 +61,7 @@ public class GaoDeMapActivity extends BaseActivity {
 
 
     public static Intent getStartShow(Context context, double lat, double lng, String name) {
-       return  (new Intent(context, GaoDeMapActivity.class)
+        return (new Intent(context, GaoDeMapActivity.class)
                 .putExtra(VALUE_LAT, lat).putExtra(VALUE_LNG, lng).putExtra(VALUE_NAME, name));
     }
 
@@ -102,12 +101,12 @@ public class GaoDeMapActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gaode_map);
         mapView = (MapView) findViewById(R.id.map);
-        LogHelper.e("gaode","create");
+        LogHelper.e("gaode", "create");
         mapView.onCreate(savedInstanceState);// 必须要写 init();
         init();
-        LogHelper.e("gaode","init");
+        LogHelper.e("gaode", "init");
         if (!readIntent()) {
-            LogHelper.e("gaode","select");
+            LogHelper.e("gaode", "select");
             getSupportActionBar().setCustomView(R.layout.ct_action_search);
             getSupportActionBar().setDisplayShowCustomEnabled(true);
             getSupportActionBar().collapseActionView();
@@ -117,7 +116,7 @@ public class GaoDeMapActivity extends BaseActivity {
             getSupportActionBar().getCustomView().findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    save();
+                    inputAndSave();
                 }
             });
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -134,24 +133,63 @@ public class GaoDeMapActivity extends BaseActivity {
             });
             move(25.044061, 121.510841);
         } else {
-            LogHelper.e("gaode","show");
+            LogHelper.e("gaode", "show");
             mapView.postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     moveAndMark(lat, lng, name);
                 }
-            },300);
-            LogHelper.e("gaode","show ok");
+            }, 300);
+            LogHelper.e("gaode", "show ok");
         }
 
         getSupportActionBar().show();
-        LogHelper.e("gaode","done");
+        LogHelper.e("gaode", "done");
+        aMap.setInfoWindowAdapter(infoWindowAdapter);
+        aMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
     }
 
-    public void save() {
-        queryAndSave(aMap.getCameraPosition().target.latitude,
-                aMap.getCameraPosition().target.longitude);
+    private AMap.InfoWindowAdapter infoWindowAdapter = new AMap.InfoWindowAdapter() {
+        @Override
+        public View getInfoWindow(Marker marker) {
+            View view = LayoutInflater.from(GaoDeMapActivity.this).inflate(R.layout.map_info_v, null);
+            ((TextView) view.findViewById(R.id.title_v)).setText(marker.getSnippet());
+            return view;
+        }
+
+        @Override
+        public View getInfoContents(Marker marker) {
+            return getInfoWindow(marker);
+        }
+    };
+    private AMap.OnInfoWindowClickListener onInfoWindowClickListener = new AMap.OnInfoWindowClickListener() {
+        @Override
+        public void onInfoWindowClick(final Marker marker) {
+            MessageUtils.dialogBuilder(GaoDeMapActivity.this, true, "",
+                    getString(R.string.set_address, marker.getSnippet()), "", getString(R.string.ct_confirm), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            queryAndSave(marker.getPosition().latitude,
+                                    marker.getPosition().longitude,
+                                    marker.getSnippet());
+                        }
+                    }
+            );
+        }
+    };
+
+    public void inputAndSave() {
+
+        final double lat = aMap.getCameraPosition().target.latitude;
+        final double lng = aMap.getCameraPosition().target.longitude;
+        MessageUtils.dialogBuilderInput(this, true, "", getString(R.string.please_desc_address), getString(R.string.ct_confirm), new MessageUtils.setMessageListener() {
+            @Override
+            public void setMessage(String s) {
+                queryAndSave(lat, lng, s);
+            }
+        });
     }
+
 
     /**
      * 初始化 AMap 对象
@@ -198,87 +236,56 @@ public class GaoDeMapActivity extends BaseActivity {
         mapView.onDestroy();
 
 //销毁页面时候的清空回调和是否回调错误
-        if(MainApplication.getCallback() != null) {
+        if (MainApplication.getCallback() != null) {
             MainApplication.getCallback().onFailure(getString(R.string.data_error));
             MainApplication.setCallback(null);
         }
     }
 
-    public void queryAndSave(final double lat, final double lng) {
-        GeocodeSearch geocoderSearch = new GeocodeSearch(this);
-        geocoderSearch.setOnGeocodeSearchListener(new GeocodeSearch.OnGeocodeSearchListener() {
-            @Override
-            public void onRegeocodeSearched(RegeocodeResult result, int rCode) {
-                hideLoading();
-                if (rCode == 0) {
-                    if (result != null && result.getRegeocodeAddress() != null && result.getRegeocodeAddress().getFormatAddress() != null) {
+    public void queryAndSave(final double lat, final double lng, String addressName) {
 
-                        String addressName = result.getRegeocodeAddress().getFormatAddress();
-                        LogHelper.e("set map ", "" + lat + "|" + lng + "|" + addressName);
-                        if (getIntent().getBooleanExtra(IM_RESULT,false)) {
-                            Map.Entry<Double,Double> pointF = bd_encrypt(lat,lng);
-                            LogHelper.e("encry"," "+pointF.getKey()+"|"+pointF.getValue());
-//                            pointF = bd_decrypt(lat, lng);
-//                            LogHelper.e("bd_decrypt"," "+pointF.getKey()+"|"+pointF.getValue());
-
-                           String url= "http://restapi.amap.com/v3/staticmap?location="+pointF.getValue()+","+pointF.getKey()+"&zoom=16&size=300*300&key=8aa78f0b74184f42e6e620866ec13802";
-//                            Uri uri = Uri.parse(" http://restapi.amap.com/v3/staticmap").buildUpon()
-//                                    .appendQueryParameter("size", "240*240")
-//                                    .appendQueryParameter("key", "8aa78f0b74184f42e6e620866ec13802")
-//                                    .appendQueryParameter("zoom", "16")
-//                                    .appendQueryParameter("location",  "116.481485,39.990464").build();
-                            LogHelper.e("set map ",""+url);
-                            Uri uri = Uri.parse(url);
-                            LocationMessage   mMsg = LocationMessage.obtain(lat,lng,
-                                    addressName, uri);
-                            MainApplication.getCallback().onSuccess(mMsg);
-                            MainApplication.setCallback(null);
-                            finish();
+        LogHelper.e("set map ", "" + lat + "|" + lng + "|" + addressName);
+        if (getIntent().getBooleanExtra(IM_RESULT, false)) {
+            Map.Entry<Double, Double> pointF = bd_encrypt(lat, lng);
+            LogHelper.e("encry", " " + pointF.getKey() + "|" + pointF.getValue());
+            String url = "http://restapi.amap.com/v3/staticmap?location=" + pointF.getValue() + "," + pointF.getKey() + "&zoom=16&size=300*300&key=8aa78f0b74184f42e6e620866ec13802";
+            LogHelper.e("set map ", "" + url);
+            Uri uri = Uri.parse(url);
+            LocationMessage mMsg = LocationMessage.obtain(lat, lng,
+                    addressName, uri);
+            MainApplication.getCallback().onSuccess(mMsg);
+            MainApplication.setCallback(null);
+            finish();
 //                           ?location=116.481485,39.990464&zoom=10&size=750*300&markers=mid,,A:116.481485,39.990464&key=ee95e52bf08006f63fd29bcfbcf21df0
-                        }else {
-                            Intent intent = new Intent();
-                            intent.putExtra(VALUE_LAT, lat);
-                            intent.putExtra(VALUE_LNG, lng);
-                            intent.putExtra(VALUE_NAME, addressName);
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra(VALUE_LAT, lat);
+            intent.putExtra(VALUE_LNG, lng);
+            intent.putExtra(VALUE_NAME, addressName);
 
-                            setResult(RESULT_OK, intent);
-                        }
-                        finish();
-                    } else {
-
-                    }
-                }
-            }
-
-            @Override
-            public void onGeocodeSearched(GeocodeResult geocodeResult, int i) {
-
-            }
-        });
-        RegeocodeQuery query = new RegeocodeQuery(new LatLonPoint(lat, lng),
-                20, GeocodeSearch.AMAP);// 第一个参数表示一个 Latlng,第二参数表示范围多少米,第三个参数 表示是火系坐标系还是 GPS 原生坐标系
-        geocoderSearch.getFromLocationAsyn(query);
+            setResult(RESULT_OK, intent);
+        }
+        finish();
     }
+
     final double x_pi = 3.14159265358979324 * 3000.0 / 180.0;
 
-    Map.Entry<Double,Double> bd_encrypt(double gg_lat, double gg_lon)
-    {
+    Map.Entry<Double, Double> bd_encrypt(double gg_lat, double gg_lon) {
         double x = gg_lon, y = gg_lat;
-        double z = Math.sqrt(x * x + y * y) + 0.00002 *  Math.sin(y * x_pi);
-        double theta =  Math.atan2(y, x) + 0.000003 *  Math.cos(x * x_pi);
-        Double bd_lon = (Double) (z *  Math.cos(theta) + 0.0065);
-        Double  bd_lat = (Double) (z *  Math.sin(theta) + 0.006);
-        return new HashMap.SimpleEntry<Double,Double>(gg_lat,gg_lon);
+        double z = Math.sqrt(x * x + y * y) + 0.00002 * Math.sin(y * x_pi);
+        double theta = Math.atan2(y, x) + 0.000003 * Math.cos(x * x_pi);
+        Double bd_lon = (Double) (z * Math.cos(theta) + 0.0065);
+        Double bd_lat = (Double) (z * Math.sin(theta) + 0.006);
+        return new HashMap.SimpleEntry<Double, Double>(gg_lat, gg_lon);
     }
 
-    Map.Entry<Double,Double> bd_decrypt(double bd_lat, double bd_lon )
-    {
+    Map.Entry<Double, Double> bd_decrypt(double bd_lat, double bd_lon) {
         double x = bd_lon - 0.0065, y = bd_lat - 0.006;
         double z = Math.sqrt(x * x + y * y) - 0.00002 * Math.sin(y * x_pi);
         double theta = Math.atan2(y, x) - 0.000003 * Math.cos(x * x_pi);
         Double gg_lon = (Double) (z * Math.cos(theta));
         Double gg_lat = (Double) (z * Math.sin(theta));
-        return new HashMap.SimpleEntry<Double,Double>(gg_lat,gg_lon);
+        return new HashMap.SimpleEntry<Double, Double>(gg_lat, gg_lon);
     }
 
     public void moveAndMark(double lat, double lng, String title) {

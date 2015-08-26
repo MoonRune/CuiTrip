@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:text="预订日期"
+                android:text="@string/order_date_time"
                 style="@style/order_form_hint"/>
             <TextView
                 android:id="@+id/ct_order_time_tv"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:text="预订人数"
+                android:text="@string/order_people"
                 style="@style/order_form_hint" />
             <TextView
                 android:id="@+id/ct_person_size_tv"
@@ -69,7 +69,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="游玩时间"
+            android:text="@string/order_play_time"
             style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_service_duration_tv"
@@ -88,7 +88,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="见面地点"
+            android:text="@string/order_meet_place"
             style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_service_meet_location_tv"
@@ -109,7 +109,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="费用"
+            android:text="@string/order_prices"
             style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_order_price_tv"
@@ -127,7 +127,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="费用包含"
+            android:text="@string/price_include"
             style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_order_price_include_tv"
@@ -144,7 +144,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="费用不包含"
+            android:text="@string/price_exclude"
             style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_order_price_uninclude_tv"
@@ -161,7 +161,7 @@
             style="@style/order_form_divide"
             />
         <TextView
-            android:text="订单失效原因"
+            android:text="@string/order_cancel_reason"
             android:layout_width="match_parent"
             android:layout_height="44dp"
             android:gravity="center_vertical"

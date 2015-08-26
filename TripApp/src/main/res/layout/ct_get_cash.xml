@@ -74,14 +74,14 @@
 
         <TextView
             style="@style/order_info_hint"
-            android:text="提现金额(USD)" />
+            android:text="@string/get_cash_amount_hint" />
 
         <EditText
             android:background="@null"
             android:inputType="numberDecimal"
             android:id="@+id/money"
             style="@style/order_info_value"
-            android:hint="请设置提款金额"  />
+            android:hint="@string/get_cath_hint"  />
     </LinearLayout>
 
     <View
@@ -94,7 +94,7 @@
         android:layout_marginTop="10dp"
         android:textColor="@color/ct_a7"
         android:textSize="13sp"
-        android:text="3~4小时后到账，提现时paypal会收取手续费"/>
+        android:text="@string/get_cash_delay_mesg"/>
     <TextView
         android:layout_marginLeft="15dp"
         android:layout_marginRight="15dp"
@@ -108,5 +108,5 @@
         android:textColor="@color/ct_white"
         android:textSize="19sp"
         android:layout_height="wrap_content"
-        android:text="确认提现"/>
+        android:text="@string/confirm_get_cash"/>
 </LinearLayout>

@@ -1,35 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp">
-    <TextView
-        android:layout_marginTop="30dp"
-        android:id="@+id/title"
-        android:textSize="15sp"
-        tools:text="title"
-        android:textColor="@color/ct_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="10dp"
-        android:id="@+id/time"
-        android:textSize="15sp"
-        tools:text="1231231"
-        android:textColor="@color/ct_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginTop="30dp"
-        android:id="@+id/content"
-        android:textSize="15sp"
-        tools:text="asdfasdfasdfasfsadf"
-        android:textColor="@color/ct_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-</LinearLayout>
+    android:background="@color/ct_white"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:textColor="@color/ct_title"
+            android:textSize="19sp"
+            tools:text="title" />
+
+        <TextView
+            android:id="@+id/time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:textColor="@color/ct_content"
+            android:textSize="11sp"
+            android:layout_marginBottom="10dp"
+            tools:text="1231231" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/ct_divider" />
+
+        <TextView
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:textColor="@color/ct_content"
+            android:textSize="17sp"
+            android:layout_marginBottom="20dp"
+            tools:text="asdfasdfasdfasfsadf" />
+    </LinearLayout>
+</ScrollView>

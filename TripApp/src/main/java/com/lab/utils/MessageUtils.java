@@ -181,4 +181,49 @@ public class MessageUtils {
         alertDialog.setCancelable(cancelable);
         alertDialog.show();
     }
+
+    public static void dialogBuilderInput(Context context, boolean cancelable, String url, String title,
+                                     String okString, final setMessageListener setMessageListener) {
+        AlertDialog.Builder builder;
+        builder = new AlertDialog.Builder(context);
+
+        View view = LayoutInflater.from(context).inflate(R.layout.dialog_centent_input, null);
+        builder.setView(view);
+        ImageView imageView = (ImageView) view.findViewById(R.id.dialog_image_iv);
+        TextView headerTv = (TextView) view.findViewById(R.id.dialog_name_tv);
+        final TextView contentTv = (TextView) view.findViewById(R.id.dialog_content_tv);
+        TextView btnV = (TextView) view.findViewById(R.id.dialog_click_v);
+        if (!TextUtils.isEmpty(url)) {
+            imageView.setVisibility(View.VISIBLE);
+            ImageHelper.displayCtImage(url, imageView, null);
+        } else {
+            imageView.setVisibility(View.GONE);
+        }
+
+        if (!TextUtils.isEmpty(title)) {
+            headerTv.setVisibility(View.VISIBLE);
+            headerTv.setText(title);
+        } else {
+            headerTv.setVisibility(View.GONE);
+        }
+
+        btnV.setText(okString);
+        final AlertDialog alertDialog = builder.show();
+        btnV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (setMessageListener != null) {
+                    setMessageListener.setMessage(contentTv.getText().toString());
+                }
+                alertDialog.dismiss();
+            }
+        });
+        alertDialog.setCanceledOnTouchOutside(cancelable);
+        alertDialog.setCancelable(cancelable);
+        alertDialog.show();
+    }
+
+    public interface setMessageListener{
+        void setMessage(String s);
+    }
 }

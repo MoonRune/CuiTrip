@@ -31,7 +31,7 @@
                 android:paddingLeft="10dp"
                 android:gravity="center"
                 android:paddingTop="8dp"
-                android:text="版本太低，请升级"
+                android:text="@string/version_too_low"
                 android:textColor="@color/ct_7c"
                 android:textSize="@dimen/ct_ts_5" />
 

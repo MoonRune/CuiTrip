@@ -99,7 +99,7 @@
                     style="@style/profileTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="出生年月" />
+                    android:text="@string/birth" />
 
                 <TextView
                     android:id="@+id/ct_personal_birth_tv"
@@ -110,7 +110,7 @@
                     android:clickable="false"
                     android:layout_marginRight="10dp"
                     android:layout_height="match_parent"
-                    android:hint="请填写出生年月" />
+                    android:hint="@string/birth_hint" />
 
                 <ImageView
                     android:layout_width="5dp"
@@ -333,7 +333,7 @@
                     android:layout_weight="1"
                     android:layout_marginRight="10dp"
                     android:layout_height="wrap_content"
-                    android:text="设置"/>
+                    android:text="@string/setting"/>
                 <ImageView
                     android:layout_width="5dp"
                     android:layout_height="wrap_content"
@@ -357,7 +357,7 @@
                     style="@style/profileTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="手机号码" />
+                    android:text="@string/phone" />
 
                 <EditText
                     android:id="@+id/ct_personal_phone_et"
@@ -382,7 +382,7 @@
                     style="@style/profileTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="邮箱" />
+                    android:text="@string/self_profile_email" />
 
                 <EditText
                     android:id="@+id/ct_personal_email_et"
@@ -410,7 +410,7 @@
                     style="@style/profileTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="身份证件"
+                    android:text="@string/self_profile_identity"
                     android:layout_weight="1"/>
 
                 <TextView

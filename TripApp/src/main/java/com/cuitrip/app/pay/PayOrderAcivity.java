@@ -75,6 +75,7 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
     LinearLayout container;
     PayMethodPop payMethodPop = new PayMethodPop();
     DiscountSelectPop discountSelectPop = new DiscountSelectPop();
+
     public static void startActivity(Activity context, String orderid) {
         Intent intent = new Intent(context, PayOrderAcivity.class);
         intent.putExtra(ORDER_ID_KEY, orderid);
@@ -114,16 +115,17 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
         ctOrderDateBuyerSizeTv.setText(item.getOrderDate() + " - " + item.getBuyerSize());
         ctOrderPriceWhithCurrencyTv.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice());
 
-        ctOrderDiscountsTv.setText(getString(R.string.coups_lef_with_num_in,(item.getDiscountItems() == null ? 0 :item.getDiscountItems().size())));
+        ctOrderDiscountsTv.setText(getString(R.string.coups_lef_with_num_in, (item.getDiscountItems() == null ? 0 : item.getDiscountItems().size())));
         if (item.getDiscount() != null) {
             ctOrderDiscountContentTv.setVisibility(View.VISIBLE);
-            ctOrderDiscountContentTv.setText(getString(R.string.current_coup , item.getDiscount().getMoneyType() , item.getDiscount().getMoney()));
+            ctOrderDiscountContentTv.setText(getString(R.string.current_coup, item.getDiscount().getMoneyType(), item.getDiscount().getMoney()));
             ctOrderDiscount.setText("-  " + item.getDiscount().getMoney());
             try {
                 double value = Double.valueOf(item.getServiceNormalPrice())
                         - Double.valueOf(item.getDiscount().getMoney());
+                value = value < 0 ? 0 : value;
                 DecimalFormat df = new DecimalFormat("0.00");
-                    ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + df.format(value));
+                ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + df.format(value));
             } catch (Exception e) {
                 ctOrderFinalPriceWithCurrency.setText(item.getOrderCurrency() + "  " + item.getServiceNormalPrice(
                 ));
@@ -190,7 +192,7 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
 
     @Override
     public void uiPayFailed(String msg) {
-    onPayFailed(msg);
+        onPayFailed(msg);
     }
 
     public class PayMethodPop implements View.OnClickListener {
@@ -285,10 +287,10 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                 ((TextView) view.findViewById(R.id.content)).setText(
                         item.getMoneyType() + item.getMoney()
                 );
-                LogHelper.e("validate ",item.getInvalidDate());
-                LogHelper.e("validate reverted ",Utils.getMsToD(item.getInvalidDate()));
+                LogHelper.e("validate ", item.getInvalidDate());
+                LogHelper.e("validate reverted ", Utils.getMsToD(item.getInvalidDate()));
                 ((TextView) view.findViewById(R.id.time)).setText(
-                                getString(R.string.validate_time_to_with_string, Utils.getMsToD(item.getInvalidDate()))
+                        getString(R.string.validate_time_to_with_string, Utils.getMsToD(item.getInvalidDate()))
                 );
             } else {
                 ((TextView) view.findViewById(R.id.content)).setText(
@@ -306,7 +308,7 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
     }
 
     public void selectDiscount(DiscountItem discountItem) {
-            payOrderPresent.selectDiscount(discountItem);
+        payOrderPresent.selectDiscount(discountItem);
     }
 
     public class DiscountSelectPop implements View.OnClickListener {
@@ -329,14 +331,14 @@ public class PayOrderAcivity extends BaseActivity implements IPayOrderView {
                 mPriceTypeWindow.setOutsideTouchable(true);
                 emptyView.setOnClickListener(this);
             }
-            if (payOrderMode.getDiscountItems() == null ) {
+            if (payOrderMode.getDiscountItems() == null) {
                 progressBar.setVisibility(View.VISIBLE);
                 listView.setVisibility(View.GONE);
             } else {
                 progressBar.setVisibility(View.GONE);
                 listView.setVisibility(View.VISIBLE);
                 if (adapter == null || listView.getAdapter() == null) {
-                    listView.setAdapter(adapter = new DiscountAdapter(payOrderMode.getDiscountItems(),this));
+                    listView.setAdapter(adapter = new DiscountAdapter(payOrderMode.getDiscountItems(), this));
                 } else {
                     adapter.setItemList(payOrderMode.getDiscountItems());
                 }

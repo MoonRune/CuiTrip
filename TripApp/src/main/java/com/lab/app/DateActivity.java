@@ -41,15 +41,16 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
     private boolean mIsFinder;
     private String mSid;
 
-    public static void startFinder(Context context,String sid){
-        context.startActivity(new Intent(context,DateActivity.class).putExtra(SERVICE_ID,sid)
-                .putExtra(USER_TYPE,UserInfo.USER_FINDER));
+    public static void startFinder(Context context, String sid) {
+        context.startActivity(new Intent(context, DateActivity.class).putExtra(SERVICE_ID, sid)
+                .putExtra(USER_TYPE, UserInfo.USER_FINDER));
     }
 
-    public static void startTraveller(Context context,String sid){
-        context.startActivity(new Intent(context,DateActivity.class).putExtra(SERVICE_ID,sid)
-                .putExtra(USER_TYPE,UserInfo.USER_TRAVEL));
+    public static void startTraveller(Context context, String sid) {
+        context.startActivity(new Intent(context, DateActivity.class).putExtra(SERVICE_ID, sid)
+                .putExtra(USER_TYPE, UserInfo.USER_TRAVEL));
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +103,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                     if (data != null) {
                         mAvailableDate = ((AvailableDate) data).getAvailableDate();
                         mBookedDate = ((AvailableDate) data).getBookedDate();
-                        if (mAvailableDate!=null&&mBookedDate!=null) {
+                        if (mAvailableDate != null && mBookedDate != null) {
                             mAvailableDate.removeAll(mBookedDate);
                         }
                         mAdapter.setCalendar(mCalendar);
@@ -179,6 +180,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
     }
 
     public static final int NO_DATE = 0;
+
     public class DateItem {
         /**
          * 1可点击白
@@ -186,7 +188,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
          */
         String name;
         long time;
-        int type ;// 可点击白  (灰 蓝)（左  中 右 全）
+        int type;// 可点击白  (灰 蓝)（左  中 右 全）
 
         public String getName() {
             return name;
@@ -212,9 +214,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
             this.type = type;
         }
     }
+
     public class DateAdapter extends BaseAdapter {
-            List<DateItem> dateItems;
-        public DateItem renderFinder(int dayIndex){
+        List<DateItem> dateItems;
+
+        public DateItem renderFinder(int dayIndex) {
             DateItem result = new DateItem();
             if (dayIndex < 1 || dayIndex > calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
                 result.setName("");
@@ -225,7 +229,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
             return result;
         }
 
-        private long buildStart(int day){
+        private long buildStart(int day) {
 
             calendar.set(Calendar.DAY_OF_MONTH, day);
             calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -245,9 +249,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
             long end = calendar.getTimeInMillis();
             return end;
         }
-            private void matched(){
 
-            }
+        private void matched() {
+
+        }
+
         private Calendar calendar = Calendar.getInstance();
 
         {
@@ -301,6 +307,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 long end = calendar.getTimeInMillis();
 
                 tv.setText(String.valueOf(date));
+                view.setTag(Long.valueOf(start));
+                tv.setVisibility(View.VISIBLE);
+                tv.setEnabled(true);
+                tv.setChecked(false);
+
                 boolean matchAvaliable = false;
                 if (mAvailableDate != null && !mAvailableDate.isEmpty()) {
                     for (long time : mAvailableDate) {
@@ -309,21 +320,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                             tv.setChecked(true);
                             matchAvaliable = true;
                             break;
+                            //avaliable
                         }
                     }
                 }
-                boolean matchBooked = false;
-                if (mBookedDate != null && !mBookedDate.isEmpty()) {
-                    for (long time : mBookedDate) {
-                        if (time >= start && time < end) {
-                            tv.setEnabled(false);
-                            tv.setChecked(true);
-                            matchBooked = true;
-                            break;
-                        }
-                    }
-                }
-                if (!matchAvaliable && !matchBooked) {
+                if (!matchAvaliable) {
                     Calendar today = Calendar.getInstance();
                     today.setTimeZone(TimeZone.getTimeZone("GMT+800"));
                     today.set(Calendar.HOUR_OF_DAY, 0);
@@ -334,18 +335,24 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                         //当天之前不能被选中
                         if (start <= today.getTimeInMillis()) {
                             tv.setEnabled(false);
-                            tv.setChecked(true);
-                        } else {
-                            tv.setEnabled(true);
                             tv.setChecked(false);
                         }
                     } else {
                         tv.setEnabled(false);
-                        tv.setChecked(true);
+                        tv.setChecked(false);
                     }
                 }
-                view.setTag(Long.valueOf(start));
-                tv.setVisibility(View.VISIBLE);
+
+                if (mBookedDate != null && !mBookedDate.isEmpty()) {
+                    for (long time : mBookedDate) {
+                        if (time >= start && time < end) {
+                            tv.setEnabled(false);
+                            tv.setChecked(true);
+                            break;
+                            //booked
+                        }
+                    }
+                }
             }
 
             if (mIsFinder && view.isEnabled()) {

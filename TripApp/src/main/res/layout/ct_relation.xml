@@ -12,7 +12,7 @@
         android:layout_marginTop="25dp"
         android:textColor="@color/ct_gray"
         android:textSize="@dimen/ct_ts_4"
-        android:text="您在使用或在旅程中遇到任何问题\n请通过以下方式联系我们\n我们将尽快解决您的问题"/>
+        android:text="@string/please_connect_msg"/>
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

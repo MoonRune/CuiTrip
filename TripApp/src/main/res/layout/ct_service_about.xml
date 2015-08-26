@@ -95,7 +95,7 @@
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
             android:paddingTop="10dp"
-            android:text="安排日程"
+            android:text="@string/order_date"
             android:textColor="@color/ct_blue_green" />
 
         <View
@@ -127,7 +127,7 @@
 
                     <TextView
                         style="@style/static_hint"
-                        android:text="支付" />
+                        android:text="@string/static_pay" />
 
                     <TextView
                         android:id="@+id/total_visit_amount_tv"
@@ -150,7 +150,7 @@
 
                     <TextView
                         style="@style/static_hint"
-                        android:text="预约" />
+                        android:text="@string/static_ordered" />
 
                     <TextView
                         android:id="@+id/total_visitor_num_tv"
@@ -181,7 +181,7 @@
 
                     <TextView
                         style="@style/static_hint"
-                        android:text="完成" />
+                        android:text="@string/static_done" />
 
                     <TextView
                         android:id="@+id/daily_visit_tv"
@@ -203,7 +203,7 @@
 
                     <TextView
                         style="@style/static_hint"
-                        android:text="喜欢" />
+                        android:text="@string/static_liked" />
 
                     <TextView
                         android:id="@+id/order_size_tv"
@@ -234,7 +234,7 @@
 
                     <TextView
                         style="@style/static_hint"
-                        android:text="取消" />
+                        android:text="@string/static_cancel" />
 
                     <TextView
                         android:id="@+id/total_like_tv"
@@ -256,7 +256,7 @@
 
                     <TextView
                         style="@style/static_hint"
-                        android:text="营业"
+                        android:text=""
                         android:visibility="invisible" />
                 </LinearLayout>
             </LinearLayout>

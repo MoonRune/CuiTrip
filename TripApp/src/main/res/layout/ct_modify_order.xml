@@ -36,7 +36,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:text="预订日期"
+            android:text="@string/order_time"
             style="@style/order_form_hint"/>
         <TextView
             android:drawablePadding="@dimen/ct_narrow_right_padding"
@@ -55,7 +55,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <TextView
-            android:text="预订人数"
+            android:text="@string/order_people"
             style="@style/order_form_hint" />
         <TextView
             android:drawablePadding="@dimen/ct_narrow_right_padding"
@@ -73,7 +73,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="费用"
+            android:text="@string/order_price_hint"
             style="@style/order_form_hint"/>
         <TextView
             android:paddingRight="24dp"

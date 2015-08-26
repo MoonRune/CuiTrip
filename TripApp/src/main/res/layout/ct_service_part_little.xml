@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:text="预订日期"
+                android:text="@string/order_time"
                 style="@style/order_form_hint"/>
             <TextView
                 android:id="@+id/ct_order_time_tv"
@@ -51,7 +51,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <TextView
-                android:text="预订人数"
+                android:text="@string/order_people"
                 style="@style/order_form_hint" />
             <TextView
                 android:id="@+id/ct_person_size_tv"
@@ -68,7 +68,7 @@
         android:orientation="horizontal">
 
         <TextView
-            android:text="费用"
+            android:text="@string/order_prices"
             style="@style/order_form_hint"/>
         <TextView
             android:id="@+id/ct_order_price_tv"

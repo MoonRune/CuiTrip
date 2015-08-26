@@ -317,7 +317,7 @@
             android:name="com.cuitrip.finder.activity.CreateServiceOtherActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustPan"></activity>
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <activity
             android:name="com.cuitrip.finder.activity.CreateServiceSuccessActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"

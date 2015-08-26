@@ -15,7 +15,7 @@
         android:id="@+id/ct_price_type_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="计费方式：两口价" />
+        tools:text="" />
 
     <TextView
         android:id="@+id/ct_price_type_desc_tv"
@@ -41,7 +41,7 @@
         android:id="@+id/ct_price_include_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="吃饭吃菜喝汤"  />
+        tools:text="asdf"  />
 
     <TextView
         android:layout_marginTop="40dp"
@@ -58,5 +58,5 @@
         android:textColor="@color/ct_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="跑步打车飞机"  />
+        tools:text="asdf"  />
 </LinearLayout>
