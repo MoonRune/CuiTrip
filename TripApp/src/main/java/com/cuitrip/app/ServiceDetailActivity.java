@@ -159,7 +159,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             setViewText(R.id.service_content, info.getDescptWithnoPic());
             setViewText(R.id.service_max_person_value, getString(R.string.per_man_with_num_above, info.getMaxbuyerNum()));
 
-            setViewText(R.id.service_duration_value, info.getServiceTime());
+            setViewText(R.id.service_duration_value, getString(R.string.per_hour_with_num_above, info.getServiceTime()));
             //setViewText(R.id.service_best_time_value, info.getBestTime());
 
             findViewById(R.id.service_click).setOnClickListener(this);
@@ -197,7 +197,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             if (commentCount > 0) {
                 findViewById(R.id.comment_block).setVisibility(View.VISIBLE);
                 if (review.getLastReview() != null) {
-                    setViewText(R.id.comment_count, review.getLastReview().getNick() );
+                    setViewText(R.id.comment_count, review.getLastReview().getNick());
                     setViewText(R.id.comment_time, Utils.getMsToD(review.getLastReview().getGmtCreated()));
                 } else {
                     setViewText(R.id.comment_count, "");

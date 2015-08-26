@@ -85,12 +85,12 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         mCount = (TextView) findViewById(R.id.selected_count);
 
         mMoneyDesc = (TextView) findViewById(R.id.money_desc);
-        mMoneyDesc.setText(mService.getMoneyType());
+        mMoneyDesc.setText(mService.getShowPrice());
         mMoney = (TextView) findViewById(R.id.bill_count);
         if (mService.getPriceType() == 1) {
-            mMoney.setText(mService.getPrice() + getString(R.string.ct_service_unit));
+            mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
         } else {
-            mMoney.setText(mService.getPrice());
+            mMoney.setText(mService.getShowPrice());
         }
 
         findViewById(R.id.order_date).setOnClickListener(this);

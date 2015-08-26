@@ -31,12 +31,12 @@
     <string name="ct_hot_recommend">熱門推薦</string>
     <string name="ct_watch_detail">了解整個旅程</string>
     <string name="ct_author_register_time">註冊時間</string>
-    <string name="ct_author_identification">身份認證</string>
+    <string name="ct_author_identification">資料驗證</string>
     <string name="ct_author_career">職業</string>
     <string name="ct_author_interest">興趣</string>
     <string name="ct_author_language">語言</string>
     <string name="ct_service_introduce">旅程說明</string>
-    <string name="ct_service_order_date">可預約的日期</string>
+    <string name="ct_service_order_date">可預約日期</string>
     <string name="ct_service_date_click">查看日期</string>
     <string name="ct_service_duration">遊玩時間</string>
     <string name="ct_service_best_time">最佳時間</string>
@@ -160,8 +160,8 @@
     <string name="ct_relation_tips_code_and_wx">請掃描二維碼或加微信帳號：cuibinglvxing</string>
     <string name="ct_relation_call">緊急情況請來電</string>
     <string name="ct_finder">行程</string>
-    <string name="ct_your_find">妳的發現</string>
-    <string name="ct_your_find_tip">妳有什麼有趣的發現要告訴旅行者嗎？</string>
+    <string name="ct_your_find">妳的行程</string>
+    <string name="ct_your_find_tip">妳有什麼有趣的行程要告訴旅行者嗎？</string>
     <string name="ct_create_my_find">發布我的精彩行程</string>
     <string name="ct_new_service">新建</string>
     <string name="ct_service_to_edit">待編輯</string>
@@ -169,7 +169,7 @@
     <string name="ct_service_no_pass">審核未通過</string>
     <string name="ct_service_date_edit">安排日程與編輯</string>
     <string name="ct_next">下壹步</string>
-    <string name="ct_add_service">新增發現</string>
+    <string name="ct_add_service">新增行程</string>
     <string name="ct_create_service_title_hint">請輸入標題</string>
     <string name="ct_set_main_pic">設為主圖</string>
     <string name="ct_mainpic_setted">已設為主圖</string>
@@ -197,9 +197,9 @@
     <string name="ct_service_count_null">請選擇人數</string>
     <string name="ct_service_unit">/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
-    <string name="ct_go_service_list">返回發現列表</string>
-    <string name="ct_create_new_again">再新追加壹個發現</string>
-    <string name="ct_create_suc_tip">您的發現已上傳\n審核通過後您可以安排日程</string>
+    <string name="ct_go_service_list">返回行程列表</string>
+    <string name="ct_create_new_again">再新追加壹個行程</string>
+    <string name="ct_create_suc_tip">您的行程已上傳\n審核通過後您可以安排日程</string>
     <string name="ct_country_selected">地區</string>
     <string name="ct_country_selected_null">請選擇地區</string>
     <string name="ct_selected_service_date">安排日程</string>
@@ -283,8 +283,8 @@
     <string name="ct_close_and_save">保存並關閉</string>
     <string name="ct_service_create_header_validate">請輸入標題</string>
     <string name="ct_service_create_image_upload_validate">有圖片正在上傳，請等待&#8230;</string>
-    <string name="ct_service_create_content_validate">請輸入發現的具體描述</string>
-    <string name="ct_service_create_image_size_validate">創造發現至少需要上傳壹張圖片</string>
+    <string name="ct_service_create_content_validate">請輸入行程的具體描述</string>
+    <string name="ct_service_create_image_size_validate">創造行程至少需要上傳壹張圖片</string>
     <string name="ct_delete_suc">刪除成功</string>
     <string name="ct_delete_failed_can_try">刪除失敗，請稍後重試</string>
     <string name="please_relogin">請重新登入</string>
@@ -313,8 +313,8 @@
     <string name="bill_title">賬單</string>
     <string name="cancel_order_text">取消預訂</string>
     <string name="comment_order_text">立即留言</string>
-    <string name="commit_service_content">提交這個發現給脆餅審核</string>
-    <string name="commit_service_title">提交發現</string>
+    <string name="commit_service_content">提交這個行程給脆餅審核</string>
+    <string name="commit_service_title">提交行程</string>
     <string name="confirm_order_text">確認預訂</string>
     <string name="connect_cuitrip">聯系脆餅</string>
     <string name="conversation_list_title">聊天</string>
@@ -323,7 +323,7 @@
     <string name="ct_cancel_discount_suc_msg">取消優惠成功</string>
     <string name="ct_cancel_order_confirm_msg">確定要取消訂單嗎</string>
     <string name="ct_cancel_rule_detail_title">詳細條款</string>
-    <string name="ct_create_service_hint">幾段精心的文字，幾張精美的圖片，讓您的發現與眾不同，更會獲得旅行者的青睞。(最多2500個字，9張圖片)</string>
+    <string name="ct_create_service_hint">幾段精心的文字，幾張精美的圖片，讓您的行程與眾不同，更會獲得旅行者的青睞。(最多2500個字，9張圖片)</string>
     <string name="ct_discount_suc_message">優惠成功</string>
     <string name="ct_discussion_unsupport">該版本不支持此會話</string>
     <string name="ct_favorite_unavaliable">發現者已不再提供此旅程，再看看其他推薦吧</string>
@@ -369,7 +369,7 @@
     <string name="ct_service_meet_selected">請選擇見面地點</string>
     <string name="ct_service_tag">特色標簽</string>
     <string name="ct_tag_hint">請選擇標簽</string>   <string name="ct_tags_select_limit_message">最多設置4個標簽</string>
-    <string name="ct_tags_select_message">添加壹些標簽，讓旅行者更快明白您發現的內容</string>
+    <string name="ct_tags_select_message">添加壹些標簽，讓旅行者更快明白您行程的內容</string>
     <string name="ct_upload_image_failed">上傳圖片失敗</string>
     <string name="ct_upload_indeitiy_suc">上傳證件成功，等待審核</string>
     <string name="current_coup">目前使用的優惠碼 優惠%1$s %2$s</string>
@@ -481,7 +481,7 @@
     <string name="price_desc">明確的費用說明對保障您和旅行者的權益至關重要。我們建議您給出更詳細的費用說明，幫助旅行者更好的了解您的服務。</string>
 
 
-    <string name="self_profile_email">電子郵件</string>
+    <string name="self_profile_email">電子郵箱</string>
     <string name="self_profile_identity">身份證件</string>
     <string name="watch_detail">查看詳情</string>
     <string name="get_cash_amount_hint">提現金額(USD)</string>

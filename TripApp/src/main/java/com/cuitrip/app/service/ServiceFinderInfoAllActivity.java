@@ -35,6 +35,8 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
     public static final String FINDER_ID = "FINDER_ID";
     @InjectView(R.id.ct_user_ava_im)
     ImageView ctUserAvaIm;
+    @InjectView(R.id.person_top_ll)
+    View goneView;
     @InjectView(R.id.ct_user_real_name_tv)
     TextView ctUserRealNameTv;
     @InjectView(R.id.ct_user_birth_tv)
@@ -87,6 +89,7 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ct_finder_info_all);
         ButterKnife.inject(this);
+        goneView.setVisibility(View.GONE);
         finderId = getIntent().getStringExtra(FINDER_ID);
     }
 

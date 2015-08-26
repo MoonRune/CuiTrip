@@ -36,12 +36,12 @@
     <string name="ct_hot_recommend">热门推荐</string>
     <string name="ct_watch_detail">了解整个旅程</string>
     <string name="ct_author_register_time">注册时间</string>
-    <string name="ct_author_identification">身份验证</string>
+    <string name="ct_author_identification">资料验证</string>
     <string name="ct_author_career">职业</string>
     <string name="ct_author_interest">兴趣</string>
     <string name="ct_author_language">语言</string>
     <string name="ct_service_introduce">旅程说明</string>
-    <string name="ct_service_order_date">可预约的日期</string>
+    <string name="ct_service_order_date">可预约日期</string>
     <string name="ct_service_date_click">查看日期</string>
     <string name="ct_service_duration">游玩时间</string>
     <string name="ct_service_best_time">最佳时间</string>
@@ -91,7 +91,7 @@
     <string name="ct_null_phone_num">暂无电话 </string>
     <string name="ct_order_comment">评价</string>
     <string name="ct_order_comment_tip">为你的发现者写段评价吧!</string>
-    <string name="ct_order_comment_hint">所说您的感受吧！</string>
+    <string name="ct_order_comment_hint">说说您的感受吧！</string>
     <string name="ct_order_comment_commit">提交评价</string>
     <string name="ct_order_comment_suc">评价成功</string>
     <string name="ct_order_comment_thanks">感谢您的评价!\n把您的旅程分享给小伙伴吧~</string>
@@ -220,8 +220,8 @@
     <string name="ct_copyright" translatable="false">Copyright © 2015 Cuitrip All Rights Reserved</string>
 
     <string name="ct_finder">行程</string>
-    <string name="ct_your_find">你的发现</string>
-    <string name="ct_your_find_tip">你有什么有趣的发现要告诉哦旅行者吗？</string>
+    <string name="ct_your_find">你的行程</string>
+    <string name="ct_your_find_tip">你有什么有趣的行程要告诉哦旅行者吗？</string>
     <string name="ct_create_my_find">发布我的精彩行程</string>
     <string name="ct_new_service">新建</string>
     <string name="ct_service_to_edit">待编辑</string>
@@ -258,7 +258,7 @@
     <string name="ct_service_count_null">请选择人数</string>
     <string name="ct_service_unit">/人</string>
     <string name="ct_service_create_sucess">提交成功</string>
-    <string name="ct_go_service_list">返回发现列表</string>
+    <string name="ct_go_service_list">返回行程列表</string>
     <string name="ct_create_new_again">继续添加行程</string>
     <string name="ct_create_suc_tip">我们将尽快完成审核，您将收到邮件和消息提醒</string>
     <string name="ct_country_selected">地区</string>
@@ -351,8 +351,8 @@
     <string name="ct_close_and_save">保存并关闭</string>
     <string name="ct_service_create_header_validate">请输入标题</string>
     <string name="ct_service_create_image_upload_validate">有图片正在上传，请等待...</string>
-    <string name="ct_service_create_content_validate">请输入发现的具体描述</string>
-    <string name="ct_service_create_image_size_validate">创建发现至少需要上传一张图片</string>
+    <string name="ct_service_create_content_validate">请输入行程的具体描述</string>
+    <string name="ct_service_create_image_size_validate">创建行程至少需要上传一张图片</string>
     <string name="ct_delete_suc">删除成功</string>
     <string name="ct_delete_failed_can_try">删除失败，请稍后重试</string>
     <string name="please_relogin">请重新登录</string>
@@ -388,7 +388,7 @@
     <string name="order_status_wait_comment">等待评价</string>
     <string name="order_status_over">旅程已结束</string>
     <string name="order_status_unavaliable">预订已失效</string>
-    <string name="ct_create_service_hint">几段精心的文字，几张精美的图片，让您的发现与众不同，更会获得旅行者的青睐。(最多2500个字，9张图片)</string>
+    <string name="ct_create_service_hint">几段精心的文字，几张精美的图片，让您的行程与众不同，更会获得旅行者的青睐。(最多2500个字，9张图片)</string>
     <string name="ct_meet_location">见面地点</string>
     <string name="ct_service_tag">特色标签</string>
     <string name="ct_price_desc">费用说明</string>
@@ -425,10 +425,10 @@
     <string name="ct_price_payway_all_detail_msg_traveller">在发现者可接待的人数范围内，无论您有几人，都只收取一次服务费用，具体产生的餐饮、交通、门票等费用，请看明细说明。</string>
     <string name="ct_price_payway_per_detail_msg_traveller">在发现者可接待的人数范围内，按参加的人数收取费用，具体产生的餐饮、交通、门票等费用，请看明细说明。发现者提供免费体验的旅程，</string>
     <string name="ct_price_payway_free_detail_msg_traveller">不收取任何服务费，其他可能产生的餐饮、交通、门票等费用，请看明细说明。</string>
-    <string name="ct_tags_select_message">添加一些标签，让旅行者更快明白您发现的内容</string>
+    <string name="ct_tags_select_message">添加一些标签，让旅行者更快明白您行程的内容</string>
     <string name="ct_tags_select_limit_message">最多设置4个标签</string>
-    <string name="commit_service_title">提交发现</string>
-    <string name="commit_service_content">提交这个发现给脆饼审核</string>
+    <string name="commit_service_title">提交行程</string>
+    <string name="commit_service_content">提交这个行程给脆饼审核</string>
     <string name="ct_please_confirm_remove_discount">确定要取消优惠？</string>
     <string name="ct_get_order_detail_failed">获取订单详情失败</string>
     <string name="ct_discount_suc_message">优惠成功</string>
@@ -554,7 +554,7 @@
 
 
     <string name="price_desc">明确的费用说明对保障您和旅行者的权益至关重要。我们建议您给出更详细的费用说明，帮助旅行者更好的了解您的服务。</string>
-    <string name="self_profile_email">电子邮件</string>
+    <string name="self_profile_email">电子邮箱</string>
     <string name="self_profile_identity">身份证件</string>
     <string name="watch_detail">查看详情</string>
     <string name="get_cash_amount_hint">提现金额(USD)</string>

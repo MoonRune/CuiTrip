@@ -19,22 +19,20 @@
     android:orientation="horizontal">
     <ImageView
         android:id="@+id/author_img"
-        android:layout_width="66dp"
-        android:layout_height="66dp"
+        android:layout_width="67dp"
+        android:layout_height="67dp"
         android:layout_marginRight="10dp"
         android:scaleType="centerCrop"
         tools:src="@drawable/ct_default_user" />
 
-    <LinearLayout
-        android:layout_toRightOf="@+id/author_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
 
         <TextView
+            android:layout_alignTop="@+id/author_img"
+            android:layout_toRightOf="@+id/author_img"
             android:id="@+id/order_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:elegantTextHeight="true"
             android:singleLine="true"
             android:text="2015/07/01"
             android:textColor="@color/ct_main_color_light"
@@ -42,6 +40,8 @@
             tools:text="order_time" />
 
         <TextView
+            android:layout_below="@+id/order_time"
+            android:layout_toRightOf="@+id/author_img"
             android:layout_marginTop="5dp"
             android:id="@+id/service_name"
             android:layout_width="wrap_content"
@@ -53,7 +53,8 @@
             tools:text="service_name" />
 
         <TextView
-            android:layout_marginTop="7dp"
+            android:layout_alignBottom="@+id/author_img"
+            android:layout_toRightOf="@+id/author_img"
             android:id="@+id/order_address"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,7 +66,6 @@
             android:textColor="@color/ct_a7"
             android:textSize="13sp"
             tools:text="order_address" />
-    </LinearLayout>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

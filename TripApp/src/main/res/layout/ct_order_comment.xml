@@ -70,16 +70,6 @@
                 android:stepSize="0.5"
                 android:numStars="5"
                 android:rating="5" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="8dp"
-                android:text="@string/ct_order_comment_tip"
-                android:textColor="@color/ct_7c"
-                android:textSize="@dimen/ct_ts_3" />
-
             <EditText
                 android:id="@+id/content"
                 android:layout_width="match_parent"

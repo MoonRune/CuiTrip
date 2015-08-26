@@ -103,7 +103,13 @@
 #butterknife end
 
 -dontwarn   com.malinskiy.superrecyclerview.**
+-keep class com.malinskiy.superrecyclerview.** { *;}
+
 -dontwarn   com.amap.**
+-keep class com.amap.** { *;}
+
+-dontwarn   io.rong.**
+-keep class io.rong.** { *;}
 
 -keep class com.alibaba.fastjson.**{*;}
 -keep class org.agoo.**{*;}

@@ -133,6 +133,7 @@ public class GaoDeMapActivity extends BaseActivity {
             });
             move(25.044061, 121.510841);
         } else {
+            findViewById(R.id.center_point).setVisibility(View.GONE);
             LogHelper.e("gaode", "show");
             mapView.postDelayed(new Runnable() {
                 @Override

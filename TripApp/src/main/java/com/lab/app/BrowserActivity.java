@@ -86,12 +86,15 @@ public class BrowserActivity extends BaseActivity {
         // Setup callback support for title and progress bar
         mWebView.setWebChromeClient(new WebChrome());
         mWebView.setWebViewClient(mWebViewClient);
-        mWebView.addJavascriptInterface(new JumpConcat(),"jumper");
+        mWebView.addJavascriptInterface(new JumpConcat(), "jumper");
         mWebView.requestFocus();
+        mWebView.setHorizontalScrollbarOverlay(false);
+        mWebView.setVerticalScrollbarOverlay(true);
         // Configure the webview
         WebSettings s = mWebView.getSettings();
         s.setUseWideViewPort(true);
         s.setSupportZoom(true);
+
         //s.setBuiltInZoomControls(true);
         s.setSaveFormData(false);
         s.setBlockNetworkLoads(false);

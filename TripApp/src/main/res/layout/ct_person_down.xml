@@ -14,7 +14,7 @@
         android:layout_marginBottom="20dp"
         android:textColor="@color/ct_black"
         android:textSize="19sp"
-        android:text="@string/order_person_validated" />
+        android:text="@string/ct_author_identification" />
 
     <View
         style="@style/order_form_divide" />
@@ -26,7 +26,7 @@
 
         <TextView
             style="@style/order_info_hint"
-            android:text="@string/order_person_phone" />
+            android:text="@string/phone" />
 
         <TextView
             style="@style/order_info_value"
@@ -52,7 +52,7 @@
 
         <TextView
             style="@style/order_info_hint"
-            android:text="@string/order_person_email" />
+            android:text="@string/self_profile_email" />
 
         <TextView
             style="@style/order_info_value"

@@ -244,7 +244,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                                     orderItem.getUserNick(), content, contentLittle, orderItem.getOid());
                             return;
                         }
-                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, "", content, context.getString(R.string.switch_mode_to_watch), null);
+                        buildNotification(DEFAULT_CHECK_MODE_NOTIFCATION_ID, context.getString(R.string.switch_mode_to_watch),  content, context.getString(R.string.switch_mode_to_watch), null);
 
                     } catch (Exception e) {
                         buildNotification(DEFAULT_ERROR_NOTIFCATION_ID, context.getString(R.string.unknown) + e.getMessage(), content, context.getString(R.string.send_message_with_name_below, ""), null);

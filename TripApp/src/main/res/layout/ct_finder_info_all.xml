@@ -44,7 +44,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="5dp"
-                    android:textColor="@color/ct_content"
+                    android:textColor="@color/ct_white"
                     android:textSize="13sp"
                     tools:text="regist" />
             </LinearLayout>
