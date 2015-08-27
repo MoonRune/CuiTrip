@@ -6,9 +6,9 @@
         <item name="android:textColor">@color/ct_title</item>
         <item name="android:windowBackground">@color/ct_common_bg</item>
         <item name="android:colorBackground">@color/ct_common_bg</item>
-        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowContentOverlay">@drawable/shape_actionbar_blow</item>
         <item name="actionMenuTextColor">@color/ct_main_color_light</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:textSize">15sp</item>>
         <item name="android:actionMenuTextAppearance">@style/ctActionbarMenu</item>
 
         <!--<item name="android:dropDownListViewStyle">@style/drop_down_style</item>-->
@@ -242,11 +242,10 @@
 
     <style name="order_info_hint" >
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:paddingRight">15dp</item>
-        <item name="android:paddingTop">5dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textColor">@color/ct_a7</item>
         <item name="android:singleLine">true</item>
@@ -254,11 +253,10 @@
 
     <style name="order_info_value" >
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">15sp</item>
         <item name="android:paddingLeft">15dp</item>
         <item name="android:layout_marginRight">15dp</item>
-        <item name="android:paddingTop">5dp</item>
         <item name="android:gravity">center_vertical|right</item>
         <item name="android:textColor">@color/ct_black</item>
         <item name="android:singleLine">true</item>

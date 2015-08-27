@@ -129,7 +129,7 @@
                 android:layout_below="@+id/comment_block"
                 android:background="@color/ct_white"
                 android:padding="@dimen/ct_width_padding"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/service_introduce"
@@ -237,13 +237,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/service_desc_block"
-                android:layout_marginTop="40dp"
-                android:background="@color/ct_common_bg"
+                android:background="@color/ct_white"
                 android:orientation="vertical"
-                android:paddingBottom="20dp"
+                android:paddingBottom="30dp"
                 android:paddingLeft="@dimen/ct_width_padding"
                 android:paddingRight="@dimen/ct_width_padding"
-                android:paddingTop="20dp"
                 tools:visibility="gone">
 
                 <TextView
@@ -288,6 +286,11 @@
                     android:text="@string/ct_cuitrip_view_all"
                     android:textColor="@color/ct_blue_green"
                     android:textSize="@dimen/ct_ts_3" />
+                <View
+                    android:layout_marginTop="50dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="1px"
+                    android:background="@color/ct_divider"/>
             </LinearLayout>
 
 

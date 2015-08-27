@@ -16,7 +16,7 @@
         <View
             android:id="@+id/ct_tab_divider"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
+            android:layout_height="1px"
             android:background="@color/ct_divider"
             android:layout_above="@android:id/tabs"/>
         <TabWidget

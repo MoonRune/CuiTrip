@@ -461,6 +461,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             switch (value) {
                 case ServiceInfo.PAYWAY_ALL:
                     showView(R.id.price_block);
+                    showView(R.id.price_block_divider);
                     removeView(R.id.service_price_type_unit);
                     if (!TextUtils.isEmpty(mServiceInfo.getMoneyType())) {
                         setViewText(R.id.service_price_type, mServiceInfo.getMoneyType());
@@ -471,11 +472,13 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     break;
                 case ServiceInfo.PAYWAY_FREE:
                     removeView(R.id.price_block);
+                    removeView(R.id.price_block_divider);
                     removeView(R.id.service_price_type_unit);
 
                     break;
                 case ServiceInfo.PAYWAY_PER:
                     showView(R.id.price_block);
+                    showView(R.id.price_block_divider);
                     showView(R.id.service_price_type_unit);
                     if (!TextUtils.isEmpty(mServiceInfo.getMoneyType())) {
                         setViewText(R.id.service_price_type, mServiceInfo.getMoneyType());

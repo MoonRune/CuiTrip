@@ -253,6 +253,13 @@ public class CreateServiceActivity extends BaseActivity {
                     if (mServiceInfo != null && mServiceInfo.getSid() != null) {
                         //do nothig
                     } else {
+                        if (mServiceInfo == null){
+                            mServiceInfo = new ServiceInfo();
+                        }
+                        mServiceInfo.setName(mTitle.getText().toString());
+                        mServiceInfo.setDescpt(desc);
+                        mServiceInfo.setBackPic(mPicEditTextView.getMainPicture());
+                        mServiceInfo.setPic(mPicEditTextView.getPictures());
                         SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,mServiceInfo);
                         mPicEditTextView.deletePictures();
                         finish();
