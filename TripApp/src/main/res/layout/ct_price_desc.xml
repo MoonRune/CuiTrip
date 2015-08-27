@@ -31,7 +31,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@color/ct_white"
+
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
+            android:background="@drawable/select_gray_disable_white"
             android:gravity="top"
             android:hint="@string/price_include_input_hint_et"
             android:minLines="5"
@@ -47,11 +52,15 @@
             android:textSize="15sp" />
 
         <EditText
+            android:paddingTop="5dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
             android:id="@+id/ct_price_uninclude_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:background="@color/ct_white"
+            android:background="@drawable/select_gray_disable_white"
             android:gravity="top"
             android:hint="@string/price_uninclude_input_hint_et"
             android:minLines="5"

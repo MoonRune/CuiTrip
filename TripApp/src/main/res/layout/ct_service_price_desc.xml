@@ -37,7 +37,7 @@
     <TextView
         android:layout_marginTop="10dp"
         android:textSize="15sp"
-        android:background="@color/ct_common_bg"
+        android:background="@color/ct_white"
         android:textColor="@color/ct_content"
         android:id="@+id/ct_price_include_tv"
         android:paddingTop="5dp"
@@ -62,7 +62,7 @@
         android:id="@+id/ct_price_uninclude_tv"
         android:textSize="15sp"
         android:textColor="@color/ct_content"
-        android:background="@color/ct_common_bg"
+        android:background="@color/ct_white"
         android:paddingTop="5dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
