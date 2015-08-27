@@ -118,7 +118,6 @@ public class ServideDetailDescActivity extends BaseActivity {
 
     public void startDiaplay(final ImageView imageView, final String url) {
         imageView.setImageResource(R.drawable.ct_default);
-
         new AsyncTask() {
             Bitmap bitmap;
             float height;

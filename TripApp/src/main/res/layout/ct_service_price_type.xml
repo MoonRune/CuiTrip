@@ -24,18 +24,19 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
         <RadioButton
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:id="@+id/ct_price_payway_free_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
             android:textColor="@color/ct_black"
             android:button="@drawable/select_radio"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="4dp"
             android:layout_marginLeft="10dp"
             android:paddingLeft="10dp"
             android:text="@string/price_way_free"/>
         <TextView
-            android:layout_marginTop="9dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/ct_a7"
@@ -45,8 +46,10 @@
             android:layout_marginRight="15dp"
             android:text="@string/ct_price_payway_free_detail_msg"/>
         <View style="@style/ctDivider"
-            android:layout_marginBottom="14dp"/>
+            android:layout_marginBottom="4dp"/>
         <RadioButton
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:id="@+id/ct_price_payway_all_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -57,7 +60,6 @@
             android:paddingLeft="10dp"
             android:text="@string/price_way_all" />
         <TextView
-            android:layout_marginTop="9dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/ct_a7"
@@ -67,19 +69,20 @@
             android:layout_marginLeft="35dp"
             android:text="@string/ct_price_payway_all_detail_msg"/>
         <View style="@style/ctDivider"
-            android:layout_marginBottom="14dp"/>
+            android:layout_marginBottom="4dp"/>
         <RadioButton
             android:id="@+id/ct_price_payway_per_rb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="15sp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
             android:button="@drawable/select_radio"
             android:layout_marginLeft="10dp"
             android:paddingLeft="10dp"
             android:textColor="@color/ct_black"
             android:text="@string/price_way_per"/>
         <TextView
-            android:layout_marginTop="9dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/ct_a7"
