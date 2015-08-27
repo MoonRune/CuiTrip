@@ -132,6 +132,8 @@ public class GaoDeMapActivity extends BaseActivity {
                 }
             });
             move(25.044061, 121.510841);
+            aMap.setInfoWindowAdapter(infoWindowAdapter);
+            aMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
         } else {
             findViewById(R.id.center_point).setVisibility(View.GONE);
             LogHelper.e("gaode", "show");
@@ -146,8 +148,6 @@ public class GaoDeMapActivity extends BaseActivity {
 
         getSupportActionBar().show();
         LogHelper.e("gaode", "done");
-        aMap.setInfoWindowAdapter(infoWindowAdapter);
-        aMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
     }
 
     private AMap.InfoWindowAdapter infoWindowAdapter = new AMap.InfoWindowAdapter() {

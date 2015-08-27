@@ -416,7 +416,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         final String phone = mPersonalPhoneEt.getText().toString();
         final String birth = mPersonalBirthTv.getText().toString();
-        final String ava = TextUtils.isEmpty(mUploadedAvaUrl) ?  userInfo.getHeadPic() :mUploadedAvaUrl ;
+        final String ava = TextUtils.isEmpty(mUploadedAvaUrl) ?userInfo.getHeadPic() :  mUploadedAvaUrl ;
         final String name = TextUtils.isEmpty(userInfo.getRealName()) ? mPersonalNameEt.getText().toString() : userInfo.getRealName();
         final String nick = mPersonalNickEt.getText().toString();
         final String gender = TextUtils.isEmpty(getGender(userInfo.getGender())) ? getGender(mPersonalGenderTv.getText().toString()) : userInfo.getGender();
