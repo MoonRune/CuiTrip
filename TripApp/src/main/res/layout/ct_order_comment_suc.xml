@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ct_white">
@@ -12,21 +13,31 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <LinearLayout
-                android:id="@+id/share_content"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+            android:orientation="vertical"
+            android:gravity="center_horizontal">
+
+                <ImageView
+                    android:layout_marginTop="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/success_g"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/ct_text_title"
+                    android:textSize="19sp"
+                    android:text="@string/comment_suc" />
                 <TextView
                     android:id="@+id/service_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="30dp"
-                    android:textColor="@color/ct_text_title"
-                    android:textSize="@dimen/ct_ts_2" />
-
+                    android:layout_marginTop="20dp"
+                    android:textColor="@color/ct_main_color"
+                    android:textSize="17sp"
+                    tools:text="name" />
                 <TextView
                     android:id="@+id/service_address"
                     android:layout_width="wrap_content"
@@ -37,61 +48,21 @@
                     android:drawableLeft="@drawable/ct_position"
                     android:drawablePadding="5dp"
                     android:textColor="@color/ct_7c"
-                    android:textSize="@dimen/ct_ts_5" />
+                    android:textSize="@dimen/ct_ts_5"
+                    tools:text="address name" />
 
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/author_img"
-                    android:layout_width="65dp"
-                    android:layout_height="65dp"
-                    android:layout_below="@+id/service_address"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginBottom="8dp"
-                    android:layout_marginTop="20dp"
-                    android:scaleType="centerCrop"
-                    app:border_color="@color/ct_white"
-                    app:border_width="@dimen/ct_logo_border" />
-
-                <TextView
-                    android:id="@+id/cuthor_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@id/author_img"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="8dp"
-                    android:textColor="@color/ct_gray"
-                    android:textSize="@dimen/ct_ts_4" />
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/content"
-                android:layout_marginLeft="@dimen/ct_width_padding"
-                android:layout_marginRight="@dimen/ct_width_padding"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
-                android:lineSpacingExtra="2dp"
-                android:text="@string/ct_order_comment_thanks"
-                android:textColor="@color/ct_7c"
-                android:textSize="@dimen/ct_ts_2" />
 
 
             <Button
                 android:id="@+id/go_share"
                 style="@style/ctMainBackgroundRecButton"
-                android:text="@string/ct_order_comment_share"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:layout_marginTop="30dp"/>
+                android:layout_marginTop="30dp"
+                android:background="@drawable/selector_blue_stoken_empty_corner"
+                android:textColor="@color/ct_blue_green"
+                android:text="@string/other_travel" />
 
-            <Button
-                android:id="@+id/go_recommend"
-                style="@style/ctMainBackgroundRecButton"
-                android:layout_alignParentBottom="true"
-                android:text="@string/ct_go_recommend"
-                android:layout_marginLeft="30dp"
-                android:layout_marginRight="30dp"
-                android:layout_marginTop="20dp"/>
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:background="@color/ct_white"
+    android:orientation="vertical">
+<LinearLayout
+    android:id="@+id/ct_top_v"
+    android:layout_width="match_parent"
+    android:layout_height="49dp"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:background="@color/ct_main_color_light">
+    <TextView
+        android:id="@+id/ct_user_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="123"
+        android:paddingLeft="18dp"
+        android:textSize="15sp"
+        android:textColor="@color/ct_white"
+        android:layout_weight="1"/>
+    <com.lab.widget.IconPageIndicator
+        android:id="@+id/ct_view_pager_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:radius="10dp"
+        app:fillColor="@color/ct_red"
+        app:strokeColor="@color/ct_white"
+        app:strokeWidth="3dp" />
+</LinearLayout>
+
+    <com.lab.widget.IndexViewPager
+        android:id="@+id/ct_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</LinearLayout>

@@ -3,8 +3,11 @@ package com.cuitrip.business;
 import android.content.Context;
 import android.text.TextUtils;
 
+import com.cuitrip.app.MainApplication;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
+import com.lab.utils.LogHelper;
+import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
 
@@ -124,7 +127,8 @@ public class UserBusiness {
     public static RequestHandle updateProfile(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                               String headPic,
                                               String realName, String nick, String gender, String city,
-                                              String language, String career, String interests, String sign) {
+                                              String language, String career, String interests, String sign,
+                                              String mobile, String email, String birth) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         if (!TextUtils.isEmpty(realName)) {
@@ -140,6 +144,59 @@ public class UserBusiness {
         params.put("interests", interests);
         params.put("sign", sign);
         params.put("headPic", headPic);
+        params.put("mobile", mobile);
+        params.put("email", email);
+        params.put("birthDay", birth);
+        LogHelper.e("send update profile",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("modifyUserInfo"), params, handler);
     }
+
+    public static RequestHandle getUserInfo(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                            String uid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("otherId", uid);
+        return client.post(context, BusinessHelper.getApiUrl("getUserInfo"), params, handler);
+    }
+
+
+    public static RequestHandle getRongToken(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        return client.post(context, BusinessHelper.getApiUrl("getRongyunToken"), params, handler);
+    }
+
+    public static RequestHandle updateIndentity(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                String idPic,
+                                                String idType, String idCountry, String idValidTime) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("idPic", idPic);
+        params.put("idType", idType);
+        params.put("idArea", idCountry);
+        params.put("idValidTime", idValidTime);
+        return client.post(context, BusinessHelper.getApiUrl("uploadCreditInfo"), params, handler);
+    }
+
+    public static RequestHandle getCash(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
+            , String payPalAccount, String cashAmount, String moneyType) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("payPalAccount", payPalAccount);
+        params.put("cashAmount", cashAmount);
+        params.put("moneyType", moneyType);
+        LogHelper.e("omg",params.toString());
+        return client.post(context, BusinessHelper.getApiUrl("getCash"), params, handler);
+    }
+
+    public static RequestHandle forceUpdate(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("version", Utils.getAppVersionName(MainApplication.getInstance()));
+        params.put("platform", "android");
+        LogHelper.e("omg",params.toString());
+        return client.post(context, BusinessHelper.getApiUrl("forceUpdate"), params, handler);
+    }
+
+
 }

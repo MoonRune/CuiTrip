@@ -144,6 +144,10 @@ public class SelfHomePageEditorActivity extends BaseActivity {
                 if (TextUtils.isEmpty(content)) {
                     content = UserConfig.getInstance().getPersonalDesc();
                 }
+                if (TextUtils.isEmpty(content)) {
+                    content = URLImageParser.replae(content);
+                    content = URLImageParser.replaeWidth(content);
+                }
                 LogHelper.e(TAG, "content " + content);
                 loopSearchUnUploaded(content, localBitmaps);
                 loopSearchUploaded(content, remoteBitmaps);
@@ -339,7 +343,7 @@ public class SelfHomePageEditorActivity extends BaseActivity {
                 new BitmapDrawable(getResources(), bitmap);
         int tempWidth = bitmap.getWidth();
         int height = bitmap.getHeight();
-        int width = MainApplication.sContext.getPageWidth();
+        int width = MainApplication.getInstance().getPageWidth();
         float leftPadding = getResources().getDimension(R.dimen.ct_personal_desc_left_padding);
         float topPadding = getResources().getDimension(R.dimen.ct_personal_desc_top_padding);
         width -= leftPadding;
@@ -471,7 +475,13 @@ public class SelfHomePageEditorActivity extends BaseActivity {
             } else {
                 mSubmitDialog.setTitleText(msg)
                         .setConfirmText(getString(R.string.ct_i_know))
-                        .setConfirmClickListener(null)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                mSubmitDialog.dismissWithAnimation();
+                                mSubmitDialog = null;
+                            }
+                        })
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
             }
         }
@@ -502,7 +512,6 @@ public class SelfHomePageEditorActivity extends BaseActivity {
         UserInfo userInfo = LoginInstance.getInstance(this).getUserInfo();
         String content= mContentEt.getText().toString();
         LogHelper.e("omg","before bad replace :"+content);
-        content = URLImageParser.badReplae(content);
         LogHelper.e("omg","after bad replace :"+content);
         LogHelper.e(TAG, "submit  : " + userInfo.getUid() + "|" + userInfo.getToken() + "|" + content);
         UserBusiness.updateIntroduce(this, mClient, new LabAsyncHttpResponseHandler() {

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -13,29 +14,31 @@
         android:layout_height="wrap_content"
         android:text="@string/app_name"
         android:textColor="@color/ct_7c"
-        android:textSize="@dimen/ct_ts_4" />
+        android:textSize="17sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/author_img"
-        android:layout_width="35dp"
-        android:layout_height="35dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
         android:layout_below="@+id/content"
         android:layout_marginRight="10dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="15dp"
         android:scaleType="centerCrop"
         app:border_color="@color/ct_white"
-        app:border_width="@dimen/ct_logo_border" />
+        tools:src="@drawable/ct_default_user"
+        app:border_width="@dimen/ct_logo_border"
+        android:layout_marginBottom="12dp"/>
 
     <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="15dp"
         android:layout_below="@+id/content"
         android:layout_toRightOf="@+id/author_img"
         android:text="@string/app_name"
-        android:textColor="@color/ct_title"
-        android:textSize="@dimen/ct_ts_4" />
+        android:textColor="@color/ct_main_color"
+        android:textSize="15sp" />
 
     <TextView
         android:id="@+id/time"
@@ -45,6 +48,12 @@
         android:layout_toRightOf="@+id/author_img"
         android:text="@string/app_name"
         android:paddingTop="3dp"
-        android:textColor="@color/ct_a8"
-        android:textSize="@dimen/ct_ts_6" />
+        android:textColor="@color/ct_a7"
+        android:textSize="13sp"
+        android:layout_marginBottom="12dp"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/ct_divider"/>
 </RelativeLayout>

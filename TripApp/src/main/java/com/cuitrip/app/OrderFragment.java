@@ -17,6 +17,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
@@ -126,8 +127,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             mOrderList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                    startActivity(new Intent(getActivity(), OrderDetailActivity.class)
-                            .putExtra(OrderDetailActivity.ORDER_ID, mAdapter.getItem(i).getOid()));
+                    OrderFormActivity.start(getActivity(),mAdapter.getItem(i).getOid());
                 }
             });
             mNoLogin = mContentView.findViewById(R.id.ct_no_login);
@@ -217,7 +217,6 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         protected ViewHolder view2Holder(View view) {
             MessageHolder holder = new MessageHolder();
             holder.mStatus = (TextView) view.findViewById(R.id.order_status);
-            holder.mName = (TextView) view.findViewById(R.id.service_author);
             holder.mService = (TextView) view.findViewById(R.id.service_name);
             holder.mTime = (TextView) view.findViewById(R.id.order_time);
             holder.mImage = (ImageView) view.findViewById(R.id.author_img);
@@ -234,27 +233,17 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
             if (time != null && time.indexOf(" ") > 1) {
                 OrderHolder.mTime.setText(time.substring(0, time.indexOf(" ")));
             } else {
-                OrderHolder.mTime.setText(item.getGmtCreated());
+                OrderHolder.mTime.setText(item.getServiceDate());
             }
-            OrderHolder.mName.setEnabled(!item.isClosed());
 
-            if (mType == TYPE_TRAVEL) {
-                OrderHolder.mName.setText(item.getServiceName());
-                OrderHolder.mService.setText(item.getUserNick());
-                OrderHolder.mAddress.setText(item.getServiceAddress());
-            } else {
-                OrderHolder.mName.setText(item.getUserNick());
-                OrderHolder.mService.setText(item.getServiceName());
-                OrderHolder.mAddress.setText(getString(R.string.ct_order_people_num, item.getBuyerNum() ));
-                OrderHolder.mAddress.setCompoundDrawables(null, null, null, null);
-            }
-            ImageHelper.displayPersonImage(item.getHeadPic(), OrderHolder.mImage, null);
+            OrderHolder.mService.setText(item.getServiceName());
+            OrderHolder.mAddress.setText(item.getServiceAddress());
+            ImageHelper.displayCtImage(item.getServicePIC(), OrderHolder.mImage, null);
         }
     }
 
     class MessageHolder extends ViewHolder {
         public ImageView mImage;
-        public TextView mName;
         public TextView mStatus;
         public TextView mService;
         public TextView mTime;

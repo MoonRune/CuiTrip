@@ -39,7 +39,7 @@ public class LocationHelper {
         // Or, use GPS location data:
         // String locationProvider = LocationManager.GPS_PROVIDER;
         // Acquire a reference to the system Location Manager
-        final LocationManager locationManager = (LocationManager) MainApplication.sContext
+        final LocationManager locationManager = (LocationManager) MainApplication.getInstance()
                 .getSystemService(Context.LOCATION_SERVICE);
 
         // Define a listener that responds to location updates
@@ -90,7 +90,7 @@ public class LocationHelper {
                 }
             }
             sCallbacks.clear();
-            final LocationManager locationManager = (LocationManager) MainApplication.sContext
+            final LocationManager locationManager = (LocationManager) MainApplication.getInstance()
                     .getSystemService(Context.LOCATION_SERVICE);
             locationManager.removeUpdates(this);
         }
@@ -109,7 +109,7 @@ public class LocationHelper {
     };
 
     public static void closeLocation() {
-        final LocationManager locationManager = (LocationManager) MainApplication.sContext
+        final LocationManager locationManager = (LocationManager) MainApplication.getInstance()
                 .getSystemService(Context.LOCATION_SERVICE);
         locationManager.removeUpdates(locationListener);
     }

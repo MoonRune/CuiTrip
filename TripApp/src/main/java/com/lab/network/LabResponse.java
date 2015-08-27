@@ -20,6 +20,9 @@ public class LabResponse {
     public int code;
     public String msg;
     public Object result;
+//    "moneyType": "CNY",		// 余额显示币种
+//            "balance": "2000.00",		// 账户余额
+//            "rate": "640.08",		// 100 美元换算成moneyType 的价值
 
     public static LabResponse parseResponse(String response) {
         LogHelper.d("LabResponse", "response: " + response);

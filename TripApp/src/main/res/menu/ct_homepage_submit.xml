@@ -6,7 +6,7 @@
         android:id="@+id/action_add_image"
         android:orderInCategory="99"
         android:title="@string/ct_add_pic"
-        android:icon="@drawable/ct_add_pic"
+        android:icon="@drawable/add_photo_g"
         app:showAsAction="always" />
     <item
         android:id="@+id/action_submit"

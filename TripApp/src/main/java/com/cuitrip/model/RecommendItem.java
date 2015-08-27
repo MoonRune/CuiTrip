@@ -1,6 +1,8 @@
 package com.cuitrip.model;
 
 
+import com.lab.utils.LogHelper;
+
 public class RecommendItem {
 //    "sid": "231", //服务ID
 //            "serviceName": "阿亮带你看妈祖绕境", //旅程名称
@@ -15,6 +17,48 @@ public class RecommendItem {
     private String headPic;
     private String userNick;
     private String servicePicUrl;
+    private boolean isLiked;
+    private String isShow;// 1 可进到详情 0 不可进
+    private String insiderId;
+    private String career;
+
+    public String getCareer() {
+        return career;
+    }
+
+    public void setCareer(String career) {
+        this.career = career;
+    }
+
+    public String getInsiderId() {
+        return insiderId;
+    }
+
+    public void setInsiderId(String insiderId) {
+        this.insiderId = insiderId;
+    }
+
+    public String getIsShow() {
+        return isShow;
+    }
+
+    public void setIsShow(String isShow) {
+        this.isShow = isShow;
+    }
+
+    public boolean isAvaliable() {
+        LogHelper.e("omg","sid  "+sid+" isshown"+isShow);
+        return "1".equals(isShow);
+    }
+
+    public boolean isLiked() {
+        return isLiked;
+    }
+
+    public void setIsLiked(boolean isLiked) {
+        this.isLiked = isLiked;
+    }
+
 
     public String getSid() {
         return sid;

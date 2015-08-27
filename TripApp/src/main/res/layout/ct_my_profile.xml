@@ -1,250 +1,452 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-    <ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        android:background="@color/ct_white"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/ct_common_bg" />
+
+        <RelativeLayout
+            android:id="@+id/ct_personal_ava_ll"
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:orientation="horizontal"
+            android:paddingLeft="15dp">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ct_personal_ava_iv"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                tools:src="@drawable/ct_default_user" />
+
+            <TextView
+                android:layout_marginTop="5dp"
+                android:id="@+id/ava_user_nick_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/ct_personal_ava_iv"
+                android:layout_toRightOf="@+id/ct_personal_ava_iv"
+                android:textColor="@color/ct_black"
+                android:textSize="18sp"
+                tools:text="ava user nick" />
+
+            <TextView
+                android:id="@+id/ava_user_regist_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ava_user_nick_tv"
+                android:layout_toRightOf="@+id/ct_personal_ava_iv"
+                android:textColor="@color/ct_text_content"
+                android:textSize="13sp"
+                tools:text="ava user register" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ct_narrow_right" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/ct_common_bg" />
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+            style="@style/profileLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/ct_white"
-            android:orientation="vertical"
-            android:focusable="true"
-            android:focusableInTouchMode="true">
-
-            <LinearLayout
-                android:id="@+id/ct_personal_ava_ll"
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="74dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/ct_profile_title_name" />
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/ct_personal_ava_iv"
-                    android:layout_width="48dp"
-                    android:layout_height="48dp"
-                    android:layout_marginRight="10dp"
-                    tools:src="@drawable/ct_default_user" />
-
-                <ImageView
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ct_narrow_right" />
-            </LinearLayout>
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
 
             <TextView
-                style="@style/profileDivide"
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_realname" />
+
+            <EditText
+                android:id="@+id/ct_personal_name_et"
+                style="@style/profileEditText"
                 android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_realname" />
-
-                <EditText
-                    android:id="@+id/ct_personal_name_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/ct_profile_hint_realname" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_nick" />
-
-                <EditText
-                    android:id="@+id/ct_personal_nick_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ct_profile_hint_nick"/>
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-
-            <LinearLayout
-                android:id="@+id/ct_personal_gender_ll"
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_gender"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/ct_personal_gender_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:hint="@string/ct_profile_hint_gender"
-                    style="@style/profileTextView"/>
-
-                <ImageView
-                    android:id="@+id/ct_gender_arrow_v"
-                    android:layout_width="5dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="10dp"
-                    android:src="@drawable/ct_narrow_right" />
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_area" />
-
-                <EditText
-                    android:id="@+id/ct_personal_area_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ct_profile_hint_area"/>
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_job" />
-
-                <EditText
-                    android:id="@+id/ct_personal_job_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ct_profile_hint_job"/>
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_hobby" />
-
-                <EditText
-                    android:id="@+id/ct_personal_hobby_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ct_profile_hint_hobby"/>
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_language" />
-
-                <EditText
-                    android:id="@+id/ct_personal_language_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ct_profile_hint_language"/>
-            </LinearLayout>
-
-            <TextView
-                style="@style/profileDivide"
-                android:layout_width="match_parent"
-                android:layout_height="1dp" />
-            <LinearLayout
-                style="@style/profileLayout"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/ct_profile_height"
-                android:orientation="horizontal">
-
-                <TextView
-                    style="@style/profileTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/ct_profile_title_sign" />
-
-                <EditText
-                    android:id="@+id/ct_personal_sign_et"
-                    style="@style/profileEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/ct_profile_hint_sign"/>
-            </LinearLayout>
+                android:layout_height="match_parent"
+                android:hint="@string/ct_profile_hint_realname" />
         </LinearLayout>
-    </ScrollView>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/ct_personal_birth_ll"
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:background="@drawable/select_white_gray"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/birth" />
+
+            <TextView
+                android:id="@+id/ct_personal_birth_tv"
+                style="@style/profileEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:clickable="false"
+                android:focusable="false"
+                android:hint="@string/birth_hint" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ct_narrow_right" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+
+        <LinearLayout
+            android:id="@+id/ct_personal_gender_ll"
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/ct_profile_title_gender" />
+
+            <TextView
+                android:id="@+id/ct_personal_gender_tv"
+                style="@style/profileTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:hint="@string/ct_profile_hint_gender" />
+
+            <ImageView
+                android:id="@+id/ct_gender_arrow_v"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ct_narrow_right" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/ct_common_bg" />
+
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_nick" />
+
+            <EditText
+                android:id="@+id/ct_personal_nick_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ct_profile_hint_nick" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/ct_personal_area_ll"
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_area" />
+
+            <TextView
+                android:id="@+id/ct_personal_area_et"
+                style="@style/profileEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:hint="@string/ct_profile_hint_area" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ct_narrow_right" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_job" />
+
+            <EditText
+                android:id="@+id/ct_personal_job_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ct_profile_hint_job" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_hobby" />
+
+            <EditText
+                android:id="@+id/ct_personal_hobby_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ct_profile_hint_hobby" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_language" />
+
+            <EditText
+                android:id="@+id/ct_personal_language_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ct_profile_hint_language" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_profile_title_sign" />
+
+            <EditText
+                android:id="@+id/ct_personal_sign_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/ct_profile_hint_sign" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            android:id="@+id/ct_selft_desc_v"
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/self_desc_hint" />
+
+            <TextView
+                android:id="@+id/ct_selft_desc_tv"
+                style="@style/profileEditText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:text="@string/setting" />
+
+            <ImageView
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ct_narrow_right" />
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="10dp"
+            android:background="@color/ct_common_bg" />
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone" />
+
+            <EditText
+                android:textColor="@color/ct_diable_gray"
+                android:id="@+id/ct_personal_phone_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/ct_not_validated" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+        <LinearLayout
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/self_profile_email" />
+
+            <EditText
+                android:id="@+id/ct_personal_email_et"
+                style="@style/profileEditText"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/ct_not_validated"
+                android:inputType="textEmailAddress" />
+        </LinearLayout>
+
+        <TextView
+            style="@style/profileDivide"
+            android:layout_width="match_parent"
+            android:layout_height="1dp" />
+
+
+        <LinearLayout
+            android:id="@+id/ct_personal_identity_ll"
+            style="@style/profileLayout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ct_profile_height"
+            android:orientation="horizontal">
+
+            <TextView
+                style="@style/profileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/self_profile_identity" />
+
+            <TextView
+                android:id="@+id/ct_personal_identity_tv"
+                style="@style/profileTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:hint="@string/ct_not_validated" />
+
+            <ImageView
+                android:id="@+id/ct_identity_arrow_v"
+                android:layout_width="5dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10dp"
+                android:src="@drawable/ct_narrow_right" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/ct_common_bg" />
+    </LinearLayout>
+</ScrollView>

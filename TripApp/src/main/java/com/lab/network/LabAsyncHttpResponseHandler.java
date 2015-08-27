@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.business.BusinessHelper;
 import com.cuitrip.service.R;
+import com.lab.utils.LogHelper;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -24,6 +25,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
     public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
         if (statusCode == 200) {
             try {
+                LogHelper.e("LoginActivity", "result "+new String(responseBody, "UTF-8"));
                 LabResponse response = LabResponse.parseResponse(responseBody);
                 if (response != null && response.code == 0) {
                     if (clazz != null && response.result != null
@@ -35,6 +37,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
                     }
                 } else if (response != null) {
                     if (BusinessHelper.isTokenInvalided(response)) {
+                        LogHelper.e("LoginActivity", "token isTokenInvalided");
                         MainApplication.getInstance().logOutWithError();
                     }
                     onFailure(response, null);
@@ -56,7 +59,7 @@ public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandl
         LabResponse response = new LabResponse();
         response.code = -1;
         response.result = null;
-        response.msg = MainApplication.sContext.getString(R.string.load_error);
+        response.msg = MainApplication.getInstance().getString(R.string.load_error);
         onFailure(response, null);
     }
 

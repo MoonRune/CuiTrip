@@ -22,7 +22,7 @@
     <item android:state_enabled="true">
         <shape android:shape="rectangle">
             <corners android:radius="3dp" />
-            <solid android:color="@color/ct_main_color" />
+            <solid android:color="@color/ct_main_color_light" />
         </shape>
     </item>
     <item>

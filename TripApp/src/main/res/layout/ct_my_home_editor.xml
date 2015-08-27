@@ -4,6 +4,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="@color/ct_white">
     <EditText
         android:id="@+id/ct_personal_desc_et"
@@ -17,6 +18,6 @@
         android:paddingRight="@dimen/ct_personal_desc_editor_content_paddingLeft"
         android:textColor="@color/ct_gray"
         android:textSize="@dimen/ct_personal_desc_content_size"
-        android:paddingBottom="@dimen/ct_personal_desc_editor_content_margibottom" />
+        android:paddingBottom="30dp" />
 
 </ScrollView>

@@ -14,22 +14,30 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
+import com.cuitrip.app.country.CountrySelectActivity;
+import com.cuitrip.app.identity.SelfIdentificationActivity;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.GetImageHelper;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 import com.lab.utils.imageupload.IImageUploader;
 import com.lab.utils.imageupload.ImageUploadCallback;
 import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.ButterKnife;
 import butterknife.InjectView;
@@ -50,8 +58,17 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
      * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
      */
 
+    @InjectView(R.id.ava_user_nick_tv)
+    TextView mPersonalAvaNickTv;
+    @InjectView(R.id.ava_user_regist_tv)
+    TextView mPersonalAvaRegistTv;
     @InjectView(R.id.ct_personal_ava_iv)
     CircleImageView mPersonalAvaIv;
+
+    @InjectView(R.id.ct_personal_birth_ll)
+    View mPersonalBirthLL;
+    @InjectView(R.id.ct_personal_birth_tv)
+    TextView mPersonalBirthTv;
     @InjectView(R.id.ct_personal_name_et)
     EditText mPersonalNameEt;
     @InjectView(R.id.ct_personal_nick_et)
@@ -74,7 +91,23 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     @InjectView(R.id.ct_personal_gender_ll)
     LinearLayout mPersonalGenderLl;
     @InjectView(R.id.ct_personal_ava_ll)
-    LinearLayout mPersonalAvaLl;
+    View mPersonalAvaLl;
+
+
+    @InjectView(R.id.ct_personal_phone_et)
+    EditText mPersonalPhoneEt;
+    @InjectView(R.id.ct_personal_email_et)
+    EditText mPersonalEmailEt;
+    @InjectView(R.id.ct_personal_identity_ll)
+    View mPersonalIdentityV;
+    @InjectView(R.id.ct_personal_identity_tv)
+    TextView mPersonaIdentityTv;
+    @InjectView(R.id.ct_selft_desc_v)
+    View mPersonalDescV;
+    @InjectView(R.id.ct_selft_desc_tv)
+    TextView mPersonalDescTv;
+    @InjectView(R.id.ct_personal_area_ll)
+    View mPersonalAreaTv;
 
 
     String mUploadedAvaUrl;
@@ -87,7 +120,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
     boolean mNickAlertShown = false;
     boolean mRealnameAlertShown = false;
-    boolean mGenderAlertShown = false;
+    boolean mGenderAlertShown = true; 
 
     SweetAlertDialog mSubmitDialog;
 
@@ -109,9 +142,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         setContentView(R.layout.ct_my_profile);
         initGenderMap();
         ButterKnife.inject(this);
+        requestUserInfo();
         userInfo = LoginInstance.getInstance(this).getUserInfo();
         setLocalValue();
-        setOnClicks();
 
     }
 
@@ -141,7 +174,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     public void setLocalValue() {
-        userInfo = LoginInstance.getInstance(this).getUserInfo();
         ImageHelper.displayPersonImage(userInfo.getHeadPic(), mPersonalAvaIv, null);
         if (TextUtils.isEmpty(userInfo.getRealName())) {
             mPersonalNameEt.setEnabled(true);
@@ -150,31 +182,83 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             mPersonalNameEt.setText(userInfo.getRealName());
         }
         mPersonalNickEt.setText(userInfo.getNick());
+        mPersonalAvaNickTv.setText(userInfo.getNick());
+        mPersonalAvaRegistTv.setText(getString(R.string.regist_time, Utils.getMsToD(userInfo.getGmtCreated())));
+        mPersonalBirthTv.setText(userInfo.getBirthDay());
 
         mPersonalGenderTv.setText(getGender(userInfo.getGender()));
 
         mPersonalAreaEt.setText(userInfo.getCity());
         mPersonalJobEt.setText(userInfo.getCareer());
+
         mPersonalHobbyEt.setText(userInfo.getInterests());
         mPersonalLanguageEt.setText(userInfo.getLanguage());
         mPersonalSignEt.setText(userInfo.getSign());
+
+        mPersonalPhoneEt.setEnabled(TextUtils.isEmpty(userInfo.getMobile()));
+        mPersonalPhoneEt.setText(userInfo.getMobile());
+
+        mPersonalEmailEt.setText(userInfo.getEmail());
+
+        setOnClicks();
+    }
+
+    public void setRemotealue() {
+        setLocalValue();
+        mPersonaIdentityTv.setText(getIndeneityString());
+
+
+        if (getIndentityClickable()) {
+            mPersonalIdentityV.setOnClickListener(this);
+        } else {
+            mPersonalIdentityV.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
+        }
+    }
+
+
+    public String getIndeneityString() {
+        switch (userInfo.getIdCheckStatus()) {
+            case UserInfo.ID_CHECK_ING:
+                return getString(R.string.id_check_ing_msg);
+            case UserInfo.ID_CHECK_SUC:
+                return getString(R.string.id_check_suc_msg);
+            case UserInfo.ID_CHECK_FAILED:
+                return getString(R.string.id_check_failed_msg);
+        }
+        return "";
+    }
+
+    public boolean getIndentityClickable() {
+        switch (userInfo.getIdCheckStatus()) {
+            case UserInfo.ID_CHECK_ING:
+                return false;
+            case UserInfo.ID_CHECK_SUC:
+                return false;
+            case UserInfo.ID_CHECK_FAILED:
+                return true;
+        }
+        return true;
     }
 
     public void setOnClicks() {
-        //性别只能改一次
-        if (TextUtils.isEmpty(getGender(userInfo.getGender()))) {
-            mPersonalGenderLl.setOnClickListener(this);
-            mPersonalGenderArrowV.setVisibility(View.VISIBLE);
-        } else {
-            mPersonalGenderArrowV.setVisibility(View.INVISIBLE);
-        }
+        mPersonalGenderLl.setOnClickListener(this);
+        mPersonalGenderArrowV.setVisibility(View.VISIBLE);
         mPersonalAvaLl.setOnClickListener(this);
 
 
         if (TextUtils.isEmpty(userInfo.getRealName())) {
             mPersonalNameEt.setOnFocusChangeListener(this);
         }
+        mPersonalBirthLL.setOnClickListener(this);
         mPersonalNickEt.setOnFocusChangeListener(this);
+        mPersonalDescV.setOnClickListener(this);
+        mPersonalAreaTv.setOnClickListener(this);
+        findViewById(R.id.ct_personal_identity_ll).setOnClickListener(this);
     }
 
     public void showGenderSelect() {
@@ -209,6 +293,17 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (SelfHomePageActivity.isModifidy(requestCode, resultCode, data)) {
+            requestUserInfo();
+        }
+        if (SelfIdentificationActivity.isModifyed(requestCode, resultCode, data)) {
+            requestUserInfo();
+        }
+        if (CountrySelectActivity.isWrited(requestCode, resultCode, data)) {
+            String country = CountrySelectActivity.getValue(data);
+            userInfo.setCountry(country);
+            mPersonalAreaEt.setText(country);
+        }
         switch (requestCode) {
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK && data != null) {
@@ -293,18 +388,35 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             } else {
                 mSubmitDialog.setTitleText(msg)
                         .setConfirmText(getString(R.string.ct_i_know))
-                        .setConfirmClickListener(null)
+                        .setConfirmClickListener(new SweetAlertDialog.OnSweetClickListener() {
+                            @Override
+                            public void onClick(SweetAlertDialog sweetAlertDialog) {
+                                mSubmitDialog.dismissWithAnimation();
+                                mSubmitDialog = null;
+                            }
+                        })
                         .changeAlertType(SweetAlertDialog.ERROR_TYPE);
             }
         }
     }
 
     public void submit() {
+        final String email = mPersonalEmailEt.getText().toString();
+        if (!TextUtils.isEmpty(email)) {
+            Pattern pattern = Pattern.compile("^([a-zA-Z0-9_\\-\\.]+)@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.)|(([a-zA-Z0-9\\-]+\\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\\]?)$");
+            Matcher matcher = pattern.matcher(email);
+            if (!matcher.matches()) {
+                MessageUtils.showToast(getString(R.string.please_input_right_email));
+                return;
+            }
+        }
         disableEdit();
         if (mIsUpLoading) {
             return;
         }
-        final String ava = mUploadedAvaUrl;
+        final String phone = mPersonalPhoneEt.getText().toString();
+        final String birth = mPersonalBirthTv.getText().toString();
+        final String ava = TextUtils.isEmpty(userInfo.getHeadPic()) ? mUploadedAvaUrl : userInfo.getHeadPic();
         final String name = TextUtils.isEmpty(userInfo.getRealName()) ? mPersonalNameEt.getText().toString() : userInfo.getRealName();
         final String nick = mPersonalNickEt.getText().toString();
         final String gender = TextUtils.isEmpty(getGender(userInfo.getGender())) ? getGender(mPersonalGenderTv.getText().toString()) : userInfo.getGender();
@@ -316,6 +428,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         UserBusiness.updateProfile(this, mClient, new LabAsyncHttpResponseHandler() {
                     // file write async?
                     public void save() {
+                        UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
                         userInfo.setHeadPic(ava);
                         userInfo.setRealName(name);
                         userInfo.setNick(nick);
@@ -325,13 +438,19 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                         userInfo.setCareer(job);
                         userInfo.setInterests(hobby);
                         userInfo.setSign(sign);
+                        userInfo.setMobile(phone);
+                        userInfo.setBirthDay(birth);
+                        userInfo.setEmail(email);
                         LoginInstance.update(SelfActivity.this, userInfo);
+                        LogHelper.e("omg", "update suc");
                     }
 
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
                         save();
+                        LogHelper.e("omg", "selft save suc");
                         enableEdit(true, "");
+                        finish();
                     }
 
 
@@ -346,23 +465,56 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                     }
 
                 }, ava, name, nick, gender, area,
-                language, job, hobby, sign
+                language, job, hobby, sign,
+                phone, email, birth
         );
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.ct_personal_area_ll:
+                CountrySelectActivity.start(this);
+                break;
+            case R.id.ct_personal_birth_ll:
+                MessageUtils.showDateCheck(this, new MessageUtils.DateCheckListener() {
+                    @Override
+                    public void onDataSelect(String s) {
+                        mPersonalBirthTv.setText(s);
+                    }
+                });
+                break;
+            case R.id.ct_selft_desc_v:
+                SelfHomePageActivity.startForResult(this);
+                break;
             case R.id.ct_personal_gender_ll:
                 showGenderSelect();
                 break;
             case R.id.ct_personal_ava_ll:
                 showAvaSelect();
                 break;
+            case R.id.ct_personal_identity_ll:
+                String[] pics = null;
+                String pic1 = "";
+                String pic2 = "";
+                LogHelper.e("pics", "" + userInfo.getIdPictures());
+                if (!TextUtils.isEmpty(userInfo.getIdPictures())) {
+                    pics = userInfo.getIdPictures().split(",");
+                    LogHelper.e("pics", TextUtils.join("-", pics));
+                    if (pics != null && pics.length >= 2) {
+                        pic1 = pics[0];
+                        pic2 = pics[1];
+                    }
+                }
+                LogHelper.e("pics", pic1 + "   " + pic2);
+                SelfIdentificationActivity.start(this, userInfo.getIdRefuseReason(),
+                        userInfo.getIdArea(), userInfo.getIdType(), userInfo.getIdValidTime(), pic1, pic2);
+                break;
             default:
                 break;
         }
     }
+
 
     public void showRealNameEditAlert() {
         SweetAlertDialog pDialog = new SweetAlertDialog(this, SweetAlertDialog.WARNING_TYPE);
@@ -408,5 +560,97 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 break;
         }
     }
+
+    public void requestUserInfo() {
+        showLoading();
+        UserInfo info = LoginInstance.getInstance(this).getUserInfo();
+        UserBusiness.getUserInfo(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                if (data != null && data instanceof UserInfo) {
+                    userInfo = ((UserInfo) data);
+                    setRemotealue();
+                    hideLoading();
+                }
+
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                String msg;
+                if (response != null && !TextUtils.isEmpty(response.msg)) {
+                    msg = response.msg;
+                } else {
+                    msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                }
+                MessageUtils.showToast(msg);
+                hideLoading();
+            }
+        }, info.getUid());
+        requestIntroduce();
+    }
+
+    public void requestIntroduce() {
+        UserBusiness.getIntroduce(this, mClient, new LabAsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                try {
+                    JSONObject json = JSONObject.parseObject(data.toString());
+
+                    Integer status = json.getInteger("introduceAuditStatus");
+                    String reason = json.getString("introduceFailedReason");
+                    final String desc = json.getString("introduce");
+                    if (status == null) {
+                        mPersonalDescV.setOnClickListener(SelfActivity.this);
+                        return;
+                    }
+                    switch (status) {
+                        case 0:
+                            mPersonalDescTv.setText(getString(R.string.ct_homepage_status_ing));
+                            mPersonalDescV.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+
+                                }
+                            });
+                            break;
+                        case 1:
+                            mPersonalDescTv.setText(getString(R.string.ct_homepage_status_suc));
+                            mPersonalDescV.setOnClickListener(SelfActivity.this);
+                            break;
+                        case 2:
+                            mPersonalDescTv.setText(getString(R.string.ct_homepage_status_failed));
+                            if (TextUtils.isEmpty(reason)) {
+                                reason = getString(R.string.ct_homepage_status_failed);
+                            }
+                            mPersonalDescV.setOnClickListener(SelfActivity.this);
+                            break;
+                        default:
+                            onUnExceptedError();
+                            break;
+                    }
+                } catch (Exception e) {
+                    onUnExceptedError();
+                }
+            }
+
+            public void onUnExceptedError() {
+                mPersonalDescTv.setText(getString(R.string.ct_homepage_status_not_suc));
+                mPersonalDescV.setOnClickListener(SelfActivity.this);
+            }
+
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                String msg = response.msg;
+                if (TextUtils.isEmpty(msg)) {
+                    msg = getString(R.string.ct_fetch_failed);
+                }
+                mPersonalDescTv.setText(msg);
+                mPersonalDescV.setOnClickListener(SelfActivity.this);
+            }
+        });
+    }
+
+
 }
 

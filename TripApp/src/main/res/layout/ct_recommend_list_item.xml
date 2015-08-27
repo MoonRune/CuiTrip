@@ -3,20 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp"
-    android:paddingTop="10dp">
+    android:layout_height="wrap_content">
 
     <com.makeramen.roundedimageview.RoundedImageView
         android:id="@+id/service_img"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="180dp"
         android:scaleType="centerCrop"
         app:riv_border_color="@android:color/transparent"
         app:riv_border_width="0dp"
-        app:riv_corner_radius_top_left="10dip"
-        app:riv_corner_radius_top_right="10dip"
         app:riv_oval="false"
         tools:src="@drawable/ct_default"/>
 
@@ -26,7 +21,7 @@
         android:layout_below="@+id/service_img"
         android:background="@drawable/ct_recommend_bg"
         android:orientation="horizontal"
-        android:paddingLeft="65dp">
+        android:paddingLeft="84dp">
 
         <TextView
             android:id="@+id/author_name"
@@ -34,16 +29,30 @@
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:textColor="@color/ct_main_color"
-            android:textSize="@dimen/ct_ts_5"
+            android:textSize="13sp"
             tools:text="user name"/>
 
         <TextView
+            android:layout_marginLeft="10dp"
+            android:id="@+id/author_carrer"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:textColor="@color/ct_gray"
+            android:textSize="13sp"
+            tools:text="carrer"/>
+
+        <TextView
             android:id="@+id/author_address"
+            android:layout_marginRight="10dp"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:gravity="center_vertical"
             android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_5"
+            android:drawableLeft="@drawable/position_g"
+            android:drawablePadding="5dp"
+            android:textSize="13sp"
             android:layout_marginLeft="5dp"
             tools:text="user address" />
     </LinearLayout>
@@ -52,7 +61,7 @@
         android:id="@+id/service_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="65dp"
+        android:paddingLeft="84dp"
         android:layout_alignBottom="@+id/service_img"
         tools:text="user name"
         android:ellipsize="end"
@@ -70,8 +79,8 @@
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/author_img"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
             android:layout_marginBottom="8dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
@@ -80,4 +89,14 @@
             app:border_width="@dimen/ct_logo_border"
             tools:src="@drawable/ct_default_user"/>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/like_img"
+        android:padding="6dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:src="@drawable/selector_now_like"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/select_alpha_gray"/>
 </RelativeLayout>

@@ -1,8 +1,12 @@
 package com.cuitrip.app;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -15,9 +19,11 @@ import android.widget.TextView;
 
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.AvailableDate;
 import com.cuitrip.model.OrderItem;
 import com.cuitrip.model.ServiceInfo;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -29,6 +35,9 @@ import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 
 /**
@@ -50,6 +59,29 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
     private List<String> mAvailableDate;
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
+    String selectedCount;
+
+    public static void start(Context context, ServiceInfo serviceInfo) {
+
+        context.startActivity(new Intent(context, CreateOrderActivity.class)
+                .putExtra(SERVICE_INFO, serviceInfo));
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.ct_create_order,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_OK:
+                createOrder();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,23 +97,27 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             finish();
             return;
         }
-        showActionBar(mService.getName());
+        showActionBar(R.string.ct_order);
         setContentView(R.layout.ct_create_order);
         mDate = (TextView) findViewById(R.id.selected_date);
         mCount = (TextView) findViewById(R.id.selected_count);
 
         mMoneyDesc = (TextView) findViewById(R.id.money_desc);
-        mMoneyDesc.setText(mService.getMoneyType());
+        mMoneyDesc.setText(mService.getShowCurrency().toUpperCase());
+
+
+        ((TextView) findViewById(R.id.ct_service_name_tv)).setText(mService.getName());
+
+
         mMoney = (TextView) findViewById(R.id.bill_count);
-        if(mService.getPriceType() == 1){
-            mMoney.setText(mService.getPrice() + getString(R.string.ct_service_unit));
-        }else{
-            mMoney.setText(mService.getPrice());
+        if (mService.getPriceType() == 1) {
+            mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
+        } else {
+            mMoney.setText(mService.getShowPrice());
         }
 
         findViewById(R.id.order_date).setOnClickListener(this);
         findViewById(R.id.order_person).setOnClickListener(this);
-        findViewById(R.id.create_order).setOnClickListener(this);
 
         mSelectListView = (ListView) View.inflate(this, R.layout.ct_choice_list, null);
         mSelectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -91,7 +127,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 if (mAdapter.isDate()) {
                     mDate.setText(mAdapter.getData().get(i));
                 } else {
-                    mCount.setText(mAdapter.getData().get(i));
+                    selectedCount = mAdapter.getData().get(i);
+                    mCount.setText(getString(R.string.per_man_with_num_above, mAdapter.getData().get(i)));
                 }
             }
         });
@@ -118,7 +155,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     if (availableDate != null) {
                         mAvailableDate = new ArrayList<String>();
                         for (long time : availableDate) {
-                            LogHelper.e("omg","fetched date :"+String.valueOf(time));
+                            LogHelper.e("omg", "fetched date :" + String.valueOf(time));
                             mAvailableDate.add(Utils.parseLongTimeToString(time, Utils.DATE_FORMAT_DAY));
                         }
                     }
@@ -128,13 +165,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                    hideLoading();
-                    MessageUtils.showToast(response.msg);
+                hideLoading();
+                MessageUtils.showToast(response.msg);
             }
         }, mService.getSid());
     }
 
-    protected void onLoginSuccess(){
+    protected void onLoginSuccess() {
         createOrder();
     }
 
@@ -154,9 +191,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.order_person:
                 showSelectedDialog(SelectBaseAdapter.TYPE_PERSON);
-                break;
-            case R.id.create_order:
-                createOrder();
                 break;
         }
     }
@@ -189,14 +223,14 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         if (mDate.getText().equals(getString(R.string.ct_order_select_date))) {
             MessageUtils.showToast(R.string.ct_create_order_null_date);
             return;
-        } else if (mCount.getText().equals(getString(R.string.ct_order_select_person_count))) {
+        } else if (mCount.getText().equals(getString(R.string.ct_order_select_person_count)) || TextUtils.isEmpty(selectedCount)) {
             MessageUtils.showToast(R.string.ct_create_order_null_person);
             return;
         }
         showNoCancelDialog();
-        LogHelper.e("omg", "create order"+ mService.getInsiderId()+"|"+ mService.getSid()+"|"+ mService.getName()+"|"+
-                Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY)+"|"+
-                mCount.getText().toString()+"|"+ mService.getPrice()+"|"+ mService.getMoneyType());
+        LogHelper.e("omg", "create order" + mService.getInsiderId() + "|" + mService.getSid() + "|" + mService.getName() + "|" +
+                Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY) + "|" +
+                selectedCount + "|" + mService.getPrice() + "|" + mService.getMoneyType());
         OrderBusiness.createOrder(this, mClient, new LabAsyncHttpResponseHandler(OrderItem.class) {
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
@@ -207,6 +241,39 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                             startActivity(new Intent(CreateOrderActivity.this, CreateorderSuccessActivity.class)
                                     .putExtra(CreateorderSuccessActivity.ORDER_INFO, item));
                             //finish();
+                            try {
+                                final OrderItem orderItem = ((OrderItem) data);
+                                String myid = "";
+                                UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+                                if (userInfo != null) {
+                                    myid = userInfo.getUid();
+                                }
+                                List<String> userIds = new ArrayList<>();
+                                userIds.add(item.getInsiderId());
+                                userIds.add(myid);
+                                String title = orderItem.getOid();
+                                RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
+                                    @Override
+                                    public void onSuccess(final String s) {
+                                        OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
+                                            @Override
+                                            public void onSuccess(LabResponse response, Object data) {
+                                            }
+
+                                            @Override
+                                            public void onFailure(LabResponse response, Object data) {
+
+                                            }
+                                        }, orderItem.getOid(), s);
+                                    }
+
+                                    @Override
+                                    public void onError(RongIMClient.ErrorCode errorCode) {
+                                    }
+                                });
+                            } catch (Exception e) {
+                                MessageUtils.showToast(R.string.load_error);
+                            }
                         }
                     }
 
@@ -217,7 +284,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     }
                 }, mService.getInsiderId(), mService.getSid(), mService.getName(),
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY),
-                mCount.getText().toString(), mService.getPrice(), mService.getMoneyType());
+                selectedCount, mService.getPrice(), mService.getMoneyType());
     }
 
 
@@ -284,7 +351,7 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                     viewholder.mText.setChecked(false);
                 }
             } else {
-                if (mCount.getText().toString().equals(getItem(i))) {
+                if (selectedCount != null && selectedCount.equals(getItem(i))) {
                     viewholder.mText.setChecked(true);
                 } else {
                     viewholder.mText.setChecked(false);

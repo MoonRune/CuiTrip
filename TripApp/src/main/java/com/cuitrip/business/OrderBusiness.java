@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
+import com.lab.utils.LogHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestHandle;
 
@@ -40,6 +41,17 @@ public class OrderBusiness {
         params.setToken(context);
         params.put("oid", oid);
         params.put("reason", reason);
+        params.put("type", "1");
+        return client.post(context, BusinessHelper.getApiUrl("cancelOrder"), params, handler);
+    }
+
+
+    public static RequestHandle refuseOrder(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                            String oid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("oid", oid);
+        params.put("type", "2");
         return client.post(context, BusinessHelper.getApiUrl("cancelOrder"), params, handler);
     }
 
@@ -145,7 +157,7 @@ public class OrderBusiness {
     }
 
     public static RequestHandle payOrder(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                              String orderId, String inviteCode) {
+                                         String orderId, String inviteCode) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", orderId);
@@ -170,22 +182,74 @@ public class OrderBusiness {
     }
 
     public static RequestHandle getCharge(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                             String oid,String channel,String clientIp,String payCurrency) {
+                                          String oid, String channel, String clientIp, String payCurrency,
+                                          String couponId) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", oid);
         params.put("channel", channel);
         params.put("clientIp", clientIp);
         params.put("payCurrency", payCurrency);
+        params.put("couponIds", couponId);
         return client.post(context, BusinessHelper.getApiUrl("getCharge"), params, handler);
     }
 
+
+    public static RequestHandle getFinalPrice(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                          String oid, String payCurrency,
+                                          String couponId) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("orderId", oid);
+        params.put("payCurrency", payCurrency);
+        params.put("couponIds", couponId);
+        return client.post(context, BusinessHelper.getApiUrl("getFinalPrice"), params, handler);
+    }
+
     public static RequestHandle notifyPayStatus(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                          String orderId, boolean isSuccess) {
+                                                String orderId, boolean isSuccess) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("orderId", orderId);
         params.put("isSuccess", isSuccess ? "true" : "false");
         return client.post(context, BusinessHelper.getApiUrl("notifyPayStatus"), params, handler);
     }
+
+
+    public static RequestHandle getBills(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                         String moneyType, int start, int size) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("moneyType", moneyType);
+        params.put("size", size);
+        params.put("start", start);
+        LogHelper.e("getBills",params.toString());
+        return client.post(context, BusinessHelper.getApiUrl("getBills"), params, handler);
+    }
+
+    public static RequestHandle getValidCoupon(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                               String payCurrency) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("payCurrency", payCurrency);
+        return client.post(context, BusinessHelper.getApiUrl("getValidCoupon"), params, handler);
+    }
+
+    public static RequestHandle updateOrderConversation(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                        String orderId,String targetId) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("orderId", orderId);
+        params.put("targetId", targetId);
+        return client.post(context, BusinessHelper.getApiUrl("updateTargetId"), params, handler);
+    }
+
+    public static RequestHandle getOrderByRongTargetId(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                                        String targetId) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("targetId", targetId);
+        return client.post(context, BusinessHelper.getApiUrl("getInfoByTargetId"), params, handler);
+    }
+
 }

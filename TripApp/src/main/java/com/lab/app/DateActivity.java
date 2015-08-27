@@ -1,5 +1,6 @@
 package com.lab.app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +11,6 @@ import android.widget.CheckedTextView;
 import android.widget.GridView;
 import android.widget.TextView;
 
-import com.cuitrip.app.ServiceDetailActivity;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.AvailableDate;
 import com.cuitrip.model.UserInfo;
@@ -28,6 +28,8 @@ import java.util.TimeZone;
 
 public class DateActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String SERVICE_ID = "DateActivity.SERVICE_ID";
+    public static final String USER_TYPE = "DateActivity.USER_TYPE";
     private TextView mMonth;
     private GridView mDate;
     private Calendar mCalendar;
@@ -39,6 +41,16 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
     private boolean mIsFinder;
     private String mSid;
 
+    public static void startFinder(Context context, String sid) {
+        context.startActivity(new Intent(context, DateActivity.class).putExtra(SERVICE_ID, sid)
+                .putExtra(USER_TYPE, UserInfo.USER_FINDER));
+    }
+
+    public static void startTraveller(Context context, String sid) {
+        context.startActivity(new Intent(context, DateActivity.class).putExtra(SERVICE_ID, sid)
+                .putExtra(USER_TYPE, UserInfo.USER_TRAVEL));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +61,13 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
             finish();
             return;
         }
-        mSid = intent.getStringExtra(ServiceDetailActivity.SERVICE_ID);
+        mSid = intent.getStringExtra(SERVICE_ID);
         if (TextUtils.isEmpty(mSid)) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();
             return;
         }
-        mIsFinder = intent.getIntExtra(ServiceDetailActivity.USER_TYPE, UserInfo.USER_TRAVEL)
+        mIsFinder = intent.getIntExtra(USER_TYPE, UserInfo.USER_TRAVEL)
                 == UserInfo.USER_FINDER;
 
         setContentView(R.layout.ct_activity_date);
@@ -91,7 +103,7 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                     if (data != null) {
                         mAvailableDate = ((AvailableDate) data).getAvailableDate();
                         mBookedDate = ((AvailableDate) data).getBookedDate();
-                        if (mAvailableDate!=null&&mBookedDate!=null) {
+                        if (mAvailableDate != null && mBookedDate != null) {
                             mAvailableDate.removeAll(mBookedDate);
                         }
                         mAdapter.setCalendar(mCalendar);
@@ -167,7 +179,80 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
 
     }
 
+    public static final int NO_DATE = 0;
+
+    public class DateItem {
+        /**
+         * 1可点击白
+         * 2.
+         */
+        String name;
+        long time;
+        int type;// 可点击白  (灰 蓝)（左  中 右 全）
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        public long getTime() {
+            return time;
+        }
+
+        public void setTime(long time) {
+            this.time = time;
+        }
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
+    }
+
     public class DateAdapter extends BaseAdapter {
+        List<DateItem> dateItems;
+
+        public DateItem renderFinder(int dayIndex) {
+            DateItem result = new DateItem();
+            if (dayIndex < 1 || dayIndex > calendar.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+                result.setName("");
+                result.setTime(0);
+                result.setType(NO_DATE);
+            }
+
+            return result;
+        }
+
+        private long buildStart(int day) {
+
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            calendar.set(Calendar.HOUR_OF_DAY, 0);
+            calendar.set(Calendar.MINUTE, 0);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            long start = calendar.getTimeInMillis();
+            return start;
+        }
+
+        private long buildEnd(int day) {
+
+            calendar.set(Calendar.HOUR_OF_DAY, 23);
+            calendar.set(Calendar.MINUTE, 59);
+            calendar.set(Calendar.SECOND, 59);
+            calendar.set(Calendar.MILLISECOND, 999);
+            long end = calendar.getTimeInMillis();
+            return end;
+        }
+
+        private void matched() {
+
+        }
 
         private Calendar calendar = Calendar.getInstance();
 
@@ -222,6 +307,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                 long end = calendar.getTimeInMillis();
 
                 tv.setText(String.valueOf(date));
+                view.setTag(Long.valueOf(start));
+                tv.setVisibility(View.VISIBLE);
+                tv.setEnabled(true);
+                tv.setChecked(false);
+
                 boolean matchAvaliable = false;
                 if (mAvailableDate != null && !mAvailableDate.isEmpty()) {
                     for (long time : mAvailableDate) {
@@ -230,21 +320,11 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                             tv.setChecked(true);
                             matchAvaliable = true;
                             break;
+                            //avaliable
                         }
                     }
                 }
-                boolean matchBooked = false;
-                if (mBookedDate != null && !mBookedDate.isEmpty()) {
-                    for (long time : mBookedDate) {
-                        if (time >= start && time < end) {
-                            tv.setEnabled(false);
-                            tv.setChecked(true);
-                            matchBooked = true;
-                            break;
-                        }
-                    }
-                }
-                if (!matchAvaliable && !matchBooked) {
+                if (!matchAvaliable) {
                     Calendar today = Calendar.getInstance();
                     today.setTimeZone(TimeZone.getTimeZone("GMT+800"));
                     today.set(Calendar.HOUR_OF_DAY, 0);
@@ -255,18 +335,24 @@ public class DateActivity extends BaseActivity implements View.OnClickListener {
                         //当天之前不能被选中
                         if (start <= today.getTimeInMillis()) {
                             tv.setEnabled(false);
-                            tv.setChecked(true);
-                        } else {
-                            tv.setEnabled(true);
                             tv.setChecked(false);
                         }
                     } else {
                         tv.setEnabled(false);
-                        tv.setChecked(true);
+                        tv.setChecked(false);
                     }
                 }
-                view.setTag(Long.valueOf(start));
-                tv.setVisibility(View.VISIBLE);
+
+                if (mBookedDate != null && !mBookedDate.isEmpty()) {
+                    for (long time : mBookedDate) {
+                        if (time >= start && time < end) {
+                            tv.setEnabled(false);
+                            tv.setChecked(true);
+                            break;
+                            //booked
+                        }
+                    }
+                }
             }
 
             if (mIsFinder && view.isEnabled()) {

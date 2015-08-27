@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
-import com.lab.location.CtLocation;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabRequestParams;
 import com.lab.utils.LogHelper;
@@ -25,16 +24,21 @@ public class ServiceBusiness {
                                                   String desc, List<String> pic, String backPic, String price,
                                                   String maxbuyerNum, String serviceTime, String bestTime,
                                                   String meetingWay, int priceType, String country, String moneyType,
-                                                  CtLocation location) {
+                                                  String meetingPlace,
+                                                  String serviceTags,
+                                                  String inlclude,
+                                                  String exclude,
+                                                  String lat,
+                                                  String lng) {
         //LabRequestParams params = new LabRequestParams();
         JSONObject object = new JSONObject();
         //params.setToken(context);
-        UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (info != null) {
             object.put("uid", info.getUid());
             object.put("token", info.getToken());
         }
-        if(!TextUtils.isEmpty(sid)){
+        if (!TextUtils.isEmpty(sid)) {
             object.put("sid", sid);
         }
         object.put("name", name);
@@ -48,10 +52,14 @@ public class ServiceBusiness {
 //        object.put("meetingWay", "0");
         object.put("priceType", priceType); //计费方式：0 一口价;1 按人计费;2 免费
         object.put("city", address);
-        object.put("lat", location.latitude);
-        object.put("lng", location.longitude);
+        object.put("lat", lat);
+        object.put("lng", lng);
         object.put("country", country);
         object.put("moneyType", moneyType);
+        object.put("meetingPlace", meetingPlace);
+        object.put("serviceTags", serviceTags);
+        object.put("feeInclude", inlclude);
+        object.put("feeExclude", exclude);
 
         StringBuilder sb1 = new StringBuilder(object.toJSONString());
         sb1.delete(sb1.lastIndexOf("}"), sb1.length());
@@ -70,7 +78,7 @@ public class ServiceBusiness {
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
-        LogHelper.e("omg","send commitServiceInfo"+object.toJSONString());
+        LogHelper.e("omg", "send commitServiceInfo" + sb1.toString());
         return client.post(context, BusinessHelper.getApiUrl("commitServiceInfo"), entity, "application/json", handler);
     }
 
@@ -80,7 +88,7 @@ public class ServiceBusiness {
 //        params.setToken(context);
         JSONObject object = new JSONObject();
         //params.setToken(context);
-        UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (info != null) {
             object.put("uid", info.getUid());
             object.put("token", info.getToken());
@@ -125,7 +133,7 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle getServiceAvailableAndBookedDate(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                        String sid) {
+                                                                 String sid) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
         return client.post(context, BusinessHelper.getApiUrl("getServiceBookedAndAvailableDate"), params, handler);
@@ -153,11 +161,13 @@ public class ServiceBusiness {
     }
 
     public static RequestHandle getServiceDetail(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                                 String sid) {
+                                                 String sid,String showCurrency) {
         LabRequestParams params = new LabRequestParams();
         params.put("sid", sid);
+        params.put("showCurrency",showCurrency);
         return client.post(context, BusinessHelper.getApiUrl("getServiceDetail"), params, handler);
     }
+
 
     public static RequestHandle delPic(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
                                        String picUrl) {
@@ -173,5 +183,70 @@ public class ServiceBusiness {
         params.setToken(context);
         params.put("picBase64", picBase64);
         return client.post(context, BusinessHelper.getApiUrl("upPic"), params, handler);
+    }
+
+
+    public static RequestHandle getServiceTags(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                               String language) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("lang", language);
+        return client.post(context, BusinessHelper.getApiUrl("getServiceTags"), params, handler);
+    }
+
+    public static RequestHandle getCountryCity(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler
+            , String language, String contry) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("lang", language);
+        params.put("country", contry);
+        return client.post(context, BusinessHelper.getApiUrl("getCountryCity"), params, handler);
+    }
+
+    public static RequestHandle getStatistic(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                             String sid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("sid", sid);
+        return client.post(context, BusinessHelper.getApiUrl("getStatistic"), params, handler);
+    }
+
+    public static RequestHandle likeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                               String sid, String serviceName, String serviceAddress, String servicePic
+            , String insiderId, String insiderNick, String insiderPic, String insiderCarrer) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("sid", sid);
+        params.put("type", "1");
+        params.put("serviceName", serviceName);
+        params.put("serviceAddress", serviceAddress);
+        params.put("servicePic", servicePic);
+        params.put("insiderId", insiderId);
+        params.put("insiderNick", insiderNick);
+        params.put("insiderPic", insiderPic);
+        params.put("insiderCarrer", insiderCarrer);
+        return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
+    }
+
+    public static RequestHandle unikeService(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
+                                             String sid) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        params.put("sid", sid);
+        params.put("type", "2");
+        return client.post(context, BusinessHelper.getApiUrl("addLikes"), params, handler);
+    }
+
+    public static RequestHandle getLikes(Context context, AsyncHttpClient clinet, LabAsyncHttpResponseHandler handler,
+                                         int start, int size) {
+        LabRequestParams params = new LabRequestParams();
+        params.setToken(context);
+        if (LoginInstance.getInstance(context).getUserInfo() != null
+                && !TextUtils.isEmpty(LoginInstance.getInstance(context).getUserInfo().getUid())) {
+            params.put("uid", LoginInstance.getInstance(context).getUserInfo().getUid());
+        }
+        params.put("start", start);
+        params.put("size", size);
+        return clinet.post(context, BusinessHelper.getApiUrl("getLikes"), params, handler);
     }
 }

@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/delete"
+        android:id="@+id/ct_delete"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="@dimen/ct_ts_3"

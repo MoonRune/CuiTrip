@@ -2,9 +2,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
     <item
+        android:id="@+id/action_messages"
+        android:orderInCategory="100"
+        android:title="@string/sys_notification"
+        android:icon="@drawable/meg_g"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_setting"
         android:orderInCategory="100"
         android:title="@string/ct_setting"
-        android:icon="@drawable/ct_setting"
+        android:icon="@drawable/setting_b"
         app:showAsAction="always" />
 </menu>

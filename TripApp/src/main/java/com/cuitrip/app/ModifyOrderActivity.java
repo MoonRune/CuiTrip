@@ -1,9 +1,12 @@
 package com.cuitrip.app;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -14,6 +17,7 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.model.AvailableDate;
@@ -24,6 +28,7 @@ import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
@@ -31,15 +36,26 @@ import com.loopj.android.http.AsyncHttpClient;
 import java.util.ArrayList;
 import java.util.List;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
+
 /**
  * Created on 7/20.
  */
-public class ModifyOrderActivity extends BaseActivity implements View.OnClickListener{
+public class ModifyOrderActivity extends BaseActivity implements View.OnClickListener {
 
+    public static final String ORDER_KEY = "ModifyOrderActivity.ORDER_KEY";
+    public static final int REQUEST_MODIFY = 33;
+    @InjectView(R.id.ct_service_name_tv)
+    TextView ctServiceNameTv;
+    @InjectView(R.id.selected_date)
+    TextView mDate;
+    @InjectView(R.id.selected_count)
+    TextView mCount;
+    @InjectView(R.id.ct_order_price_tv)
+    TextView ctOrderPriceTv;
     private OrderItem mOrder;
     private ServiceInfo mService;
-
-    private TextView mDate, mCount;
 
     private AlertDialog mSelectDialog;
     private ListView mSelectListView;
@@ -50,6 +66,18 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
 
     private AsyncHttpClient mClient = new AsyncHttpClient();
 
+    public static void startModify(Activity activity, OrderItem orderItem) {
+        LogHelper.e("startModify", com.alibaba.fastjson.JSONObject.toJSONString(orderItem));
+        activity.startActivityForResult(new Intent(activity, ModifyOrderActivity.class)
+                .putExtra(ORDER_KEY, orderItem), REQUEST_MODIFY);
+
+    }
+
+    public static boolean isModifyed(int requestCode, int resultcode, Intent bundle) {
+        return requestCode == REQUEST_MODIFY && resultcode == RESULT_OK;
+
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -58,7 +86,7 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
             finish();
             return;
         }
-        mOrder = (OrderItem) intent.getSerializableExtra(OrderDetailActivity.ORDER_INFO);
+        mOrder = (OrderItem) intent.getSerializableExtra(ORDER_KEY);
         if (mOrder == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();
@@ -71,6 +99,7 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 hideLoading();
+                LogHelper.e("omg", " suc result " + response.result);
                 if (data != null) {
                     ServiceDetail detail = (ServiceDetail) data;
                     mService = detail.getServiceInfo();
@@ -84,26 +113,48 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideLoading();
+                LogHelper.e("omg", " suc failed " + response.result);
                 if (!TextUtils.isEmpty(response.msg)) {
                     MessageUtils.showToast(response.msg);
                 }
 
             }
-        }, mOrder.getSid());
+        }, mOrder.getSid(), UnitUtils.getSettingMoneyType());
     }
 
-    private void intView(){
-        setContentView(R.layout.ct_create_order);
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.ct_modify_order, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_OK:
+                modifyOrder();
+                break;
+            default:
+                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void intView() {
+        setContentView(R.layout.ct_modify_order);
+        ButterKnife.inject(this);
         mDate = (TextView) findViewById(R.id.selected_date);
         mCount = (TextView) findViewById(R.id.selected_count);
-        findViewById(R.id.bill_divider).setVisibility(View.GONE);
-        findViewById(R.id.order_bill).setVisibility(View.GONE);
+
 
         findViewById(R.id.order_date).setOnClickListener(this);
         findViewById(R.id.order_person).setOnClickListener(this);
-        findViewById(R.id.create_order).setOnClickListener(this);
-        setViewText(R.id.create_order, getString(R.string.ct_order_modify_confirm));
 
+        ctServiceNameTv.setText(mService.getName());
+//        setViewText(R.id.create_order, getString(R.string.ct_order_modify_confirm));
+        mDate.setText(Utils.getMsToD(mOrder.getServiceDate()));
+        mCount.setText(mOrder.getBuyerNum());
+        ctOrderPriceTv.setText(mOrder.getPayCurrency() + " " + mOrder.getOrderPrice());
         mSelectListView = (ListView) View.inflate(this, R.layout.ct_choice_list, null);
         mSelectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -148,13 +199,13 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFailure(LabResponse response, Object data) {
-                    hideLoading();
-                    MessageUtils.showToast(response.msg);
+                hideLoading();
+                MessageUtils.showToast(response.msg);
             }
         }, mOrder.getSid());
     }
 
-    protected void onLoginSuccess(){
+    protected void onLoginSuccess() {
         modifyOrder();
     }
 
@@ -174,9 +225,6 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.order_person:
                 showSelectedDialog(SelectBaseAdapter.TYPE_PERSON);
-                break;
-            case R.id.create_order:
-                modifyOrder();
                 break;
         }
     }
@@ -228,8 +276,8 @@ public class ModifyOrderActivity extends BaseActivity implements View.OnClickLis
 
                     @Override
                     public void onFailure(LabResponse response, Object data) {
-                            hideNoCancelDialog();
-                            MessageUtils.showToast(response.msg);
+                        hideNoCancelDialog();
+                        MessageUtils.showToast(response.msg);
                     }
                 }, mOrder.getOid(), mOrder.getSid(), mService.getName(),
                 Utils.parseStringToLongTime(mDate.getText().toString(), Utils.DATE_FORMAT_DAY),

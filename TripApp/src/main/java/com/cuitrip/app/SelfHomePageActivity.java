@@ -1,5 +1,6 @@
 package com.cuitrip.app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -7,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -24,6 +24,7 @@ import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.imageupload.URLImageParser;
+import com.lab.widget.MutiEditView;
 import com.loopj.android.http.AsyncHttpClient;
 
 import butterknife.ButterKnife;
@@ -35,10 +36,11 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLayout.OnRefreshListener {
     public static final String TAG = "SelfHomePageActivity";
+    public static final int REQUEST = 4;
     @InjectView(R.id.ct_swipe_refresh_layout)
     public SwipeRefreshLayout mSwipRl;
     @InjectView(R.id.ct_content_tv)
-    public TextView mContentTv;
+    public MutiEditView mContentTv;
     @InjectView(R.id.ct_ava_riv)
     public CircleImageView mAvaRiv;
     @InjectView(R.id.ct_nick_tv)
@@ -50,17 +52,25 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
 
     String introduce;
 
-    public static void startForResult(Fragment fragment,int request) {
+    public static void startForResult(Fragment fragment) {
         Intent intent = new Intent(fragment.getActivity(),SelfHomePageActivity.class);
-        fragment.startActivityForResult(intent,request);
+        fragment.startActivityForResult(intent,REQUEST);
 
+    }
+
+    public static void startForResult(Activity activity) {
+        Intent intent = new Intent(activity,SelfHomePageActivity.class);
+        activity.startActivityForResult(intent,REQUEST);
+    }
+    public static boolean isModifidy(int req,int res,Intent data){
+        return req == REQUEST&&res ==SelfHomePageEditorActivity.HOME_PAGE_UPDATED;
     }
     protected Drawable buildDrawable(Bitmap bitmap) {
         Drawable drawable =
                 new BitmapDrawable(getResources(), bitmap);
         int tempWidth = bitmap.getWidth();
         int height = bitmap.getHeight();
-        int width = MainApplication.sContext.getPageWidth();
+        int width = MainApplication.getInstance().getPageWidth();
         float leftPadding = getResources().getDimension(R.dimen.ct_personal_desc_left_padding);
         float topPadding = getResources().getDimension(R.dimen.ct_personal_desc_top_padding);
         width -= leftPadding;
@@ -105,7 +115,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == SelfHomePageEditorActivity.REQUEST_HOME_PAGE_UPDATE && resultCode == SelfHomePageEditorActivity.HOME_PAGE_UPDATED) {
-            setResult( SelfHomePageEditorActivity.HOME_PAGE_UPDATED);
+            setResult(SelfHomePageEditorActivity.HOME_PAGE_UPDATED);
             finish();
         }
         super.onActivityResult(requestCode, resultCode, data);
@@ -125,6 +135,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
             @Override
             public void onSuccess(LabResponse response, Object data) {
                 LogHelper.e(TAG, "" + data.toString());
+                stopRerfresh();
                 try {
                     JSONObject json = JSONObject.parseObject(data.toString());
 
@@ -135,7 +146,12 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
                         return;
                     }
                     if (status != 1) {
-                        MessageUtils.showToast(R.string.ct_homepage_status_not_suc);
+                        String content = "";
+                        try {
+                            content = json.getString("introduce");
+                        } catch (Exception e) {
+                        }
+                        SelfHomePageEditorActivity.startActivity(SelfHomePageActivity.this, content);
                         finish();
                         return ;
                     }
@@ -151,8 +167,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
 
                     introduce = json.getString("introduce");
                     introduce=URLImageParser.replae(introduce);
-                    URLImageParser p = new URLImageParser(mContentTv, SelfHomePageActivity.this, introduce);
-                    mContentTv.setText(Html.fromHtml(introduce, p, null));
+                    mContentTv.setText(introduce);
                 } catch (Exception e) {
                     LogHelper.e(TAG, "get introduce pic: " + e);
                     MessageUtils.showToast(R.string.ct_fetch_failed);
@@ -166,6 +181,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
                     msg=getString(R.string.ct_fetch_failed);
                 }
                 MessageUtils.showToast(msg);
+                stopRerfresh();
             }
 
             @Override

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_back_light_yellow"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
+
+
+    <TextView
+        android:id="@+id/ct_service_name_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:textColor="@color/ct_black"
+        android:textSize="19sp"
+        tools:text="ct_service_name_tv" />
+
+    <TextView
+        android:id="@+id/ct_service_address_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@drawable/ct_position"
+        android:drawablePadding="5dp"
+        android:textColor="@color/ct_a7"
+        android:textSize="13sp"
+        tools:text="ct_service_address_tv" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal">
+
+
+        <ImageView
+            android:layout_marginBottom="10dp"
+            android:layout_alignBottom="@+id/avas"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/join_g" />
+        <RelativeLayout
+            android:id="@+id/avas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <LinearLayout
+                android:id="@+id/help_left"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingRight="40dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ct_travel_ava_im"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    app:border_color="@color/ct_white"
+                    app:border_width="@dimen/ct_logo_border"
+
+                    tools:src="@drawable/ct_default_user" />
+
+                <TextView
+                    android:id="@+id/ct_travel_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/ct_green_circle_solid"
+                    android:textSize="15sp"
+                    tools:text="ct_travel_name_tv" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/shape_green_circle_stoken" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/help_left"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingLeft="40dp">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/ct_finder_ava_im"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="centerCrop"
+                    app:border_color="@color/ct_white"
+                    app:border_width="@dimen/ct_logo_border"
+
+                    tools:src="@drawable/ct_default_user" />
+
+                <TextView
+                    android:id="@+id/ct_finder_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:singleLine="true"
+                    android:textColor="@color/ct_blue_circle_solid"
+                    android:textSize="15sp"
+                    tools:text="ct_finder_name_tv" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/shape_blue_circle_stoken" />
+            </LinearLayout>
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1"
+        android:gravity="center_horizontal|top"
+        android:textColor="@color/ct_a7"
+        android:textSize="15sp"
+        tools:text="your travel progressing" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:textColor="@color/ct_a7"
+        android:textSize="13sp"
+        tools:text="if you need help" />
+</LinearLayout>

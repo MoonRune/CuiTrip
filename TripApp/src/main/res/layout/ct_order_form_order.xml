@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ViewStub
+                android:id="@+id/ct_progressing_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/ct_order_progressing"
+                android:layout_marginBottom="20dp"/>
+            <ViewStub
+                android:id="@+id/ct_service_info_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/ct_service_part" />
+
+            <ViewStub
+                android:id="@+id/ct_service_comment_v"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/ct_comment_part" />
+
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/ct_bottom_tv"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:textColor="@color/ct_white"
+        android:gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:textSize="17sp"
+        tools:text="sdf"
+        android:background="@drawable/select_blue_corner"/>
+</LinearLayout>

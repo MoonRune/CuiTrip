@@ -10,6 +10,7 @@
     android:layout_marginLeft="30dp"
     android:layout_marginRight="30dp"
     android:background="@drawable/ct_white_round"
+    android:paddingTop="24dp"
     android:orientation="vertical">
 
     <ImageView
@@ -29,7 +30,6 @@
         android:gravity="center"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:paddingTop="24dp"
         android:singleLine="true"
         android:textColor="@color/ct_text_title"
         android:textSize="19sp"
@@ -39,10 +39,11 @@
         android:id="@+id/dialog_content_tv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:gravity="top|center_horizontal"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
         android:paddingTop="5dp"
+        android:minLines="2"
         android:textColor="@color/ct_text_content"
         android:textSize="15sp"
         tools:text="content" />

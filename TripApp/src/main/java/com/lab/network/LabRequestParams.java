@@ -3,6 +3,7 @@ package com.lab.network;
 import android.content.Context;
 
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
 import com.lab.utils.LogHelper;
@@ -15,7 +16,7 @@ public class LabRequestParams extends RequestParams {
     }
 
     public void setToken(Context context){
-        UserInfo info = LoginInstance.getInstance(MainApplication.sContext).getUserInfo();
+        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if(info != null){
             put("uid", info.getUid());
             put("token", info.getToken());
@@ -23,6 +24,8 @@ public class LabRequestParams extends RequestParams {
         } else {
 
         }
+        put("lang", UnitUtils.getLanguage());
+        put("moneyType", UnitUtils.getMoneyType());
     }
 
 

@@ -2,13 +2,17 @@ package com.cuitrip.finder.activity;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
@@ -17,12 +21,15 @@ import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.location.LocationHelper;
 import com.lab.utils.GetImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.SavedDescSharedPreferences;
+import com.lab.utils.imageupload.CacheDirManager;
 import com.lab.utils.imageupload.URLImageParser;
 import com.lab.widget.PicTextEditView;
 import com.loopj.android.http.AsyncHttpClient;
 
+import java.io.File;
 import java.util.List;
 
 
@@ -32,7 +39,8 @@ import java.util.List;
 public class CreateServiceActivity extends BaseActivity {
 
     private static final String TAG = "CreateServiceActivity";
-    private static final int REQUEST_IMAGE = 100;
+    private static final int REQUEST_IMAGE = 99;
+    private static final int REQUEST_PHOTO = 100;
     private static final int REQUEST_CREATE = 101;
 
     public static final String EDIT_MODE = "edit_mode";
@@ -46,7 +54,61 @@ public class CreateServiceActivity extends BaseActivity {
     private boolean mInEdit;
     private boolean mLocalService;
 
+    File tempPhotoFile;
     private AsyncHttpClient mClient = new AsyncHttpClient();
+
+    public static void startModifyRemote(Context context, ServiceInfo serviceInfo) {
+        context.startActivity(new Intent(context, CreateServiceActivity.class)
+                .putExtra(CreateServiceActivity.SERVICE_INFO, serviceInfo)
+                .putExtra(CreateServiceActivity.EDIT_MODE, true));
+    }
+
+    protected View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ct_photo_im:
+                    mPicEditTextView.addImage(REQUEST_IMAGE);
+                    break;
+                case R.id.ct_camera_im:
+                    new AsyncTask() {
+                        @Override
+                        protected Object doInBackground(Object[] params) {
+                            tempPhotoFile =
+                                    new File(CacheDirManager.getInstance().cameraDir());
+                            try {
+                                if (!tempPhotoFile.exists()) {
+
+                                    LogHelper.e("omg", "tempPhotoFile not exists");
+                                    File vDirPath = tempPhotoFile.getParentFile(); //new File(vFile.getParent());
+                                    vDirPath.mkdirs();
+                                    tempPhotoFile.createNewFile();
+                                }
+                            } catch (Exception e) {
+                                LogHelper.e("omg", e.getMessage());
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            showLoading();
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+                            hideLoading();
+                            mPicEditTextView.addTakePhotoImage(REQUEST_PHOTO, tempPhotoFile);
+                        }
+                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,12 +126,14 @@ public class CreateServiceActivity extends BaseActivity {
         }
 
         setContentView(R.layout.ct_finder_create_service);
-        mTitle = (TextView)findViewById(R.id.service_name);
+        mTitle = (TextView) findViewById(R.id.service_name);
         mPicEditTextView = (PicTextEditView) findViewById(R.id.service_content);
+        findViewById(R.id.ct_camera_im).setOnClickListener(onClickListener);
+        findViewById(R.id.ct_photo_im).setOnClickListener(onClickListener);
         mPicEditTextView.setActivity(this);
         mPicEditTextView.setAsyncHttpClient(mClient);
         if (mInEdit) {
-            mPicEditTextView.initDesc( URLImageParser.replae(mServiceInfo.getDescpt()), mServiceInfo.getBackPic());
+            mPicEditTextView.initDesc(URLImageParser.replae(mServiceInfo.getDescpt()), mServiceInfo.getBackPic());
             mTitle.setText(mServiceInfo.getName());
         } else {
             mPicEditTextView.initDesc("", null);
@@ -90,16 +154,16 @@ public class CreateServiceActivity extends BaseActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_next:
-                if(TextUtils.isEmpty(mTitle.getText().toString().trim())){
+                if (TextUtils.isEmpty(mTitle.getText().toString().trim())) {
                     MessageUtils.showToast(getString(R.string.ct_service_create_header_validate));
                     return true;
                 }
-                if(mPicEditTextView.isUpdating()){
+                if (mPicEditTextView.isUpdating()) {
                     MessageUtils.showToast(getString(R.string.ct_service_create_image_upload_validate));
                     return true;
                 }
                 String content = mPicEditTextView.generateDesc();
-                if(TextUtils.isEmpty(content)){
+                if (TextUtils.isEmpty(content)) {
                     MessageUtils.showToast(getString(R.string.ct_service_create_content_validate));
                     return true;
                 }
@@ -108,7 +172,7 @@ public class CreateServiceActivity extends BaseActivity {
                     MessageUtils.showToast(getString(R.string.ct_service_create_image_size_validate));
                     return true;
                 }
-                if(mServiceInfo == null){
+                if (mServiceInfo == null) {
                     mServiceInfo = new ServiceInfo();
                 }
                 mServiceInfo.setDescpt(content);
@@ -118,9 +182,6 @@ public class CreateServiceActivity extends BaseActivity {
                 startActivityForResult(new Intent(this, CreateServiceOtherActivity.class)
                         .putExtra(CreateServiceActivity.SERVICE_INFO, mServiceInfo), REQUEST_CREATE);
 
-                return true;
-            case R.id.action_add_pic:
-                mPicEditTextView.addImage(REQUEST_IMAGE);
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -139,12 +200,31 @@ public class CreateServiceActivity extends BaseActivity {
                     }
                 }
                 break;
+            case REQUEST_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    Bitmap bp = GetImageHelper.getResizedBitmap(this, Uri.fromFile(tempPhotoFile));
+                    if (bp == null) {
+                        MessageUtils.showToast(getString(R.string.ct_create_image_failed_msg));
+                    } else {
+                        mPicEditTextView.insertImage(bp);
+                    }
+                }
+                break;
+
             case REQUEST_CREATE:
-                if (resultCode == RESULT_OK){
-                    if(mLocalService){
+                if (resultCode == RESULT_OK) {
+                    if (mLocalService) {
                         SavedDescSharedPreferences.deleteServiceDesc(this);
                     }
                     finish();
+                } else if (resultCode == RESULT_CANCELED) {
+                    LogHelper.e("save","saveToPreModify");
+                    if (data != null && data.hasExtra(SERVICE_INFO)) {
+                        mServiceInfo = (ServiceInfo) data.getSerializableExtra(SERVICE_INFO);
+                        getIntent().putExtra(SERVICE_INFO, mServiceInfo);
+                        LogHelper.e("save","set memory "+mServiceInfo.getAddress());
+                    }
+
                 }
         }
     }
@@ -156,9 +236,9 @@ public class CreateServiceActivity extends BaseActivity {
             return;
         }
         String[] tip;
-        if(mServiceInfo != null && mServiceInfo.getSid() != null){
+        if (mServiceInfo != null && mServiceInfo.getSid() != null) {
             tip = new String[]{getString(R.string.ct_edit_give_up), getString(R.string.ct_cancel)};
-        }else{
+        } else {
             tip = new String[]{getString(R.string.ct_edit_give_up), getString(R.string.ct_close_and_save), getString(R.string.ct_cancel)};
         }
         AlertDialog.Builder builder = MessageUtils.createHoloBuilder(this);
@@ -170,11 +250,17 @@ public class CreateServiceActivity extends BaseActivity {
                 if (i == 0) {
                     finish();
                 } else if (i == 1) {
-                    if(mServiceInfo != null && mServiceInfo.getSid() != null){
+                    if (mServiceInfo != null && mServiceInfo.getSid() != null) {
                         //do nothig
-                    }else{
-                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,
-                                mTitle.getText().toString(), desc, mPicEditTextView.getMainPicture());
+                    } else {
+                        if (mServiceInfo == null){
+                            mServiceInfo = new ServiceInfo();
+                        }
+                        mServiceInfo.setName(mTitle.getText().toString());
+                        mServiceInfo.setDescpt(desc);
+                        mServiceInfo.setBackPic(mPicEditTextView.getMainPicture());
+                        mServiceInfo.setPic(mPicEditTextView.getPictures());
+                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,mServiceInfo);
                         mPicEditTextView.deletePictures();
                         finish();
                     }

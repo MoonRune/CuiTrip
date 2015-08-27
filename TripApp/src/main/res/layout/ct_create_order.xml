@@ -1,28 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/ct_white"
     android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="@color/ct_back_light_yellow"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ct_service_name_tv"
+            tools:text="service_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:textSize="19sp"
+            android:textColor="@color/ct_black"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/ct_divider"
+        />
 
     <LinearLayout
         android:id="@+id/order_date"
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/ct_white_gray"
-        android:paddingLeft="@dimen/ct_width_padding"
         android:paddingRight="@dimen/ct_width_padding">
 
         <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/ct_order_date"
-            android:layout_weight="1"
-            android:layout_gravity="center_vertical"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
+            style="@style/order_form_hint"
+            android:text="@string/order_time" />
 
         <TextView
             android:id="@+id/selected_date"
@@ -34,7 +53,7 @@
             android:gravity="center_vertical"
             android:text="@string/ct_order_select_date"
             android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_5" />
+            android:textSize="15sp" />
     </LinearLayout>
 
     <View
@@ -45,16 +64,11 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@drawable/ct_white_gray"
-        android:paddingLeft="@dimen/ct_width_padding"
         android:paddingRight="@dimen/ct_width_padding">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/ct_order_person"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
+            style="@style/order_form_hint"
+            android:text="@string/order_people" />
 
         <TextView
             android:id="@+id/selected_count"
@@ -66,7 +80,7 @@
             android:gravity="center_vertical"
             android:text="@string/ct_order_select_person_count"
             android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_5" />
+            android:textSize="15sp" />
     </RelativeLayout>
 
     <View  android:id="@+id/bill_divider"
@@ -77,16 +91,12 @@
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@drawable/ct_white_gray"
-        android:paddingLeft="@dimen/ct_width_padding"
         android:paddingRight="@dimen/ct_width_padding">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:text="@string/ct_order_bill"
-            android:textColor="@color/ct_text_title"
-            android:textSize="@dimen/ct_ts_4" />
+            android:text="@string/order_price_hint"
+            style="@style/order_form_hint"
+            />
 
         <TextView
             android:id="@+id/money_desc"
@@ -95,7 +105,7 @@
             android:layout_toLeftOf="@+id/bill_count"
             android:gravity="center_vertical"
             android:textColor="@color/ct_red"
-            android:textSize="@dimen/ct_ts_5" />
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/bill_count"
@@ -104,13 +114,7 @@
             android:layout_alignParentRight="true"
             android:gravity="center_vertical"
             android:textColor="@color/ct_gray"
-            android:textSize="@dimen/ct_ts_5"
+            android:textSize="15sp"
             android:layout_marginLeft="5dp"/>
     </RelativeLayout>
-
-    <Button
-        android:id="@+id/create_order"
-        android:layout_marginTop="20dp"
-        android:text="@string/ct_create_order"
-        style="@style/ctMainBackgroundButton" />
 </LinearLayout>

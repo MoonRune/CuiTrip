@@ -17,7 +17,7 @@ public class URLDrawable extends BitmapDrawable {
 
     protected Drawable defaultDrawable;
     public URLDrawable() {
-     defaultDrawable = MainApplication.sContext.getResources().getDrawable(R.drawable.ct_default);
+     defaultDrawable = MainApplication.getInstance().getResources().getDrawable(R.drawable.ct_default);
     }
 
     @Override

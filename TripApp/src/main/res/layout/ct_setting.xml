@@ -8,19 +8,35 @@
         style="@style/ctMyProfile"
         android:text="@string/ct_modify_pass"
         android:layout_marginTop="20dp"/>
-    <View
+
+    <LinearLayout
+        android:id="@+id/ct_money_hint_ll"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/ct_single_px"
-        android:background="@color/ct_divider" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="15dp">
+
+        <TextView
+            style="@style/ctMyProfile"
+            android:drawableRight="@null"
+            android:layout_width="wrap_content"
+            android:text="@string/cash_unit"/>
+
+        <TextView
+            android:gravity="right|center_vertical"
+            android:drawablePadding="10dp"
+            android:textColor="@color/ct_content"
+            android:id="@+id/ct_money_value_tv_tv"
+            style="@style/ctMyProfile"
+            android:text=""/>
+    </LinearLayout>
     <TextView
+        android:layout_marginTop="15dp"
         android:id="@+id/ct_about"
         style="@style/ctMyProfile"
-        android:text="@string/ct_about" />
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ct_single_px"
-        android:background="@color/ct_divider" />
+        android:text="@string/ct_about" />/>
     <TextView
+        android:layout_marginTop="1dp"
         android:id="@+id/ct_relation"
         style="@style/ctMyProfile"
         android:text="@string/ct_relation_us" />

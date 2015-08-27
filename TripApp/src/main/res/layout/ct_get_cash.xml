@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@color/ct_back_light_yellow"
+        android:paddingRight="15dp"
+        android:paddingLeft="15dp">
+        <TextView
+            android:id="@+id/desc"
+            android:gravity="right"
+            android:textSize="13sp"
+            android:textColor="@color/ct_a7"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="sdf"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:textSize="17sp"
+                android:textColor="@color/ct_black"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ct_mount_left"/>
+            <TextView
+                android:layout_marginLeft="10dp"
+                android:textSize="27sp"
+                android:textColor="@color/ct_main_color"
+                android:id="@+id/amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                tools:text="USD123"/>
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@color/ct_white" >
+
+        <ImageView
+            style="@style/order_info_hint"
+            android:src="@drawable/paypal_s_c" />
+
+        <EditText
+            android:id="@+id/account"
+            android:background="@null"
+            style="@style/order_info_value"
+            android:hint="@string/un_setted" />
+    </LinearLayout>
+
+    <View
+        style="@style/order_form_divide" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/ct_white"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/get_cash_amount_hint" />
+
+        <EditText
+            android:background="@null"
+            android:inputType="numberDecimal"
+            android:id="@+id/money"
+            style="@style/order_info_value"
+            android:hint="@string/get_cath_hint"  />
+    </LinearLayout>
+
+    <View
+        style="@style/order_form_divide" />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/ct_a7"
+        android:textSize="13sp"
+        android:text="@string/get_cash_delay_mesg"/>
+    <TextView
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="10dp"
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:background="@drawable/select_blue_corner"
+        android:textColor="@color/ct_white"
+        android:textSize="19sp"
+        android:layout_height="wrap_content"
+        android:text="@string/confirm_get_cash"/>
+</LinearLayout>

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/person_top_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <LinearLayout
+        android:id="@+id/ct_user_real_name_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_real_name" />
+
+        <TextView
+            android:id="@+id/ct_user_real_name_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_real_name_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_real_name_div"
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:id="@+id/ct_user_birth_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_birth" />
+
+        <TextView
+            android:id="@+id/ct_user_birth_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_birth_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_birth_div"
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:id="@+id/ct_user_gender_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_gender" />
+
+        <TextView
+            android:id="@+id/ct_user_gender_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_gender_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_gender_div"
+        style="@style/order_form_divide" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ct_user_city_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:layout_weight="1"
+            android:text="@string/ct_profile_title_area" />
+
+        <TextView
+            android:id="@+id/ct_user_city_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_city_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_city_div"
+        style="@style/order_form_divide" />
+
+    <LinearLayout
+
+        android:id="@+id/ct_user_carrer_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_carrer" />
+
+        <TextView
+            android:id="@+id/ct_user_carrer_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_carrer_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_carrer_div"
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:id="@+id/ct_user_hobby_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_hobby" />
+
+        <TextView
+            android:id="@+id/ct_user_hobby_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_hobby_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_hobby_div"
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:id="@+id/ct_user_language_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_language" />
+
+        <TextView
+            android:id="@+id/ct_user_language_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_language_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_language_div"
+        style="@style/order_form_divide" />
+    <LinearLayout
+        android:id="@+id/ct_user_sign_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            style="@style/order_info_hint"
+            android:text="@string/order_person_sign" />
+
+        <TextView
+            android:id="@+id/ct_user_sign_tv"
+            style="@style/order_info_value"
+            tools:text="ct_user_sign_tv" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_user_sign_div"
+        style="@style/order_form_divide" />
+</LinearLayout>

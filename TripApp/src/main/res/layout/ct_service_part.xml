@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/ct_white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ct_service_name_tv"
+            tools:text="service_name"
+            android:gravity="center_vertical"
+            android:paddingLeft="18dp"
+            android:paddingRight="18dp"
+            android:textSize="19sp"
+            android:textColor="@color/ct_black"
+            android:layout_width="wrap_content"
+            android:layout_height="64dp"
+            android:layout_weight="1"/>
+    </LinearLayout>
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="1dp"
+      android:background="@color/ct_divider"
+      />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/order_date_time"
+                style="@style/order_form_hint"/>
+            <TextView
+                android:id="@+id/ct_order_time_tv"
+                tools:text="order_time"
+                style="@style/order_form_value" />
+        </LinearLayout>
+
+    <View
+        style="@style/order_form_divide"
+        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:text="@string/order_people"
+                style="@style/order_form_hint" />
+            <TextView
+                android:id="@+id/ct_person_size_tv"
+                android:text="order_person_size"
+                tools:text="order_people"
+                style="@style/order_form_value" />
+        </LinearLayout>
+    <View
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:id="@+id/ct_service_duration_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/order_play_time"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_service_duration_tv"
+            tools:text="service_duration"
+            style="@style/order_form_value"/>
+    </LinearLayout>
+
+    <View
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:id="@+id/ct_service_meet_location_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/select_white_gray"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/order_meet_place"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_service_meet_location_tv"
+            tools:text="ct_service_meet_location_tv"
+            android:drawableRight="@drawable/map_b"
+            android:drawablePadding="8dp"
+            style="@style/order_form_value" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/ct_ct_service_duration_divide"
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/order_prices"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_order_price_tv"
+            tools:text="order_cost"
+            style="@style/order_form_value"/>
+    </LinearLayout>
+    <View
+        style="@style/order_form_divide"
+        />
+
+    <LinearLayout
+        android:id="@+id/ct_order_price_include_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/price_include"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_order_price_include_tv"
+            tools:text="order_price_include"
+            style="@style/order_form_value" />
+    </LinearLayout>
+    <View
+        style="@style/order_form_divide"
+        />
+    <LinearLayout
+        android:id="@+id/ct_order_price_uninclude_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:text="@string/price_exclude"
+            style="@style/order_form_hint"/>
+        <TextView
+            android:id="@+id/ct_order_price_uninclude_tv"
+            tools:text="order_price_uninclude"
+            style="@style/order_form_value" />
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/ct_order_unvaliable_ll"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <View
+            style="@style/order_form_divide"
+            />
+        <TextView
+            android:layout_marginTop="30dp"
+            android:text="@string/order_cancel_reason"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:gravity="center_vertical"
+            style="@style/order_form_hint"/>
+
+        <View
+            style="@style/order_form_divide"
+            />
+        <TextView
+            android:paddingTop="10dp"
+            android:paddingBottom="20dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/ct_order_unvaliable_tv"
+            tools:text="order_price_uninclude"
+            style="@style/order_form_value" />
+    </LinearLayout>
+</LinearLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/ct_white"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_marginTop="30dp"
+                android:id="@+id/ce_service_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/ct_black"
+                android:textSize="19sp"
+                tools:text="name" />
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/ce_service_location"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawablePadding="10dp"
+
+                android:textColor="@color/ct_content"
+                android:textSize="15sp"
+                android:drawableLeft="@drawable/position_g"
+                tools:text="position" />
+
+
+            <RatingBar
+                android:layout_marginTop="10dp"
+                android:id="@+id/service_score"
+                style="@style/ctStarMini"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/service_address"
+                android:layout_centerHorizontal="true"
+                android:isIndicator="true"
+                android:max="5"
+                android:numStars="5" />
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"></LinearLayout>
+
+            <TextView
+                android:layout_marginTop="10dp"
+                android:id="@+id/ct_content_v"
+                android:paddingLeft="18dp"
+                android:paddingRight="18dp"
+                android:textSize="17sp"
+                android:lineSpacingMultiplier="1.3"
+                tools:text="@string/ct_message_finder_cancel_little"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"></TextView>
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:visibility="gone"
+        android:id="@+id/ct_book"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/ct_blue_bg"
+        android:gravity="center"
+        android:text="@string/ct_cuitrip_book"
+        android:textColor="@color/ct_white"
+        android:textSize="@dimen/ct_ts_3" />
+</LinearLayout>

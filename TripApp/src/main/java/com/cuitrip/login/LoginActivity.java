@@ -51,6 +51,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        showActionBar(R.string.ct_login);
+
         setContentView(R.layout.ct_activity_login);
         mPassWd = (TextView) findViewById(R.id.ct_passwd);
         mCountry = (TextView) findViewById(R.id.ct_contry);
@@ -137,6 +139,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String[] country = null;
         if (!TextUtils.isEmpty(mcc)) {
             country = SMSSDK.getCountryByMCC(mcc);
+            if (country != null) {
+                LogHelper.e("omg", TextUtils.join("|", country));
+            }
         }
 
         if (country == null) {
@@ -149,13 +154,23 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     private String getMCC() {
         TelephonyManager tm = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
         // 返回当前手机注册的网络运营商所在国家的MCC+MNC. 如果没注册到网络就为空.
-        String networkOperator = tm.getNetworkOperator();
-        if (!TextUtils.isEmpty(networkOperator)) {
-            return networkOperator;
+        String temp = tm.getSimOperator();
+        if (!TextUtils.isEmpty(temp)) {
+            if (temp.length() > 3) {
+                return temp.substring(0, 3);
+            }
+            return temp;
         }
 
         // 返回SIM卡运营商所在国家的MCC+MNC. 5位或6位. 如果没有SIM卡返回空
-        return tm.getSimOperator();
+        temp = tm.getNetworkOperator();
+        if (!TextUtils.isEmpty(temp)) {
+            if (temp.length() > 3) {
+                return temp.substring(0, 3);
+            }
+            return temp;
+        }
+        return "";
     }
 
     @Override
@@ -246,9 +261,11 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                     }
                     //TODO 发现者模式下登录切换到旅行者？
                     info.setType(UserInfo.USER_TRAVEL);
-                    UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
+
+                            UserInfo oldInfo = LoginInstance.getInstance(LoginActivity.this).getUserInfo();
                     if (oldInfo == null || (oldInfo != null && !oldInfo.isTravel())) {
                         LoginInstance.update(LoginActivity.this, info);
+                        LogHelper.e("LoginActivity", "jump index");
                         Intent intent = new Intent(LoginActivity.this, IndexActivity.class);
                         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                         startActivity(intent);
@@ -256,7 +273,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                         LoginInstance.update(LoginActivity.this, info);
                     }
 
-                    LoginInstance.update(LoginActivity.this, info);
 
                     try {
                         InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);

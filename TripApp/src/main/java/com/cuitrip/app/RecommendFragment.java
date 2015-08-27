@@ -14,16 +14,17 @@ import android.widget.ListView;
 
 import com.cuitrip.adapter.RecommendAdapter;
 import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.RecommendItem;
 import com.cuitrip.model.RecommendOutData;
-import com.lab.app.BaseFragment;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
+import com.lab.app.BaseFragment;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
-
 
 import java.util.List;
 
@@ -34,8 +35,9 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
     private View mContentView;
     private ListView mListView;
     private AsyncHttpClient mAsyncHttpClient = new AsyncHttpClient();
-
+    RecommendAdapter adapter;
     private RecommendOutData mRecommendOutData;
+
     /**
      * When creating, retrieve this instance's number from its arguments.
      */
@@ -43,16 +45,16 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ActionBar bar = getActionBar();
-        if(bar != null){
+        if (bar != null) {
             bar.setDisplayHomeAsUpEnabled(false);
         }
     }
 
-    public void onResume(){
+    public void onResume() {
         super.onResume();
         showActionBar(getString(R.string.ct_hot_recommend));
-        if(mRecommendOutData == null || mRecommendOutData.getLists() == null
-                || mRecommendOutData.getLists().isEmpty()){
+        if (mRecommendOutData == null || mRecommendOutData.getLists() == null
+                || mRecommendOutData.getLists().isEmpty()) {
             mContentView.post(new Runnable() {
                 @Override
                 public void run() {
@@ -67,7 +69,7 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
 
     public void onDestroy() {
         super.onDestroy();
-        if(refresh != null){
+        if (refresh != null) {
             refresh.setRefreshing(false);
         }
     }
@@ -110,11 +112,11 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
         @Override
         public void onFailure(LabResponse response, Object data) {
 
-                if (response != null && !TextUtils.isEmpty(response.msg)) {
-                    MessageUtils.showToast(response.msg);
-                }
-                refresh.setRefreshing(false);
-                onNetwokError(0, 0, 0);
+            if (response != null && !TextUtils.isEmpty(response.msg)) {
+                MessageUtils.showToast(response.msg);
+            }
+            refresh.setRefreshing(false);
+            onNetwokError(0, 0, 0);
         }
 
         @Override
@@ -125,10 +127,74 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
                 mRecommendOutData = (RecommendOutData) data;
                 List<RecommendItem> list = mRecommendOutData.getLists();
                 if (list != null && !list.isEmpty()) {
-                    RecommendAdapter adapter = new RecommendAdapter(getActivity(),
-                            list, R.layout.ct_list_pending, list.size() <= RecommendAdapter.PAGE_SIZE);
+                    adapter = new RecommendAdapter(getActivity(),
+                            list, R.layout.ct_list_pending, list.size() <= RecommendAdapter.PAGE_SIZE,
+                            onClickListener);
                     mListView.setAdapter(adapter);
                 }
+            }
+        }
+    };
+
+    protected View.OnClickListener onClickListener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.like_img:
+                    if (!LoginInstance.isLogin(getActivity())) {
+                        reLogin();
+                        return;
+                    }
+                    if (v.getTag() != null && v.getTag() instanceof RecommendItem) {
+                        final RecommendItem item = ((RecommendItem) v.getTag());
+                        if (item.isLiked()) {
+                            ServiceBusiness.unikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
+                                @Override
+                                public void onSuccess(LabResponse response, Object data) {
+                                    item.setIsLiked(false);
+                                    adapter.notifyDataSetChanged();
+                                }
+
+                                @Override
+                                public void onFailure(LabResponse response, Object data) {
+                                    adapter.notifyDataSetChanged();
+                                    String msg;
+                                    if (response != null && !TextUtils.isEmpty(response.msg)) {
+                                        msg = response.msg;
+                                    } else {
+                                        msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                                    }
+                                    MessageUtils.showToast(msg);
+
+                                }
+                            }, item.getSid());
+                        } else {
+                            ServiceBusiness.likeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
+                                        @Override
+                                        public void onSuccess(LabResponse response, Object data) {
+                                            item.setIsLiked(true);
+                                            adapter.notifyDataSetChanged();
+                                        }
+
+                                        @Override
+                                        public void onFailure(LabResponse response, Object data) {
+                                            adapter.notifyDataSetChanged();
+
+                                            String msg;
+                                            if (response != null && !TextUtils.isEmpty(response.msg)) {
+                                                msg = response.msg;
+                                            } else {
+                                                msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                                            }
+                                            MessageUtils.showToast(msg);
+
+                                        }
+                                    }, item.getSid(), item.getServiceName(), item.getServiceAddress(), item.getServicePicUrl(),
+                                    item.getInsiderId(), item.getUserNick(), item.getHeadPic(), item.getCareer());
+
+                        }
+                    }
+                    break;
             }
         }
     };

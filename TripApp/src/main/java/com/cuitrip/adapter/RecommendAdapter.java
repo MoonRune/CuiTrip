@@ -18,8 +18,6 @@ import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
 import com.loopj.android.http.SyncHttpClient;
 
-import org.w3c.dom.Text;
-
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -53,8 +51,8 @@ public class RecommendAdapter extends PagedEndlessAdapter<RecommendItem> {
         return incoming;
     }
 
-    public RecommendAdapter(Context context, List<RecommendItem> initList, int pendingResource, boolean keepOnAppending) {
-        super(context, new RecommenWrapperAdapter(context, initList), pendingResource, keepOnAppending);
+    public RecommendAdapter(Context context, List<RecommendItem> initList, int pendingResource, boolean keepOnAppending,View.OnClickListener onClickListener) {
+        super(context, new RecommenWrapperAdapter(context, initList,onClickListener), pendingResource, keepOnAppending);
 //        if (getWrappedAdapter() != null && getWrappedAdapter().getCount() > 0) {
 //            initStartPage(1);
 //        }
@@ -62,8 +60,10 @@ public class RecommendAdapter extends PagedEndlessAdapter<RecommendItem> {
 
     public static class RecommenWrapperAdapter extends WrappedAdapter<RecommendItem> {
 
-        public RecommenWrapperAdapter(Context context, List<RecommendItem> initItems) {
+        private View.OnClickListener onClickListener;
+        public RecommenWrapperAdapter(Context context, List<RecommendItem> initItems,View.OnClickListener onClickListener) {
             super(context, initItems);
+            this.onClickListener = onClickListener;
         }
 
         @Override
@@ -75,6 +75,8 @@ public class RecommendAdapter extends PagedEndlessAdapter<RecommendItem> {
                 viewHolder.authorName = (TextView) convertView.findViewById(R.id.author_name);
                 viewHolder.serviceName = (TextView) convertView.findViewById(R.id.service_name);
                 viewHolder.servicePic = (ImageView) convertView.findViewById(R.id.service_img);
+                viewHolder.carrerTv = (TextView) convertView.findViewById(R.id.author_carrer);
+                viewHolder.likeImg = (ImageView) convertView.findViewById(R.id.like_img);
                 viewHolder.authorPic = (CircleImageView) convertView.findViewById(R.id.author_img);
                 viewHolder.authorAddress = (TextView) convertView.findViewById(R.id.author_address);
                 convertView.setTag(viewHolder);
@@ -83,12 +85,23 @@ public class RecommendAdapter extends PagedEndlessAdapter<RecommendItem> {
             }
             RecommendItem item = getItem(position);
             if (!TextUtils.isEmpty(item.getServiceAddress())) {
-                viewHolder.authorAddress.setText("  -  " + item.getServiceAddress());
+                viewHolder.authorAddress.setText( item.getServiceAddress());
+            }else {
+                viewHolder.authorAddress.setText("");
             }
             viewHolder.authorName.setText(item.getUserNick());
             ImageHelper.displayPersonImage(item.getHeadPic(), viewHolder.authorPic, null);
             ImageHelper.displayCtImage(item.getServicePicUrl(), viewHolder.servicePic, null);
             viewHolder.serviceName.setText(item.getServiceName());
+            if (TextUtils.isEmpty(item.getCareer())){
+                viewHolder.carrerTv.setText(" ");
+            }else {
+                viewHolder.carrerTv.setText("- " + item.getCareer());
+            }
+            viewHolder.likeImg.setImageResource(item.isLiked() ? R.drawable.selector_now_like :
+                    R.drawable.selector_now_unlike);
+            viewHolder.likeImg.setTag(item);
+            viewHolder.likeImg.setOnClickListener(onClickListener);
             return convertView;
         }
     }
@@ -99,6 +112,8 @@ public class RecommendAdapter extends PagedEndlessAdapter<RecommendItem> {
         public TextView serviceName;
         public TextView authorName;
         public TextView authorAddress;
+        public ImageView likeImg;
+        public TextView carrerTv;
 
     }
 

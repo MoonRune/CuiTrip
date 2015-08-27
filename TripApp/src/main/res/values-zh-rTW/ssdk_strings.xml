@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="weibo_oauth_regiseter">應用授權</string>
-	<string name="website">http://www.mob.com</string>
 	<string name="weibo_upload_content">分享圖片</string>
 	<string name="wechat_client_inavailable">目前您的微信版本太舊或未安裝微信，需要安裝微信才能使用</string>
-	<string name="google_plus_client_inavailable">Google+ 版本太舊或者没有安裝，需要升級或安裝Google+才能使用！</string>
-	<string name="qq_client_inavailable">QQ 版本太舊或者没有安裝，需要升級或安裝QQ才能使用！</string>
-	<string name="pinterest_client_inavailable">Pinterest版本太舊或者没有安装，需要升級或安裝Pinterest才能使用！</string>
-	<string name="instagram_client_inavailable">Instagram版本太舊或者没有安装，需要升級或安装Instagram才能使用！</string>
+	<string name="google_plus_client_inavailable">Google+ 版本太舊或者沒有安裝，需要升級或安裝Google+才能使用！</string>
+	<string name="qq_client_inavailable">QQ 版本太舊或者沒有安裝，需要升級或安裝QQ才能使用！</string>
+	<string name="pinterest_client_inavailable">Pinterest版本太舊或者沒有安裝，需要升級或安裝Pinterest才能使用！</string>
+	<string name="instagram_client_inavailable">Instagram版本太舊或者沒有安裝，需要升級或安裝Instagram才能使用！</string>
 	<string name="yixin_client_inavailable">目前您的易信版本太舊或未安裝，需要安裝易信才能使用</string>
 	<string name="line_client_inavailable">目前您的Line版本太舊或未安裝，需要安裝Line才能使用</string>
 	<string name="kakaotalk_client_inavailable">目前您的KakaoTalk版本太舊或未安裝，需要安裝KakaoTalk才能使用</string>
@@ -67,6 +66,6 @@
 	<string name="share_to_qq">分享到QQ</string>
 	<string name="mingdao_share_content">網頁分享</string>
 	<string name="share_to_mingdao">分享到明道</string>
-	<string name="share_to_qzone_default">來自%s的分享</string>
+	<string name="share_to_qzone_default">來自%%s的分享</string>
 	<string name="use_login_button">請改用“登入”按鈕</string>
 </resources>

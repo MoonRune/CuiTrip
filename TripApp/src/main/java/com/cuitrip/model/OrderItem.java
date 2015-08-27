@@ -3,9 +3,15 @@ package com.cuitrip.model;
 
 import java.io.Serializable;
 
-public class OrderItem implements Serializable{
+public class OrderItem implements Serializable {
     private static final long serialVersionUID = 1523183235771740008L;
-
+    public static final int STATUS_WAIT_COFIRM = 1;
+    public static final int STATUS_WAIT_PAY = 2;
+    public static final int STATUS_WAIT_START = 3;
+    public static final int STATUS_WAIT_END = 4;
+    public static final int STATUS_WAIT_COMMENT = 5;
+    public static final int STATUS_OVER = 6;
+    public static final int STATUS_UNVALIABLE = 7;
 //    public enum OrderStatus {
 //        CREATED(1), CONFIRMED(2), PAYED(8), WILL_BEGIN(3),BEGIN(4),END(5),CANCEL(6),CLOSED(7);
 //        private int status;
@@ -56,7 +62,7 @@ public class OrderItem implements Serializable{
     private String travellerName; //": "Andy",
     private String paymentWay; //": "1",
     private String serviceName; //": "bobby带你看花莲老火车",
-    private String serviceDate; //": "2015-06-29 00:00:00",
+    private String serviceDate; //": "2015-06-29 00:00:00", TODO 啥？？订单时间吗
     private String servicePIC; //": "http://cuitrip.oss-cn-shenzhen.aliyuncs.com/13_1434945983861",
     private String serviceAddress; //": "花莲",
     private String orderPrice; //": "0",
@@ -68,24 +74,101 @@ public class OrderItem implements Serializable{
     private String gmtCreated; //": "2015-06-26 22:11:50.0",
     private String gmtModified; //": "2015-06-26 22:38:56.0"
     private String comment;
-    private String commentScore;
+    private String score;
     private String priceType;
+    private String feeInclude;
+    private String feeExclude;
+    private String meetingPlace;
+    private String invalidReason;
+    private String lat;
+    private String lng;
+    private String targetId;
+    private String serviceTime;//游玩时间长度
+
+    public String getServiceTime() {
+        return serviceTime;
+    }
+
+    public void setServiceTime(String serviceTime) {
+        this.serviceTime = serviceTime;
+    }
+
+    public String getTargetId() {
+        return targetId;
+    }
+
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
+    }
+
+    public String getScore() {
+        return score;
+    }
+
+    public void setScore(String score) {
+        this.score = score;
+    }
+
+    public String getLat() {
+        return lat;
+    }
+
+    public void setLat(String lat) {
+        this.lat = lat;
+    }
+
+    public String getLng() {
+        return lng;
+    }
+
+    public void setLng(String lng) {
+        this.lng = lng;
+    }
+
+    public String getFeeInclude() {
+        return feeInclude;
+    }
+
+    public void setFeeInclude(String feeInclude) {
+        this.feeInclude = feeInclude;
+    }
+
+    public String getFeeExclude() {
+        return feeExclude;
+    }
+
+    public void setFeeExclude(String feeExclude) {
+        this.feeExclude = feeExclude;
+    }
+
+    public String getMeetingPlace() {
+        return meetingPlace;
+    }
+
+    public void setMeetingPlace(String meetingPlace) {
+        this.meetingPlace = meetingPlace;
+    }
+
+    public String getInvalidReason() {
+        return invalidReason;
+    }
+
+    public void setInvalidReason(String invalidReason) {
+        this.invalidReason = invalidReason;
+    }
 
     public String getPriceType() {
         return priceType;
-    }
-
-    public void setPriceType(String priceType) {
-        this.priceType = priceType;
     }
 
     public boolean isDiscount() {
         return "2".equals(paymentWay);
     }
 
-    public boolean isPricePerMan(){
-        return "1".equals(priceType );
+    public boolean isPricePerMan() {
+        return "1".equals(priceType);
     }
+
     public String getPayCurrency() {
         return payCurrency;
     }
@@ -103,18 +186,18 @@ public class OrderItem implements Serializable{
     }
 
     public float getCommentScore() {
-        try{
-            return Float.valueOf(commentScore);
-        }catch (Exception e){
+        try {
+            return Float.valueOf(score);
+        } catch (Exception e) {
             return -1;
         }
     }
 
     public void setCommentScore(String commentScore) {
-        this.commentScore = commentScore;
+        this.score = commentScore;
     }
 
-    public boolean isClosed(){
+    public boolean isClosed() {
         return (status == 6) || (status == 7);
     }
 
@@ -128,6 +211,7 @@ public class OrderItem implements Serializable{
 
     /**
      * createOrder接口中为orderId
+     *
      * @param orderId
      */
     public void setOrderId(String orderId) {
@@ -318,4 +402,9 @@ public class OrderItem implements Serializable{
     public void setGmtModified(String gmtModified) {
         this.gmtModified = gmtModified;
     }
+
+    public void setPriceType(String priceType) {
+        this.priceType = priceType;
+    }
+
 }

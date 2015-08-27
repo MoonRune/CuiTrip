@@ -13,8 +13,8 @@ public class CurrencyHelper {
     private static CurrencyHelper currencyHelper;
 
     private CurrencyHelper() {
-        currencyMap.put("cny", MainApplication.sContext.getString(R.string.ct_cny));
-        currencyMap.put("wtd", MainApplication.sContext.getString(R.string.ct_twd));
+        currencyMap.put("cny", MainApplication.getInstance().getString(R.string.ct_cny));
+        currencyMap.put("wtd", MainApplication.getInstance().getString(R.string.ct_twd));
     }
 
     public static CurrencyHelper getInstance() {

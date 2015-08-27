@@ -6,9 +6,9 @@
         <item name="android:textColor">@color/ct_title</item>
         <item name="android:windowBackground">@color/ct_common_bg</item>
         <item name="android:colorBackground">@color/ct_common_bg</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:actionMenuTextColor">@color/ct_white</item>
-        <item name="actionMenuTextColor">@color/ct_white</item>
+        <item name="android:windowContentOverlay">@drawable/shape_actionbar_blow</item>
+        <item name="actionMenuTextColor">@color/ct_main_color_light</item>
+        <item name="android:textSize">15sp</item>>
         <item name="android:actionMenuTextAppearance">@style/ctActionbarMenu</item>
 
         <!--<item name="android:dropDownListViewStyle">@style/drop_down_style</item>-->
@@ -25,8 +25,7 @@
     </style>
 
     <style name="ctActionbarMenu" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
-        <item name="android:textSize">@dimen/ct_ts_4</item>
-        <item name="android:textColor">@color/ct_white</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="cuiAppDialog" parent="android:Theme.Holo.Light.Dialog">
@@ -46,12 +45,13 @@
         <item name="android:scrollbarTrackVertical">@null</item>
     </style>
     <style name="ctMyActionBar" parent="@style/Widget.AppCompat.ActionBar">
-        <item name="background">@drawable/ct_actionbar_bg</item>
+        <item name="background">@color/ct_white</item>
         <item name="titleTextStyle">@style/ct_ActionBar_Text</item>
-        <item name="homeAsUpIndicator">@drawable/ct_trip_back</item>
+        <item name="homeAsUpIndicator">@drawable/back_arrow_b</item>
+        <item name="android:textSize">15sp</item>
     </style>
     <style name="ct_ActionBar_Text" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
-        <item name="android:textColor">@color/ct_white</item>
+        <item name="android:textColor">@color/ct_black</item>
         <item name="android:textSize">@dimen/ct_ts_3</item>
     </style>
 
@@ -63,22 +63,20 @@
 
     <style name="ctStarMini" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/ct_star_mini</item>
-        <item name="android:minHeight">22dp</item>
-        <item name="android:maxHeight">22dp</item>
     </style>
 
     <style name="ctDetailLeft" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">44dp</item>
-        <item name="android:textSize">@dimen/ct_ts_5</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/ct_title</item>
         <item name="android:gravity">center_vertical</item>
     </style>
     <style name="ctDetailRight" >
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">44dp</item>
-        <item name="android:gravity">center_vertical</item>
-        <item name="android:textSize">@dimen/ct_ts_5</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textColor">@color/ct_a8</item>
         <item name="android:layout_alignParentRight">true</item>
     </style>
@@ -168,7 +166,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:layout_marginRight">25dp</item>
         <item name="android:background">@color/ct_alpha</item>
-        <item name="android:textSize">13dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:colorBackgroundCacheHint">@color/ct_text_title</item>
         <item name="android:textColor">@color/ct_text_title</item>
         <item name="android:maxLength">20</item>
@@ -179,7 +177,7 @@
         <item name="android:gravity">center_vertical|right</item>
         <item name="android:singleLine">true</item>
         <item name="android:background">@color/ct_alpha</item>
-        <item name="android:textSize">13dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:colorBackgroundCacheHint">@color/ct_text_title</item>
     </style>
     <style name="profileDivide" >
@@ -208,6 +206,86 @@
     </style>
 
 
+    <style name="order_form_divide" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@color/ct_divider</item>
+    </style>
+
+
+    <style name="order_form_hint" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingLeft">18dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/ct_a7</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="order_form_value" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/ct_black</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="order_info_hint" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:textColor">@color/ct_a7</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
+    <style name="order_info_value" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:gravity">center_vertical|right</item>
+        <item name="android:textColor">@color/ct_black</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+
+    <style name="create_service_divide" >
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:background">@color/ct_divider</item>
+    </style>
+
+
+    <style name="static_hint" >
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">13dp</item>
+        <item name="android:textColor">@color/ct_a7</item>
+    </style>
+
+    <style name="static_value" >
+        <item name="android:layout_marginTop">7dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">17dp</item>
+        <item name="android:textColor">@color/ct_black</item>
+    </style>
     <!--<style name="selectorItem" parent="Widget.AppCompat.Light.DropDownItem.Spinner">-->
         <!--<item name="android:textColor">@color/B_black_85</item>-->
     <!--</style>-->
