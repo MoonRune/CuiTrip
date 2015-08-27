@@ -121,7 +121,10 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 @Override
                 public void onTokenIncorrect() {
                     LogHelper.e("ron token error", "");
-    /* Token 错误，在线上环境下主要是因为 Token 已经过期，您需要向 App Server 重新请求一个新的 Token */
+                    try {
+                        MainApplication.getInstance().logOutWithError();
+                    } catch (Exception e) {
+                    }
                 }
 
             });
