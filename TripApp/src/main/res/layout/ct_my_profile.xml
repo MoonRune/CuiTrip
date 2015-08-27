@@ -9,11 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ct_white"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:orientation="vertical"
-        android:paddingBottom="20dp">
+        android:orientation="vertical">
 
         <View
             android:layout_width="match_parent"
@@ -37,6 +33,7 @@
                 tools:src="@drawable/ct_default_user" />
 
             <TextView
+                android:layout_marginTop="5dp"
                 android:id="@+id/ava_user_nick_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -377,6 +374,7 @@
                 android:text="@string/phone" />
 
             <EditText
+                android:textColor="@color/ct_diable_gray"
                 android:id="@+id/ct_personal_phone_et"
                 style="@style/profileEditText"
                 android:layout_width="match_parent"
@@ -446,5 +444,9 @@
                 android:src="@drawable/ct_narrow_right" />
         </LinearLayout>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:background="@color/ct_common_bg" />
     </LinearLayout>
 </ScrollView>

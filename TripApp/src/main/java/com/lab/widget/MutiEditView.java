@@ -66,6 +66,7 @@ public class MutiEditView extends LinearLayout {
     }
 
     public void setText(String introduce) {
+        removeAllViews();
         while (!TextUtils.isEmpty(introduce) && introduce.indexOf("<div>") >= 0) {
             if (introduce.indexOf("<div>") >= 0) {
                 String temp = introduce.substring(0, introduce.indexOf("<div>"));
