@@ -366,6 +366,8 @@
                             android:text="@string/ct_author_register_time" />
 
                         <TextView
+                            android:layout_weight="1"
+                            tools:text="asdf"
                             android:id="@+id/author_register_time_value"
                             style="@style/ctDetailRight"
                             android:layout_below="@+id/author_more" />
@@ -435,6 +437,8 @@
                             android:text="@string/ct_author_career" />
 
                         <TextView
+                            android:layout_weight="1"
+                            tools:text="asdf"
                             android:id="@+id/author_career_value"
                             style="@style/ctDetailRight"
                             android:layout_below="@+id/divider2" />
@@ -459,6 +463,8 @@
                             android:text="@string/ct_author_interest" />
 
                         <TextView
+                            android:layout_weight="1"
+                            tools:text="asdf"
                             android:id="@+id/author_interest_value"
                             style="@style/ctDetailRight"
                             android:layout_below="@+id/divider3" />
@@ -482,6 +488,8 @@
                             android:text="@string/ct_author_language" />
 
                         <TextView
+                            android:layout_weight="1"
+                            tools:text="asdf"
                             android:id="@+id/author_language_value"
                             style="@style/ctDetailRight"
                             android:layout_below="@+id/divider4" />
