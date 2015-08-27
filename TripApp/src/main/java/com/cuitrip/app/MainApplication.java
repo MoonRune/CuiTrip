@@ -33,7 +33,7 @@ import jonathanfinerty.once.Once;
 
 public class MainApplication extends BaseAppLication {
     public static final String DAILY_FORCE_UPDATE = "MainApplication.DAILY_FORCE_UPDATE";
-    public static final boolean IS_DEV = false;
+    public static final boolean IS_DEV = true;
     private static MainApplication sContext;
 
     private int mPageWidth;
