@@ -608,5 +608,6 @@
     <string name="please_desc_address">请输入地址的描述</string>
     <string name="order_status_hint">预订状态</string>
     <string name="get_cash">提现</string>
+    <string name="tb_munion_tip_download_prefix">loading:</string>
 
 </resources>
