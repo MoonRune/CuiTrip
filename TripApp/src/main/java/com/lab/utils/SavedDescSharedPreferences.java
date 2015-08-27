@@ -46,7 +46,6 @@ public class SavedDescSharedPreferences {
                 LogHelper.e("omg","get  exception"+e.getMessage());
                 return null;
             }
-            LogHelper.e("omg","get saved "+savedService==null?"null":savedService.getName());
             return savedService;
         }
     }
