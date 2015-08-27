@@ -109,8 +109,8 @@ public class ServideDetailDescActivity extends BaseActivity {
             image = image.substring(image.indexOf("http:"), image.indexOf("\"", image.indexOf("http:")));
             ImageView textView = (ImageView) LayoutInflater.from(this).inflate(R.layout.tv_image, content, false);
             content.addView(textView);
-            ImageHelper.displayCtImage(image, textView, null);
-//            startDiaplay(textView,image);
+//            ImageHelper.displayCtImage(image, textView, null);
+            startDiaplay(textView, image);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -118,41 +118,40 @@ public class ServideDetailDescActivity extends BaseActivity {
 
     public void startDiaplay(final ImageView imageView, final String url) {
         imageView.setImageResource(R.drawable.ct_default);
+
         new AsyncTask() {
             Bitmap bitmap;
-            int height;
-            int width;
+            float height;
+            float width;
 
             @Override
             protected Object doInBackground(Object[] params) {
-                 bitmap = ImageLoader.getInstance().loadImageSync(url, ImageHelper.getDefaultDisplayImageOptions());
-//                InputStream is = fetch(urlString);
-//                Drawable drawable = Drawable.createFromStream(is, "src");
-                int tempWidth = bitmap.getScaledWidth(MainApplication.getInstance().getResources().getDisplayMetrics());
-                 height = bitmap.getScaledHeight(MainApplication.getInstance().getResources().getDisplayMetrics()) * 2 / 3;
-//                drawable.setBounds(0,0,tempWidth,height);
-                LogHelper.e("omg", "normal  " + tempWidth + " -" + height);
-                LogHelper.e("omg", "page  " + MainApplication.getInstance().getPageWidth() + " -" + MainApplication.getInstance().getPageHeight());
-                 width = MainApplication.getInstance().getPageWidth();
-                height =  width * height /tempWidth ;
-
+                bitmap = ImageLoader.getInstance().loadImageSync(url, ImageHelper.getDefaultDisplayImageOptions());
+                int tempWidth = bitmap.getWidth();
+                height = bitmap.getHeight();
+                width = MainApplication.getInstance().getPageWidth();
+                height = width * height / tempWidth;
                 return null;
             }
 
             @Override
             protected void onPostExecute(Object o) {
-                if (bitmap!=null){
-                    imageView.setImageBitmap(bitmap);
-                    ViewGroup.LayoutParams params =  imageView.getLayoutParams();
-                    params.width =width;
-                    params.height = height;
-                    imageView.setLayoutParams(params);
-                    imageView.invalidate();
-                    LogHelper.e("omg", "set image "+width+"|"+height);
+                try {
+                    if (bitmap != null&&imageView!=null) {
+                        imageView.setImageBitmap(bitmap);
+                        ViewGroup.LayoutParams params = imageView.getLayoutParams();
+                        params.width = (int) width;
+                        params.height = (int) height;
+                        imageView.setLayoutParams(params);
+                        imageView.invalidate();
+                        LogHelper.e("omg", "set image " + width + "|" + height);
+                    }
+                } catch (Exception e) {
                 }
-                LogHelper.e("omg", "set finished ");
                 super.onPostExecute(o);
             }
+
+
         }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 }
