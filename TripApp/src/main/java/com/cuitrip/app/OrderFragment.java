@@ -238,7 +238,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
             OrderHolder.mService.setText(item.getServiceName());
             OrderHolder.mAddress.setText(item.getServiceAddress());
-            ImageHelper.displayCtImage(item.getServicePIC(), OrderHolder.mImage, null);
+            ImageHelper.displayCtImage(item.getHeadPic(), OrderHolder.mImage, null);
         }
     }
 

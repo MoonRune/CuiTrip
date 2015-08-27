@@ -80,10 +80,15 @@ public class OrderProgressingRenderData {
         UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         String finderAva;
         String travelAva;
+        String finderName;
+        String travellerName;
         if (userInfo.getUid().equals(orderItem.getTravellerId())) {
             if (userInfo.isTravel()) {
                 travelAva = userInfo.getHeadPic();
                 finderAva = orderItem.getHeadPic();
+
+                travellerName = userInfo.getNick();
+                finderName = orderItem.getUserNick();
             } else {
                 //todo
                 throw new RuntimeException("user with finder status order  see travel order !!!");
@@ -96,9 +101,12 @@ public class OrderProgressingRenderData {
             } else {
                 finderAva = userInfo.getHeadPic();
                 travelAva = orderItem.getHeadPic();
+
+                finderName = userInfo.getNick();
+                travellerName = orderItem.getUserNick();
             }
         }
-        return new OrderProgressingRenderData(orderItem.getTravellerName(), travelAva,
-                orderItem.getInsiderName(), finderAva, orderItem.getServiceName(), orderItem.getServiceAddress());
+        return new OrderProgressingRenderData(travellerName, travelAva,
+                finderName, finderAva, orderItem.getServiceName(), orderItem.getServiceAddress());
     }
 }
