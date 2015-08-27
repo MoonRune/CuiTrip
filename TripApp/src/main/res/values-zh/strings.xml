@@ -610,7 +610,6 @@
     <string name="get_cash">提现</string>
 
     <!--umeng start-->
-    <string name="tb_munion_tip_download_prefix">正在下载:</string>
 
     <string name="umeng_common_action_info_exist">正在下载中.</string>
     <string name="umeng_common_info_interrupt">下载出错啦，请检查网络后继续。</string>
