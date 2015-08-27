@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    tools:background="@color/ct_white"
     android:orientation="vertical">
 
     <TextView
@@ -99,6 +100,5 @@
     </LinearLayout>
     <View
         android:id="@+id/ct_user_identity_validate_div"
-        style="@style/order_form_divide"
-        android:layout_marginTop="20dp"/>
+        style="@style/order_form_divide"/>
 </LinearLayout>

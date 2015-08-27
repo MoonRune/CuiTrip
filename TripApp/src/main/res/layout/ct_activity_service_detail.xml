@@ -501,6 +501,11 @@
 
 
             </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:background="@color/ct_white"
+                android:layout_height="50dp"/>
         </LinearLayout>
 
     </ScrollView>

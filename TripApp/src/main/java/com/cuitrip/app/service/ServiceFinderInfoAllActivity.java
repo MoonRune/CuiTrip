@@ -151,12 +151,14 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
 
     public void requestUserInfo() {
         isFetching = true;
+        showNoCancelDialog();
         UserBusiness.getUserInfo(this, mClient, new LabAsyncHttpResponseHandler(UserInfo.class) {
             @Override
             public void onSuccess(LabResponse response, Object data) {
 
                 render(OrderPersonRenderData.getInstance(((UserInfo) data)));
                 isFetching = false;
+                hideNoCancelDialog();
             }
 
             @Override
@@ -168,6 +170,7 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
                     msg = PlatformUtil.getInstance().getString(R.string.data_error);
                 }
                 MessageUtils.showToast(msg);
+                hideNoCancelDialog();
                 isFetching = false;
 
             }
