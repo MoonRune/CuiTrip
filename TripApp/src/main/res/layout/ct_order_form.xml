@@ -13,14 +13,14 @@
     android:layout_height="49dp"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="@color/ct_main_color">
+    android:background="@color/ct_main_color_light">
     <TextView
         android:id="@+id/ct_user_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         tools:text="123"
-        android:paddingLeft="10dp"
-        android:textSize="13sp"
+        android:paddingLeft="18dp"
+        android:textSize="15sp"
         android:textColor="@color/ct_white"
         android:layout_weight="1"/>
     <com.lab.widget.IconPageIndicator

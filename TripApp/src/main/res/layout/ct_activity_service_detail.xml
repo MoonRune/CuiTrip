@@ -61,7 +61,7 @@
                 android:paddingLeft="@dimen/ct_width_padding"
                 android:paddingRight="@dimen/ct_width_padding"
                 android:paddingTop="30dp"
-                tools:visibility="gone">
+                tools:visibility="visible">
 
                 <TextView
                     android:id="@+id/service_name"
@@ -101,18 +101,17 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/service_score"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="5dp"
-                    android:ellipsize="end"
                     android:lineSpacingExtra="5dp"
                     android:maxLines="3"
                     android:textColor="@color/ct_a8"
                     android:textSize="@dimen/ct_ts_4"
+                    android:ellipsize="end"
                     tools:text="asdfsadf" />
 
                 <Button
                     android:id="@+id/service_click"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="44dp"
                     android:layout_below="@+id/service_content"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
@@ -279,7 +278,7 @@
                 <Button
                     android:id="@+id/comment_click"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="44dp"
                     android:layout_below="@+id/service_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="10dp"
@@ -335,7 +334,7 @@
                 <TextView
                     android:id="@+id/author_more"
                     android:layout_width="wrap_content"
-                    android:layout_height="40dp"
+                    android:layout_height="44dp"
                     android:layout_below="@+id/author_sign"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="8dp"

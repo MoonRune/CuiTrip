@@ -52,13 +52,12 @@
 
                 tools:text="this is my sign" />
 
-            <TextView
+            <com.lab.widget.MutiEditView
                 android:id="@+id/ct_content_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="@dimen/ct_personal_desc_content_marginbottom"
                 android:layout_marginTop="@dimen/ct_personal_desc_content_margintop"
-                android:padding="@dimen/ct_personal_desc_content_paddingLeft"
 
                 android:textSize="@dimen/ct_personal_desc_content_size"
                 tools:text="Hi ! My name is Nick Name i'm from this" />

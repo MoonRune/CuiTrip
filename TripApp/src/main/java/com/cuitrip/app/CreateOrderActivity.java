@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -65,6 +67,22 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 .putExtra(SERVICE_INFO, serviceInfo));
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.ct_create_order,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_OK:
+                createOrder();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Intent intent = getIntent();
@@ -79,13 +97,18 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
             finish();
             return;
         }
-        showActionBar(mService.getName());
+        showActionBar(R.string.ct_order);
         setContentView(R.layout.ct_create_order);
         mDate = (TextView) findViewById(R.id.selected_date);
         mCount = (TextView) findViewById(R.id.selected_count);
 
         mMoneyDesc = (TextView) findViewById(R.id.money_desc);
-        mMoneyDesc.setText(mService.getShowCurrency());
+        mMoneyDesc.setText(mService.getShowCurrency().toUpperCase());
+
+
+        ((TextView) findViewById(R.id.ct_service_name_tv)).setText(mService.getName());
+
+
         mMoney = (TextView) findViewById(R.id.bill_count);
         if (mService.getPriceType() == 1) {
             mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
@@ -95,7 +118,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
         findViewById(R.id.order_date).setOnClickListener(this);
         findViewById(R.id.order_person).setOnClickListener(this);
-        findViewById(R.id.create_order).setOnClickListener(this);
 
         mSelectListView = (ListView) View.inflate(this, R.layout.ct_choice_list, null);
         mSelectListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -169,9 +191,6 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.order_person:
                 showSelectedDialog(SelectBaseAdapter.TYPE_PERSON);
-                break;
-            case R.id.create_order:
-                createOrder();
                 break;
         }
     }

@@ -14,10 +14,10 @@ public class UserInfo implements Serializable {
     public static final int VALIDATE_MASK_IDCARD = 4;
     public static final int VALIDATE_MASK_INTERNATION_CARD = 8;
 
-    public static final String ID_CHECK_NONE="3";//ing
     public static final String ID_CHECK_ING="0";//ing
     public static final String ID_CHECK_SUC="1";//ing
     public static final String ID_CHECK_FAILED="2";//ing
+    public static final String ID_CHECK_NONE="3";//ing
 //    "uid": "3", 12345678912 123456
 //            "nick": "Rosa",
 //            "status": "0",

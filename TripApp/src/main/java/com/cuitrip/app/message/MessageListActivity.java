@@ -57,7 +57,6 @@ public class MessageListActivity extends BaseVerticalListActivity<MessageMode> i
         super.onCreate(savedInstanceState);
         showActionBar(getString(R.string.message_title));
         mRecyclerView.setAdapter(mAdapter);
-        mSwipeRefreshLayout.setPadding(0,Utils.dp2pixel(10),0,Utils.dp2pixel(10));
         SlideInLeftAnimator animator =  new SlideInLeftAnimator();
         mRecyclerView.setItemAnimator(animator);
         mRecyclerView.addItemDecoration(new BaseItemDecoration(0,0,Utils.dp2pixel(1),0));

@@ -3,7 +3,6 @@ package com.cuitrip.app.service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +22,7 @@ import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
 import com.lab.utils.imageupload.URLImageParser;
+import com.lab.widget.MutiEditView;
 import com.loopj.android.http.AsyncHttpClient;
 
 import butterknife.ButterKnife;
@@ -55,10 +55,8 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
     TextView ctUserLanguageTv;
     @InjectView(R.id.ct_user_sign_tv)
     TextView ctUserSignTv;
-    @InjectView(R.id.about_hint)
-    TextView aboutHint;
     @InjectView(R.id.about_value)
-    TextView aboutValue;
+    MutiEditView aboutValue;
 
     @InjectView(R.id.service_share)
     ImageView serviceShare;
@@ -231,20 +229,16 @@ public class ServiceFinderInfoAllActivity extends BaseActivity {
 
 
         if (TextUtils.isEmpty(data.getIntroduce())) {
-            aboutHint.setVisibility(View.GONE);
             aboutValue.setVisibility(View.GONE);
         } else {
-            aboutHint.setVisibility(View.VISIBLE);
             aboutValue.setVisibility(View.VISIBLE);
-            aboutHint.setText(getString(R.string.about_with, data.getUserName()));
             String introduce = data.getIntroduce();
             LogHelper.e("omg1", introduce);
             introduce = URLImageParser.replae(introduce);
             LogHelper.e("omg2", introduce);
             introduce = URLImageParser.replaeWidth(introduce);
             LogHelper.e("omg3", introduce);
-            URLImageParser urlImageParser = new URLImageParser(aboutValue, this, introduce);
-            aboutValue.setText(Html.fromHtml(introduce, urlImageParser, null));
+            aboutValue.setText(introduce);
         }
 //        ctUserPhoneTv.setText(data.getUserPhone());
 //

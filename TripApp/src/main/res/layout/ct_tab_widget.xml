@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:orientation="vertical"
-    android:padding="10dp">
+    android:padding="5dp">
 
     <ImageView
         android:id="@+id/tabIcon"
@@ -20,7 +20,7 @@
         android:id="@+id/tab_tv"
         android:layout_centerHorizontal="true"
         android:singleLine="true"
-        android:textSize="13sp"
+        android:textSize="10sp"
         android:duplicateParentState="true"
         android:textColor="@color/ct_gray_blue"
         android:layout_below="@+id/tabIcon"

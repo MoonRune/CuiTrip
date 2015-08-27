@@ -393,7 +393,7 @@
     <string name="hour_7">7小時</string>
     <string name="hour_8">8小時</string>
     <string name="hour_9">9小時</string>
-    <string name="id_check_failed_msg">審核失敗</string>
+    <string name="id_check_failed_msg">審核未通過</string>
     <string name="id_check_ing_msg">審核中</string>
     <string name="id_check_suc_msg">審核通過</string>
     <string name="im_default_message_image">[圖片]</string>
@@ -535,4 +535,5 @@
     <string name="please_input">請輸入</string>
     <string name="please_desc_address">請輸入地址的描述</string>
     <string name="order_status_hint">預訂狀態</string>
+    <string name="get_cash">提現</string>
 </resources>

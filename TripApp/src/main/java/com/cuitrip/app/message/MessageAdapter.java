@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.lab.utils.LogHelper;
+import com.lab.utils.Utils;
 
 import java.util.List;
 
@@ -74,6 +75,15 @@ public class MessageAdapter extends RecyclerView.Adapter<MessageViewHolder> {
 
     @Override
     public void onBindViewHolder(MessageViewHolder holder, int position) {
+        if (position == 0) {
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            params.setMargins(0, Utils.dp2pixel(20), 0, 0);
+            holder.itemView.setLayoutParams(params);
+        } else {
+            RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) holder.itemView.getLayoutParams();
+            params.setMargins(0, 0, 0, 0);
+            holder.itemView.setLayoutParams(params);
+        }
         holder.render(mModeList.get(position));
     }
 

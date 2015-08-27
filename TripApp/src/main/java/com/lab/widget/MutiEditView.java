@@ -79,18 +79,18 @@ public class MutiEditView extends LinearLayout {
         }
         buildTextView(introduce);
     }
-
-    @Override
-    public void addView(View child) {
-        for (int i =  getChildCount(); i>0 ; i--) {
-            if (
-                    ( getChildAt(i) instanceof TextView )&&
-                            TextUtils.isEmpty(((TextView) getChildAt(i)).getText().toString())){
-                removeViewAt(i);
-            }
-        }
-        super.addView(child);
-    }
+//
+//    @Override
+//    public void addView(View child) {
+//        for (int i =  getChildCount(); i>0 ; i--) {
+//            if (
+//                    ( getChildAt(i) instanceof TextView )&&
+//                            TextUtils.isEmpty(((TextView) getChildAt(i)).getText().toString())){
+//                removeViewAt(i);
+//            }
+//        }
+//        super.addView(child);
+//    }
 
     public EditText buildEdittext() {
         EditText textView = (EditText) LayoutInflater.from(getContext()).inflate(R.layout.edit, this, false);

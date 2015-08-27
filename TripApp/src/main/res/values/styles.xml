@@ -7,7 +7,8 @@
         <item name="android:windowBackground">@color/ct_common_bg</item>
         <item name="android:colorBackground">@color/ct_common_bg</item>
         <item name="android:windowContentOverlay">@null</item>
-        <item name="actionMenuTextColor">@color/ct_main_color</item>
+        <item name="actionMenuTextColor">@color/ct_main_color_light</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:actionMenuTextAppearance">@style/ctActionbarMenu</item>
 
         <!--<item name="android:dropDownListViewStyle">@style/drop_down_style</item>-->
@@ -24,7 +25,7 @@
     </style>
 
     <style name="ctActionbarMenu" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
-        <item name="android:textSize">@dimen/ct_ts_4</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="cuiAppDialog" parent="android:Theme.Holo.Light.Dialog">
@@ -47,6 +48,7 @@
         <item name="background">@color/ct_white</item>
         <item name="titleTextStyle">@style/ct_ActionBar_Text</item>
         <item name="homeAsUpIndicator">@drawable/back_arrow_b</item>
+        <item name="android:textSize">15sp</item>
     </style>
     <style name="ct_ActionBar_Text" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
         <item name="android:textColor">@color/ct_black</item>
@@ -164,7 +166,7 @@
         <item name="android:singleLine">true</item>
         <item name="android:layout_marginRight">25dp</item>
         <item name="android:background">@color/ct_alpha</item>
-        <item name="android:textSize">13dp</item>
+        <item name="android:textSize">15dp</item>
         <item name="android:colorBackgroundCacheHint">@color/ct_text_title</item>
         <item name="android:textColor">@color/ct_text_title</item>
         <item name="android:maxLength">20</item>
@@ -217,7 +219,7 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">44dp</item>
         <item name="android:textSize">15sp</item>
-        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingLeft">18dp</item>
         <item name="android:paddingRight">15dp</item>
         <item name="android:paddingTop">5dp</item>
         <item name="android:gravity">center_vertical</item>

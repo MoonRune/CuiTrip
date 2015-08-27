@@ -8,7 +8,6 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.Html;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -25,6 +24,7 @@ import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.imageupload.URLImageParser;
+import com.lab.widget.MutiEditView;
 import com.loopj.android.http.AsyncHttpClient;
 
 import butterknife.ButterKnife;
@@ -40,7 +40,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
     @InjectView(R.id.ct_swipe_refresh_layout)
     public SwipeRefreshLayout mSwipRl;
     @InjectView(R.id.ct_content_tv)
-    public TextView mContentTv;
+    public MutiEditView mContentTv;
     @InjectView(R.id.ct_ava_riv)
     public CircleImageView mAvaRiv;
     @InjectView(R.id.ct_nick_tv)
@@ -167,8 +167,7 @@ public class SelfHomePageActivity extends BaseActivity implements SwipeRefreshLa
 
                     introduce = json.getString("introduce");
                     introduce=URLImageParser.replae(introduce);
-                    URLImageParser p = new URLImageParser(mContentTv, SelfHomePageActivity.this, introduce);
-                    mContentTv.setText(Html.fromHtml(introduce, p, null));
+                    mContentTv.setText(introduce);
                 } catch (Exception e) {
                     LogHelper.e(TAG, "get introduce pic: " + e);
                     MessageUtils.showToast(R.string.ct_fetch_failed);
