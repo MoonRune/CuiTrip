@@ -142,22 +142,24 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         final CountDownLatch countDownLatch = new CountDownLatch(1);
         final List<UserInfo> result = new ArrayList<>();
         try {
-            UserBusiness.getUserInfo(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler(com.cuitrip.model.UserInfo.class) {
-                @Override
-                public void onSuccess(LabResponse response, Object data) {
-                    if (data != null && data instanceof com.cuitrip.model.UserInfo) {
-                        com.cuitrip.model.UserInfo temp = ((com.cuitrip.model.UserInfo) data);
-                        result.add(new UserInfo(userId, temp.getNick(), Uri.parse(temp.getHeadPic())));
+            if (LoginInstance.isLogin(MainApplication.getInstance())) {
+                UserBusiness.getUserInfo(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler(com.cuitrip.model.UserInfo.class) {
+                    @Override
+                    public void onSuccess(LabResponse response, Object data) {
+                        if (data != null && data instanceof com.cuitrip.model.UserInfo) {
+                            com.cuitrip.model.UserInfo temp = ((com.cuitrip.model.UserInfo) data);
+                            result.add(new UserInfo(userId, temp.getNick(), Uri.parse(temp.getHeadPic())));
+                        }
+                        countDownLatch.countDown();
                     }
-                    countDownLatch.countDown();
-                }
 
-                @Override
-                public void onFailure(LabResponse response, Object data) {
-                    countDownLatch.countDown();
-                }
-            }, userId);
-            countDownLatch.await();
+                    @Override
+                    public void onFailure(LabResponse response, Object data) {
+                        countDownLatch.countDown();
+                    }
+                }, userId);
+                countDownLatch.await();
+            }
         } catch (Exception e) {
             LogHelper.e("UserInfoProvider", "search error " + e.getMessage());
             e.printStackTrace();

@@ -524,7 +524,7 @@
     <string name="order_date_time">預訂日期</string>
     <string name="order_play_time">遊玩時間</string>
     <string name="order_meet_place">見面地點</string>
-    <string name="order_prices">預訂費用</string>
+    <string name="order_prices">費用總額</string>
     <string name="price_include">費用包含</string>
     <string name="price_exclude">費用不包含</string>
     <string name="order_cancel_reason">預訂失效的原因</string>

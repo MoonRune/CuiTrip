@@ -596,7 +596,7 @@
     <string name="order_date_time">预订日期</string>
     <string name="order_play_time">游玩时间</string>
     <string name="order_meet_place">见面地点</string>
-    <string name="order_prices">预订费用</string>
+    <string name="order_prices">费用总额</string>
     <string name="price_include">费用包含</string>
     <string name="price_exclude">费用不包含</string>
     <string name="order_cancel_reason">预订失效的原因</string>
