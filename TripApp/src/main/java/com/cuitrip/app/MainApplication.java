@@ -32,24 +32,41 @@ import jonathanfinerty.once.Once;
 
 
 public class MainApplication extends BaseAppLication {
-    public static final String DAILY_FORCE_UPDATE="MainApplication.DAILY_FORCE_UPDATE";
+    public static final String DAILY_FORCE_UPDATE = "MainApplication.DAILY_FORCE_UPDATE";
     public static final boolean IS_DEV = true;
     private static MainApplication sContext;
 
     private int mPageWidth;
     private int mPageHeight;
+    private String versionName;
 
     public static MainApplication getInstance() {
         return sContext;
     }
 
-    public void initRongIM(){
+    public void initRongIM() {
         RongIM.init(this);
         RongIMClient.init(this);
         RongContext.init(this);
     }
 
-    public void initRongImCallback(){
+    public String getVersionName() {
+        if (TextUtils.isEmpty(versionName)) {
+            getAppInfo();
+        }
+        return versionName;
+    }
+
+    private void getAppInfo() {
+        try {
+            String pkName = this.getPackageName();
+            versionName = this.getPackageManager().getPackageInfo(
+                    pkName, 0).versionName;
+        } catch (Exception e) {
+        }
+    }
+
+    public void initRongImCallback() {
         RongIM.getInstance().getRongIMClient().setOnReceivePushMessageListener(RongCloudEvent.getInstance());
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(RongCloudEvent.getInstance());
         RongIM.setConversationBehaviorListener(RongCloudEvent.getInstance());
@@ -66,7 +83,7 @@ public class MainApplication extends BaseAppLication {
 
     }
 
-    public static  RongIM.LocationProvider.LocationCallback callback;
+    public static RongIM.LocationProvider.LocationCallback callback;
 
     public static RongIM.LocationProvider.LocationCallback getCallback() {
         return callback;
@@ -75,8 +92,9 @@ public class MainApplication extends BaseAppLication {
     public static void setCallback(RongIM.LocationProvider.LocationCallback callback) {
         MainApplication.callback = callback;
     }
+
     public void initStictMode() {
-        if (IS_DEV){
+        if (IS_DEV) {
 //            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder()
 //                    .detectDiskReads()
 //                    .detectDiskWrites()
@@ -100,7 +118,7 @@ public class MainApplication extends BaseAppLication {
         initRongIM();
         ImageHelper.initImageLoader(getApplicationContext());
         SmsSdkHelper.initSmsSDK(getApplicationContext());
-        if("com.cuitrip.service".equals(getCurProcessName(getApplicationContext())) ||
+        if ("com.cuitrip.service".equals(getCurProcessName(getApplicationContext())) ||
                 "io.rong.push".equals(getCurProcessName(getApplicationContext()))) {
 
             initRongIM();
@@ -163,7 +181,7 @@ public class MainApplication extends BaseAppLication {
 
             @Override
             public String getString(int id, Object... objs) {
-                return MainApplication.getInstance().getString(id,objs);
+                return MainApplication.getInstance().getString(id, objs);
             }
 
             @Override
@@ -172,6 +190,7 @@ public class MainApplication extends BaseAppLication {
             }
         });
     }
+
     public int dp2pixel(int i) {
         return (int) (0.5F + getResources().getDisplayMetrics().density * (float) i);
     }
@@ -184,12 +203,12 @@ public class MainApplication extends BaseAppLication {
         return mPageHeight;
     }
 
-    public void logOutWithError(){
+    public void logOutWithError() {
         MessageUtils.showToast(getString(R.string.please_relogin));
-       logOut();
+        logOut();
     }
 
-    public void logOut(){
+    public void logOut() {
         cleanDeviceTOken();
         RongCloudEvent.DisConnectRong();
         LoginInstance.logout(this);
@@ -198,17 +217,18 @@ public class MainApplication extends BaseAppLication {
         startActivity(intent);
     }
 
-    public void cleanDeviceTOken(){
+    public void cleanDeviceTOken() {
         uploadDeviceToken("");
     }
+
     AsyncHttpClient mClient = new AsyncHttpClient();
 
     /**
+     * String deviceId = UmengRegistrar.getRegistrationId(this);
      *
-     String deviceId = UmengRegistrar.getRegistrationId(this);
      * @param deviceId
      */
-    public void uploadDeviceToken(String deviceId){
+    public void uploadDeviceToken(String deviceId) {
         LogHelper.e("LoginActivity", "device_id: " + deviceId);
         UserInfo info = (UserInfo) LoginInstance.getInstance(this).getUserInfo();
         if (!TextUtils.isEmpty(deviceId)) {
@@ -226,10 +246,11 @@ public class MainApplication extends BaseAppLication {
         }
     }
 
-    public void orderMemberIdError(){
+    public void orderMemberIdError() {
         MobclickAgent.onEventEnd(this, "1001");
     }
-    public void orderRongMembersizeError(){
+
+    public void orderRongMembersizeError() {
         MobclickAgent.onEventEnd(this, "1002");
     }
 }
