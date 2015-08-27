@@ -115,9 +115,9 @@ public class OrderPersonViewHolder implements PartViewHolder<OrderPersonRenderDa
     }
 
     public void setValidated(View view, boolean isValidated, View ll, View div) {
-        view.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
-        ll.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
-        div.setVisibility(isValidated ? View.VISIBLE : View.INVISIBLE);
+        view.setVisibility(isValidated ? View.VISIBLE : View.GONE);
+        ll.setVisibility(isValidated ? View.VISIBLE : View.GONE);
+        div.setVisibility(isValidated ? View.VISIBLE : View.GONE);
     }
 
 
