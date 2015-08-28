@@ -192,7 +192,7 @@ public class BillActivity extends BaseActivity {
                 loading = false;
 
             }
-        }, UnitUtils.getCashType(), 0, DEFAULT_SIZE);
+        }, UnitUtils.getSettingMoneyType(), 0, DEFAULT_SIZE);
     }
 
     public void requestPresentLoadMore() {
@@ -233,7 +233,7 @@ public class BillActivity extends BaseActivity {
                 loading = false;
 
             }
-        }, UnitUtils.getCashType(), size, size + DEFAULT_SIZE);
+        }, UnitUtils.getSettingMoneyType(), size, size + DEFAULT_SIZE);
 
     }
 
