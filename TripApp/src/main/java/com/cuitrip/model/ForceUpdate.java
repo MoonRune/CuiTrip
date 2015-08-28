@@ -4,13 +4,13 @@ package com.cuitrip.model;
  * Created by baziii on 15/8/24.
  */
 public class ForceUpdate {
-    private boolean forceUpdate;
+    private boolean needUpdate;
 
-    public boolean isForceUpdate() {
-        return forceUpdate;
+    public boolean isNeedUpdate() {
+        return needUpdate;
     }
 
-    public void setForceUpdate(boolean forceUpdate) {
-        this.forceUpdate = forceUpdate;
+    public void setNeedUpdate(boolean needUpdate) {
+        this.needUpdate = needUpdate;
     }
 }

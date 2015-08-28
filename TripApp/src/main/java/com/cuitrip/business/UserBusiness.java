@@ -195,7 +195,7 @@ public class UserBusiness {
         params.put("clientVersion", Utils.getAppVersionName(MainApplication.getInstance()));
         params.put("platform", "android");
         LogHelper.e("omg",params.toString());
-        return client.post(context, BusinessHelper.getApiUrl("forceUpdate"), params, handler);
+        return client.post(context, BusinessHelper.getApiUrl("getVersionCtrl"), params, handler);
     }
 
 
