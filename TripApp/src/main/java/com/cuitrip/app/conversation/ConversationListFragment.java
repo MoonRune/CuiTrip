@@ -18,6 +18,7 @@ import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.service.R;
 import com.lab.app.BaseFragment;
+import com.lab.utils.LogHelper;
 
 import java.util.List;
 
@@ -157,11 +158,6 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     public void refreshMessage(List<ConversationItem> items) {
         if (!isDetached()) {
             if (mRecyclerView != null) {
-                if (items == null && items.isEmpty()) {
-                    ctEmpty.setVisibility(View.VISIBLE);
-                } else {
-                    ctEmpty.setVisibility(View.GONE);
-                }
                 if (mAdapter == null || mRecyclerView.getAdapter() == null) {
                     mAdapter = new ConversationAdapter(mPresent);
                     mAdapter.setDatas(items);
@@ -169,6 +165,15 @@ public class ConversationListFragment extends BaseFragment implements IConversat
                 } else {
                     mAdapter.setDatas(items);
                     mAdapter.notifyDataSetChanged();
+                }
+                if (items == null ||  items.isEmpty()) {
+                    LogHelper.e("omg", "VISIBLE");
+                    ctEmpty.setVisibility(View.VISIBLE);
+                    mRecyclerView.setVisibility(View.GONE);
+                } else {
+                    LogHelper.e("omg", "GONE");
+                    ctEmpty.setVisibility(View.GONE);
+                    mRecyclerView.setVisibility(View.VISIBLE);
                 }
             }
         }

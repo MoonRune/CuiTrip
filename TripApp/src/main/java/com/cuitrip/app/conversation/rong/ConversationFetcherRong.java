@@ -99,6 +99,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                     @Override
                                     public void onSuccess(final List<Conversation> conversations) {
                                         if (conversations == null) {
+                                            countDownLatch.countDown();
                                             LogHelper.e(TAG, "empty conversation");
                                             return;
                                         }
@@ -127,12 +128,14 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                 } catch (InterruptedException e) {
                                     e.printStackTrace();
                                 }
-                                Collections.sort(sorteds, new Comparator<ConversationItem>() {
-                                    @Override
-                                    public int compare(ConversationItem lhs, ConversationItem rhs) {
-                                        return (int) (rhs.getLast() - lhs.getLast());
-                                    }
-                                });
+                                if ( sorteds !=null) {
+                                    Collections.sort(sorteds, new Comparator<ConversationItem>() {
+                                        @Override
+                                        public int compare(ConversationItem lhs, ConversationItem rhs) {
+                                            return (int) (rhs.getLast() - lhs.getLast());
+                                        }
+                                    });
+                                }
                                 return null;
                             }
 
