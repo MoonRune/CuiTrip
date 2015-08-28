@@ -67,7 +67,7 @@ public class IndexActivity extends BaseTabHostActivity {
         LogHelper.e("LoginActivity", "index oncreate");
         if (intent != null) {
             String tabTag = intent.getStringExtra(GO_TO_TAB);
-            LogHelper.e("showNotification", "index ty"+tabTag);
+            LogHelper.e("showNotification", "index ty" + tabTag);
             if (!TextUtils.isEmpty(tabTag)) {
                 mTabHost.setCurrentTabByTag(tabTag);
             }
@@ -78,10 +78,11 @@ public class IndexActivity extends BaseTabHostActivity {
 
     protected void validateForceUpdate() {
         if (!Once.beenDone(TimeUnit.DAYS, 1, MainApplication.DAILY_FORCE_UPDATE)) {
+            Once.markDone(MainApplication.DAILY_FORCE_UPDATE);
             UserBusiness.forceUpdate(this, new AsyncHttpClient(), new LabAsyncHttpResponseHandler(ForceUpdate.class) {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
-                    if (data != null && data instanceof ForceUpdate && ((ForceUpdate) data).isForceUpdate()) {
+                    if (data != null && data instanceof ForceUpdate && ((ForceUpdate) data).isNeedUpdate()) {
                         showForceUpdate();
                     }
                 }
