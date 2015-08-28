@@ -27,9 +27,9 @@ public class LabRequestParams extends RequestParams {
         }
         put("lang", UnitUtils.getLanguage());
         put("moneyType", UnitUtils.getMoneyType());
-        put("version", MainApplication.getInstance().getVersionName());//服务器api version
+        put("clientVersion", MainApplication.getInstance().getVersionName());
 
-        put("clientVersion",  BusinessHelper.API_VERSION);
+        put("version", BusinessHelper.API_VERSION);
         put("platform", "android");
     }
 }
