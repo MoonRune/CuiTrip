@@ -58,7 +58,7 @@
             android:textColor="@color/ct_white"
             android:textSize="@dimen/ct_ts_3" />
     </LinearLayout>
-    <!--<include-->
-        <!--android:id="@+id/no_login"-->
-        <!--layout="@layout/ct_no_login_message" />-->
+    <include
+        android:id="@+id/no_login"
+        layout="@layout/ct_no_login_message" />
 </FrameLayout>
