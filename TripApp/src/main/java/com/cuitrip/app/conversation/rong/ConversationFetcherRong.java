@@ -58,8 +58,8 @@ public class ConversationFetcherRong implements IConversationsFetcher {
             public void onSuccess(LabResponse response, Object data) {
                 try {
                     final List<OrderItem> mOrderDatas = JSON.parseArray(data.toString(), OrderItem.class);
-                    if (mOrderDatas != null &&!mOrderDatas.isEmpty()) {
-                        LogHelper.e(TAG,"order size"+mOrderDatas.size());
+                    if (mOrderDatas != null && !mOrderDatas.isEmpty()) {
+                        LogHelper.e(TAG, "order size" + mOrderDatas.size());
                         new AsyncTask() {
                             final List<ConversationItem> sorteds = new ArrayList();
 
@@ -77,7 +77,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                                 "",
                                                 "",
                                                 orderItem.getHeadPic(), orderItem.getOid()));
-                                        LogHelper.e(TAG,"put  "+orderItem.getOid());
+                                        LogHelper.e(TAG, "put  " + orderItem.getOid());
                                     } else {
                                         lefted.add(new ConversationItem(
                                                 "",
@@ -87,11 +87,11 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                                 "",
                                                 "",
                                                 orderItem.getHeadPic(), orderItem.getOid()));
-                                        LogHelper.e(TAG,"put  "+orderItem.getOid());
+                                        LogHelper.e(TAG, "put  " + orderItem.getOid());
 
                                     }
                                 }
-                                LogHelper.e(TAG,"result size"+result.size());
+                                LogHelper.e(TAG, "result size" + result.size());
 
 
                                 final CountDownLatch countDownLatch = new CountDownLatch(1);
@@ -130,7 +130,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                 Collections.sort(sorteds, new Comparator<ConversationItem>() {
                                     @Override
                                     public int compare(ConversationItem lhs, ConversationItem rhs) {
-                                        return (int) (rhs.getLast()- lhs.getLast());
+                                        return (int) (rhs.getLast() - lhs.getLast());
                                     }
                                 });
                                 return null;
@@ -138,17 +138,19 @@ public class ConversationFetcherRong implements IConversationsFetcher {
 
                             @Override
                             protected void onPostExecute(Object o) {
-                                LogHelper.e(TAG,"sorteds size"+sorteds.size());
+                                LogHelper.e(TAG, "sorteds size" + sorteds.size());
                                 for (ConversationItem orderItem : sorteds) {
-                                    LogHelper.e(TAG," result:"+orderItem.toString());
+                                    LogHelper.e(TAG, " result:" + orderItem.toString());
                                 }
-                                    itemListFetchCallback.onSuc(sorteds);
+                                itemListFetchCallback.onSuc(sorteds);
 //                            itemListFetchCallback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.data_error)));
                                 super.onPostExecute(o);
                             }
 
                         }.execute(AsyncTask.THREAD_POOL_EXECUTOR);
                         LogHelper.e(TAG, "order size excuted");
+                    } else {
+                        itemListFetchCallback.onSuc(new ArrayList<ConversationItem>());
                     }
                 } catch (Exception e) {
                     itemListFetchCallback.onFailed(new CtException(PlatformUtil.getInstance().getString(R.string.data_error)));

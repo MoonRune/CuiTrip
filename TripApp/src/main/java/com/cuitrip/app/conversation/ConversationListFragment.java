@@ -1,5 +1,6 @@
 package com.cuitrip.app.conversation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,8 +9,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.login.LoginInstance;
@@ -34,6 +37,9 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     TextView ctLoginTv;
     @InjectView(R.id.no_login)
     View ctLogin;
+    @InjectView(R.id.ct_empty)
+    LinearLayout ctEmpty;
+
 
     LinearLayoutManager mLayoutManager;
     ConversationAdapter mAdapter;
@@ -42,7 +48,11 @@ public class ConversationListFragment extends BaseFragment implements IConversat
 
     boolean isResumeRefresh = false;
 
-
+    @OnClick(R.id.ct_go_recommend)
+    public void gotoTab(){
+        startActivity(new Intent(getActivity(), IndexActivity.class)
+                .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.RECOMMEND_TAB));
+    }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -147,6 +157,11 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     public void refreshMessage(List<ConversationItem> items) {
         if (!isDetached()) {
             if (mRecyclerView != null) {
+                if (items == null && items.isEmpty()) {
+                    ctEmpty.setVisibility(View.VISIBLE);
+                } else {
+                    ctEmpty.setVisibility(View.GONE);
+                }
                 if (mAdapter == null || mRecyclerView.getAdapter() == null) {
                     mAdapter = new ConversationAdapter(mPresent);
                     mAdapter.setDatas(items);
