@@ -15,7 +15,7 @@ public class MessageBusiness {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("userType", userType);
-        params.put("version", "1.0");
+        params.put("version", BusinessHelper.API_VERSION);
         params.put("start", start);
         params.put("size", size);
         LogHelper.e("getMessageList",params.toString());
