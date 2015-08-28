@@ -1,4 +1,4 @@
-package com.cuitrip.app.country;
+package com.cuitrip.model;
 
 import java.util.List;
 

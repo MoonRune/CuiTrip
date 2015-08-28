@@ -1,4 +1,4 @@
-package com.cuitrip.app.country;
+package com.cuitrip.model;
 
 /**
  * Created by baziii on 15/8/19.

@@ -125,11 +125,14 @@ public class ServideDetailDescActivity extends BaseActivity {
 
             @Override
             protected Object doInBackground(Object[] params) {
+                try {
                 bitmap = ImageLoader.getInstance().loadImageSync(url, ImageHelper.getDefaultDisplayImageOptions());
                 int tempWidth = bitmap.getWidth();
                 height = bitmap.getHeight();
                 width = MainApplication.getInstance().getPageWidth();
                 height = width * height / tempWidth;
+                } catch (Exception e) {
+                }
                 return null;
             }
 

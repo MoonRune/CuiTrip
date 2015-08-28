@@ -99,15 +99,14 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                                     @Override
                                     public void onSuccess(final List<Conversation> conversations) {
                                         if (conversations == null) {
-                                            countDownLatch.countDown();
                                             LogHelper.e(TAG, "empty conversation");
-                                            return;
-                                        }
-                                        for (Conversation conversation : conversations) {
-                                            if (result.containsKey(conversation.getTargetId())) {
-                                                LogHelper.e(TAG, "has " + conversation.getTargetId());
-                                                ConversationItem item = result.get(conversation.getTargetId());
-                                                filterName(conversation, item);
+                                        }else {
+                                            for (Conversation conversation : conversations) {
+                                                if (result.containsKey(conversation.getTargetId())) {
+                                                    LogHelper.e(TAG, "has " + conversation.getTargetId());
+                                                    ConversationItem item = result.get(conversation.getTargetId());
+                                                    filterName(conversation, item);
+                                                }
                                             }
                                         }
                                         LogHelper.e(TAG, " ok ");
