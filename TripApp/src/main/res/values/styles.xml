@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="cuitripAppTheme" parent="Theme.AppCompat.Light">
         <item name="android:windowNoTitle">true</item>
+        <item name="android:windowAnimationStyle">@style/activityAnimation</item>
         <item name="android:textColor">@color/ct_title</item>
         <item name="android:windowBackground">@color/ct_common_bg</item>
         <item name="android:colorBackground">@color/ct_common_bg</item>
@@ -23,7 +24,12 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowIsTranslucent">true</item>
     </style>
-
+    <style name="activityAnimation" parent="@android:style/Animation">
+        <item name="android:activityOpenEnterAnimation">@anim/ct_slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/ct_slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/ct_slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/ct_slide_out_right</item>
+    </style>
     <style name="ctActionbarMenu" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Menu">
         <item name="android:textSize">15sp</item>
     </style>
