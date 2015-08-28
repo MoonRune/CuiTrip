@@ -192,7 +192,7 @@ public class UserBusiness {
     public static RequestHandle forceUpdate(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
-        params.put("version", Utils.getAppVersionName(MainApplication.getInstance()));
+        params.put("clientVersion", Utils.getAppVersionName(MainApplication.getInstance()));
         params.put("platform", "android");
         LogHelper.e("omg",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("forceUpdate"), params, handler);

@@ -31,7 +31,7 @@ public class ServiceBusiness {
                                                   String lat,
                                                   String lng) {
         //LabRequestParams params = new LabRequestParams();
-        JSONObject object = new JSONObject();
+        JSONObject object = LabRequestParams.getJsonObject();
         //params.setToken(context);
         UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (info != null) {
@@ -86,7 +86,7 @@ public class ServiceBusiness {
                                                   String sid, List<Long> availableDate) {
 //        LabRequestParams params = new LabRequestParams();
 //        params.setToken(context);
-        JSONObject object = new JSONObject();
+        JSONObject object =  LabRequestParams.getJsonObject();
         //params.setToken(context);
         UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (info != null) {

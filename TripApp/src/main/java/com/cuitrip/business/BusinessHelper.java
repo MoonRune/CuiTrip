@@ -8,6 +8,7 @@ public class BusinessHelper {
     //public static final String BASE_URL = "http://42.121.16.186:9999/baseservice/";
 //    public static final String BASE_URL = "http://58.96.175.29:8080/baseservice/";
 
+    public static final String API_VERSION = "1.0";
     public static String getApiUrl(String api){
         return BASE_URL + api;
     }
