@@ -2,7 +2,10 @@ package com.cuitrip.app.pro;
 
 import android.text.TextUtils;
 
+import com.cuitrip.app.MainApplication;
+import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.utils.LogHelper;
@@ -142,20 +145,29 @@ public class ServicePartRenderData {
 
 
     public static String getOrderDateText(OrderItem orderItem) {
-        LogHelper.e("getOrderDateText",orderItem.getServiceDate()+ " to "+Utils.getMsToD(orderItem.getServiceDate()));
+        LogHelper.e("getOrderDateText", orderItem.getServiceDate() + " to " + Utils.getMsToD(orderItem.getServiceDate()));
         return Utils.getMsToD(orderItem.getServiceDate());
     }
 
     public static String getOrderPeopleSizeText(OrderItem orderItem) {
-        return PlatformUtil.getInstance().getString(R.string.per_man_with_num_above,orderItem.getBuyerNum());
+        return PlatformUtil.getInstance().getString(R.string.per_man_with_num_above, orderItem.getBuyerNum());
     }
 
     public static String getOrderDurationText(OrderItem orderItem) {
-        return  PlatformUtil.getInstance().getString(R.string.per_hour_with_num_above,orderItem.getServiceTime() );
+        return PlatformUtil.getInstance().getString(R.string.per_hour_with_num_above, orderItem.getServiceTime());
     }
 
 
     public static String getOrderPriceWithCurrencyText(OrderItem orderItem) {
+        UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+        if (userInfo != null) {
+            try {
+                if (userInfo.getUid().equals(orderItem.getInsiderId())) {
+                    return orderItem.getMoneyType() + " " + orderItem.getServicePrice();
+                }
+            } catch (Exception e) {
+            }
+        }
         return orderItem.getPayCurrency() + " " + orderItem.getOrderPrice();
     }
 
@@ -198,7 +210,8 @@ public class ServicePartRenderData {
         }
         return orderItem.getInvalidReason();
     }
-    public static double  getLat(OrderItem orderItem) {
+
+    public static double getLat(OrderItem orderItem) {
 
         try {
             return Double.valueOf(orderItem.getLat());
@@ -206,7 +219,8 @@ public class ServicePartRenderData {
             return 0;
         }
     }
-    public static double  getLng(OrderItem orderItem) {
+
+    public static double getLng(OrderItem orderItem) {
         try {
             return Double.valueOf(orderItem.getLng());
         } catch (Exception e) {
@@ -222,7 +236,7 @@ public class ServicePartRenderData {
                 getOrderPeopleSizeText(orderItem),
                 getOrderDurationText(orderItem),
                 getOrderPriceWithCurrencyText(orderItem), getOrderPriceInclude(orderItem), getOrderPriceUninclude(orderItem),
-                getLat(orderItem),getLng(orderItem),
+                getLat(orderItem), getLng(orderItem),
                 getStatusText(orderItem)
         );
         return result;
