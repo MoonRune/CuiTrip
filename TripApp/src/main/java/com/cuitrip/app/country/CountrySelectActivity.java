@@ -16,6 +16,8 @@ import android.widget.TextView;
 
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.ServiceBusiness;
+import com.cuitrip.model.AreaMode;
+import com.cuitrip.model.LocationMode;
 import com.cuitrip.service.R;
 import com.cuitrip.util.PlatformUtil;
 import com.lab.app.BaseActivity;
