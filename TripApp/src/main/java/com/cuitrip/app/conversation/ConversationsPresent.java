@@ -5,6 +5,7 @@ import com.cuitrip.app.base.ListFetchCallback;
 import com.cuitrip.app.conversation.rong.ConversationFetcherRong;
 import com.cuitrip.login.LoginInstance;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,6 +51,7 @@ public class ConversationsPresent {
 
                 @Override
                 public void onFailed(Throwable throwable) {
+                    iConversationView.refreshMessage(new ArrayList<ConversationItem>());
                     iConversationView.hideRefreshLoading();
 
                 }
