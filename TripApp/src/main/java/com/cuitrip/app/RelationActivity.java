@@ -24,7 +24,7 @@ public class RelationActivity extends BaseActivity {
         findViewById(R.id.ct_call).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Utils.requestDial(RelationActivity.this, "8657186992999");
+                Utils.requestDial(RelationActivity.this, "008657186992999");
             }
         });findViewById(R.id.ct_mail).setOnClickListener(new View.OnClickListener() {
             @Override
