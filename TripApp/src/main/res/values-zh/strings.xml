@@ -608,6 +608,7 @@
     <string name="please_desc_address">请输入地址的描述</string>
     <string name="order_status_hint">预订状态</string>
     <string name="get_cash">提现</string>
+<<<<<<< HEAD
 
     <!--umeng start-->
 
@@ -642,4 +643,6 @@
     <string name="UMDialog_InstallAPK">最新版本已下载，是否安装？</string>
 
     <!--umeng end-->
+    <string name="ct_trip_no_conversation_title">您的聊天</string>
+    <string name="ct_trip_no_conversation_message">如果您有聊天消息，将会在这里看到</string>
 </resources>
