@@ -102,6 +102,11 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 }
                 return;
             }
+
+            if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+                LogHelper.e("ron suc", " already");
+                return;
+            }
             String token = userInfo.getRongyunToken();
             LogHelper.e(TAG, "rongyun roken is : " + token);
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
@@ -114,7 +119,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
                 @Override
                 public void onError(RongIMClient.ErrorCode e) {
-                    LogHelper.e("ron failed", "");
+                    LogHelper.e("ron failed", ""+e);
     /* 连接失败，注意并不需要您做重连 */
                 }
 
