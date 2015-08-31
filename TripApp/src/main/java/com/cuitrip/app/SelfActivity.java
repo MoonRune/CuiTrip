@@ -551,7 +551,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 }
                 break;
             case R.id.ct_personal_nick_et:
-                if (hasFocus && !mNickAlertShown) {
+                if (!hasFocus && !mNickAlertShown) {
                     mNickAlertShown = true;
                     showNickEditAlert();
                 }
