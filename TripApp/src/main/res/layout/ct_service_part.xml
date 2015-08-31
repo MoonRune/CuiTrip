@@ -132,6 +132,7 @@
         <TextView
             android:id="@+id/ct_order_price_include_tv"
             tools:text="order_price_include"
+            android:singleLine="false"
             style="@style/order_form_value" />
     </LinearLayout>
     <View
@@ -149,6 +150,7 @@
         <TextView
             android:id="@+id/ct_order_price_uninclude_tv"
             tools:text="order_price_uninclude"
+            android:singleLine="false"
             style="@style/order_form_value" />
     </LinearLayout>
     <LinearLayout

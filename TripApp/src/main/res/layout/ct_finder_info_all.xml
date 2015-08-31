@@ -16,14 +16,15 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="250dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp">
 
                 <ImageView
                     android:id="@+id/ct_user_ava_im"
                     android:layout_width="match_parent"
-                    android:layout_height="250dp"
-                    android:scaleType="centerCrop"
+                    android:layout_height="wrap_content"
+                    android:minHeight="250dp"
+                    android:scaleType="fitXY"
                     tools:src="@drawable/ct_default_user" />
 
                 <LinearLayout
