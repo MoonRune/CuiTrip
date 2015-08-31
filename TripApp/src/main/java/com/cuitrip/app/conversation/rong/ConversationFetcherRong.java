@@ -154,37 +154,39 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                 LogHelper.e(TAG, "result size" + result.size());
 
 
+                try {
                 final CountDownLatch countDownLatch = new CountDownLatch(1);
-                RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-                    @Override
-                    public void onSuccess(final List<Conversation> conversations) {
-                        if (conversations == null) {
-                            LogHelper.e(TAG, "empty conversation");
-                        }else {
-                            for (Conversation conversation : conversations) {
-                                if (result.containsKey(conversation.getTargetId())) {
-                                    LogHelper.e(TAG, "has " + conversation.getTargetId());
-                                    ConversationItem item = result.get(conversation.getTargetId());
-                                    filterName(conversation, item);
+                if ( RongIM.getInstance()!=null&& RongIM.getInstance().getRongIMClient()!=null) {
+                    RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                        @Override
+                        public void onSuccess(final List<Conversation> conversations) {
+                            if (conversations == null) {
+                                LogHelper.e(TAG, "empty conversation");
+                            } else {
+                                for (Conversation conversation : conversations) {
+                                    if (result.containsKey(conversation.getTargetId())) {
+                                        LogHelper.e(TAG, "has " + conversation.getTargetId());
+                                        ConversationItem item = result.get(conversation.getTargetId());
+                                        filterName(conversation, item);
+                                    }
                                 }
                             }
+                            LogHelper.e(TAG, " ok ");
+                            sorteds.addAll(result.values());
+                            sorteds.addAll(lefted);
+                            countDownLatch.countDown();
                         }
-                        LogHelper.e(TAG, " ok ");
-                        sorteds.addAll(result.values());
-                        sorteds.addAll(lefted);
-                        countDownLatch.countDown();
-                    }
 
-                    public void onError(RongIMClient.ErrorCode errorCode) {
-                        LogHelper.e("fetch conversations", "|error|" + errorCode);
+                        public void onError(RongIMClient.ErrorCode errorCode) {
+                            LogHelper.e("fetch conversations", "|error|" + errorCode);
 
-                        countDownLatch.countDown();
-                    }
+                            countDownLatch.countDown();
+                        }
 
-                }, Conversation.ConversationType.DISCUSSION);
-                try {
+                    }, Conversation.ConversationType.DISCUSSION);
+                }
                     countDownLatch.await();
-                } catch (InterruptedException e) {
+                } catch (Exception e) {
                     e.printStackTrace();
                 }
                 if ( sorteds !=null) {
