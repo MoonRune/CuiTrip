@@ -193,7 +193,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             ImageHelper.displayPersonImage(userInfo.getHeadPic(), img, null);
             setViewText(R.id.author_name, userInfo.getNick());
             setViewText(R.id.author_sign, userInfo.getSign());
-            setViewText(R.id.author_register_time_value, Utils.getMsToD(userInfo.getGmtModified()));
+            setViewText(R.id.author_register_time_value, Utils.getMsToD(userInfo.getGmtCreated()));
             //TODO:
             findViewById(R.id.phone_validate).setVisibility(userInfo.isPhoneValidated() ? View.VISIBLE : View.GONE);
             findViewById(R.id.email_validate).setVisibility(userInfo.isEmailValidated() ? View.VISIBLE : View.GONE);
