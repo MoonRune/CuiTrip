@@ -49,7 +49,8 @@ public class ConversationFetcherRong implements IConversationsFetcher {
 
     AsyncHttpClient mClient = new AsyncHttpClient();
 
-    public static final int DEFAULT_SIZE=10;
+    public static final int DEFAULT_SIZE = 10;
+
     @Override
     public void getConversations(final ListFetchCallback<ConversationItem> itemListFetchCallback) {
         final UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
@@ -61,7 +62,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                     final List<OrderItem> mOrderDatas = JSON.parseArray(data.toString(), OrderItem.class);
                     if (mOrderDatas != null && !mOrderDatas.isEmpty()) {
                         LogHelper.e(TAG, "order size" + mOrderDatas.size());
-                        requestRong(itemListFetchCallback,userInfo,mOrderDatas);
+                        requestRong(itemListFetchCallback, userInfo, mOrderDatas);
                         LogHelper.e(TAG, "order size excuted");
                     } else {
                         itemListFetchCallback.onSuc(new ArrayList<ConversationItem>());
@@ -72,17 +73,16 @@ public class ConversationFetcherRong implements IConversationsFetcher {
             }
 
 
-
             @Override
             public void onFailure(LabResponse response, Object data) {
 
             }
-        }, userInfo.isTravel() ? 1 : 2,0,DEFAULT_SIZE);
+        }, userInfo.isTravel() ? 1 : 2, 0, DEFAULT_SIZE);
 
     }
 
     @Override
-    public void getConversationsMore(final ListFetchCallback<ConversationItem> itemListFetchCallback,int from) {
+    public void getConversationsMore(final ListFetchCallback<ConversationItem> itemListFetchCallback, int from) {
         final UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
 
         OrderBusiness.getOrderList(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
@@ -92,7 +92,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
                     final List<OrderItem> mOrderDatas = JSON.parseArray(data.toString(), OrderItem.class);
                     if (mOrderDatas != null && !mOrderDatas.isEmpty()) {
                         LogHelper.e(TAG, "order size" + mOrderDatas.size());
-                        requestRong(itemListFetchCallback,userInfo,mOrderDatas);
+                        requestRong(itemListFetchCallback, userInfo, mOrderDatas);
                         LogHelper.e(TAG, "order size excuted");
                     } else {
                         itemListFetchCallback.onSuc(new ArrayList<ConversationItem>());
@@ -103,14 +103,14 @@ public class ConversationFetcherRong implements IConversationsFetcher {
             }
 
 
-
             @Override
             public void onFailure(LabResponse response, Object data) {
 
             }
-        }, userInfo.isTravel() ? 1 : 2,from,from+DEFAULT_SIZE);
+        }, userInfo.isTravel() ? 1 : 2, from, from + DEFAULT_SIZE);
 
     }
+
     public void filterName(Conversation conversation, ConversationItem item) {
         item.setId(conversation.getTargetId());
         item.setUnreadCount(conversation.getUnreadMessageCount());
@@ -119,7 +119,8 @@ public class ConversationFetcherRong implements IConversationsFetcher {
 
         item.setLastWords(RongCloudEvent.getMessageContent(conversation.getLatestMessage()));
     }
-    public void requestRong(final ListFetchCallback<ConversationItem> itemListFetchCallback,final UserInfo userInfo, final List<OrderItem> mOrderDatas ){
+
+    public void requestRong(final ListFetchCallback<ConversationItem> itemListFetchCallback, final UserInfo userInfo, final List<OrderItem> mOrderDatas) {
         new AsyncTask() {
             final List<ConversationItem> sorteds = new ArrayList();
 
@@ -155,45 +156,46 @@ public class ConversationFetcherRong implements IConversationsFetcher {
 
 
                 try {
-                final CountDownLatch countDownLatch = new CountDownLatch(1);
-                if ( RongIM.getInstance()!=null&& RongIM.getInstance().getRongIMClient()!=null) {
-                    RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
-                        @Override
-                        public void onSuccess(final List<Conversation> conversations) {
-                            if (conversations == null) {
-                                LogHelper.e(TAG, "empty conversation");
-                            } else {
-                                for (Conversation conversation : conversations) {
-                                    if (result.containsKey(conversation.getTargetId())) {
-                                        LogHelper.e(TAG, "has " + conversation.getTargetId());
-                                        ConversationItem item = result.get(conversation.getTargetId());
-                                        filterName(conversation, item);
+                    final CountDownLatch countDownLatch = new CountDownLatch(1);
+                    if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null) {
+                        RongIM.getInstance().getRongIMClient().getConversationList(new RongIMClient.ResultCallback<List<Conversation>>() {
+                            @Override
+                            public void onSuccess(final List<Conversation> conversations) {
+                                if (conversations == null) {
+                                    LogHelper.e(TAG, "empty conversation");
+                                } else {
+                                    for (Conversation conversation : conversations) {
+                                        if (result.containsKey(conversation.getTargetId())) {
+                                            LogHelper.e(TAG, "has " + conversation.getTargetId());
+                                            ConversationItem item = result.get(conversation.getTargetId());
+                                            filterName(conversation, item);
+                                        }
                                     }
                                 }
+                                LogHelper.e(TAG, " ok ");
+                                sorteds.addAll(result.values());
+                                sorteds.addAll(lefted);
+                                countDownLatch.countDown();
                             }
-                            LogHelper.e(TAG, " ok ");
-                            sorteds.addAll(result.values());
-                            sorteds.addAll(lefted);
-                            countDownLatch.countDown();
-                        }
 
-                        public void onError(RongIMClient.ErrorCode errorCode) {
-                            LogHelper.e("fetch conversations", "|error|" + errorCode);
+                            public void onError(RongIMClient.ErrorCode errorCode) {
+                                LogHelper.e("fetch conversations", "|error|" + errorCode);
 
-                            countDownLatch.countDown();
-                        }
+                                countDownLatch.countDown();
+                            }
 
-                    }, Conversation.ConversationType.DISCUSSION);
-                }
+                        }, Conversation.ConversationType.DISCUSSION);
+                    }
                     countDownLatch.await();
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-                if ( sorteds !=null) {
+                if (sorteds != null) {
                     Collections.sort(sorteds, new Comparator<ConversationItem>() {
                         @Override
                         public int compare(ConversationItem lhs, ConversationItem rhs) {
-                            return (int) (rhs.getLast() - lhs.getLast());
+                            //long cast
+                            return (rhs.getLast() - lhs.getLast()) > 0 ? 3 : -3;
                         }
                     });
                 }

@@ -12,7 +12,7 @@ public class ConversationItem {
     private String time;
     private String ava;
     private String orderId;
-    private long  last;
+    private long  last = 0;
 
     public ConversationItem(String id, String name, int unreadCount, String serviceName, String lastWords, String time, String ava, String orderId) {
         this.id = id;
@@ -100,14 +100,9 @@ public class ConversationItem {
     @Override
     public String toString() {
         return "ConversationItem{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", unreadCount=" + unreadCount +
-                ", serviceName='" + serviceName + '\'' +
-                ", lastWords='" + lastWords + '\'' +
-                ", time='" + time + '\'' +
-                ", ava='" + ava + '\'' +
-                ", orderId='" + orderId + '\'' +
+                "name='" + name + '\'' +
+                ", id='" + id + '\'' +
+                ", last=" + last +
                 '}';
     }
 }
