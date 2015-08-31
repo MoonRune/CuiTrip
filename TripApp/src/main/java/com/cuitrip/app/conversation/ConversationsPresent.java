@@ -15,7 +15,7 @@ public class ConversationsPresent {
     IConversationsView iConversationView;
     IConversationsFetcher iConversationsFetcher = new ConversationFetcherRong();
 
-//            new IConversationsFetcher() {
+    //            new IConversationsFetcher() {
 //        @Override
 //        public void getConversations(ListFetchCallback<ConversationItem> itemListFetchCallback) {
 //            List<ConversationItem> result =new ArrayList<>();
@@ -37,7 +37,8 @@ public class ConversationsPresent {
     public void onConversationRemoved(ConversationItem item) {
 
     }
-    public void onCallRefresh(){
+
+    public void onCallRefresh() {
         if (LoginInstance.isLogin(MainApplication.getInstance())) {
             iConversationView.uiHidenNoLogin();
             iConversationView.showRefreshLoading();
@@ -54,7 +55,31 @@ public class ConversationsPresent {
 
                 }
             });
-        }else {
+        } else {
+            iConversationView.uiShowNoLogin();
+        }
+
+    }
+
+
+    public void loadMore() {
+        if (LoginInstance.isLogin(MainApplication.getInstance())) {
+            iConversationView.uiHidenNoLogin();
+            iConversationView.showRefreshLoading();
+            iConversationsFetcher.getConversationsMore(new ListFetchCallback<ConversationItem>() {
+                @Override
+                public void onSuc(List<ConversationItem> t) {
+                    iConversationView.appendMessages(t);
+                    iConversationView.hideRefreshLoading();
+                }
+
+                @Override
+                public void onFailed(Throwable throwable) {
+                    iConversationView.hideRefreshLoading();
+
+                }
+            }, iConversationView.getSize());
+        } else {
             iConversationView.uiShowNoLogin();
         }
 
