@@ -89,13 +89,23 @@
 
         <TextView
             android:text="@string/order_meet_place"
-            style="@style/order_form_hint"/>
+            style="@style/order_form_hint"
+            android:layout_weight="0"/>
         <TextView
+            android:layout_height="wrap_content"
+            android:singleLine="false"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
             android:id="@+id/ct_service_meet_location_tv"
-            tools:text="ct_service_meet_location_tv"
-            android:drawableRight="@drawable/map_b"
+            tools:text="ct_service_meet_location_tv adsfasdfasdfasdfaasdfasdfasdfasdfadfsadfasdfasdfasdasdfasdf"
             android:drawablePadding="8dp"
             style="@style/order_form_value" />
+        <ImageView
+            android:paddingRight="15dp"
+            android:paddingTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/map_b"/>
     </LinearLayout>
 
     <View

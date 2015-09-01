@@ -40,6 +40,7 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.SavedDescSharedPreferences;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -281,6 +282,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
                         hideNoCancelDialog();
+                        SavedDescSharedPreferences.deleteServiceDesc(CreateServiceOtherActivity.this);
                         startActivity(new Intent(CreateServiceOtherActivity.this, CreateServiceSuccessActivity.class));
                         setResult(RESULT_OK);
                         finish();
