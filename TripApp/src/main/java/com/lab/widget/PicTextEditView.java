@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.service.R;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -188,7 +189,7 @@ public class PicTextEditView extends LinearLayout implements ImageSelectView.OnI
         return false;
     }
 
-    public void addImage(int requestCode) {
+    public void addImage(int requestCode,File f) {
         if (mActivity == null) {
             return;
         }
@@ -213,8 +214,13 @@ public class PicTextEditView extends LinearLayout implements ImageSelectView.OnI
         mCurrentEdit = (TextEditSplit) foucs;
         mPositionInParent = indexOfChild(mCurrentEdit);
         mPositionInEdit = mCurrentEdit.getSelectionStart();
-        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+            Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
         photoPickerIntent.setType("image/*");
+
+        photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(f));
+        photoPickerIntent.putExtra("crop", "true");
+        photoPickerIntent.putExtra("aspectX", UnitUtils.IMAGE_CROP_WIDTH);// 裁剪框比例
+        photoPickerIntent.putExtra("aspectY", UnitUtils.IMAGE_CROP_HEIGHT);
         mActivity.startActivityForResult(photoPickerIntent, requestCode);
     }
 
@@ -245,6 +251,9 @@ public class PicTextEditView extends LinearLayout implements ImageSelectView.OnI
         mPositionInEdit = mCurrentEdit.getSelectionStart();
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(file));
+        intent.putExtra("crop", "true");
+        intent.putExtra("aspectX", UnitUtils.IMAGE_CROP_WIDTH);// 裁剪框比例
+        intent.putExtra("aspectY", UnitUtils.IMAGE_CROP_HEIGHT);
         mActivity.startActivityForResult(intent, requestCode);
     }
 

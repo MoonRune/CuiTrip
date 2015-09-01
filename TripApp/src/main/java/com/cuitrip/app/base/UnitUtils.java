@@ -14,6 +14,8 @@ import java.util.HashMap;
  */
 public class UnitUtils {
 
+    public static final int IMAGE_CROP_WIDTH=1;
+    public static final int IMAGE_CROP_HEIGHT=1;
     public static final String DEFAULT_MONEY_TYPE = "cny";
     public static final String DEFAULT_CASH_MONEY_TYPE = "usd";
     public static String[] MONEY_TYPES = {DEFAULT_MONEY_TYPE.toUpperCase(), "twd".toUpperCase(), DEFAULT_CASH_MONEY_TYPE.toUpperCase()};

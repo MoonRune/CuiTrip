@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.Spannable;
 import android.text.SpannableString;
@@ -17,6 +19,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.EditText;
 
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.business.UserBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.UserInfo;
@@ -27,6 +30,7 @@ import com.lab.network.LabResponse;
 import com.lab.utils.GetImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.imageupload.CacheDirManager;
 import com.lab.utils.imageupload.IImageUploader;
 import com.lab.utils.imageupload.ImageUploadCallback;
 import com.lab.utils.imageupload.URLImageParser;
@@ -34,6 +38,7 @@ import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -192,10 +197,52 @@ public class SelfHomePageEditorActivity extends BaseActivity {
         }
     }
 
+    File tempPhotoFile;
     protected void injectImage() {
-        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, REQUEST_IMAGE);
+
+        showLoading();
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                tempPhotoFile =
+                        new File(CacheDirManager.getInstance().cameraDir());
+                try {
+                    if (!tempPhotoFile.exists()) {
+
+                        LogHelper.e("omg", "tempPhotoFile not exists");
+                        File vDirPath = tempPhotoFile.getParentFile(); //new File(vFile.getParent());
+                        vDirPath.mkdirs();
+                        tempPhotoFile.createNewFile();
+                    }
+                } catch (Exception e) {
+                    LogHelper.e("omg", e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showLoading();
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                hideLoading();
+                if (tempPhotoFile!=null) {
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    photoPickerIntent.setType("image/*");
+                    photoPickerIntent.putExtra("crop", "true");
+                    photoPickerIntent.putExtra("aspectX", UnitUtils.IMAGE_CROP_WIDTH);// 裁剪框比例
+                    photoPickerIntent.putExtra("aspectY", UnitUtils.IMAGE_CROP_HEIGHT);
+                    photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempPhotoFile));
+                    startActivityForResult(photoPickerIntent, REQUEST_IMAGE);
+                }else {
+                    MessageUtils.showToast(R.string.data_error);
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     @Override
@@ -203,7 +250,7 @@ public class SelfHomePageEditorActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK && data != null) {
-                    Bitmap bp = GetImageHelper.getResizedBitmap(this, data.getData());
+                    Bitmap bp = GetImageHelper.getResizedBitmap(this, Uri.fromFile(tempPhotoFile));
                     if (bp == null) {
                         MessageUtils.showToast(getString(R.string.select_image_failed));
                     } else {

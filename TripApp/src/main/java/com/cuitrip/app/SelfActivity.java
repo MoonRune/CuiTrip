@@ -4,7 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
+import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.app.country.CountrySelectActivity;
 import com.cuitrip.app.identity.SelfIdentificationActivity;
 import com.cuitrip.business.UserBusiness;
@@ -30,11 +34,13 @@ import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.lab.utils.Utils;
+import com.lab.utils.imageupload.CacheDirManager;
 import com.lab.utils.imageupload.IImageUploader;
 import com.lab.utils.imageupload.ImageUploadCallback;
 import com.lab.utils.imageupload.imp.ServiceImageUploader;
 import com.loopj.android.http.AsyncHttpClient;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -280,14 +286,54 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 }).show();
     }
 
+    File tempPhotoFile;
     public void showAvaSelect() {
         if (mIsUpLoading || mDisableEdit) {
             return;
         }
+        showLoading();
+        new AsyncTask() {
+            @Override
+            protected Object doInBackground(Object[] params) {
+                tempPhotoFile =
+                        new File(CacheDirManager.getInstance().cameraDir());
+                try {
+                    if (!tempPhotoFile.exists()) {
 
-        Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
-        photoPickerIntent.setType("image/*");
-        startActivityForResult(photoPickerIntent, REQUEST_IMAGE);
+                        LogHelper.e("omg", "tempPhotoFile not exists");
+                        File vDirPath = tempPhotoFile.getParentFile(); //new File(vFile.getParent());
+                        vDirPath.mkdirs();
+                        tempPhotoFile.createNewFile();
+                    }
+                } catch (Exception e) {
+                    LogHelper.e("omg", e.getMessage());
+                }
+                return null;
+            }
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                showLoading();
+            }
+
+            @Override
+            protected void onPostExecute(Object o) {
+                super.onPostExecute(o);
+                hideLoading();
+                if (tempPhotoFile!=null) {
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_GET_CONTENT);
+                    photoPickerIntent.setType("image/*");
+                    photoPickerIntent.putExtra("crop", "true");
+                    photoPickerIntent.putExtra("aspectX", UnitUtils.IMAGE_CROP_WIDTH);// 裁剪框比例
+                    photoPickerIntent.putExtra("aspectY", UnitUtils.IMAGE_CROP_HEIGHT);
+                    photoPickerIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempPhotoFile));
+                    startActivityForResult(photoPickerIntent, REQUEST_IMAGE);
+                }else {
+                    MessageUtils.showToast(R.string.data_error);
+                }
+            }
+        }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 
     }
 
@@ -307,7 +353,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         switch (requestCode) {
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK && data != null) {
-                    Bitmap bp = GetImageHelper.getResizedBitmap(this, data.getData());
+                    Bitmap bp = GetImageHelper.getResizedBitmap(this, Uri.fromFile(tempPhotoFile));
                     if (bp == null) {
                         MessageUtils.showToast(getString(R.string.select_image_failed));
                     } else {
