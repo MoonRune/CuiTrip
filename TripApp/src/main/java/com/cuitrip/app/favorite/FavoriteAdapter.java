@@ -51,6 +51,12 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteViewHolder> {
         } else {
             int size = this.mModeList.size();
             this.mModeList.addAll(modeList);
+            for (int i = modeList.size(); i >= 0; i--) {
+                //clean same
+                if (this.mModeList.contains(modeList.get(i))) {
+                    modeList.remove(i);
+                }
+            }
             notifyItemRangeInserted(size, getListSize(modeList));
         }
     }

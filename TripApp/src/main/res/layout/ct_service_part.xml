@@ -110,10 +110,13 @@
 
         <TextView
             android:text="@string/order_prices"
-            style="@style/order_form_hint"/>
+            style="@style/order_form_hint"
+            android:layout_weight="0"/>
         <TextView
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
             android:id="@+id/ct_order_price_tv"
-            tools:text="order_cost"
+            tools:text="order_cost adsfasdfasdfasdfaasdfasdfasdfasdfadfsadfasdfasdfasdasdfasdf"
             style="@style/order_form_value"/>
     </LinearLayout>
     <View
@@ -124,14 +127,21 @@
         android:id="@+id/ct_order_price_include_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <TextView
             android:text="@string/price_include"
-            style="@style/order_form_hint"/>
+            style="@style/order_form_hint"
+            android:layout_gravity="top"
+            android:layout_weight="0"/>
         <TextView
             android:id="@+id/ct_order_price_include_tv"
-            tools:text="order_price_include"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical|right"
+            tools:text="order_price_incs asdfasdfasdfasdfasdfasdfasdfasdfasdfasdfasdfsdafa dfa"
             android:singleLine="false"
             style="@style/order_form_value" />
     </LinearLayout>
@@ -141,15 +151,22 @@
     <LinearLayout
         android:id="@+id/ct_order_price_uninclude_ll"
         android:layout_width="match_parent"
+        android:gravity="center_vertical"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
+            android:layout_gravity="top"
             android:text="@string/price_exclude"
-            style="@style/order_form_hint"/>
+            style="@style/order_form_hint"
+            android:layout_weight="0"/>
         <TextView
+            android:layout_width="match_parent"
             android:id="@+id/ct_order_price_uninclude_tv"
-            tools:text="order_price_uninclude"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            tools:text="order_price_uninclude 1231234567890123456789234567890234567893456789 sdfsdf mkmkmkmk"
+            android:gravity="center_vertical|right"
             android:singleLine="false"
             style="@style/order_form_value" />
     </LinearLayout>

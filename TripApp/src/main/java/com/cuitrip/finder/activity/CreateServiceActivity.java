@@ -9,6 +9,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -40,7 +41,9 @@ public class CreateServiceActivity extends BaseActivity {
 
     private static final String TAG = "CreateServiceActivity";
     private static final int REQUEST_IMAGE = 99;
+    private static final int REQUEST_IMAGE_CROP = 199;
     private static final int REQUEST_PHOTO = 100;
+    private static final int REQUEST_PHOTO_CROP = 200;
     private static final int REQUEST_CREATE = 101;
 
     public static final String EDIT_MODE = "edit_mode";
@@ -193,6 +196,24 @@ public class CreateServiceActivity extends BaseActivity {
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK && data != null) {
                     Bitmap bp = GetImageHelper.getResizedBitmap(this, data.getData());
+
+                        Intent intent = new Intent();
+                        intent.setAction("com.android.camera.action.CROP");
+                        intent.setDataAndType(Uri.fromFile(tempPhotoFile), "image/*");// mUri是已经选择的图片Uri
+                        intent.putExtra("crop", "true");
+                        intent.putExtra("aspectX", 1);// 裁剪框比例
+                        intent.putExtra("aspectY", 1);
+//                    intent.putExtra("outputX", 150);// 输出图片大小
+//                    intent.putExtra("outputY", 150);
+                        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempPhotoFile));
+                        intent.putExtra("return-data", false);
+
+                        this.startActivityForResult(intent, REQUEST_PHOTO_CROP);
+                }
+                break;
+            case REQUEST_IMAGE_CROP:
+                if (resultCode == RESULT_OK && data != null) {
+                    Bitmap bp = GetImageHelper.getResizedBitmap(this, data.getData());
                     if (bp == null) {
                         MessageUtils.showToast(getString(R.string.ct_create_image_failed_msg));
                     } else {
@@ -201,6 +222,22 @@ public class CreateServiceActivity extends BaseActivity {
                 }
                 break;
             case REQUEST_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    Intent intent = new Intent();
+                    intent.setAction("com.android.camera.action.CROP");
+                    intent.setDataAndType(Uri.fromFile(tempPhotoFile), "image/*");// mUri是已经选择的图片Uri
+                    intent.putExtra("crop", "true");
+                    intent.putExtra("aspectX", 1);// 裁剪框比例
+                    intent.putExtra("aspectY", 1);
+//                    intent.putExtra("outputX", 150);// 输出图片大小
+//                    intent.putExtra("outputY", 150);
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(tempPhotoFile));
+                    intent.putExtra("return-data", false);
+
+                    this.startActivityForResult(intent, REQUEST_PHOTO_CROP);
+                }
+                break;
+            case REQUEST_PHOTO_CROP:
                 if (resultCode == RESULT_OK) {
                     Bitmap bp = GetImageHelper.getResizedBitmap(this, Uri.fromFile(tempPhotoFile));
                     if (bp == null) {
@@ -218,11 +255,11 @@ public class CreateServiceActivity extends BaseActivity {
                     }
                     finish();
                 } else if (resultCode == RESULT_CANCELED) {
-                    LogHelper.e("save","saveToPreModify");
+                    LogHelper.e("save", "saveToPreModify");
                     if (data != null && data.hasExtra(SERVICE_INFO)) {
                         mServiceInfo = (ServiceInfo) data.getSerializableExtra(SERVICE_INFO);
                         getIntent().putExtra(SERVICE_INFO, mServiceInfo);
-                        LogHelper.e("save","set memory "+mServiceInfo.getAddress());
+                        LogHelper.e("save", "set memory " + mServiceInfo.getAddress());
                     }
 
                 }
@@ -253,14 +290,14 @@ public class CreateServiceActivity extends BaseActivity {
                     if (mServiceInfo != null && mServiceInfo.getSid() != null) {
                         //do nothig
                     } else {
-                        if (mServiceInfo == null){
+                        if (mServiceInfo == null) {
                             mServiceInfo = new ServiceInfo();
                         }
                         mServiceInfo.setName(mTitle.getText().toString());
                         mServiceInfo.setDescpt(desc);
                         mServiceInfo.setBackPic(mPicEditTextView.getMainPicture());
                         mServiceInfo.setPic(mPicEditTextView.getPictures());
-                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,mServiceInfo);
+                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this, mServiceInfo);
                         mPicEditTextView.deletePictures();
                         finish();
                     }

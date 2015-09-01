@@ -95,4 +95,20 @@ public class FavoriteMode {
                 item.getServiceName(),item.getServicePicUrl(),item.getServiceAddress(),
                 item.getUserNick(),item.getHeadPic(),item.getCareer(),item.isAvaliable());
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        FavoriteMode that = (FavoriteMode) o;
+
+        return !(id != null ? !id.equals(that.id) : that.id != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id != null ? id.hashCode() : 0;
+    }
 }
