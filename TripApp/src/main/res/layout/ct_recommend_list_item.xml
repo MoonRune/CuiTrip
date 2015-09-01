@@ -97,6 +97,5 @@
         android:layout_height="wrap_content"
         tools:src="@drawable/selector_now_like"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/select_alpha_gray"/>
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>

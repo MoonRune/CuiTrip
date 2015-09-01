@@ -146,16 +146,20 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             String money = "";
 
             try {
-                double value = Double.valueOf(info.getShowPrice());
-                if (value <= 0) {
+                if (info.isTypeFree()) {
                     price = getString(R.string.ct_service_free);
-
                 } else {
-                    money = info.getShowPrice();
-                    if (info.getPriceType() == 1) { //按人计费
-                        price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
+                    double value = Double.valueOf(info.getShowPrice());
+                    if (value <= 0) {
+                        price = getString(R.string.ct_service_free);
+
                     } else {
-                        price = info.getShowCurrency().toUpperCase() + " " + money;
+                        money = info.getShowPrice();
+                        if (info.getPriceType() == 1) { //按人计费
+                            price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
+                        } else {
+                            price = info.getShowCurrency().toUpperCase() + " " + money;
+                        }
                     }
                 }
             } catch (Exception e) {

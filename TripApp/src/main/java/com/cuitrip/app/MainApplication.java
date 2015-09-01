@@ -209,7 +209,7 @@ public class MainApplication extends BaseAppLication {
     }
 
     public void logOut() {
-        cleanDeviceTOken();
+        cleanDeviceToken();
         RongCloudEvent.DisConnectRong();
         LoginInstance.logout(this);
         Intent intent = new Intent(this, LogoActivity.class);
@@ -217,33 +217,26 @@ public class MainApplication extends BaseAppLication {
         startActivity(intent);
     }
 
-    public void cleanDeviceTOken() {
-        uploadDeviceToken("");
-    }
-
     AsyncHttpClient mClient = new AsyncHttpClient();
 
     /**
      * String deviceId = UmengRegistrar.getRegistrationId(this);
      *
-     * @param deviceId
      */
-    public void uploadDeviceToken(String deviceId) {
-        LogHelper.e("LoginActivity", "device_id: " + deviceId);
+    public void cleanDeviceToken() {
+        LogHelper.e("LoginActivity", "device_id: clean");
         UserInfo info = (UserInfo) LoginInstance.getInstance(this).getUserInfo();
-        if (!TextUtils.isEmpty(deviceId)) {
-            UserBusiness.upDevicetoken(this, mClient, new LabAsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(LabResponse response, Object data) {
-                    LogHelper.e("LoginActivity", "device_id: suc");
-                }
+        UserBusiness.upDevicetoken(this, mClient, new LabAsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                LogHelper.e("LoginActivity", "device_id: suc");
+            }
 
-                @Override
-                public void onFailure(LabResponse response, Object data) {
-                    LogHelper.e("LoginActivity", "device_id: failed ");
-                }
-            }, deviceId, info.getUid(), info.getToken());
-        }
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                LogHelper.e("LoginActivity", "device_id: failed ");
+            }
+        }, "", info.getUid(), info.getToken());
     }
 
     public void orderMemberIdError() {

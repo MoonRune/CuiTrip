@@ -159,14 +159,26 @@ public class ServicePartRenderData {
 
 
     public static String getOrderPriceWithCurrencyText(OrderItem orderItem) {
+        if (orderItem.isTypeFree()) {
+            return PlatformUtil.getInstance().getString(R.string.ct_service_free);
+        }
         UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
         if (userInfo != null) {
             try {
                 if (userInfo.getUid().equals(orderItem.getInsiderId())) {
-                    return orderItem.getMoneyType() + " " + orderItem.getServicePrice();
+                    double value = Double.valueOf(orderItem.getServicePrice());
+                    if (value <= 0) {
+                        return PlatformUtil.getInstance().getString(R.string.ct_service_free);
+                    } else {
+                        return orderItem.getMoneyType() + " " + orderItem.getServicePrice();
+                    }
                 }
             } catch (Exception e) {
             }
+        }
+        double value = Double.valueOf(orderItem.getOrderPrice());
+        if (value <= 0) {
+            return PlatformUtil.getInstance().getString(R.string.ct_service_free);
         }
         return orderItem.getPayCurrency() + " " + orderItem.getOrderPrice();
     }

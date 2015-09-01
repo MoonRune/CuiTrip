@@ -12,6 +12,7 @@ public class OrderItem implements Serializable {
     public static final int STATUS_WAIT_COMMENT = 5;
     public static final int STATUS_OVER = 6;
     public static final int STATUS_UNVALIABLE = 7;
+
 //    public enum OrderStatus {
 //        CREATED(1), CONFIRMED(2), PAYED(8), WILL_BEGIN(3),BEGIN(4),END(5),CANCEL(6),CLOSED(7);
 //        private int status;
@@ -407,4 +408,7 @@ public class OrderItem implements Serializable {
         this.priceType = priceType;
     }
 
+    public boolean isTypeFree(){
+        return String.valueOf(ServiceInfo.PAYWAY_FREE).equals(priceType);
+    }
 }

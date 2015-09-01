@@ -69,13 +69,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ct_create_order,menu);
+        getMenuInflater().inflate(R.menu.ct_create_order, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_OK:
                 createOrder();
                 return true;
@@ -110,11 +110,31 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
 
         mMoney = (TextView) findViewById(R.id.bill_count);
-        if (mService.getPriceType() == 1) {
-            mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
-        } else {
-            mMoney.setText(mService.getShowPrice());
+
+        try {
+
+            if (mService.isTypeFree()) {
+                mMoney.setText(R.string.ct_service_free);
+            } else {
+                double value = Double.valueOf(mService.getShowPrice());
+                if (value <= 0) {
+                    mMoney.setText(R.string.ct_service_free);
+                } else {
+                    if (mService.getPriceType() == 1) {
+                        mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
+                    } else {
+                        mMoney.setText(mService.getShowPrice());
+                    }
+                }
+            }
+        } catch (Exception e) {
+            if (mService.getPriceType() == 1) {
+                mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
+            } else {
+                mMoney.setText(mService.getShowPrice());
+            }
         }
+
 
         findViewById(R.id.order_date).setOnClickListener(this);
         findViewById(R.id.order_person).setOnClickListener(this);
