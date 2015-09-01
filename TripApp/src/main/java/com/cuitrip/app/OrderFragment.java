@@ -183,6 +183,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     LabAsyncHttpResponseHandler responseHandler = new LabAsyncHttpResponseHandler() {
         @Override
         public void onFailure(LabResponse response, Object data) {
+            LogHelper.e("omg","refresh << failed");
             mRefresh.setRefreshing(false);
             if (response != null && !TextUtils.isEmpty(response.msg)) {
                 MessageUtils.showToast(response.msg);
@@ -191,12 +192,14 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
 
         @Override
         public void onSuccess(LabResponse response, Object data) {
+            LogHelper.e("omg","refresh << onSuccess");
             mRefresh.setRefreshing(false);
             if (data != null) {
                 try {
                     mOrderDatas = JSON.parseArray(data.toString(), OrderItem.class);
                     if (mAdapter.getData() != null) {
                         mAdapter.getData().clear();
+                        mAdapter.getData().addAll(mOrderDatas);
                         mAdapter.notifyDataSetChanged();
                     } else {
                         mAdapter.setData(mOrderDatas);
@@ -250,8 +253,10 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
     }
 
     private void getOrderList() {
-        if (mRefresh != null && !mRefresh.isRefreshing()) {
+        LogHelper.e("omg","getOrderList");
+        if (mRefresh != null ) {
             mRefresh.setRefreshing(true);
+            LogHelper.e("omg", "OrderBusiness.getOrderList");
             OrderBusiness.getOrderList(getActivity(), mAsyncHttpClient, responseHandler, mType, 0, DEFUALT_SIZE);
         }
     }

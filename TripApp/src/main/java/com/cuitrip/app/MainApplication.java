@@ -222,6 +222,7 @@ public class MainApplication extends BaseAppLication {
     /**
      * String deviceId = UmengRegistrar.getRegistrationId(this);
      *
+     *  should  build new api  post only  deviceId ，then server delete this id
      */
     public void cleanDeviceToken() {
         LogHelper.e("LoginActivity", "device_id: clean");
@@ -236,7 +237,7 @@ public class MainApplication extends BaseAppLication {
             public void onFailure(LabResponse response, Object data) {
                 LogHelper.e("LoginActivity", "device_id: failed ");
             }
-        }, "", info.getUid(), info.getToken());
+        }, "deletetokenwhycannotpassemptyparam", info.getUid(), info.getToken());
     }
 
     public void orderMemberIdError() {
