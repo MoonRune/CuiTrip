@@ -79,7 +79,10 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     //query for userinfo  from api && local  ??
 
     public static void DisConnectRong() {
-        RongIM.getInstance().disconnect();
+        if (RongIM.getInstance() != null) {
+            LogHelper.e("ron", "logout");
+            RongIM.getInstance().logout();
+        }
     }
 
     public static void ConnectRongForce() {
@@ -100,6 +103,13 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 if (force) {
                     MainApplication.getInstance().logOutWithError();
                 }
+                return;
+            }
+
+            //状态池维护 很蛋疼，还是得抽出来
+            if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null
+                    &&RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
+                LogHelper.e("ron suc", " already");
                 return;
             }
             String token = userInfo.getRongyunToken();

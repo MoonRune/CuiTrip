@@ -208,17 +208,20 @@ public class MainApplication extends BaseAppLication {
         logOut();
     }
 
+    public boolean validateRong(){
+        if (!LoginInstance.isLogin(this)) {
+            LogHelper.e("ron","disconnect");
+            RongCloudEvent.DisConnectRong();
+            return false;
+        }
+        return true;
+    }
     public void logOut() {
-        cleanDeviceTOken();
-        RongCloudEvent.DisConnectRong();
+        cleanDeviceToken();
         LoginInstance.logout(this);
         Intent intent = new Intent(this, LogoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
-    }
-
-    public void cleanDeviceTOken() {
-        uploadDeviceToken("");
     }
 
     AsyncHttpClient mClient = new AsyncHttpClient();
@@ -226,24 +229,22 @@ public class MainApplication extends BaseAppLication {
     /**
      * String deviceId = UmengRegistrar.getRegistrationId(this);
      *
-     * @param deviceId
+     *  should  build new api  post only  deviceId ，then server delete this id
      */
-    public void uploadDeviceToken(String deviceId) {
-        LogHelper.e("LoginActivity", "device_id: " + deviceId);
+    public void cleanDeviceToken() {
+        LogHelper.e("LoginActivity", "device_id: clean");
         UserInfo info = (UserInfo) LoginInstance.getInstance(this).getUserInfo();
-        if (!TextUtils.isEmpty(deviceId)) {
-            UserBusiness.upDevicetoken(this, mClient, new LabAsyncHttpResponseHandler() {
-                @Override
-                public void onSuccess(LabResponse response, Object data) {
-                    LogHelper.e("LoginActivity", "device_id: suc");
-                }
+        UserBusiness.upDevicetoken(this, mClient, new LabAsyncHttpResponseHandler() {
+            @Override
+            public void onSuccess(LabResponse response, Object data) {
+                LogHelper.e("LoginActivity", "device_id: suc");
+            }
 
-                @Override
-                public void onFailure(LabResponse response, Object data) {
-                    LogHelper.e("LoginActivity", "device_id: failed ");
-                }
-            }, deviceId, info.getUid(), info.getToken());
-        }
+            @Override
+            public void onFailure(LabResponse response, Object data) {
+                LogHelper.e("LoginActivity", "device_id: failed ");
+            }
+        }, "deletetokenwhycannotpassemptyparam", info.getUid(), info.getToken());
     }
 
     public void orderMemberIdError() {
