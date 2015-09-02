@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.os.Build;
+import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +18,8 @@ import android.widget.Toast;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.service.R;
+import com.cuitrip.util.PlatformUtil;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -29,37 +33,81 @@ public class MessageUtils {
         void onDataSelect(String s);
     }
 
-    public static void showDateCheck(Context context, final DateCheckListener dateCheckListener) {
+    public static boolean isAfter5() {
+        return (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT);
+    }
+
+    public static void showDateCheck(FragmentActivity context, final DateCheckListener dateCheckListener) {
         AlertDialog.Builder builder = MessageUtils.createHoloBuilder(context);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
-        final DatePicker datePicker = new DatePicker(context);
-        int year = calendar.get(Calendar.YEAR);
-        int monthOfYear = calendar.get(Calendar.MONTH);
-        int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
-        datePicker.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener() {
+        if (isAfter5())
+        {
+            final DatePicker datePicker = new DatePicker(context);
+            int year = calendar.get(Calendar.YEAR);
+            int monthOfYear = calendar.get(Calendar.MONTH);
+            int dayOfMonth = calendar.get(Calendar.DAY_OF_MONTH);
+            datePicker.init(year, monthOfYear, dayOfMonth, new DatePicker.OnDateChangedListener() {
 
-            public void onDateChanged(DatePicker view, int year,
-                                      int monthOfYear, int dayOfMonth) {
-                LogHelper.e("omg", "onDateChanged");
-            }
-
-        });
-        builder.setView(datePicker);
-        builder.setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (dateCheckListener != null) {
-                    dateCheckListener.onDataSelect(datePicker.getYear() + "-" +
-                            fillToTwo(datePicker.getMonth() + 1)
-                            + "-" + fillToTwo(datePicker.getDayOfMonth()));
+                public void onDateChanged(DatePicker view, int year,
+                                          int monthOfYear, int dayOfMonth) {
+                    LogHelper.e("omg", "onDateChanged");
                 }
-                dialog.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.show();
-        dialog.show();
+
+            });
+            builder.setView(datePicker);
+            builder.setPositiveButton(R.string.ct_confirm, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    if (dateCheckListener != null) {
+                        dateCheckListener.onDataSelect(datePicker.getYear() + "-" +
+                                fillToTwo(datePicker.getMonth() + 1)
+                                + "-" + fillToTwo(datePicker.getDayOfMonth()));
+                    }
+                    dialog.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.show();
+            dialog.show();
+        }
+        else
+        {
+
+            Calendar now = Calendar.getInstance();
+            DatePickerDialog dpd = DatePickerDialog.newInstance(
+                    new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePickerDialog datePickerDialog, int i, int i1, int i2) {
+                            if (dateCheckListener != null) {
+                                dateCheckListener.onDataSelect(i + "-" +
+                                        fillToTwo(i1+1)
+                                        + "-" + fillToTwo(i2));
+                                datePickerDialog.dismiss();
+                            }
+                        }
+                    },
+                    now.get(Calendar.YEAR),
+                    now.get(Calendar.MONTH),
+                    now.get(Calendar.DAY_OF_MONTH)
+            );
+//            dpd.setThemeDark(modeDarkDate.isChecked());
+//            dpd.vibrate(vibrateDate.isChecked());
+//            dpd.dismissOnPause(dismissDate.isChecked());
+//            if (modeCustomAccentDate.isChecked()) {
+//                dpd.setAccentColor(Color.parseColor("#9C27B0"));
+//            }
+            dpd.setAccentColor(PlatformUtil.getInstance().getColor(R.color.ct_main_color_light));
+            dpd.show(context.getFragmentManager(), "Datepickerdialog");
+
+//            DatePickerDialog dpd = DatePickerDialog.newInstance(
+//                    context,
+//                    calendar.get(Calendar.YEAR),
+//                    calendar.get(Calendar.MONTH),
+//                    calendar.get(Calendar.DAY_OF_MONTH)
+//            );
+//            dpd.show(getFragmentManager(), "Datepickerdialog");
+        }
     }
 
     public static String fillToTwo(int value) {
@@ -183,7 +231,7 @@ public class MessageUtils {
     }
 
     public static void dialogBuilderInput(Context context, boolean cancelable, String url, String title,
-                                     String okString, final setMessageListener setMessageListener) {
+                                          String okString, final setMessageListener setMessageListener) {
         AlertDialog.Builder builder;
         builder = new AlertDialog.Builder(context);
 
@@ -212,7 +260,7 @@ public class MessageUtils {
         btnV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(contentTv.getText().toString())){
+                if (TextUtils.isEmpty(contentTv.getText().toString())) {
                     showToast(R.string.please_input);
                     return;
                 }
@@ -227,7 +275,7 @@ public class MessageUtils {
         alertDialog.show();
     }
 
-    public interface setMessageListener{
+    public interface setMessageListener {
         void setMessage(String s);
     }
 }

@@ -601,7 +601,7 @@
     <string name="price_exclude">费用不包含</string>
     <string name="order_cancel_reason">预订失效的原因</string>
     <string name="cash_unit">货币</string>
-    <string name="version_too_low">版本太低，请升级</string>
+    <string name="version_too_low">立刻升级，获得全新体验</string>
     <string name="app_downloads">精品应用推荐下载</string>
     <string name="please_input">请输入</string>
     <string name="set_address">设置地点为%1$s吗？</string>

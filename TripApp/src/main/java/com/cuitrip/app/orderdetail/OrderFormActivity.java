@@ -17,6 +17,8 @@ import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
+import com.cuitrip.app.base.CtException;
+import com.cuitrip.app.base.CtFetchCallback;
 import com.cuitrip.app.base.ProgressingFragment;
 import com.cuitrip.app.conversation.CtConversationFragment;
 import com.cuitrip.app.pay.PayOrderAcivity;
@@ -280,31 +282,17 @@ public class OrderFormActivity extends BaseActivity {
         }
         String title = buildOrderConversationTitle(orderItem);
         try {
-            RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
+            RongCloudEvent.getInstance().startConversation(title, userIds, orderId, new CtFetchCallback<String>() {
                 @Override
-                public void onSuccess(final String s) {
-                    LogHelper.e(TAG, "suc build  target id" + s);
-                    OrderBusiness.updateOrderConversation(OrderFormActivity.this, mClient, new LabAsyncHttpResponseHandler() {
-                        @Override
-                        public void onSuccess(LabResponse response, Object data) {
-                            LogHelper.e(TAG, "update suc   target id" + s);
-                            orderItem.setTargetId(s);
-                            replaceFragment();
-                        }
+                public void onSuc(String s) {
+                    orderItem.setTargetId(s);
+                    replaceFragment();
 
-                        @Override
-                        public void onFailure(LabResponse response, Object data) {
-                            LogHelper.e(TAG, "update failed   target id" + s);
-                            MessageUtils.showToast(R.string.load_error);
-                        }
-                    }, orderItem.getOid(), s);
                 }
 
                 @Override
-                public void onError(RongIMClient.ErrorCode errorCode) {
-                    LogHelper.e(TAG, "build failed   target " + errorCode);
-                    hideNoCancelDialog();
-                    MessageUtils.showToast(R.string.load_error);
+                public void onFailed(CtException throwable) {
+                    MessageUtils.showToast(throwable.getMessage());
                 }
             });
         } catch (Exception e) {

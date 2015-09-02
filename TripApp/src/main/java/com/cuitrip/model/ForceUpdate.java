@@ -6,6 +6,10 @@ package com.cuitrip.model;
 public class ForceUpdate {
     private boolean needUpdate;
 
+    //todo
+    public String getUrl(){
+        return "url";
+    }
     public boolean isNeedUpdate() {
         return needUpdate;
     }

@@ -86,6 +86,7 @@ public class OrderItem implements Serializable {
     private String targetId;//融云targetid
     private String serviceTime;//游玩时间长度
 
+    //todo redirect
     public boolean hasOldConversations(){
         return true;
     }

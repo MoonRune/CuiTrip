@@ -11,6 +11,8 @@ import android.view.View;
 
 import com.cuitrip.app.IndexActivity;
 import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.base.CtException;
+import com.cuitrip.app.base.CtFetchCallback;
 import com.cuitrip.app.base.ImageActivity;
 import com.cuitrip.app.map.GaoDeMapActivity;
 import com.cuitrip.app.orderdetail.OrderFormActivity;
@@ -107,13 +109,12 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             }
 
             //状态池维护 很蛋疼，还是得抽出来
-
-            //if connected
-            if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null
-                    &&RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
+            if (RongCloudEvent.getInstance().isConnected()){
                 LogHelper.e("ron suc", " already");
                 return;
             }
+            //if connected
+
             String token = userInfo.getRongyunToken();
             LogHelper.e(TAG, "rongyun roken is : " + token);
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
@@ -146,6 +147,58 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     }
 
     SyncHttpClient mClient = new SyncHttpClient();
+
+    public boolean isConnected() {
+        return (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null
+                && RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED));
+    }
+
+    public void startConversation(String title, List<String> userIds, final String oid) {
+
+       startConversation(title, userIds, oid,null);
+    }
+
+
+    public void startConversation(String title, List<String> userIds, final String oid, final CtFetchCallback<String> callback) {
+
+        if (isConnected()) {
+            RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
+                @Override
+                public void onSuccess(final String s) {
+                    OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
+                        @Override
+                        public void onSuccess(LabResponse response, Object data) {
+                            if (callback!=null){
+                                callback.onSuc(s);
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(LabResponse response, Object data) {
+                            if (callback!=null){
+                                String msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                                if (!TextUtils.isEmpty(response.msg)){
+                                    msg = response.msg;
+                                }
+                                callback.onFailed(new CtException(msg));
+                            }
+                        }
+                    }, oid, s);
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode errorCode) {
+                    if (callback!=null){
+                        String msg = PlatformUtil.getInstance().getString(R.string.data_error);
+                        if (!TextUtils.isEmpty(errorCode.getMessage())){
+                            msg = errorCode.getMessage();
+                        }
+                        callback.onFailed(new CtException(msg));
+                    }
+                }
+            });
+        }
+    }
 
     @Override
     public UserInfo getUserInfo(final String userId) {

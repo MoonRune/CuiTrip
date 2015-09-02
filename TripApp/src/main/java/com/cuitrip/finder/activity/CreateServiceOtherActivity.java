@@ -456,11 +456,10 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             removeView(R.id.service_price_type_unit);
             removeView(R.id.price_block_divider);
         } else {
-            int value = mServiceInfo.getPriceType();
             paywayValue = mServiceInfo.getPriceType();
             mPayType.setText(getOrderPriceType()[paywayValue]);
             showView(R.id.price_block_divider);
-            switch (value) {
+            switch (paywayValue) {
                 case ServiceInfo.PAYWAY_ALL:
                     showView(R.id.price_block);
                     showView(R.id.price_block_divider);
@@ -471,6 +470,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     if (!TextUtils.isEmpty(mServiceInfo.getPrice())) {
                         setViewText(R.id.service_price, mServiceInfo.getPrice());
                     }
+                    mMoney.setText("0");
+                    mServiceInfo.setPrice("0");
                     break;
                 case ServiceInfo.PAYWAY_FREE:
                     removeView(R.id.price_block);

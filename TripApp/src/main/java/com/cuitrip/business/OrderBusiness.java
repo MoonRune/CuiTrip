@@ -115,6 +115,7 @@ public class OrderBusiness {
         params.put("oid", oid);
         params.put("serviceScore", serviceScore);
         params.put("content", content);
+        LogHelper.e("omg","submitReview "+params.toString());
         return client.post(context, BusinessHelper.getApiUrl("submitReview"), params, handler);
     }
 

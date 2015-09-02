@@ -17,6 +17,7 @@ import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.ImageHelper;
+import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -77,6 +78,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
 
     private void commitComment() {
         showNoCancelDialog();
+        LogHelper.e("omg", "rating" + String.valueOf(mRatingBar.getRating()));
         OrderBusiness.submitReview(this, mClient, new LabAsyncHttpResponseHandler() {
             @Override
             public void onSuccess(LabResponse response, Object data) {
@@ -84,7 +86,7 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
                 MessageUtils.showToast(R.string.ct_order_comment_suc);
                 Intent intent = new Intent(CommentActivity.this, CommentSuccessActivity.class)
                         .putExtra(CommentSuccessActivity.ORDER_INFO, mOrderInfo);
-                if(mRatingBar.getRating() > 3){
+                if (mRatingBar.getRating() > 3) {
                     intent.putExtra(CommentSuccessActivity.ENABLE_SHARE, true);
                 }
                 LocalBroadcastManager.getInstance(CommentActivity.this).sendBroadcast(
@@ -97,10 +99,10 @@ public class CommentActivity extends BaseActivity implements View.OnClickListene
             @Override
             public void onFailure(LabResponse response, Object data) {
                 hideNoCancelDialog();
-                    if (response != null && !TextUtils.isEmpty(response.msg)) {
-                        MessageUtils.showToast(response.msg);
-                    }
-                    return;
+                if (response != null && !TextUtils.isEmpty(response.msg)) {
+                    MessageUtils.showToast(response.msg);
+                }
+                return;
             }
         }, mOrderInfo.getOid(), String.valueOf(mRatingBar.getRating()), mContent.getText().toString());
     }
