@@ -208,9 +208,16 @@ public class MainApplication extends BaseAppLication {
         logOut();
     }
 
+    public boolean validateRong(){
+        if (!LoginInstance.isLogin(this)) {
+            LogHelper.e("ron","disconnect");
+            RongCloudEvent.DisConnectRong();
+            return false;
+        }
+        return true;
+    }
     public void logOut() {
         cleanDeviceToken();
-        RongCloudEvent.DisConnectRong();
         LoginInstance.logout(this);
         Intent intent = new Intent(this, LogoActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

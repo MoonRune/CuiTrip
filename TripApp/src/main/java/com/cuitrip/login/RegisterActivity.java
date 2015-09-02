@@ -13,6 +13,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cuitrip.business.UserBusiness;
@@ -54,7 +55,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     private TextView mPassWd;
     private TextView mCountry;
     private TextView mGetcode;
-    private TextView mPhoneNumber;
+    private EditText mPhoneNumber;
     private TextView mNick;
     private TextView mVcode;
 
@@ -80,7 +81,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
         mPassWd = (TextView) findViewById(R.id.ct_passwd);
         mCountry = (TextView) findViewById(R.id.ct_contry);
-        mPhoneNumber = (TextView) findViewById(R.id.ct_mobile);
+        mPhoneNumber = (EditText) findViewById(R.id.ct_mobile);
         mNick = (TextView) findViewById(R.id.ct_nick);
         mVcode = (TextView) findViewById(R.id.ct_vcode);
         mNick.setImeOptions(EditorInfo.IME_ACTION_DONE);
@@ -170,8 +171,19 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         String[] country = getCurrentCountry();
         if (country != null) {
             currentCode = country[1];
-            mCountry.setText("+" + currentCode);
+            setCurrentCode(currentCode);
         }
+    }
+
+    public void setCurrentCode(String currentCode){
+
+        if (currentCode!=null &&currentCode.equals("886")){
+            if(TextUtils.isEmpty(mPhoneNumber.getText().toString().trim())) {
+                mPhoneNumber.setText("0");
+                mPhoneNumber.setSelection(mPhoneNumber.getText().toString().length());
+            }
+        }
+        mCountry.setText( "+" + currentCode);
     }
 
     public void onAccountChanged() {
@@ -510,7 +522,7 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
                 String[] country = SMSSDK.getCountry(currentId);
                 if (country != null) {
                     currentCode = country[1];
-                    mCountry.setText("+" + currentCode);
+                    setCurrentCode(currentCode);
                 }
                 checkPhoneNum(mPhoneNumber.getText().toString().trim(), currentCode);
             }

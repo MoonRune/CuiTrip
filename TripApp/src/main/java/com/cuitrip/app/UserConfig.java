@@ -29,6 +29,11 @@ public class UserConfig {
         about.edit().clear().commit();
         SavedDescSharedPreferences.deleteServiceDesc(MainApplication.getInstance());
     }
+    public static void clear(UserConfig config) {
+        SharedPreferences about = config.sp;
+        about.edit().clear().commit();
+        SavedDescSharedPreferences.deleteServiceDesc(MainApplication.getInstance());
+    }
 
     public static UserConfig getInstance() {
         if (config == null) {
@@ -41,7 +46,7 @@ public class UserConfig {
            //当前config存在的情况下
             // current 不为空  id不同 ，重建
             synchronized (UserConfig.class) {
-                clear();
+                clear(config);
                 config = new UserConfig();
             }
 
