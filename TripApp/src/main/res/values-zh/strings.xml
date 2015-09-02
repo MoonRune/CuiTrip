@@ -610,4 +610,5 @@
     <string name="get_cash">提现</string>
     <string name="ct_trip_no_conversation_title">您的聊天</string>
     <string name="ct_trip_no_conversation_message">如果您有聊天消息，将会在这里看到</string>
+    <string name="ct_old_messages">查看老版本消息</string>
 </resources>

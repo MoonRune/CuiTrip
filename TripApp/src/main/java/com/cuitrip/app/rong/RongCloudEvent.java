@@ -107,6 +107,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             }
 
             //状态池维护 很蛋疼，还是得抽出来
+
+            //if connected
             if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null
                     &&RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
                 LogHelper.e("ron suc", " already");

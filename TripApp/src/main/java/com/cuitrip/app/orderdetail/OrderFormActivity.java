@@ -18,6 +18,7 @@ import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
 import com.cuitrip.app.base.ProgressingFragment;
+import com.cuitrip.app.conversation.CtConversationFragment;
 import com.cuitrip.app.pay.PayOrderAcivity;
 import com.cuitrip.app.pro.ServicePartRenderData;
 import com.cuitrip.app.rong.RongCloudEvent;
@@ -40,7 +41,6 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import io.rong.imkit.RongIM;
-import io.rong.imkit.fragment.ConversationFragment;
 import io.rong.imlib.RongIMClient;
 import io.rong.imlib.model.Conversation;
 import io.rong.imlib.model.Discussion;
@@ -207,7 +207,8 @@ public class OrderFormActivity extends BaseActivity {
                                 }
                             }
                         });
-                        ConversationFragment fragment = new ConversationFragment();
+                        CtConversationFragment fragment =  CtConversationFragment.newInstance(orderId,
+                                orderItem.hasOldConversations());
                         String target = orderItem.getTargetId();
                         LogHelper.e(TAG, "build fragment   target id" + target);
                         String title = orderItem.getServiceName();

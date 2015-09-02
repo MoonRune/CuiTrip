@@ -80,12 +80,15 @@ public class IndexActivity extends BaseTabHostActivity {
 
     protected void validateForceUpdate() {
         if (!Once.beenDone(TimeUnit.DAYS, 1, MainApplication.DAILY_FORCE_UPDATE)) {
-            Once.markDone(MainApplication.DAILY_FORCE_UPDATE);
             UserBusiness.forceUpdate(this, new AsyncHttpClient(), new LabAsyncHttpResponseHandler(ForceUpdate.class) {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
-                    if (data != null && data instanceof ForceUpdate && ((ForceUpdate) data).isNeedUpdate()) {
-                        showForceUpdate();
+                    if (data != null && data instanceof ForceUpdate) {
+                        if (((ForceUpdate) data).isNeedUpdate()) {
+                            showForceUpdate();
+                        } else {
+                            Once.markDone(MainApplication.DAILY_FORCE_UPDATE);
+                        }
                     }
                 }
 
