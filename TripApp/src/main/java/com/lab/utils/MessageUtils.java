@@ -18,8 +18,6 @@ import android.widget.Toast;
 
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.service.R;
-import com.cuitrip.util.PlatformUtil;
-import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.DecimalFormat;
 import java.util.Calendar;
@@ -41,7 +39,7 @@ public class MessageUtils {
         AlertDialog.Builder builder = MessageUtils.createHoloBuilder(context);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+800"));
-        if (isAfter5())
+//        if (isAfter5())
         {
             final DatePicker datePicker = new DatePicker(context);
             int year = calendar.get(Calendar.YEAR);
@@ -71,43 +69,28 @@ public class MessageUtils {
             AlertDialog dialog = builder.show();
             dialog.show();
         }
-        else
-        {
-
-            Calendar now = Calendar.getInstance();
-            DatePickerDialog dpd = DatePickerDialog.newInstance(
-                    new DatePickerDialog.OnDateSetListener() {
-                        @Override
-                        public void onDateSet(DatePickerDialog datePickerDialog, int i, int i1, int i2) {
-                            if (dateCheckListener != null) {
-                                dateCheckListener.onDataSelect(i + "-" +
-                                        fillToTwo(i1+1)
-                                        + "-" + fillToTwo(i2));
-                                datePickerDialog.dismiss();
-                            }
-                        }
-                    },
-                    now.get(Calendar.YEAR),
-                    now.get(Calendar.MONTH),
-                    now.get(Calendar.DAY_OF_MONTH)
-            );
-//            dpd.setThemeDark(modeDarkDate.isChecked());
-//            dpd.vibrate(vibrateDate.isChecked());
-//            dpd.dismissOnPause(dismissDate.isChecked());
-//            if (modeCustomAccentDate.isChecked()) {
-//                dpd.setAccentColor(Color.parseColor("#9C27B0"));
-//            }
-            dpd.setAccentColor(PlatformUtil.getInstance().getColor(R.color.ct_main_color_light));
-            dpd.show(context.getFragmentManager(), "Datepickerdialog");
-
+//        else
+//        {
 //            DatePickerDialog dpd = DatePickerDialog.newInstance(
-//                    context,
+//                    new DatePickerDialog.OnDateSetListener() {
+//                        @Override
+//                        public void onDateSet(DatePickerDialog datePickerDialog, int i, int i1, int i2) {
+//                            if (dateCheckListener != null) {
+//                                dateCheckListener.onDataSelect(i + "-" +
+//                                        fillToTwo(i1+1)
+//                                        + "-" + fillToTwo(i2));
+//                                datePickerDialog.dismiss();
+//                            }
+//                        }
+//                    },
 //                    calendar.get(Calendar.YEAR),
 //                    calendar.get(Calendar.MONTH),
 //                    calendar.get(Calendar.DAY_OF_MONTH)
 //            );
-//            dpd.show(getFragmentManager(), "Datepickerdialog");
-        }
+//            dpd.dismissOnPause(true);
+//            dpd.setAccentColor(PlatformUtil.getInstance().getColor(R.color.ct_main_color_light));
+//            dpd.show(context.getFragmentManager(), "Datepickerdialog");
+//        }
     }
 
     public static String fillToTwo(int value) {

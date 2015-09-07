@@ -1,6 +1,8 @@
 package com.cuitrip.model;
 
 
+import com.cuitrip.app.base.UnitUtils;
+
 import java.io.Serializable;
 
 public class OrderItem implements Serializable {
@@ -86,10 +88,37 @@ public class OrderItem implements Serializable {
     private String targetId;//融云targetid
     private String serviceTime;//游玩时间长度
 
-    //todo redirect
-    public boolean hasOldConversations(){
-        return true;
+    private String isOldVersion;//"0"/"1"
+    /**
+     * 之后默认false
+     */
+    private String showOldDialog = UnitUtils.BOOLEAN_FALSE;
+
+    public String getIsOldVersion() {
+        return isOldVersion;
     }
+
+    public void setIsOldVersion(String isOldVersion) {
+        this.isOldVersion = isOldVersion;
+    }
+
+    public String getShowOldDialog() {
+        return showOldDialog;
+    }
+
+    public void setShowOldDialog(String showOldDialog) {
+        this.showOldDialog = showOldDialog;
+    }
+
+    public boolean hasOldConversations(){
+        return UnitUtils.BOOLEAN_TRUE.equals(isOldVersion);
+    }
+
+    public boolean enableRongConversation(){
+//        return true;
+        return UnitUtils.BOOLEAN_FALSE.equals(showOldDialog);
+    }
+
     public String getServiceTime() {
         return serviceTime;
     }

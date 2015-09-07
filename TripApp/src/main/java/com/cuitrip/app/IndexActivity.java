@@ -74,7 +74,7 @@ public class IndexActivity extends BaseTabHostActivity {
             }
         }
         if (MainApplication.getInstance().validateRong()) {
-            RongCloudEvent.ConnectRong(false);
+            RongCloudEvent.ConnectRong(true);
         }
         validateForceUpdate();
     }

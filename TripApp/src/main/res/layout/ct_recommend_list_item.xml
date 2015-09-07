@@ -38,10 +38,12 @@
             android:layout_width="wrap_content"
             android:layout_height="30dp"
             android:layout_weight="1"
+            android:singleLine="true"
+            android:ellipsize="end"
             android:gravity="center_vertical"
             android:textColor="@color/ct_gray"
             android:textSize="13sp"
-            tools:text="carrer"/>
+            tools:text="carrer carrer carer carrer"/>
 
         <TextView
             android:id="@+id/author_address"

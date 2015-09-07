@@ -17,6 +17,7 @@ import com.cuitrip.app.CancelOrderActivity;
 import com.cuitrip.app.CommentActivity;
 import com.cuitrip.app.MainApplication;
 import com.cuitrip.app.ModifyOrderActivity;
+import com.cuitrip.app.OldConversatoinFragment;
 import com.cuitrip.app.base.CtException;
 import com.cuitrip.app.base.CtFetchCallback;
 import com.cuitrip.app.base.ProgressingFragment;
@@ -27,6 +28,7 @@ import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.login.LoginInstance;
 import com.cuitrip.model.OrderItem;
+import com.cuitrip.model.UserInfo;
 import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.network.LabAsyncHttpResponseHandler;
@@ -179,48 +181,64 @@ public class OrderFormActivity extends BaseActivity {
                     return PersonInfoFragment.newInstance(id);
                 default:
                     LogHelper.e("replaceFragment", "getfragment");
-                    if (!TextUtils.isEmpty(orderItem.getTargetId())) {
-                        LogHelper.e("replaceFragment", " do replace");
-                        CURRENT_TARGET = orderItem.getTargetId();
-                        LogHelper.e("omg member", " CURRENT_TARGET " + CURRENT_TARGET);
-                        RongIM.getInstance().getRongIMClient().getDiscussion(CURRENT_TARGET, new RongIMClient.ResultCallback<Discussion>() {
-                            @Override
-                            public void onSuccess(Discussion discussion) {
-                                LogHelper.e("omg member", TextUtils.join("|", discussion.getMemberIdList()));
-                                try {
-                                    if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() < 2
-                                            || !discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
-                                            ) {
+                    if (orderItem.enableRongConversation()) {
+                        if (!TextUtils.isEmpty(orderItem.getTargetId())) {
+
+                            UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+                            if (info != null) {
+                                RongCloudEvent.onConversationStart(orderId,
+                                        orderItem.getInsiderId(),
+                                        info.getUid(),
+                                        orderItem.getSid(),
+                                        orderItem.getTargetId());
+
+                            }
+
+
+                            LogHelper.e("replaceFragment", " do replace");
+                            CURRENT_TARGET = orderItem.getTargetId();
+                            LogHelper.e("omg member", " CURRENT_TARGET " + CURRENT_TARGET);
+                            RongIM.getInstance().getRongIMClient().getDiscussion(CURRENT_TARGET, new RongIMClient.ResultCallback<Discussion>() {
+                                @Override
+                                public void onSuccess(Discussion discussion) {
+                                    LogHelper.e("omg member", TextUtils.join("|", discussion.getMemberIdList()));
+                                    try {
+                                        if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() < 2
+                                                || !discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
+                                                ) {
+                                            MainApplication.getInstance().orderRongMembersizeError();
+                                            buildConversation(orderItem);
+                                        }
+                                    } catch (Exception e) {
+                                        LogHelper.e(TAG, "failed");
+                                    }
+                                    LogHelper.e(TAG, "SUC " + discussion.getMemberIdList() + " : " + TextUtils.join("|", discussion.getMemberIdList()));
+                                }
+
+                                @Override
+                                public void onError(RongIMClient.ErrorCode errorCode) {
+                                    LogHelper.e(TAG, " member failed " + errorCode.name() + "|" + errorCode.getMessage());
+                                    if (errorCode.equals(RongIMClient.ErrorCode.NOT_IN_DISCUSSION)) {
                                         MainApplication.getInstance().orderRongMembersizeError();
                                         buildConversation(orderItem);
                                     }
-                                } catch (Exception e) {
-                                    LogHelper.e(TAG, "failed");
                                 }
-                                LogHelper.e(TAG, "SUC " + discussion.getMemberIdList() + " : " + TextUtils.join("|", discussion.getMemberIdList()));
-                            }
-
-                            @Override
-                            public void onError(RongIMClient.ErrorCode errorCode) {
-                                LogHelper.e(TAG, " member failed " + errorCode.name() + "|" + errorCode.getMessage());
-                                if (errorCode.equals(RongIMClient.ErrorCode.NOT_IN_DISCUSSION)) {
-                                    MainApplication.getInstance().orderRongMembersizeError();
-                                    buildConversation(orderItem);
-                                }
-                            }
-                        });
-                        CtConversationFragment fragment =  CtConversationFragment.newInstance(orderId,
-                                orderItem.hasOldConversations());
-                        String target = orderItem.getTargetId();
-                        LogHelper.e(TAG, "build fragment   target id" + target);
-                        String title = orderItem.getServiceName();
-                        Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
-                                .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
-                                .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
-                        fragment.setUri(uri);
-                        return fragment;
+                            });
+                            CtConversationFragment fragment = CtConversationFragment.newInstance(orderId,
+                                    orderItem.hasOldConversations());
+                            String target = orderItem.getTargetId();
+                            LogHelper.e(TAG, "build fragment   target id" + target);
+                            String title = orderItem.getServiceName();
+                            Uri uri = Uri.parse("rong://" + getApplicationInfo().packageName).buildUpon().appendPath("conversation")
+                                    .appendPath(Conversation.ConversationType.DISCUSSION.getName().toLowerCase())
+                                    .appendQueryParameter("targetId", target).appendQueryParameter("title", title).build();
+                            fragment.setUri(uri);
+                            return fragment;
+                        } else {
+                            return emptyFragment = ProgressingFragment.newInstance();
+                        }
                     } else {
-                        return emptyFragment = ProgressingFragment.newInstance();
+                        return OldConversatoinFragment.newInstance(orderId);
                     }
             }
         }
