@@ -115,8 +115,8 @@ public class OrderItem implements Serializable {
     }
 
     public boolean enableRongConversation(){
-//        return true;
-        return UnitUtils.BOOLEAN_FALSE.equals(showOldDialog);
+        return true;
+//        return UnitUtils.BOOLEAN_FALSE.equals(showOldDialog);
     }
 
     public String getServiceTime() {

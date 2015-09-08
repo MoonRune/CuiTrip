@@ -174,12 +174,11 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
 
     public void startConversation(String title, List<String> userIds, final String oid, final CtFetchCallback<String> callback) {
-
-        if (isConnected()) {
+        if (isConnecting()||isConnected()) {
             RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
                 @Override
                 public void onSuccess(final String s) {
-                    OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
+                    OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
                         @Override
                         public void onSuccess(LabResponse response, Object data) {
                             if (callback != null) {
@@ -211,6 +210,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                     }
                 }
             });
+        } else {
+            LogHelper.e("start"," not connected");
         }
     }
 

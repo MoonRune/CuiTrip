@@ -315,6 +315,10 @@ public class GaoDeMapActivity extends BaseActivity {
             public void onPoiSearched(PoiResult poiResult, int i) {
                 LogHelper.e("search", "onPoiSearched " + i);
                 aMap.getMapScreenMarkers().clear();
+                if (poiResult == null || poiResult.getPois() == null || poiResult.getPois().isEmpty()) {
+                    toastError();
+                    return;
+                }
                 for (PoiItem item : poiResult.getPois()) {
                     mark(item.getLatLonPoint().getLatitude(),
                             item.getLatLonPoint().getLongitude(),
@@ -331,8 +335,13 @@ public class GaoDeMapActivity extends BaseActivity {
             @Override
             public void onPoiItemDetailSearched(PoiItemDetail poiItemDetail, int i) {
                 LogHelper.e("search", "onPoiItemDetailSearched " + i);
+                toastError();
             }
         });
         poiSearch.searchPOIAsyn();
+    }
+
+    public void toastError() {
+        MessageUtils.showToast(R.string.no_date);
     }
 }

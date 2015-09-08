@@ -258,8 +258,16 @@ public class OrderFormActivity extends BaseActivity {
     public void replaceFragment() {
         LogHelper.e("replaceFragment", "replaceFragment");
         try {
+            if (orderItem == null){
+
+                LogHelper.e("replaceFragment", "orderItem == null");
+            }else {
+
+                LogHelper.e("replaceFragment", orderItem.getTargetId()+"|"+(emptyFragment != null));
+            }
             if (orderItem != null && !TextUtils.isEmpty(orderItem.getTargetId()) && emptyFragment != null) {
                 needRefreshFragmenet = true;
+                LogHelper.e("replaceFragment", " remove ");
                 getSupportFragmentManager().beginTransaction().remove(
                         emptyFragment
 //                        getFragmentManager().findFragmentByTag("android:switcher:" + R.id.ct_view_pager + ":" + 2)
@@ -267,6 +275,7 @@ public class OrderFormActivity extends BaseActivity {
                 emptyFragment = null;
             }
         } catch (Exception e) {
+            LogHelper.e("replaceFragment", "replaceFragment error"+e.getMessage());
 
         }
         mAdapter.notifyDataSetChanged();
@@ -300,9 +309,11 @@ public class OrderFormActivity extends BaseActivity {
         }
         String title = buildOrderConversationTitle(orderItem);
         try {
+            LogHelper.e(TAG, "startConversation ");
             RongCloudEvent.getInstance().startConversation(title, userIds, orderId, new CtFetchCallback<String>() {
                 @Override
-                public void onSuc(String s) {
+                public void onSuc(final String s) {
+                    LogHelper.e(TAG, "startConversation suc build  target id" + s);
                     orderItem.setTargetId(s);
                     replaceFragment();
 
@@ -310,6 +321,7 @@ public class OrderFormActivity extends BaseActivity {
 
                 @Override
                 public void onFailed(CtException throwable) {
+                    LogHelper.e(TAG, "startConversation failed build" );
                     MessageUtils.showToast(throwable.getMessage());
                 }
             });
