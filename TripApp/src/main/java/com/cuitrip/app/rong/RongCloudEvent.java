@@ -399,18 +399,17 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         switch (connectionStatus) {
             case DISCONNECTED:
                 MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_disconnected));
+                if (LoginInstance.isLogin(MainApplication.getInstance())){
+                    RongCloudEvent.getInstance().ConnectRong(false);
+                }
                 break;
             case CONNECTED:
-                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_connected));
                 break;
             case CONNECTING:
-                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_connecting));
                 break;
             case NETWORK_UNAVAILABLE:
-                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_network_unavaliable));
                 break;
             case KICKED_OFFLINE_BY_OTHER_CLIENT:
-                MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_kick_off));
                 break;
         }
     }

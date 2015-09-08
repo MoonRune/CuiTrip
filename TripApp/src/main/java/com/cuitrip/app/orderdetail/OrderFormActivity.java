@@ -78,7 +78,11 @@ public class OrderFormActivity extends BaseActivity {
         intent.putExtra(ORDER_ID, orderId);
         context.startActivity(intent);
     }
-
+    public static Intent getStartOrderIntent(Context context, String orderId) {
+        Intent intent = new Intent(context, OrderFormActivity.class);
+        intent.putExtra(ORDER_ID, orderId);
+        return intent;
+    }
     public static Intent getStartIntent(Context context, String orderId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
         intent.putExtra(ORDER_ID, orderId);
@@ -187,7 +191,7 @@ public class OrderFormActivity extends BaseActivity {
                             UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
                             if (info != null) {
                                 RongCloudEvent.onConversationStart(orderId,
-                                        orderItem.getInsiderId(),
+                                        orderItem.getOtherId(info.getUid()),
                                         info.getUid(),
                                         orderItem.getSid(),
                                         orderItem.getTargetId());
@@ -225,7 +229,8 @@ public class OrderFormActivity extends BaseActivity {
                                 }
                             });
                             CtConversationFragment fragment = CtConversationFragment.newInstance(orderId,
-                                    orderItem.hasOldConversations());
+                                    orderItem.hasOldConversations(),
+                                    orderItem.getOtherId(info.getUid()));
                             String target = orderItem.getTargetId();
                             LogHelper.e(TAG, "build fragment   target id" + target);
                             String title = orderItem.getServiceName();
@@ -238,7 +243,11 @@ public class OrderFormActivity extends BaseActivity {
                             return emptyFragment = ProgressingFragment.newInstance();
                         }
                     } else {
-                        return OldConversatoinFragment.newInstance(orderId);
+                        UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+                        if (info != null) {
+                            return OldConversatoinFragment.newInstance(orderId,orderItem.getOtherId(info.getUid()));
+                        }
+                        return emptyFragment = ProgressingFragment.newInstance();
                     }
             }
         }

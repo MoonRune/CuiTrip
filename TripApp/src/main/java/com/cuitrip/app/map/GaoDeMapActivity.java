@@ -247,6 +247,7 @@ public class GaoDeMapActivity extends BaseActivity {
 
         LogHelper.e("set map ", "" + lat + "|" + lng + "|" + addressName);
         if (getIntent().getBooleanExtra(IM_RESULT, false)) {
+            //聊天界面选择地图
             Map.Entry<Double, Double> pointF = bd_encrypt(lat, lng);
             LogHelper.e("encry", " " + pointF.getKey() + "|" + pointF.getValue());
             String url = "http://restapi.amap.com/v3/staticmap?location=" + pointF.getValue() + "," + pointF.getKey() + "&zoom=16&size=300*300&key=8aa78f0b74184f42e6e620866ec13802";

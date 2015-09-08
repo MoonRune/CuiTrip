@@ -40,6 +40,7 @@ import java.util.List;
 public class OldConversatoinFragment extends BaseFragment implements View.OnClickListener {
 
     public static final String ORDER_ID = "MessageDetailActivity.ORDER_ID";
+    public static final String RECEIVE_ID = "MessageDetailActivity.RECEIVE_ID";
     //TODO 根据订单状态决定是否聊天
     private String mOrderId;
     private ListView mMessageList;
@@ -48,11 +49,13 @@ public class OldConversatoinFragment extends BaseFragment implements View.OnClic
     private EditText mContent;
     private Button mSend;
     private View sendBlock;
+    private String mReceiveId;
 
-    public static OldConversatoinFragment newInstance(String mOrderId) {
+    public static OldConversatoinFragment newInstance(String mOrderId,String receiveId) {
 
         Bundle args = new Bundle();
         args.putString(ORDER_ID, mOrderId);
+        args.putString(RECEIVE_ID, receiveId);
         OldConversatoinFragment fragment = new OldConversatoinFragment();
         fragment.setArguments(args);
         return fragment;
@@ -70,6 +73,7 @@ public class OldConversatoinFragment extends BaseFragment implements View.OnClic
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mOrderId = getArguments().getString(ORDER_ID);
+        mReceiveId =  getArguments().getString(RECEIVE_ID);
         mMessageList = (ListView) view.findViewById(R.id.ct_list);
         mContent = (EditText) view.findViewById(R.id.send_content);
         mSend = (Button) view.findViewById(R.id.message_send);
@@ -168,7 +172,7 @@ public class OldConversatoinFragment extends BaseFragment implements View.OnClic
                                 hideLoading();
                                 MessageUtils.showToast(response.msg);
                             }
-                        }, mOrderId, info.getToken(), info.getUid(), mData.getInsiderId(),
+                        }, mOrderId, info.getToken(), info.getUid(), mReceiveId,
                         content, mData.getSid());
             }
         }

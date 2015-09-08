@@ -53,6 +53,7 @@ public class MessageBusiness {
         params.put("receiver", receiver);
         params.put("content", content);
         params.put("sid", sid);
+        LogHelper.e("putdialog",params.toString());
         return client.post(context, BusinessHelper.getApiUrl("putDialog"), params, handler);
     }
 
@@ -69,6 +70,7 @@ public class MessageBusiness {
 
         params.put("content", content);
         params.put("sid", sid);
+        LogHelper.e("putdialog", params.toString());
         return client.post(context, BusinessHelper.getApiUrl("putDialog"), params, handler);
     }
 }

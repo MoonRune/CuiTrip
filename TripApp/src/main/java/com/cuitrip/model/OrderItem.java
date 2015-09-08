@@ -110,13 +110,13 @@ public class OrderItem implements Serializable {
         this.showOldDialog = showOldDialog;
     }
 
-    public boolean hasOldConversations(){
+    public boolean hasOldConversations() {
         return UnitUtils.BOOLEAN_TRUE.equals(isOldVersion);
     }
 
-    public boolean enableRongConversation(){
-        return true;
-//        return UnitUtils.BOOLEAN_FALSE.equals(showOldDialog);
+    public boolean enableRongConversation() {
+//        return true;
+        return UnitUtils.BOOLEAN_FALSE.equals(showOldDialog);
     }
 
     public String getServiceTime() {
@@ -289,6 +289,13 @@ public class OrderItem implements Serializable {
         return insiderId;
     }
 
+    public String getOtherId(String id) {
+        if (id != null) {
+            return id.equals(getInsiderId()) ? getTravellerId() : getInsiderId();
+        }
+        return null;
+    }
+
     public void setInsiderId(String insiderId) {
         this.insiderId = insiderId;
     }
@@ -441,7 +448,7 @@ public class OrderItem implements Serializable {
         this.priceType = priceType;
     }
 
-    public boolean isTypeFree(){
+    public boolean isTypeFree() {
         return String.valueOf(ServiceInfo.PAYWAY_FREE).equals(priceType);
     }
 }

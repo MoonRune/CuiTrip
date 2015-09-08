@@ -33,6 +33,7 @@ import java.util.List;
 public class OldConversatoinActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String ORDER_ID = "MessageDetailActivity.ORDER_ID";
+    public static final String RECEIVE_ID = "MessageDetailActivity.RECEIVE_ID";
     //TODO 根据订单状态决定是否聊天
     private String mOrderId;
     private ListView mMessageList;
@@ -40,10 +41,12 @@ public class OldConversatoinActivity extends BaseActivity implements View.OnClic
     private DialogList mData;
     private EditText mContent;
     private Button mSend;
+    private String mReceiveId;
 
-    public static void start(Context context, String mOrderId) {
+    public static void start(Context context, String mOrderId,String receiveId) {
         context.startActivity(new Intent(context, OldConversatoinActivity.class)
-                .putExtra(ORDER_ID, mOrderId));
+                .putExtra(ORDER_ID, mOrderId)
+        .putExtra(RECEIVE_ID,receiveId));
     }
 
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +58,7 @@ public class OldConversatoinActivity extends BaseActivity implements View.OnClic
             return;
         }
         mOrderId = intent.getStringExtra(ORDER_ID);
+        mReceiveId = intent.getStringExtra(RECEIVE_ID);
         if (mOrderId == null) {
             MessageUtils.showToast(R.string.parameter_error);
             finish();
@@ -158,7 +162,7 @@ public class OldConversatoinActivity extends BaseActivity implements View.OnClic
                                 hideLoading();
                                 MessageUtils.showToast(response.msg);
                             }
-                        }, mOrderId, info.getToken(), info.getUid(), mData.getInsiderId(),
+                        }, mOrderId, info.getToken(), info.getUid(), mReceiveId,
                         content, mData.getSid());
             }
         }
