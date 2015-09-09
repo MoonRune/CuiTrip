@@ -253,10 +253,21 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             MessageUtils.showToast(R.string.ct_service_pay_way_selecte_hint);
             return;
         }
-        if ((paywayValue == 0 || paywayValue == 1)
-                && TextUtils.isEmpty(mMoney.getText().toString())) {
-            MessageUtils.showToast(R.string.ct_service_money_set);
-            return;
+        if ((paywayValue == 0 || paywayValue == 1)) {
+            if (TextUtils.isEmpty(mMoney.getText().toString())) {
+                MessageUtils.showToast(R.string.ct_service_money_set);
+                return;
+            }
+            try {
+                Double value = Double.valueOf(mMoney.getText().toString());
+                if (value <= 0) {
+                    MessageUtils.showToast(R.string.ct_service_money_set);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                MessageUtils.showToast(R.string.ct_service_money_set);
+                return;
+            }
         }
 
         MessageUtils.createHoloBuilder(this).setMessage(R.string.commit_service_content).setTitle(R.string.commit_service_title)

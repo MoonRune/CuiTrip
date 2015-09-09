@@ -110,7 +110,7 @@ public class OrderItem implements Serializable {
         this.showOldDialog = showOldDialog;
     }
 
-    public boolean hasOldConversations() {
+    public boolean isOldConversations() {
         return UnitUtils.BOOLEAN_TRUE.equals(isOldVersion);
     }
 

@@ -185,7 +185,7 @@ public class OrderFormActivity extends BaseActivity {
                     return PersonInfoFragment.newInstance(id);
                 default:
                     LogHelper.e("replaceFragment", "getfragment");
-                    if (orderItem.enableRongConversation()) {
+                    if (orderItem.enableRongConversation() || ! orderItem.isOldConversations()) {
                         if (!TextUtils.isEmpty(orderItem.getTargetId())) {
 
                             UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
@@ -229,7 +229,7 @@ public class OrderFormActivity extends BaseActivity {
                                 }
                             });
                             CtConversationFragment fragment = CtConversationFragment.newInstance(orderId,
-                                    orderItem.hasOldConversations(),
+                                    orderItem.isOldConversations(),
                                     orderItem.getOtherId(info.getUid()));
                             String target = orderItem.getTargetId();
                             LogHelper.e(TAG, "build fragment   target id" + target);
