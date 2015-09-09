@@ -259,8 +259,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                         if (data != null) {
                             OrderItem item = (OrderItem) data;
                             item.setServicePIC(mService.getBackPic());
-                            startActivity(new Intent(CreateOrderActivity.this, CreateorderSuccessActivity.class)
-                                    .putExtra(CreateorderSuccessActivity.ORDER_INFO, item));
+                            startActivity(new Intent(CreateOrderActivity.this, IndexActivity.class)
+                                    .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.ORDER_TAB));
                             try {
                                 final OrderItem orderItem = ((OrderItem) data);
                                 String myid = "";

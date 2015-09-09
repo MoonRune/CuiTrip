@@ -352,7 +352,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         }
         switch (requestCode) {
             case REQUEST_IMAGE:
-                if (resultCode == RESULT_OK && data != null) {
+                if (resultCode == RESULT_OK) {
                     Bitmap bp = GetImageHelper.getResizedBitmap(this, Uri.fromFile(tempPhotoFile));
                     if (bp == null) {
                         MessageUtils.showToast(getString(R.string.select_image_failed));

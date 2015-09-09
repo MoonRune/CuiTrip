@@ -6,16 +6,22 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
+import android.widget.BaseAdapter;
+import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.amap.api.maps2d.AMap;
 import com.amap.api.maps2d.CameraUpdateFactory;
 import com.amap.api.maps2d.MapView;
 import com.amap.api.maps2d.model.LatLng;
-import com.amap.api.maps2d.model.Marker;
 import com.amap.api.maps2d.model.MarkerOptions;
 import com.amap.api.services.core.PoiItem;
 import com.amap.api.services.poisearch.PoiItemDetail;
@@ -27,10 +33,14 @@ import com.cuitrip.service.R;
 import com.lab.app.BaseActivity;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.Utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import io.rong.message.LocationMessage;
 
 /**
@@ -43,7 +53,10 @@ public class GaoDeMapActivity extends BaseActivity {
     public static final String IM_RESULT = "IM_RESULT";
     public static final int REQUEST = 13;
     MapView mapView;
+    View container;
     AMap aMap;
+    PlacePop placePop = new PlacePop();
+    PoiItem currentItem;
 
     public static void returnForIM(Context activity) {
         activity.startActivity(new Intent(activity, GaoDeMapActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK).putExtra(IM_RESULT, true));
@@ -97,6 +110,14 @@ public class GaoDeMapActivity extends BaseActivity {
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        if (getSupportActionBar() != null && getSupportActionBar().getCustomView() != null && getSupportActionBar().getCustomView().findViewById(R.id.confirm) != null) {
+            getSupportActionBar().getCustomView().findViewById(R.id.confirm).setVisibility(currentItem != null ? View.VISIBLE : View.GONE);
+        }
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.gaode_map);
@@ -105,6 +126,8 @@ public class GaoDeMapActivity extends BaseActivity {
         mapView.onCreate(savedInstanceState);// 必须要写 init();
         init();
         LogHelper.e("gaode", "init");
+        container = findViewById(R.id.container);
+        findViewById(R.id.mark_tv).setVisibility(View.GONE);
         if (!readIntent()) {
             LogHelper.e("gaode", "select");
             getSupportActionBar().setCustomView(R.layout.ct_action_search);
@@ -113,10 +136,14 @@ public class GaoDeMapActivity extends BaseActivity {
             SearchView searchView = (SearchView) getSupportActionBar().getCustomView().findViewById(R.id.search_view);
             searchView.setImeOptions(EditorInfo.IME_ACTION_SEARCH);
             searchView.onActionViewCollapsed();
-            getSupportActionBar().getCustomView().findViewById(R.id.confirm).setOnClickListener(new View.OnClickListener() {
+            getSupportActionBar().getCustomView().findViewById(R.id.confirm).setVisibility(View.GONE);
+            getSupportActionBar().getCustomView().findViewById(R.id.confirm).setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    inputAndSave();
+                    queryAndSave(currentItem.getLatLonPoint().getLatitude(),
+                            currentItem.getLatLonPoint().getLongitude(),
+                            currentItem.getTitle()
+                    );
                 }
             });
             searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -132,10 +159,7 @@ public class GaoDeMapActivity extends BaseActivity {
                 }
             });
             move(25.044061, 121.510841);
-            aMap.setInfoWindowAdapter(infoWindowAdapter);
-            aMap.setOnInfoWindowClickListener(onInfoWindowClickListener);
         } else {
-            findViewById(R.id.center_point).setVisibility(View.GONE);
             LogHelper.e("gaode", "show");
             mapView.postDelayed(new Runnable() {
                 @Override
@@ -145,50 +169,9 @@ public class GaoDeMapActivity extends BaseActivity {
             }, 300);
             LogHelper.e("gaode", "show ok");
         }
-
         getSupportActionBar().show();
+        supportInvalidateOptionsMenu();
         LogHelper.e("gaode", "done");
-    }
-
-    private AMap.InfoWindowAdapter infoWindowAdapter = new AMap.InfoWindowAdapter() {
-        @Override
-        public View getInfoWindow(Marker marker) {
-            View view = LayoutInflater.from(GaoDeMapActivity.this).inflate(R.layout.map_info_v, null);
-            ((TextView) view.findViewById(R.id.title_v)).setText(marker.getSnippet());
-            return view;
-        }
-
-        @Override
-        public View getInfoContents(Marker marker) {
-            return getInfoWindow(marker);
-        }
-    };
-    private AMap.OnInfoWindowClickListener onInfoWindowClickListener = new AMap.OnInfoWindowClickListener() {
-        @Override
-        public void onInfoWindowClick(final Marker marker) {
-            MessageUtils.dialogBuilder(GaoDeMapActivity.this, true, "",
-                    getString(R.string.set_address, marker.getSnippet()), "", getString(R.string.ct_confirm), new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            queryAndSave(marker.getPosition().latitude,
-                                    marker.getPosition().longitude,
-                                    marker.getSnippet());
-                        }
-                    }
-            );
-        }
-    };
-
-    public void inputAndSave() {
-
-        final double lat = aMap.getCameraPosition().target.latitude;
-        final double lng = aMap.getCameraPosition().target.longitude;
-        MessageUtils.dialogBuilderInput(this, true, "", getString(R.string.please_desc_address), getString(R.string.ct_confirm), new MessageUtils.setMessageListener() {
-            @Override
-            public void setMessage(String s) {
-                queryAndSave(lat, lng, s);
-            }
-        });
     }
 
 
@@ -296,6 +279,8 @@ public class GaoDeMapActivity extends BaseActivity {
     }
 
     public void mark(double lat, double lng, String title) {
+        findViewById(R.id.mark_tv).setVisibility(View.VISIBLE);
+        ((TextView) findViewById(R.id.mark_tv)).setText(title);
         aMap.addMarker(new MarkerOptions().anchor(0.5f, 0.5f)
                 .position(new LatLng(lat, lng
                 )).snippet(title));
@@ -307,6 +292,7 @@ public class GaoDeMapActivity extends BaseActivity {
     }
 
     public void search(String msg) {
+        showLoading();
         LogHelper.e("search", "asfsf" + msg);
         PoiSearch.Query query = new PoiSearch.Query(msg, "", UnitUtils.getDefaultCity());
         query.setPageSize(20);
@@ -315,28 +301,33 @@ public class GaoDeMapActivity extends BaseActivity {
             @Override
             public void onPoiSearched(PoiResult poiResult, int i) {
                 LogHelper.e("search", "onPoiSearched " + i);
+                hideLoading();
                 aMap.getMapScreenMarkers().clear();
                 if (poiResult == null || poiResult.getPois() == null || poiResult.getPois().isEmpty()) {
                     toastError();
                     return;
                 }
-                for (PoiItem item : poiResult.getPois()) {
-                    mark(item.getLatLonPoint().getLatitude(),
-                            item.getLatLonPoint().getLongitude(),
-                            item.getTitle());
-                }
-                if (poiResult.getPois() != null && !poiResult.getPois().isEmpty()) {
-                    move(
-                            poiResult.getPois().get(0).getLatLonPoint().getLatitude(),
-                            poiResult.getPois().get(0).getLatLonPoint().getLongitude()
-                    );
-                }
+                LogHelper.e("search", "onPoiSearched " + i + " |" + poiResult.getPois().size());
+                placePop.showPriceType(container, poiResult.getPois());
+
+//                for (PoiItem item : poiResult.getPois()) {
+//                    mark(item.getLatLonPoint().getLatitude(),
+//                            item.getLatLonPoint().getLongitude(),
+//                            item.getTitle());
+//                }
+//                if (poiResult.getPois() != null && !poiResult.getPois().isEmpty()) {
+//                    move(
+//                            poiResult.getPois().get(0).getLatLonPoint().getLatitude(),
+//                            poiResult.getPois().get(0).getLatLonPoint().getLongitude()
+//                    );
+//                }
             }
 
             @Override
             public void onPoiItemDetailSearched(PoiItemDetail poiItemDetail, int i) {
                 LogHelper.e("search", "onPoiItemDetailSearched " + i);
                 toastError();
+                hideLoading();
             }
         });
         poiSearch.searchPOIAsyn();
@@ -344,5 +335,116 @@ public class GaoDeMapActivity extends BaseActivity {
 
     public void toastError() {
         MessageUtils.showToast(R.string.no_date);
+    }
+
+    public class PlacePop {
+
+        PopupWindow mPlacePopWindow;
+        @InjectView(R.id.listView)
+        ListView listView;
+        @InjectView(R.id.empty_view)
+        View emptyView;
+        PlaceAdapter adapter;
+        List<PoiItem> pois;
+
+        public void showPriceType(View container, List<PoiItem> pois) {
+            LogHelper.e("omg", "showPriceType");
+            if (mPlacePopWindow == null) {
+                LogHelper.e("omg", "null");
+                View view = LayoutInflater.from(GaoDeMapActivity.this).inflate(R.layout.ct_map_list, null);
+                ButterKnife.inject(this, view);
+                LogHelper.e("omg", "inject ");
+                mPlacePopWindow = new PopupWindow(view, ViewGroup.LayoutParams.MATCH_PARENT, MainApplication.getInstance().getPageHeight() - Utils.dp2pixel(48 + 25));
+                mPlacePopWindow.setOutsideTouchable(true);
+                listView.setAdapter(adapter = new PlaceAdapter());
+                LogHelper.e("omg", "setadapter ");
+                view.findViewById(R.id.empty_view).setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mPlacePopWindow.dismiss();
+                    }
+                });
+                mPlacePopWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+                        supportInvalidateOptionsMenu();
+                    }
+                });
+                LogHelper.e("omg", "null ok ");
+            }
+            this.pois = pois;
+            adapter.notifyDataSetChanged();
+            LogHelper.e("omg", "value");
+            mPlacePopWindow.showAtLocation(container, Gravity.TOP, 0, Utils.dp2pixel(48 + 25));
+            supportInvalidateOptionsMenu();
+            LogHelper.e("omg", "show palcesssese");
+        }
+
+
+        public boolean dismiss() {
+            if (mPlacePopWindow != null && mPlacePopWindow.isShowing()) {
+                mPlacePopWindow.dismiss();
+                return true;
+            }
+            return false;
+        }
+
+        public String getMenuText() {
+            if (mPlacePopWindow != null && mPlacePopWindow.isShowing()) {
+
+                return getString(R.string.ct_confirm);
+            }
+            return "";
+        }
+
+        public class PlaceAdapter extends BaseAdapter implements OnClickListener {
+
+            @Override
+            public int getCount() {
+                return pois == null ? 0 : pois.size();
+            }
+
+            @Override
+            public PoiItem getItem(int position) {
+                return pois.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return 0;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                TextView textView = (TextView) LayoutInflater.from(parent.getContext()).inflate(R.layout.ct_map_list_item, null);
+                textView.setText(getItem(position).getTitle());
+                textView.setOnClickListener(this);
+                textView.setTag(getItem(position));
+                return textView;
+            }
+
+            @Override
+            public void onClick(View v) {
+                if (v.getTag() != null && v.getTag() instanceof PoiItem) {
+                    currentItem = ((PoiItem) v.getTag());
+                    mark(currentItem.getLatLonPoint().getLatitude(),
+                            currentItem.getLatLonPoint().getLongitude(),
+                            currentItem.getTitle());
+                    move(currentItem.getLatLonPoint().getLatitude(),
+                            currentItem.getLatLonPoint().getLongitude()
+                    );
+                    supportInvalidateOptionsMenu();
+                    placePop.dismiss();
+                }
+            }
+        }
+
+
+        public boolean onClick() {
+            if (mPlacePopWindow != null && mPlacePopWindow.isShowing()) {
+                return true;
+            }
+            return false;
+        }
     }
 }

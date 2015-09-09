@@ -2,16 +2,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
     android:gravity="center">
 
     <com.amap.api.maps2d.MapView
         android:id="@+id/map"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <ImageView
-        android:id="@+id/center_point"
-        android:layout_width="18dp"
-        android:layout_height="18dp"
-        android:src="@drawable/position_b"
-        android:layout_centerInParent="true"/>
+    <TextView
+        android:id="@+id/mark_tv"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        tools:text="123"
+        android:drawableLeft="@drawable/position_g"
+        android:background="@color/ct_white"
+        android:padding="10dp"
+        android:drawablePadding="5dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
 </RelativeLayout>
