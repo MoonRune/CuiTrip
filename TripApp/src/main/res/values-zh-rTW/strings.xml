@@ -169,7 +169,8 @@
     <string name="ct_service_no_pass">審核未通過</string>
     <string name="ct_service_date_edit">安排日程與編輯</string>
     <string name="ct_next">下壹步</string>
-    <string name="ct_add_service">新增行程</string>
+    <string name="ct_add_service">創建行程</string>
+    <string name="ct_edit_service">編輯行程</string>
     <string name="ct_create_service_title_hint">請輸入標題</string>
     <string name="ct_set_main_pic">設為主圖</string>
     <string name="ct_mainpic_setted">已設為主圖</string>

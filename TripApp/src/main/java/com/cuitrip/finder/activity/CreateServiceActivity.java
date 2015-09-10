@@ -40,9 +40,7 @@ public class CreateServiceActivity extends BaseActivity {
 
     private static final String TAG = "CreateServiceActivity";
     private static final int REQUEST_IMAGE = 99;
-    private static final int REQUEST_IMAGE_CROP = 199;
     private static final int REQUEST_PHOTO = 100;
-    private static final int REQUEST_PHOTO_CROP = 200;
     private static final int REQUEST_CREATE = 101;
 
     public static final String EDIT_MODE = "edit_mode";
@@ -147,7 +145,6 @@ public class CreateServiceActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LocationHelper.getLoation(null);
-        showActionBar(R.string.ct_add_service);
         Intent intent = getIntent();
         if (intent != null && (mInEdit = intent.getBooleanExtra(EDIT_MODE, false))) {
             mServiceInfo = (ServiceInfo) intent.getSerializableExtra(SERVICE_INFO);
@@ -157,6 +154,11 @@ public class CreateServiceActivity extends BaseActivity {
                 return;
             }
             mLocalService = intent.getBooleanExtra(EDIT_MODE, false);
+        }
+        if (mInEdit) {
+            showActionBar(R.string.ct_edit_service);
+        } else {
+            showActionBar(R.string.ct_add_service);
         }
 
         setContentView(R.layout.ct_finder_create_service);

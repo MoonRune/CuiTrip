@@ -116,7 +116,6 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        showActionBar(R.string.ct_add_service);
         Intent intent = getIntent();
         if (intent != null) {
             mServiceInfo = (ServiceInfo) intent.getSerializableExtra(CreateServiceActivity.SERVICE_INFO);
@@ -129,6 +128,12 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             MessageUtils.showToast(R.string.parameter_error);
             finish();
             return;
+        }
+
+        if (mServiceInfo!=null && !TextUtils.isEmpty(mServiceInfo.getSid())) {
+            showActionBar(R.string.ct_edit_service);
+        } else {
+            showActionBar(R.string.ct_add_service);
         }
         setContentView(R.layout.ct_create_service_other);
         tryFetchTags();
