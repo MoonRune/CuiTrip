@@ -114,16 +114,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 }
                 return;
             }
-
-<<<<<<< HEAD
-            //状态池维护 很蛋疼，还是得抽出来
-            if (RongIM.getInstance() != null && RongIM.getInstance().getRongIMClient() != null
-                    &&RongIM.getInstance().getRongIMClient().getCurrentConnectionStatus().equals(ConnectionStatus.CONNECTED)) {
-                LogHelper.e("ron suc", " already");
-                return;
-            }
-            String token = userInfo.getRongyunToken();
-=======
             if (currentToken != null && currentToken.equals(userInfo.getRongyunToken())) {
                 //状态池维护 很蛋疼，还是得抽出来
                 if (RongCloudEvent.getInstance().isConnecting()) {
@@ -139,7 +129,6 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             //if connected
 
             final String token = userInfo.getRongyunToken();
->>>>>>> development
             LogHelper.e(TAG, "rongyun roken is : " + token);
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
