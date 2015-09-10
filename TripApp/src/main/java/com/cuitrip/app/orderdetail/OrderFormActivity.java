@@ -202,17 +202,24 @@ public class OrderFormActivity extends BaseActivity {
                             LogHelper.e("replaceFragment", " do replace");
                             CURRENT_TARGET = orderItem.getTargetId();
                             LogHelper.e("omg member", " CURRENT_TARGET " + CURRENT_TARGET);
+
+                            final CtConversationFragment fragment = CtConversationFragment.newInstance(orderId,
+                                    orderItem.isOldConversations(),
+                                    orderItem.getOtherId(info.getUid()));
+
                             RongIM.getInstance().getRongIMClient().getDiscussion(CURRENT_TARGET, new RongIMClient.ResultCallback<Discussion>() {
                                 @Override
                                 public void onSuccess(Discussion discussion) {
                                     LogHelper.e("omg member", TextUtils.join("|", discussion.getMemberIdList()));
                                     try {
-                                        if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() < 2
+                                        if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() !=2
                                                 || !discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
                                                 ) {
+                                            emptyFragment = fragment;
                                             MainApplication.getInstance().orderRongMembersizeError();
                                             buildConversation(orderItem);
                                         }
+
                                     } catch (Exception e) {
                                         LogHelper.e(TAG, "failed");
                                     }
@@ -223,14 +230,12 @@ public class OrderFormActivity extends BaseActivity {
                                 public void onError(RongIMClient.ErrorCode errorCode) {
                                     LogHelper.e(TAG, " member failed " + errorCode.name() + "|" + errorCode.getMessage());
                                     if (errorCode.equals(RongIMClient.ErrorCode.NOT_IN_DISCUSSION)) {
+                                        emptyFragment = fragment;
                                         MainApplication.getInstance().orderRongMembersizeError();
                                         buildConversation(orderItem);
                                     }
                                 }
                             });
-                            CtConversationFragment fragment = CtConversationFragment.newInstance(orderId,
-                                    orderItem.isOldConversations(),
-                                    orderItem.getOtherId(info.getUid()));
                             String target = orderItem.getTargetId();
                             LogHelper.e(TAG, "build fragment   target id" + target);
                             String title = orderItem.getServiceName();
@@ -267,13 +272,6 @@ public class OrderFormActivity extends BaseActivity {
     public void replaceFragment() {
         LogHelper.e("replaceFragment", "replaceFragment");
         try {
-            if (orderItem == null){
-
-                LogHelper.e("replaceFragment", "orderItem == null");
-            }else {
-
-                LogHelper.e("replaceFragment", orderItem.getTargetId()+"|"+(emptyFragment != null));
-            }
             if (orderItem != null && !TextUtils.isEmpty(orderItem.getTargetId()) && emptyFragment != null) {
                 needRefreshFragmenet = true;
                 LogHelper.e("replaceFragment", " remove ");

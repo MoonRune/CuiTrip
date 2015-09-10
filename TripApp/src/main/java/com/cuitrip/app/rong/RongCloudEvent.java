@@ -63,6 +63,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     public static final int DEFAULT_CHECK_MODE_NOTIFCATION_ID = 2;
     public static final int DEFAULT_ERROR_NOTIFCATION_ID = 3;
 
+    public static String currentToken;
+
     private RongCloudEvent() {
 
     }
@@ -83,7 +85,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     //query for userinfo  from api && local  ??
 
     public static void DisConnectRong() {
-        if (RongIM.getInstance() != null) {
+        if (RongIM.getInstance() != null && (RongCloudEvent.getInstance().isConnected()
+                || RongCloudEvent.getInstance().isConnecting())) {
             LogHelper.e("ron", "logout");
             RongIM.getInstance().logout();
         }
@@ -112,37 +115,40 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 return;
             }
 
-            //状态池维护 很蛋疼，还是得抽出来
-            if (RongCloudEvent.getInstance().isConnecting()) {
-                LogHelper.e(TAG, " isConnecting");
-                return;
+            if (currentToken != null && currentToken.equals(userInfo.getRongyunToken())) {
+                //状态池维护 很蛋疼，还是得抽出来
+                if (RongCloudEvent.getInstance().isConnecting()) {
+                    LogHelper.e(TAG, " isConnecting");
+                    return;
 
-            }
-            if (RongCloudEvent.getInstance().isConnected()) {
-                LogHelper.e(TAG, " already");
-                return;
+                }
+                if (RongCloudEvent.getInstance().isConnected()) {
+                    LogHelper.e(TAG, " already");
+                    return;
+                }
             }
             //if connected
 
-            String token = userInfo.getRongyunToken();
+            final String token = userInfo.getRongyunToken();
             LogHelper.e(TAG, "rongyun roken is : " + token);
             RongIM.connect(token, new RongIMClient.ConnectCallback() {
 
                 @Override
                 public void onSuccess(String userId) {
-                    LogHelper.e(TAG,"ron suc" + userId);
+                    currentToken = token;
+                    LogHelper.e(TAG, "ron suc" + userId);
     /* 连接成功 */
                 }
 
                 @Override
                 public void onError(RongIMClient.ErrorCode e) {
-                    LogHelper.e(TAG,"ron failed " + e);
+                    LogHelper.e(TAG, "ron failed " + e);
     /* 连接失败，注意并不需要您做重连 */
                 }
 
                 @Override
                 public void onTokenIncorrect() {
-                    LogHelper.e(TAG,"ron token error");
+                    LogHelper.e(TAG, "ron token error");
                     try {
                         MainApplication.getInstance().logOutWithError();
                     } catch (Exception e) {
@@ -174,7 +180,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
 
 
     public void startConversation(String title, List<String> userIds, final String oid, final CtFetchCallback<String> callback) {
-        if (isConnecting()||isConnected()) {
+        if (isConnecting() || isConnected()) {
             RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
                 @Override
                 public void onSuccess(final String s) {
@@ -211,7 +217,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 }
             });
         } else {
-            LogHelper.e("start"," not connected");
+            LogHelper.e("start", " not connected");
         }
     }
 
@@ -256,6 +262,9 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
     @Override
     public boolean onReceived(Message message, int left) {
         LogHelper.e(TAG, "on receive message" + message.getTargetId());
+        if (!LoginInstance.isLogin(MainApplication.getInstance())) {
+            return true;
+        }
         if (OrderFormActivity.CURRENT_TARGET == null || !OrderFormActivity.CURRENT_TARGET.equals(message.getTargetId())) {
             LogHelper.e(TAG, "on receive message query");
             try {
@@ -399,7 +408,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         switch (connectionStatus) {
             case DISCONNECTED:
                 MessageUtils.showToast(PlatformUtil.getInstance().getString(R.string.im_status_disconnected));
-                if (LoginInstance.isLogin(MainApplication.getInstance())){
+                if (LoginInstance.isLogin(MainApplication.getInstance())) {
                     RongCloudEvent.getInstance().ConnectRong(false);
                 }
                 break;
@@ -419,6 +428,10 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         LogHelper.e(TAG, "onReceivePushMessage");
 
         try {
+            if (!LoginInstance.isLogin(MainApplication.getInstance())) {
+                return true;
+            }
+
             final com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
 
             if (message.getContent() != null) {
@@ -586,6 +599,8 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             char codePoint = source.charAt(i);
             if (isNotEmojiCharacter(codePoint)) {
                 buf.append(codePoint);
+            } else {
+                buf.append("[voice]");
             }
         }
         LogHelper.e(TAG, " filtereEmoji " + source + " >>" + buf.toString());
@@ -604,20 +619,22 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             DecimalFormat df = new DecimalFormat("#.00");
             content = PlatformUtil.getInstance().getString(R.string.send_location, location.getPoi(),
                     df.format(location.getLat()), df.format(location.getLng()));
+        } else if (messageContent instanceof VoiceMessage) {//
+            VoiceMessage voiceMessage = (VoiceMessage) messageContent;
+            content = PlatformUtil.getInstance().getString(R.string.send_voice);
         }
         return content;
     }
 
     @Override
     public Message onSend(Message message) {
-              return message;
+        return message;
     }
 
     @Override
     public boolean onSent(Message message, RongIM.SentMessageErrorCode sentMessageErrorCode) {
-        LogHelper.e(TAG, "onSent "+message.getSentStatus());
-        if (Message.SentStatus.SENT.equals(message.getSentStatus()))
-        {
+        LogHelper.e(TAG, "onSent " + message.getSentStatus());
+        if (Message.SentStatus.SENT.equals(message.getSentStatus())) {
             LogHelper.e(TAG, message.getTargetId());
             if (TARGET_ID.equals(message.getTargetId())) {
                 String content = getMessageLoadToService(message.getContent());

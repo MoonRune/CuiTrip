@@ -73,9 +73,6 @@ public class IndexActivity extends BaseTabHostActivity {
                 mTabHost.setCurrentTabByTag(tabTag);
             }
         }
-        if (MainApplication.getInstance().validateRong()) {
-            RongCloudEvent.ConnectRong(true);
-        }
         validateForceUpdate();
     }
 
@@ -129,6 +126,9 @@ public class IndexActivity extends BaseTabHostActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (MainApplication.getInstance().validateRong()) {
+            RongCloudEvent.ConnectRong(true);
+        }
     }
 
     View tab;

@@ -122,7 +122,7 @@ public class PushService extends UmengBaseIntentService {
                         }
                     {
                         String oid = valus.get(UMENG_MESSAGE_ID);
-                        LogHelper.e(TAG, "has value " + UMENG_MESSAGE_ACTION_ORDER_DETAIL + "|" + oid);
+                        LogHelper.e(TAG, "has value " + UMENG_MESSAGE_ACTION_CHAT_DETAIL + "|" + oid);
                         Intent notificationIntent = OrderFormActivity.getStartIntent(MainApplication.getInstance(), oid);
                         notificationIntent.setFlags(notificationIntent.FLAG_ACTIVITY_NEW_TASK);
                         result = PendingIntent.getActivity(MainApplication.getInstance(), oid.hashCode(),
