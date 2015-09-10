@@ -11,10 +11,12 @@ import com.loopj.android.http.RequestHandle;
 
 public class OrderBusiness {
     public static RequestHandle getOrderList(Context context, AsyncHttpClient client, LabAsyncHttpResponseHandler handler,
-                                             int userType) {
+                                             int userType,int start, int end) {
         LabRequestParams params = new LabRequestParams();
         params.setToken(context);
         params.put("userType", userType);
+        params.put("start", start);
+        params.put("size", end);
         return client.post(context, BusinessHelper.getApiUrl("getOrderList"), params, handler);
     }
 
@@ -113,6 +115,7 @@ public class OrderBusiness {
         params.put("oid", oid);
         params.put("serviceScore", serviceScore);
         params.put("content", content);
+        LogHelper.e("omg","submitReview "+params.toString());
         return client.post(context, BusinessHelper.getApiUrl("submitReview"), params, handler);
     }
 

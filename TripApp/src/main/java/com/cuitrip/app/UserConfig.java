@@ -2,10 +2,10 @@ package com.cuitrip.app;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.text.TextUtils;
 
 import com.cuitrip.app.base.UnitUtils;
 import com.cuitrip.login.LoginInstance;
+import com.lab.utils.SavedDescSharedPreferences;
 
 /**
  * Created by baziii on 15/7/28.
@@ -27,7 +27,12 @@ public class UserConfig {
     public static void clear() {
         SharedPreferences about = getInstance().sp;
         about.edit().clear().commit();
-
+        SavedDescSharedPreferences.deleteServiceDesc(MainApplication.getInstance());
+    }
+    public static void clear(UserConfig config) {
+        SharedPreferences about = config.sp;
+        about.edit().clear().commit();
+        SavedDescSharedPreferences.deleteServiceDesc(MainApplication.getInstance());
     }
 
     public static UserConfig getInstance() {
@@ -37,12 +42,11 @@ public class UserConfig {
                     config = new UserConfig();
                 }
             }
-        } else if (!TextUtils.isEmpty(config.currentUserId) && LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo() != null &&
-                !config.currentUserId.equals(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())) {
-            //当前config存在的情况下
+        } else {
+           //当前config存在的情况下
             // current 不为空  id不同 ，重建
             synchronized (UserConfig.class) {
-                clear();
+                clear(config);
                 config = new UserConfig();
             }
 

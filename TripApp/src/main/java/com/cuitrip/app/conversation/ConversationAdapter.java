@@ -23,11 +23,19 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationsViewH
         this.datas = datas;
     }
 
+    public void append(List<ConversationItem> datas) {
+        if (this.datas == null) {
+            this.datas = datas;
+        } else {
+            this.datas.addAll(datas);
+        }
+    }
+
     @Override
     public ConversationsViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(ConversationsViewHolder.RES,parent,false);
-        ConversationsViewHolder viewHolder= new ConversationsViewHolder(view,present);
-        return  viewHolder;
+        View view = LayoutInflater.from(parent.getContext()).inflate(ConversationsViewHolder.RES, parent, false);
+        ConversationsViewHolder viewHolder = new ConversationsViewHolder(view, present);
+        return viewHolder;
     }
 
     @Override
@@ -38,6 +46,6 @@ public class ConversationAdapter extends RecyclerView.Adapter<ConversationsViewH
 
     @Override
     public int getItemCount() {
-        return datas.size();
+        return datas == null ? 0 : datas.size();
     }
 }

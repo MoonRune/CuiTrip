@@ -40,7 +40,9 @@ public class CreateServiceActivity extends BaseActivity {
 
     private static final String TAG = "CreateServiceActivity";
     private static final int REQUEST_IMAGE = 99;
+    private static final int REQUEST_IMAGE_CROP = 199;
     private static final int REQUEST_PHOTO = 100;
+    private static final int REQUEST_PHOTO_CROP = 200;
     private static final int REQUEST_CREATE = 101;
 
     public static final String EDIT_MODE = "edit_mode";
@@ -68,7 +70,39 @@ public class CreateServiceActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.ct_photo_im:
-                    mPicEditTextView.addImage(REQUEST_IMAGE);
+
+                    new AsyncTask() {
+                        @Override
+                        protected Object doInBackground(Object[] params) {
+                            tempPhotoFile =
+                                    new File(CacheDirManager.getInstance().cameraDir());
+                            try {
+                                if (!tempPhotoFile.exists()) {
+
+                                    LogHelper.e("omg", "tempPhotoFile not exists");
+                                    File vDirPath = tempPhotoFile.getParentFile(); //new File(vFile.getParent());
+                                    vDirPath.mkdirs();
+                                    tempPhotoFile.createNewFile();
+                                }
+                            } catch (Exception e) {
+                                LogHelper.e("omg", e.getMessage());
+                            }
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPreExecute() {
+                            super.onPreExecute();
+                            showLoading();
+                        }
+
+                        @Override
+                        protected void onPostExecute(Object o) {
+                            super.onPostExecute(o);
+                            hideLoading();
+                            mPicEditTextView.addImage(REQUEST_IMAGE, tempPhotoFile);
+                        }
+                    }.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
                     break;
                 case R.id.ct_camera_im:
                     new AsyncTask() {
@@ -192,7 +226,7 @@ public class CreateServiceActivity extends BaseActivity {
         switch (requestCode) {
             case REQUEST_IMAGE:
                 if (resultCode == RESULT_OK && data != null) {
-                    Bitmap bp = GetImageHelper.getResizedBitmap(this, data.getData());
+                    Bitmap bp = GetImageHelper.getResizedBitmap(this, Uri.fromFile(tempPhotoFile));
                     if (bp == null) {
                         MessageUtils.showToast(getString(R.string.ct_create_image_failed_msg));
                     } else {
@@ -218,11 +252,11 @@ public class CreateServiceActivity extends BaseActivity {
                     }
                     finish();
                 } else if (resultCode == RESULT_CANCELED) {
-                    LogHelper.e("save","saveToPreModify");
+                    LogHelper.e("save", "saveToPreModify");
                     if (data != null && data.hasExtra(SERVICE_INFO)) {
                         mServiceInfo = (ServiceInfo) data.getSerializableExtra(SERVICE_INFO);
                         getIntent().putExtra(SERVICE_INFO, mServiceInfo);
-                        LogHelper.e("save","set memory "+mServiceInfo.getAddress());
+                        LogHelper.e("save", "set memory " + mServiceInfo.getAddress());
                     }
 
                 }
@@ -253,14 +287,14 @@ public class CreateServiceActivity extends BaseActivity {
                     if (mServiceInfo != null && mServiceInfo.getSid() != null) {
                         //do nothig
                     } else {
-                        if (mServiceInfo == null){
+                        if (mServiceInfo == null) {
                             mServiceInfo = new ServiceInfo();
                         }
                         mServiceInfo.setName(mTitle.getText().toString());
                         mServiceInfo.setDescpt(desc);
                         mServiceInfo.setBackPic(mPicEditTextView.getMainPicture());
                         mServiceInfo.setPic(mPicEditTextView.getPictures());
-                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this,mServiceInfo);
+                        SavedDescSharedPreferences.saveServiceDesc(CreateServiceActivity.this, mServiceInfo);
                         mPicEditTextView.deletePictures();
                         finish();
                     }

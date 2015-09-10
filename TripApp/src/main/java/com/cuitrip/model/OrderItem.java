@@ -1,6 +1,8 @@
 package com.cuitrip.model;
 
 
+import com.cuitrip.app.base.UnitUtils;
+
 import java.io.Serializable;
 
 public class OrderItem implements Serializable {
@@ -12,6 +14,7 @@ public class OrderItem implements Serializable {
     public static final int STATUS_WAIT_COMMENT = 5;
     public static final int STATUS_OVER = 6;
     public static final int STATUS_UNVALIABLE = 7;
+
 //    public enum OrderStatus {
 //        CREATED(1), CONFIRMED(2), PAYED(8), WILL_BEGIN(3),BEGIN(4),END(5),CANCEL(6),CLOSED(7);
 //        private int status;
@@ -54,36 +57,67 @@ public class OrderItem implements Serializable {
     private String type; //": "0",
     private String sid; //": "9",
     private String insiderId; //": "13",
-    private String userNick; //": "Andy",
-    private String headPic; //": "http://cuitrip.oss-cn-shenzhen.aliyuncs.com/14_1435329624387",
-    private String insiderName; //": "Andy",
+    private String userNick; //": "Andy", 对方名字
+    private String headPic; //": "http://cuitrip.oss-cn-shenzhen.aliyuncs.com/14_1435329624387", 对方头像
+    private String insiderName; //": "Andy", 有时候返回空， 建议使用usernick
     private String insiderSign; //": "再改一句",
     private String travellerId; //": "14",
-    private String travellerName; //": "Andy",
+    private String travellerName; //": "Andy", 不建议使用 ，有时候返回空 很蛋疼
     private String paymentWay; //": "1",
     private String serviceName; //": "bobby带你看花莲老火车",
-    private String serviceDate; //": "2015-06-29 00:00:00", TODO 啥？？订单时间吗
+    private String serviceDate; //": "2015-06-29 00:00:00", 订单时间
     private String servicePIC; //": "http://cuitrip.oss-cn-shenzhen.aliyuncs.com/13_1434945983861",
     private String serviceAddress; //": "花莲",
-    private String orderPrice; //": "0",
-    private String payCurrency;
-    private String servicePrice; //": "200",
-    private String moneyType; //": "CNY",
-    private String buyerNum; //": "1",
+    private String orderPrice; //": "0",  paycurrency
+    private String payCurrency;//orderprice
+    private String servicePrice; //": "200", 和moneytype对应
+    private String moneyType; //": "CNY", 和servicePrice对应
+    private String buyerNum; //": "1", 没有单位
     private String extInfo; //": "",
     private String gmtCreated; //": "2015-06-26 22:11:50.0",
     private String gmtModified; //": "2015-06-26 22:38:56.0"
     private String comment;
     private String score;
-    private String priceType;
+    private String priceType;  // 免费/每人/所有
     private String feeInclude;
     private String feeExclude;
     private String meetingPlace;
     private String invalidReason;
     private String lat;
     private String lng;
-    private String targetId;
+    private String targetId;//融云targetid
     private String serviceTime;//游玩时间长度
+
+    private String isOldVersion;//"0"/"1"
+    /**
+     * 之后默认false
+     */
+    private String showOldDialog = UnitUtils.BOOLEAN_FALSE;
+
+    public String getIsOldVersion() {
+        return isOldVersion;
+    }
+
+    public void setIsOldVersion(String isOldVersion) {
+        this.isOldVersion = isOldVersion;
+    }
+
+    public String getShowOldDialog() {
+        return showOldDialog;
+    }
+
+    public void setShowOldDialog(String showOldDialog) {
+        this.showOldDialog = showOldDialog;
+    }
+
+    public boolean isOldConversations() {
+        return UnitUtils.BOOLEAN_TRUE.equals(isOldVersion);
+    }
+
+    public boolean enableRongConversation() {
+//        return true;
+        return UnitUtils.BOOLEAN_FALSE.equals(showOldDialog);
+    }
 
     public String getServiceTime() {
         return serviceTime;
@@ -255,6 +289,13 @@ public class OrderItem implements Serializable {
         return insiderId;
     }
 
+    public String getOtherId(String id) {
+        if (id != null) {
+            return id.equals(getInsiderId()) ? getTravellerId() : getInsiderId();
+        }
+        return null;
+    }
+
     public void setInsiderId(String insiderId) {
         this.insiderId = insiderId;
     }
@@ -407,4 +448,7 @@ public class OrderItem implements Serializable {
         this.priceType = priceType;
     }
 
+    public boolean isTypeFree() {
+        return String.valueOf(ServiceInfo.PAYWAY_FREE).equals(priceType);
+    }
 }

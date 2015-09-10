@@ -64,10 +64,12 @@ public class LoginInstance {
     }
 
     public static void logout(Context context) {
+        UserConfig.clear();
         SharedPreferences sp = context.getSharedPreferences(KEY_USERINFO_ID, Context.MODE_PRIVATE);
         sp.edit().remove(KEY_USERINFO_ID).commit();
         LoginInstance info = getInstance(context);
         info.sUserInfo = null;
+
     }
 
     public static boolean isLogin(Context context) {

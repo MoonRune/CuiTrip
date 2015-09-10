@@ -23,7 +23,7 @@
         android:layout_height="44dp"
         android:layout_alignParentBottom="true"
         android:background="@drawable/ct_send_bg"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <EditText
             android:id="@+id/send_content"

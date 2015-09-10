@@ -11,6 +11,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cuitrip.app.IndexActivity;
@@ -39,7 +40,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
 
     private TextView mPassWd;
     private TextView mCountry;
-    private TextView mPhoneNumber;
+    private EditText mPhoneNumber;
 
     // 默认使用中国区号
     private static final String DEFAULT_COUNTRY_ID = "42";
@@ -56,7 +57,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         setContentView(R.layout.ct_activity_login);
         mPassWd = (TextView) findViewById(R.id.ct_passwd);
         mCountry = (TextView) findViewById(R.id.ct_contry);
-        mPhoneNumber = (TextView) findViewById(R.id.ct_mobile);
+        mPhoneNumber = (EditText) findViewById(R.id.ct_mobile);
         mPassWd.setImeOptions(EditorInfo.IME_ACTION_DONE);
         mPassWd.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -112,10 +113,20 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         String[] country = getCurrentCountry();
         if (country != null) {
             currentCode = country[1];
-            mCountry.setText( "+" + currentCode);
+            setCurrentCode(  currentCode);
         }
     }
 
+    public void setCurrentCode(String currentCode){
+
+        if (currentCode!=null &&currentCode.equals("886")){
+            if(TextUtils.isEmpty(mPhoneNumber.getText().toString().trim())) {
+                mPhoneNumber.setText("0");
+                mPhoneNumber.setSelection(mPhoneNumber.getText().toString().length());
+            }
+        }
+        mCountry.setText( "+" + currentCode);
+    }
 
     public void onAccountChanged(){
         findViewById(R.id.ct_account_clear).setVisibility(TextUtils.isEmpty(mPhoneNumber.getText().toString())?View.INVISIBLE:View.VISIBLE);
@@ -305,7 +316,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 String[] country = SMSSDK.getCountry(currentId);
                 if (country != null) {
                     currentCode = country[1];
-                    mCountry.setText("+" + currentCode);
+                    setCurrentCode( currentCode);
                 }
                 checkPhoneNum(mPhoneNumber.getText().toString().trim(), currentCode);
             }

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="bool" name="rc_is_show_warning_notification">false</item>
+</resources>

@@ -17,6 +17,7 @@ import android.widget.CheckedTextView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.cuitrip.app.rong.RongCloudEvent;
 import com.cuitrip.business.OrderBusiness;
 import com.cuitrip.business.ServiceBusiness;
 import com.cuitrip.login.LoginInstance;
@@ -35,9 +36,6 @@ import com.loopj.android.http.AsyncHttpClient;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 
 
 /**
@@ -69,13 +67,13 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.ct_create_order,menu);
+        getMenuInflater().inflate(R.menu.ct_create_order, menu);
         return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.action_OK:
                 createOrder();
                 return true;
@@ -103,18 +101,41 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
         mCount = (TextView) findViewById(R.id.selected_count);
 
         mMoneyDesc = (TextView) findViewById(R.id.money_desc);
-        mMoneyDesc.setText(mService.getShowCurrency().toUpperCase());
 
 
         ((TextView) findViewById(R.id.ct_service_name_tv)).setText(mService.getName());
 
 
         mMoney = (TextView) findViewById(R.id.bill_count);
-        if (mService.getPriceType() == 1) {
-            mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
-        } else {
-            mMoney.setText(mService.getShowPrice());
+
+        try {
+
+            if (mService.isTypeFree()) {
+                mMoneyDesc.setText("");
+                mMoney.setText(R.string.ct_service_free);
+            } else {
+                double value = Double.valueOf(mService.getShowPrice());
+                if (value <= 0) {
+                    mMoneyDesc.setText("");
+                    mMoney.setText(R.string.ct_service_free);
+                } else {
+                    if (mService.getPriceType() == 1) {
+                        mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
+                    } else {
+                        mMoney.setText(mService.getShowPrice());
+                    }
+                    mMoneyDesc.setText(mService.getShowCurrency().toUpperCase());
+                }
+            }
+        } catch (Exception e) {
+            if (mService.getPriceType() == 1) {
+                mMoney.setText(mService.getShowPrice() + getString(R.string.ct_service_unit));
+            } else {
+                mMoney.setText(mService.getShowPrice());
+            }
+            mMoneyDesc.setText(mService.getShowCurrency().toUpperCase());
         }
+
 
         findViewById(R.id.order_date).setOnClickListener(this);
         findViewById(R.id.order_person).setOnClickListener(this);
@@ -238,9 +259,8 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                         if (data != null) {
                             OrderItem item = (OrderItem) data;
                             item.setServicePIC(mService.getBackPic());
-                            startActivity(new Intent(CreateOrderActivity.this, CreateorderSuccessActivity.class)
-                                    .putExtra(CreateorderSuccessActivity.ORDER_INFO, item));
-                            //finish();
+                            startActivity(new Intent(CreateOrderActivity.this, IndexActivity.class)
+                                    .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.ORDER_TAB));
                             try {
                                 final OrderItem orderItem = ((OrderItem) data);
                                 String myid = "";
@@ -252,28 +272,12 @@ public class CreateOrderActivity extends BaseActivity implements View.OnClickLis
                                 userIds.add(item.getInsiderId());
                                 userIds.add(myid);
                                 String title = orderItem.getOid();
-                                RongIM.getInstance().getRongIMClient().createDiscussion(title, userIds, new RongIMClient.CreateDiscussionCallback() {
-                                    @Override
-                                    public void onSuccess(final String s) {
-                                        OrderBusiness.updateOrderConversation(MainApplication.getInstance(), mClient, new LabAsyncHttpResponseHandler() {
-                                            @Override
-                                            public void onSuccess(LabResponse response, Object data) {
-                                            }
+                                RongCloudEvent.getInstance().startConversation(title, userIds, orderItem.getOid());
 
-                                            @Override
-                                            public void onFailure(LabResponse response, Object data) {
-
-                                            }
-                                        }, orderItem.getOid(), s);
-                                    }
-
-                                    @Override
-                                    public void onError(RongIMClient.ErrorCode errorCode) {
-                                    }
-                                });
                             } catch (Exception e) {
                                 MessageUtils.showToast(R.string.load_error);
                             }
+                            finish();
                         }
                     }
 

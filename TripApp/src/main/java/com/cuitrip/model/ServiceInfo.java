@@ -433,4 +433,9 @@ public class ServiceInfo implements Serializable, ServiceListInterface {
             this.refuseReason = refuseReason;
         }
     }
+
+
+    public boolean isTypeFree() {
+        return priceType != null && priceType == PAYWAY_FREE;
+    }
 }

@@ -1,6 +1,7 @@
 package com.cuitrip.app;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -72,20 +73,21 @@ public class IndexActivity extends BaseTabHostActivity {
                 mTabHost.setCurrentTabByTag(tabTag);
             }
         }
-        if (MainApplication.getInstance().validateRong()) {
-            RongCloudEvent.ConnectRong(false);
-        }
         validateForceUpdate();
     }
 
     protected void validateForceUpdate() {
         if (!Once.beenDone(TimeUnit.DAYS, 1, MainApplication.DAILY_FORCE_UPDATE)) {
-            Once.markDone(MainApplication.DAILY_FORCE_UPDATE);
             UserBusiness.forceUpdate(this, new AsyncHttpClient(), new LabAsyncHttpResponseHandler(ForceUpdate.class) {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
-                    if (data != null && data instanceof ForceUpdate && ((ForceUpdate) data).isNeedUpdate()) {
-                        showForceUpdate();
+                    if (data != null && data instanceof ForceUpdate) {
+                        ForceUpdate update = ((ForceUpdate) data);
+                        if (update.isNeedUpdate()) {
+                            showForceUpdate(update.getUrl());
+                        } else {
+                            Once.markDone(MainApplication.DAILY_FORCE_UPDATE);
+                        }
                     }
                 }
 
@@ -97,9 +99,17 @@ public class IndexActivity extends BaseTabHostActivity {
         }
     }
 
-    private void showForceUpdate() {
+    private void showForceUpdate(final String url) {
+        View view  =  LayoutInflater.from(this).inflate(R.layout.force_update, null);
+        view.findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                startActivity(it);
+            }
+        });
         MessageUtils.createBuilder(this).setCancelable(false).setView(
-                LayoutInflater.from(this).inflate(R.layout.force_update, null)).show().show();
+               view).show().show();
     }
 
     @Override
@@ -116,6 +126,9 @@ public class IndexActivity extends BaseTabHostActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        if (MainApplication.getInstance().validateRong()) {
+            RongCloudEvent.ConnectRong(true);
+        }
     }
 
     View tab;

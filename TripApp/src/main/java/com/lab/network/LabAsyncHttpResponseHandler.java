@@ -10,6 +10,10 @@ import com.loopj.android.http.AsyncHttpResponseHandler;
 
 import org.apache.http.Header;
 
+/**
+ *
+ * 为啥要用这个啊。。 蛋疼
+ */
 public abstract class LabAsyncHttpResponseHandler extends AsyncHttpResponseHandler {
 
     public Class<?> clazz;

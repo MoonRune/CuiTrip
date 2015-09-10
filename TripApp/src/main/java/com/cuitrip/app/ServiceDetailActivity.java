@@ -146,16 +146,20 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             String money = "";
 
             try {
-                double value = Double.valueOf(info.getShowPrice());
-                if (value <= 0) {
+                if (info.isTypeFree()) {
                     price = getString(R.string.ct_service_free);
-
                 } else {
-                    money = info.getShowPrice();
-                    if (info.getPriceType() == 1) { //按人计费
-                        price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
+                    double value = Double.valueOf(info.getShowPrice());
+                    if (value <= 0) {
+                        price = getString(R.string.ct_service_free);
+
                     } else {
-                        price = info.getShowCurrency().toUpperCase() + " " + money;
+                        money = info.getShowPrice();
+                        if (info.getPriceType() == 1) { //按人计费
+                            price = info.getShowCurrency().toUpperCase() + " " + money + getString(R.string.ct_service_unit);
+                        } else {
+                            price = info.getShowCurrency().toUpperCase() + " " + money;
+                        }
                     }
                 }
             } catch (Exception e) {
@@ -193,7 +197,7 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
             ImageHelper.displayPersonImage(userInfo.getHeadPic(), img, null);
             setViewText(R.id.author_name, userInfo.getNick());
             setViewText(R.id.author_sign, userInfo.getSign());
-            setViewText(R.id.author_register_time_value, Utils.getMsToD(userInfo.getGmtModified()));
+            setViewText(R.id.author_register_time_value, Utils.getMsToD(userInfo.getGmtCreated()));
             //TODO:
             findViewById(R.id.phone_validate).setVisibility(userInfo.isPhoneValidated() ? View.VISIBLE : View.GONE);
             findViewById(R.id.email_validate).setVisibility(userInfo.isEmailValidated() ? View.VISIBLE : View.GONE);

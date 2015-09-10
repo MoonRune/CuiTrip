@@ -45,4 +45,11 @@ public class LogHelper {
         }
         return Log.e(TAG + tag, msg);
     }
+
+    public static int e(String tag, String msg,Throwable e) {
+        if (!MainApplication.IS_DEV) {
+            return 0;
+        }
+        return Log.e(TAG + tag, msg,e);
+    }
 }

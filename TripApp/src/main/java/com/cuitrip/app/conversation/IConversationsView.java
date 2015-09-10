@@ -17,4 +17,7 @@ public interface IConversationsView {
     void jumpConversation(ConversationItem item);
     void removeItem(ConversationItem item);
     void refreshMessage(List<ConversationItem> items);
+    void appendMessages(List<ConversationItem> items);
+
+    int getSize();
 }

@@ -46,7 +46,9 @@ public class CommentSuccessActivity extends BaseActivity implements View.OnClick
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.go_share:
-                finish();
+
+                startActivity(new Intent(this, IndexActivity.class)
+                        .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.ORDER_TAB));
                 break;
         }
     }

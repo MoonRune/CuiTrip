@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -24,16 +25,19 @@
                 android:paddingTop="10dp"
                 android:textColor="@color/ct_main_color"
                 android:textSize="@dimen/ct_ts_2" />
-            <TextView
-                android:layout_width="match_parent"
+
+            <Button
+                android:id="@+id/button"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="wrap_content"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
                 android:layout_height="wrap_content"
-                android:paddingRight="10dp"
-                android:paddingLeft="10dp"
-                android:gravity="center"
-                android:paddingTop="8dp"
-                android:text="@string/version_too_low"
-                android:textColor="@color/ct_7c"
-                android:textSize="@dimen/ct_ts_5" />
+                android:background="@drawable/selector_blue_stoken_empty_corner"
+                android:textColor="@color/ct_blue_white"
+                android:layout_marginBottom="10dp"
+                android:text="@string/version_too_low"/>
 
 
             <TextView

@@ -81,7 +81,7 @@ public class FavoriteListActivity extends BaseVerticalListActivity<FavoriteMode>
 
     @Override
     public void renderUIWithData(List items) {
-        mAdapter.appendModeList(items);
+        mAdapter.setModeList(items);
     }
 
     @Override

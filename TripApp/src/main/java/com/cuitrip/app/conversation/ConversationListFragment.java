@@ -50,10 +50,11 @@ public class ConversationListFragment extends BaseFragment implements IConversat
     boolean isResumeRefresh = false;
 
     @OnClick(R.id.ct_go_recommend)
-    public void gotoTab(){
+    public void gotoTab() {
         startActivity(new Intent(getActivity(), IndexActivity.class)
                 .putExtra(IndexActivity.GO_TO_TAB, IndexActivity.RECOMMEND_TAB));
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -61,6 +62,24 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         ButterKnife.inject(this, view);
         return view;
     }
+
+    protected RecyclerView.OnScrollListener onScrollListener = new RecyclerView.OnScrollListener() {
+
+        @Override
+        public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+            super.onScrolled(recyclerView, dx, dy);
+            int pastVisiblesItems, visibleItemCount, totalItemCount;
+
+            visibleItemCount = mLayoutManager.getChildCount();
+            totalItemCount = mLayoutManager.getItemCount();
+            pastVisiblesItems = mLayoutManager.findFirstVisibleItemPosition();
+            if (!mSwipeRefreshLayout.isRefreshing()) {
+                if ((visibleItemCount + pastVisiblesItems) >= totalItemCount) {
+                    mPresent.loadMore();
+                }
+            }
+        }
+    };
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
@@ -70,6 +89,13 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mPresent = new ConversationsPresent(this);
+    }
+
+    public int getSize() {
+        if (mAdapter != null) {
+            return mAdapter.getItemCount();
+        }
+        return 0;
     }
 
     @Override
@@ -166,7 +192,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
                     mAdapter.setDatas(items);
                     mAdapter.notifyDataSetChanged();
                 }
-                if (items == null ||  items.isEmpty()) {
+                if (items == null || items.isEmpty()) {
                     LogHelper.e("omg", "VISIBLE");
                     ctEmpty.setVisibility(View.VISIBLE);
                     mRecyclerView.setVisibility(View.GONE);
@@ -174,6 +200,22 @@ public class ConversationListFragment extends BaseFragment implements IConversat
                     LogHelper.e("omg", "GONE");
                     ctEmpty.setVisibility(View.GONE);
                     mRecyclerView.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+    }
+
+    @Override
+    public void appendMessages(List<ConversationItem> items) {
+        if (!isDetached()) {
+            if (mRecyclerView != null) {
+                if (mAdapter == null || mRecyclerView.getAdapter() == null) {
+                    mAdapter = new ConversationAdapter(mPresent);
+                    mAdapter.setDatas(items);
+                    mRecyclerView.setAdapter(mAdapter);
+                } else {
+                    mAdapter.append(items);
+                    mAdapter.notifyDataSetChanged();
                 }
             }
         }

@@ -46,7 +46,6 @@ public class FavoritePresent<T extends FavoriteMode> {
                         for (RecommendItem item : recommendOutData.getLists()) {
                             result.add(FavoriteMode.getInstance(item));
                         }
-
                     }
                     itemListFetchCallback.onSuc(result);
                 }
@@ -98,11 +97,12 @@ public class FavoritePresent<T extends FavoriteMode> {
 
         @Override
         public void deleteFavorite(FavoriteMode favoriteMode, final CtApiCallback callback) {
+            //  先删
+            callback.onSuc();
             ServiceBusiness.unikeService(((FavoriteListActivity) mFavoriteView), mClient, new LabAsyncHttpResponseHandler() {
                 @Override
                 public void onSuccess(LabResponse response, Object data) {
                     LogHelper.e("omg", " suc " + String.valueOf(response.result));
-                    callback.onSuc();
                 }
 
                 @Override

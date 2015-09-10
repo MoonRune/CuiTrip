@@ -25,9 +25,7 @@ import com.lab.utils.SmsSdkHelper;
 import com.loopj.android.http.AsyncHttpClient;
 import com.umeng.analytics.MobclickAgent;
 
-import io.rong.imkit.RongContext;
 import io.rong.imkit.RongIM;
-import io.rong.imlib.RongIMClient;
 import jonathanfinerty.once.Once;
 
 
@@ -46,8 +44,6 @@ public class MainApplication extends BaseAppLication {
 
     public void initRongIM() {
         RongIM.init(this);
-        RongIMClient.init(this);
-        RongContext.init(this);
     }
 
     public String getVersionName() {
@@ -70,6 +66,8 @@ public class MainApplication extends BaseAppLication {
         RongIM.getInstance().getRongIMClient().setOnReceivePushMessageListener(RongCloudEvent.getInstance());
         RongIM.getInstance().getRongIMClient().setOnReceiveMessageListener(RongCloudEvent.getInstance());
         RongIM.setConversationBehaviorListener(RongCloudEvent.getInstance());
+        RongIM.getInstance().getRongIMClient().setConnectionStatusListener(RongCloudEvent.getInstance());
+        RongIM.getInstance().setSendMessageListener(RongCloudEvent.getInstance());
         RongIM.setUserInfoProvider(RongCloudEvent.getInstance(), true);
         RongIM.setLocationProvider(new RongIM.LocationProvider() {
             @Override

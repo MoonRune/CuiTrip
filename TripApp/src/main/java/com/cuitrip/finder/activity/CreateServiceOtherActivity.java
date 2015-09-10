@@ -40,6 +40,7 @@ import com.lab.network.LabAsyncHttpResponseHandler;
 import com.lab.network.LabResponse;
 import com.lab.utils.LogHelper;
 import com.lab.utils.MessageUtils;
+import com.lab.utils.SavedDescSharedPreferences;
 import com.lab.utils.Utils;
 import com.loopj.android.http.AsyncHttpClient;
 
@@ -252,10 +253,21 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             MessageUtils.showToast(R.string.ct_service_pay_way_selecte_hint);
             return;
         }
-        if ((paywayValue == 0 || paywayValue == 1)
-                && TextUtils.isEmpty(mMoney.getText().toString())) {
-            MessageUtils.showToast(R.string.ct_service_money_set);
-            return;
+        if ((paywayValue == 0 || paywayValue == 1)) {
+            if (TextUtils.isEmpty(mMoney.getText().toString())) {
+                MessageUtils.showToast(R.string.ct_service_money_set);
+                return;
+            }
+            try {
+                Double value = Double.valueOf(mMoney.getText().toString());
+                if (value <= 0) {
+                    MessageUtils.showToast(R.string.ct_service_money_set);
+                    return;
+                }
+            } catch (NumberFormatException e) {
+                MessageUtils.showToast(R.string.ct_service_money_set);
+                return;
+            }
         }
 
         MessageUtils.createHoloBuilder(this).setMessage(R.string.commit_service_content).setTitle(R.string.commit_service_title)
@@ -281,6 +293,7 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     @Override
                     public void onSuccess(LabResponse response, Object data) {
                         hideNoCancelDialog();
+                        SavedDescSharedPreferences.deleteServiceDesc(CreateServiceOtherActivity.this);
                         startActivity(new Intent(CreateServiceOtherActivity.this, CreateServiceSuccessActivity.class));
                         setResult(RESULT_OK);
                         finish();
@@ -454,11 +467,10 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
             removeView(R.id.service_price_type_unit);
             removeView(R.id.price_block_divider);
         } else {
-            int value = mServiceInfo.getPriceType();
             paywayValue = mServiceInfo.getPriceType();
             mPayType.setText(getOrderPriceType()[paywayValue]);
             showView(R.id.price_block_divider);
-            switch (value) {
+            switch (paywayValue) {
                 case ServiceInfo.PAYWAY_ALL:
                     showView(R.id.price_block);
                     showView(R.id.price_block_divider);
@@ -469,6 +481,8 @@ public class CreateServiceOtherActivity extends BaseActivity implements View.OnC
                     if (!TextUtils.isEmpty(mServiceInfo.getPrice())) {
                         setViewText(R.id.service_price, mServiceInfo.getPrice());
                     }
+                    mMoney.setText("0");
+                    mServiceInfo.setPrice("0");
                     break;
                 case ServiceInfo.PAYWAY_FREE:
                     removeView(R.id.price_block);

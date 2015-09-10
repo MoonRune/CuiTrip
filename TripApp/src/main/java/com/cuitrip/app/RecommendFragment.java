@@ -148,15 +148,16 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
                     if (v.getTag() != null && v.getTag() instanceof RecommendItem) {
                         final RecommendItem item = ((RecommendItem) v.getTag());
                         if (item.isLiked()) {
+                            item.setIsLiked(false);
+                            adapter.notifyDataSetChanged();
                             ServiceBusiness.unikeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
                                 @Override
                                 public void onSuccess(LabResponse response, Object data) {
-                                    item.setIsLiked(false);
-                                    adapter.notifyDataSetChanged();
-                                }
+                                    }
 
                                 @Override
                                 public void onFailure(LabResponse response, Object data) {
+                                    item.setIsLiked(true);
                                     adapter.notifyDataSetChanged();
                                     String msg;
                                     if (response != null && !TextUtils.isEmpty(response.msg)) {
@@ -169,15 +170,16 @@ public class RecommendFragment extends BaseFragment implements SwipeRefreshLayou
                                 }
                             }, item.getSid());
                         } else {
+                            item.setIsLiked(true);
+                            adapter.notifyDataSetChanged();
                             ServiceBusiness.likeService(getActivity(), mAsyncHttpClient, new LabAsyncHttpResponseHandler() {
                                         @Override
                                         public void onSuccess(LabResponse response, Object data) {
-                                            item.setIsLiked(true);
-                                            adapter.notifyDataSetChanged();
                                         }
 
                                         @Override
                                         public void onFailure(LabResponse response, Object data) {
+                                            item.setIsLiked(false);
                                             adapter.notifyDataSetChanged();
 
                                             String msg;

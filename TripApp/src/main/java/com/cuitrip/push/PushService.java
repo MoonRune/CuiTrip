@@ -9,6 +9,8 @@ import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 
 import com.cuitrip.app.IndexActivity;
+import com.cuitrip.app.MainApplication;
+import com.cuitrip.app.orderdetail.OrderFormActivity;
 import com.cuitrip.service.R;
 import com.lab.utils.LogHelper;
 import com.umeng.message.UTrack;
@@ -18,6 +20,7 @@ import com.umeng.message.entity.UMessage;
 import org.android.agoo.client.BaseConstants;
 import org.json.JSONObject;
 
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -31,6 +34,14 @@ public class PushService extends UmengBaseIntentService {
 
     public static final String NEW_MESSAGE_BROADCAT = "ct_new_message_coming";
     public static final String NEW_MESSAGE_TYPE = "ct_new_message_type";
+
+
+    private static final String UMENG_MESSAGE_ID = "messageId";
+
+    private static final String UMENG_MESSAGE_ACTION = "goto";
+
+    private static final String UMENG_MESSAGE_ACTION_ORDER_DETAIL = "orderDetail";
+    private static final String UMENG_MESSAGE_ACTION_CHAT_DETAIL = "chatDetail";
 
     @Override
     protected void onMessage(Context context, Intent intent) {
@@ -48,8 +59,8 @@ public class PushService extends UmengBaseIntentService {
         }
     }
 
-    private void updateMsg(Context context, UMessage msg){
-        if(msg.extra != null && !TextUtils.isEmpty(msg.extra.get("gmtCreated"))){
+    private void updateMsg(Context context, UMessage msg) {
+        if (msg.extra != null && !TextUtils.isEmpty(msg.extra.get("gmtCreated"))) {
             MessagePrefs.saveLastMessageTime(msg.extra.get("gmtCreated"));
         }
         MessagePrefs.setHasNewMessage(true);
@@ -62,8 +73,11 @@ public class PushService extends UmengBaseIntentService {
         intent.putExtra(IndexActivity.GO_TO_TAB, IndexActivity.ORDER_TAB);
         LogHelper.e("showNotification", "ORDER_TAB");
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, new Random().nextInt() % 10000, intent,
-                PendingIntent.FLAG_UPDATE_CURRENT);
+        PendingIntent pendingIntent = getPending(msg);
+        if (msg == null) {
+            pendingIntent = PendingIntent.getActivity(context, new Random().nextInt() % 10000, intent,
+                    PendingIntent.FLAG_UPDATE_CURRENT);
+        }
         Notification notification = new NotificationCompat.Builder(context)
                 .setSmallIcon(R.drawable.ct_ic_launcher)
                 .setTicker(msg.title).setContentTitle(msg.title).setContentText(msg.text)
@@ -72,5 +86,57 @@ public class PushService extends UmengBaseIntentService {
                 .build();
         NotificationManagerCompat managerCompat = NotificationManagerCompat.from(context);
         managerCompat.notify(new Random().nextInt() % 10000, notification);
+    }
+
+    public PendingIntent getPending(UMessage message) {
+        LogHelper.e(TAG, "getPending");
+        PendingIntent result = null;
+        try {
+            Map<String, String> valus = message.extra;
+            if (valus == null) {
+
+                LogHelper.e(TAG, "no valus");
+            }
+            if (valus != null && valus.containsKey(UMENG_MESSAGE_ACTION)) {
+
+                LogHelper.e(TAG, "has value");
+                switch (valus.get(UMENG_MESSAGE_ACTION)) {
+                    case UMENG_MESSAGE_ACTION_ORDER_DETAIL:
+                        if (!valus.containsKey(UMENG_MESSAGE_ID)) {
+                            LogHelper.e(TAG, "no messageId");
+                            break;
+                        }
+                    {
+                        String oid = valus.get(UMENG_MESSAGE_ID);
+                        LogHelper.e(TAG, "has value " + UMENG_MESSAGE_ACTION_ORDER_DETAIL + "|" + oid);
+                        Intent notificationIntent = OrderFormActivity.getStartOrderIntent(MainApplication.getInstance(), oid);
+                        notificationIntent.setFlags(notificationIntent.FLAG_ACTIVITY_NEW_TASK);
+                        result = PendingIntent.getActivity(MainApplication.getInstance(), oid.hashCode(),
+                                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
+                    break;
+                    case UMENG_MESSAGE_ACTION_CHAT_DETAIL:
+                        if (!valus.containsKey(UMENG_MESSAGE_ID)) {
+                            LogHelper.e(TAG, "no messageId");
+                            break;
+                        }
+                    {
+                        String oid = valus.get(UMENG_MESSAGE_ID);
+                        LogHelper.e(TAG, "has value " + UMENG_MESSAGE_ACTION_CHAT_DETAIL + "|" + oid);
+                        Intent notificationIntent = OrderFormActivity.getStartIntent(MainApplication.getInstance(), oid);
+                        notificationIntent.setFlags(notificationIntent.FLAG_ACTIVITY_NEW_TASK);
+                        result = PendingIntent.getActivity(MainApplication.getInstance(), oid.hashCode(),
+                                notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+                    }
+                    break;
+                    default:
+                        break;
+                }
+            }
+        } catch (Exception e) {
+
+            LogHelper.e(TAG, " JSON error " + e.getMessage());
+        }
+        return result;
     }
 }

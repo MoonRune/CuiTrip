@@ -31,7 +31,7 @@
         android:layout_height="36dp"
         android:isIndicator="true"
         android:progressDrawable="@drawable/ct_rating_bar"
-        android:stepSize="0.1"
+        android:stepSize="0.5"
         tools:rating="3.4"
         tools:numStars="5"/>
     <TextView

@@ -12,15 +12,8 @@ import com.cuitrip.app.MainApplication;
 import com.cuitrip.service.R;
 import com.lab.utils.ImageHelper;
 import com.lab.utils.LogHelper;
-import com.loopj.android.http.HttpGet;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.impl.client.DefaultHttpClient;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 
 /**
@@ -126,13 +119,6 @@ public class URLImageParser implements Html.ImageGetter {
             } catch (Exception e) {
                 return null;
             }
-        }
-
-        private InputStream fetch(String urlString) throws MalformedURLException, IOException {
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpGet request = new HttpGet(urlString);
-            HttpResponse response = httpClient.execute(request);
-            return response.getEntity().getContent();
         }
     }
 }
