@@ -78,11 +78,13 @@ public class OrderFormActivity extends BaseActivity {
         intent.putExtra(ORDER_ID, orderId);
         context.startActivity(intent);
     }
+
     public static Intent getStartOrderIntent(Context context, String orderId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
         intent.putExtra(ORDER_ID, orderId);
         return intent;
     }
+
     public static Intent getStartIntent(Context context, String orderId) {
         Intent intent = new Intent(context, OrderFormActivity.class);
         intent.putExtra(ORDER_ID, orderId);
@@ -185,7 +187,7 @@ public class OrderFormActivity extends BaseActivity {
                     return PersonInfoFragment.newInstance(id);
                 default:
                     LogHelper.e("replaceFragment", "getfragment");
-                    if (orderItem.enableRongConversation() || ! orderItem.isOldConversations()) {
+                    if (orderItem.enableRongConversation() || !orderItem.isOldConversations()) {
                         if (!TextUtils.isEmpty(orderItem.getTargetId())) {
 
                             UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
@@ -212,7 +214,7 @@ public class OrderFormActivity extends BaseActivity {
                                 public void onSuccess(Discussion discussion) {
                                     LogHelper.e("omg member", TextUtils.join("|", discussion.getMemberIdList()));
                                     try {
-                                        if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() !=2
+                                        if (discussion.getMemberIdList() == null || discussion.getMemberIdList().size() != 2
                                                 || !discussion.getMemberIdList().contains(LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo().getUid())
                                                 ) {
                                             emptyFragment = fragment;
@@ -255,7 +257,7 @@ public class OrderFormActivity extends BaseActivity {
                     } else {
                         UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
                         if (info != null) {
-                            return OldConversatoinFragment.newInstance(orderId,orderItem.getOtherId(info.getUid()));
+                            return OldConversatoinFragment.newInstance(orderId, orderItem.getOtherId(info.getUid()));
                         }
                         return emptyFragment = ProgressingFragment.newInstance();
                     }
@@ -274,6 +276,22 @@ public class OrderFormActivity extends BaseActivity {
     Fragment emptyFragment = null;
     boolean needRefreshFragmenet = false;
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (orderItem != null) {
+            UserInfo info = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+            if (info != null) {
+                RongCloudEvent.onConversationStart(orderId,
+                        orderItem.getOtherId(info.getUid()),
+                        info.getUid(),
+                        orderItem.getSid(),
+                        orderItem.getTargetId());
+
+            }
+        }
+    }
+
     public void replaceFragment() {
         LogHelper.e("replaceFragment", "replaceFragment");
         try {
@@ -287,7 +305,7 @@ public class OrderFormActivity extends BaseActivity {
                 emptyFragment = null;
             }
         } catch (Exception e) {
-            LogHelper.e("replaceFragment", "replaceFragment error"+e.getMessage());
+            LogHelper.e("replaceFragment", "replaceFragment error" + e.getMessage());
 
         }
         mAdapter.notifyDataSetChanged();
@@ -333,7 +351,7 @@ public class OrderFormActivity extends BaseActivity {
 
                 @Override
                 public void onFailed(CtException throwable) {
-                    LogHelper.e(TAG, "startConversation failed build" );
+                    LogHelper.e(TAG, "startConversation failed build");
                     MessageUtils.showToast(throwable.getMessage());
                 }
             });
