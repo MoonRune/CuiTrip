@@ -2,11 +2,11 @@
 citric android source code 
 
 #Todo 
-1.接入drag2 
-2.改http通讯模块，至少支持test
-3.fresco
-4.统一 启动组建使用静态方法 activity.start(args)
-5.actvitiyresult －>eventBus
+1. 接入drag2 
+2. 上一位同志的AsyncHttpResponseHandler很蛋疼 ，改http通讯模块，至少支持test
+3. fresco
+4. 统一 启动组建使用静态方法 activity.start(args)
+5. actvitiyresult －>eventBus
 
 
 #RongIm
@@ -21,4 +21,18 @@ citric android source code
 * 发送消息
     - 发送消息成功后，使用老聊天接口发送给服务器老聊天记录。 考虑 保存hash的tartgetid和orderid表， 
 * 聊天列表
-    - 使用了订单列表api ，然后获取融云聊天数据，填充最后消息和未读消息数，并根据最后消息时间大到小排序，由于订单列表并未根据消息时间排序，
+    - 使用了订单列表api ，然后获取融云聊天数据，填充最后消息和未读消息数，并根据最后消息时间大到小排序，然并卵<---订单列表并未根据消息时间排序并且做了分页。
+
+#版本
+* MainApplication is_dev 属性
+* BusinessHelper BASE_URL
+* BusinessHelper API_VERSION 
+* build.gradle (TripApp) version**
+
+#代码混淆
+	-keep class com.cuitrip.model.**{*;}		 
+	-keep class com.cuitrip.business.**{*;}	
+	
+
+
+ 
