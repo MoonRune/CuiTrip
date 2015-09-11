@@ -234,6 +234,11 @@ public class OrderFormActivity extends BaseActivity {
                                         MainApplication.getInstance().orderRongMembersizeError();
                                         buildConversation(orderItem);
                                     }
+                                    if (RongIMClient.ErrorCode.IPC_DISCONNECT.equals(errorCode)
+                                            || RongIMClient.ErrorCode.RC_NET_UNAVAILABLE.equals(errorCode)
+                                            || RongIMClient.ErrorCode.RC_SOCKET_DISCONNECTED.equals(errorCode)) {
+                                        RongCloudEvent.getInstance().forceConnect();
+                                    }
                                 }
                             });
                             String target = orderItem.getTargetId();
