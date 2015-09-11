@@ -88,6 +88,7 @@ public class ConversationListFragment extends BaseFragment implements IConversat
         mLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
         mSwipeRefreshLayout.setEnabled(false);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addOnScrollListener(onScrollListener);
         mPresent = new ConversationsPresent(this);
     }
 
