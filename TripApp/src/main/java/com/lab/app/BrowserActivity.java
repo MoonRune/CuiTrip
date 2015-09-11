@@ -7,13 +7,12 @@ import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.Window;
 import android.webkit.CookieSyncManager;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.cuitrip.app.RelationActivity;
+import com.cuitrip.model.JumpConcat;
 import com.cuitrip.service.R;
 import com.lab.utils.Constants;
 import com.lab.utils.LogHelper;
@@ -44,6 +43,7 @@ public class BrowserActivity extends BaseActivity {
     protected WebView mWebView;
     private String mTitle;
 
+    private JumpConcat jumpConcat;
     /*
      * As the file content is loaded completely into RAM first, set a limitation
      * on the file size so we don't use too much RAM. If someone wants to load
@@ -65,13 +65,7 @@ public class BrowserActivity extends BaseActivity {
         intent.putExtra(TITLE,title);
         context.startActivity(intent);
     }
-    public class JumpConcat{
-        @JavascriptInterface
-        public void jumpConcat(){
-            RelationActivity.start(BrowserActivity.this);
-        }
 
-    }
     public void buildWebView(){
 
         mWebView = new WebView(this);
@@ -93,7 +87,7 @@ public class BrowserActivity extends BaseActivity {
         // Setup callback support for title and progress bar
         mWebView.setWebChromeClient(new WebChrome());
         mWebView.setWebViewClient(mWebViewClient);
-        mWebView.addJavascriptInterface(new JumpConcat(), "jumper");
+        mWebView.addJavascriptInterface(jumpConcat = new JumpConcat(this), "jumper");
         mWebView.requestFocus();
         mWebView.setHorizontalScrollbarOverlay(false);
         mWebView.setVerticalScrollbarOverlay(true);
@@ -193,6 +187,9 @@ public class BrowserActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mWebView.destroy();
+        if (jumpConcat!=null){
+            jumpConcat.destroy();
+        }
     }
 
     class WebChrome extends WebChromeClient {
