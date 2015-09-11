@@ -96,7 +96,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
         ConnectRong(true);
     }
 
-    public static void ConnectRong(boolean force) {
+    public static void ConnectRong(boolean forceExit) {
         try {
             if (!LoginInstance.isLogin(MainApplication.getInstance())) {
                 LogHelper.e(TAG, " notlogin");
@@ -109,7 +109,7 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
             }
             if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
                 LogHelper.e(TAG, "rongyun roken null");
-                if (force) {
+                if (forceExit) {
                     MainApplication.getInstance().logOutWithError();
                 }
                 return;
@@ -128,6 +128,53 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                 }
             }
             //if connected
+
+            final String token = userInfo.getRongyunToken();
+            LogHelper.e(TAG, "rongyun roken is : " + token);
+            RongIM.connect(token, new RongIMClient.ConnectCallback() {
+
+                @Override
+                public void onSuccess(String userId) {
+                    currentToken = token;
+                    LogHelper.e(TAG, "ron suc" + userId);
+    /* 连接成功 */
+                }
+
+                @Override
+                public void onError(RongIMClient.ErrorCode e) {
+                    LogHelper.e(TAG, "ron failed " + e);
+    /* 连接失败，注意并不需要您做重连 */
+                }
+
+                @Override
+                public void onTokenIncorrect() {
+                    LogHelper.e(TAG, "ron token error");
+                    try {
+                        MainApplication.getInstance().logOutWithError();
+                    } catch (Exception e) {
+                    }
+                }
+
+            });
+        } catch (Exception e) {
+            MessageUtils.showToast(R.string.load_error);
+        }
+    }
+
+    public static void forceConnect() {
+        try {
+            if (!LoginInstance.isLogin(MainApplication.getInstance())) {
+                LogHelper.e(TAG, " notlogin");
+                return;
+            }
+            com.cuitrip.model.UserInfo userInfo = LoginInstance.getInstance(MainApplication.getInstance()).getUserInfo();
+            if (userInfo == null || TextUtils.isEmpty(userInfo.getUid())) {
+                LogHelper.e(TAG, " userinfo null");
+                return;
+            }
+            if (TextUtils.isEmpty(userInfo.getRongyunToken())) {
+                LogHelper.e(TAG, "rongyun roken null");
+            }
 
             final String token = userInfo.getRongyunToken();
             LogHelper.e(TAG, "rongyun roken is : " + token);
@@ -213,6 +260,11 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                             msg = errorCode.getMessage();
                         }
                         callback.onFailed(new CtException(msg));
+                    }
+                    if (RongIMClient.ErrorCode.IPC_DISCONNECT.equals(errorCode)
+                            || RongIMClient.ErrorCode.RC_NET_UNAVAILABLE.equals(errorCode)
+                            || RongIMClient.ErrorCode.RC_SOCKET_DISCONNECTED.equals(errorCode)) {
+                        forceConnect();
                     }
                 }
             });
@@ -473,6 +525,11 @@ public class RongCloudEvent implements RongIM.UserInfoProvider, RongIMClient.OnR
                                     @Override
                                     public void onError(RongIMClient.ErrorCode errorCode) {
                                         LogHelper.e(TAG, "failed " + errorCode);
+                                        if (RongIMClient.ErrorCode.IPC_DISCONNECT.equals(errorCode)
+                                                || RongIMClient.ErrorCode.RC_NET_UNAVAILABLE.equals(errorCode)
+                                                || RongIMClient.ErrorCode.RC_SOCKET_DISCONNECTED.equals(errorCode)) {
+                                            forceConnect();
+                                        }
 
                                     }
                                 }
