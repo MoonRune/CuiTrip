@@ -73,7 +73,7 @@
                 android:max="5"
                 android:stepSize="1"
                 android:numStars="5"
-                android:rating="1" />
+                android:rating="5" />
             <EditText
                 android:id="@+id/content"
                 android:layout_width="match_parent"
