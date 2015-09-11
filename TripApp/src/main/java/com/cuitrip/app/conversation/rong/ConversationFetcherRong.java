@@ -107,7 +107,7 @@ public class ConversationFetcherRong implements IConversationsFetcher {
             public void onFailure(LabResponse response, Object data) {
 
             }
-        }, userInfo.isTravel() ? 1 : 2, from, from + DEFAULT_SIZE);
+        }, userInfo.isTravel() ? 1 : 2, from,  DEFAULT_SIZE);
 
     }
 

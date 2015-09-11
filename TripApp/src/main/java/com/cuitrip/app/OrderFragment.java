@@ -265,7 +265,7 @@ public class OrderFragment extends BaseFragment implements SwipeRefreshLayout.On
         if (mRefresh != null && !mRefresh.isRefreshing()) {
             mRefresh.setRefreshing(true);
             LogHelper.e("omg", "load more " + getSize() + "|" + (getSize() + DEFUALT_SIZE));
-            OrderBusiness.getOrderList(getActivity(), mAsyncHttpClient, loaderMoreResponse, mType, getSize(), getSize() + DEFUALT_SIZE);
+            OrderBusiness.getOrderList(getActivity(), mAsyncHttpClient, loaderMoreResponse, mType, getSize(),  DEFUALT_SIZE);
         }
     }
 
